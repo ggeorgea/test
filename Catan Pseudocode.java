@@ -86,7 +86,7 @@ if (diceRoll == 7 || card == knight) {
   System.out.println("Choose where to move the robber");
   //robber is moved
   //the hex nodes are checked for settlements
-  //player then steals a resource card from one of those players
+  //player then steals a random resource card from one of those players
 }
 
 -------------------------------------------------------------------------------
