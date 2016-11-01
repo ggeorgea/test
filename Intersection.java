@@ -1,7 +1,37 @@
 
 public class Intersection {
 
-	Coordinate coordinate;
-	Player owner;
-	Building building;
+	private Coordinate coordinate;
+	private Player owner;
+	private Building building;
+	
+	public Coordinate getCoordinate() {
+	
+		return coordinate;
+	}
+	
+	public void setCoordinate(Coordinate coordinate) {
+	
+		this.coordinate = coordinate;
+	}
+	
+	public Player getOwner() {
+	
+		return owner;
+	}
+	
+	public void setOwner(Player owner) {
+	
+		this.owner = owner;
+	}
+	
+	public Building getBuilding() {
+	
+		return building;
+	}
+	
+	public void setBuilding(Building building) {
+	
+		this.building = building;
+	}	
 }
