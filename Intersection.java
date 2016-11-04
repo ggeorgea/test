@@ -4,7 +4,14 @@ public class Intersection {
 	private Coordinate coordinate;
 	private Player owner;
 	private Building building;
-	
+	public Intersection(){}
+	public Intersection(Coordinate coordinate, Player owner, Building building) {
+		super();
+		this.coordinate = coordinate;
+		this.owner = owner;
+		this.building = building;
+	}
+
 	public Coordinate getCoordinate() {
 	
 		return coordinate;

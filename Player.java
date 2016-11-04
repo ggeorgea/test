@@ -11,7 +11,19 @@ public class Player {
 	
 	private ArrayList<ResourceCard> resourceCards = new ArrayList<ResourceCard>();
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
-	
+	public Player(){}
+	public Player(String name, int victoryPoints, int longestRoad,
+			int largestArmy, ArrayList<ResourceCard> resourceCards,
+			ArrayList<DevelopmentCard> developmentCards) {
+		super();
+		this.name = name;
+		this.victoryPoints = victoryPoints;
+		this.longestRoad = longestRoad;
+		this.largestArmy = largestArmy;
+		this.resourceCards = resourceCards;
+		this.developmentCards = developmentCards;
+	}
+
 	public String getName() {
 	
 		return name;

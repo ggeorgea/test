@@ -6,7 +6,16 @@ public class Game {
 	private Board board;
 	private ArrayList<ResourceCard> resourceCards = new ArrayList<ResourceCard>();
 	private ArrayList<Player> players = new ArrayList<Player>();
-	
+	public Game(){}
+	public Game(String id, Board board, ArrayList<ResourceCard> resourceCards,
+			ArrayList<Player> players) {
+		super();
+		this.id = id;
+		this.board = board;
+		this.resourceCards = resourceCards;
+		this.players = players;
+	}
+
 	public String getId() {
 	
 		return id;
