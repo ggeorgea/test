@@ -4,9 +4,13 @@ public class Hex {
 	private Coordinate coordinate;
 	private String terrain;
 	private int number;
-	public Hex(){}
+	
+	public Hex() {
+		
+	}
+	
 	public Hex(Coordinate coordinate, String terrain, int number) {
-		super();
+		
 		this.coordinate = coordinate;
 		this.terrain = terrain;
 		this.number = number;

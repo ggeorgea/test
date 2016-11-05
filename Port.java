@@ -4,14 +4,18 @@ public class Port {
 	private Coordinate coordinateA;
 	private Coordinate coordinateB;
 	private String resource;
-	public Port(){}
+	
+	public Port() {
+		
+	}
+	
 	public Port(Coordinate coordinateA, Coordinate coordinateB, String resource) {
-		super();
+
 		this.coordinateA = coordinateA;
 		this.coordinateB = coordinateB;
 		this.resource = resource;
 	}
-
+	
 	public Coordinate getCoordinateA() {
 	
 		return coordinateA;

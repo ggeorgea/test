@@ -2,9 +2,13 @@
 public class ResourceCard {
 
 	private String resource;
-	public ResourceCard(){}
+
+	public ResourceCard() {
+		
+	}
+	
 	public ResourceCard(String resource) {
-		super();
+	
 		this.resource = resource;
 	}
 

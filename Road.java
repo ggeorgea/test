@@ -4,14 +4,18 @@ public class Road {
 	private Coordinate coordinateA;
 	private Coordinate coordinateB;
 	private Player owner;
-	public Road(){}
+	
+	public Road() {
+		
+	}
+	
 	public Road(Coordinate coordinateA, Coordinate coordinateB, Player owner) {
-		super();
+		
 		this.coordinateA = coordinateA;
 		this.coordinateB = coordinateB;
 		this.owner = owner;
 	}
-
+	
 	public Coordinate getCoordinateA() {
 	
 		return coordinateA;

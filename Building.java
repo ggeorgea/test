@@ -3,13 +3,17 @@ public class Building {
 
 	private String type;
 	private int victoryPoints;
-	public Building(){}
+	
+	public Building() {
+		
+	}
+	
 	public Building(String type, int victoryPoints) {
-		super();
+		
 		this.type = type;
 		this.victoryPoints = victoryPoints;
 	}
-
+	
 	public String getType() {
 		
 		return type;
