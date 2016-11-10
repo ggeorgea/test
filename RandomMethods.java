@@ -80,7 +80,7 @@ public class RandomMethods {
 	}
 	
 	//TODO robber stuff
-	
+	//G: note, i added a robber text field to each of the hexes, to be filled with " " if the robber is elsewhere, and "R" if the robber is present
 	//here so no errors
 	ArrayList<Road> validRoads = null;
 	

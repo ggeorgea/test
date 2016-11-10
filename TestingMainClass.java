@@ -1,19 +1,11 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class TestingMainClass {
 
 	public static void main(String[] args) {
-
-		Hex testHex1 = new Hex();
-		Hex testHex2 = new Hex();
-		Hex testHex3 = new Hex();
-		testHex1.setCoordinate(new Coordinate(0, 0));
-		testHex1.setTerrain("D");
-		testHex2.setCoordinate(new Coordinate(0, 3));
-		testHex2.setTerrain("F");
-		testHex3.setCoordinate(new Coordinate(2, 1));
-		testHex3.setTerrain("M");
 
 		Board board1 = getHexBoard(3);
 		// this fills the arraylist with hexes
@@ -26,10 +18,35 @@ public class TestingMainClass {
 			board1.setHexes(Hexes);
 		}
 
-		printMap(board1);
-
+		Game game1 = new Game();
+		board1 = setRandHexNumbersAndRob(board1);
+		game1.setBoard(board1);
+		//this prints the board
+		printMap(game1.getBoard());
 	}
 
+	public static Board setRandHexNumbersAndRob(Board board1){
+		int[] hexnumbers = {7,5,2,6,3,8,10,9,12,11,4,8,10,9,4,5,6,3,11};
+		ArrayList<Integer> x1 = new ArrayList<Integer>();
+		for(int i=0; i<hexnumbers.length; i++)
+		{
+		    x1.add(hexnumbers[i]);
+		}
+		Collections.shuffle(x1);
+		Iterator numberIt = x1.iterator();
+		for(int y = 0; y<hexnumbers.length;y++){
+			int toset = (int)numberIt.next();
+			Hex hexer = board1.getHexes().get(y);
+			hexer.setNumber(toset);
+			if(toset == 7){
+				//this puts the robber on the hex
+				hexer.setisRobberHere("R");
+			}
+			board1.getHexes().set(y, hexer);
+		}
+		return board1;
+	}
+	
 	// This will make hexes and fill in the coordinates as long as the board is
 	// a hexagon
 	public static Board getHexBoard(int Edgesize) {
@@ -68,18 +85,25 @@ public class TestingMainClass {
 
 	public static void printMap(Board board1) {
 
-		// Iterator<Hex> anIt = board1.getHexes().iterator();
 		// this big print out is gonna get very complicated, it does look quite
 		// nice as ascii
 		// i suggest we lose any semblance that we can keep it looking neat as
 		// ascii, and instead try to make it neat as code!
-		String robberloc = "R";
+		//these are just for iterating through the robber fields, the terrain fields and then number fields
+		int rn = 0;
 		int tn = 0;
 		int nn = 0;
-		String townOrCityOwn = "3t";
+		//these must be replaced to iterate through roads and cities
 		int roadOwn = 1;
+		String townOrCityOwn = "3t";
 		System.out
-				.println("                                                            \n"
+				.println("                    "
+						+ townOrCityOwn
+						+ "            "
+						+ townOrCityOwn
+						+ "            "
+						+ townOrCityOwn
+						+ "                                      \n"
 						+ "                 "
 						+ roadOwn
 						+ "  /\\  "
@@ -105,11 +129,11 @@ public class TestingMainClass {
 						+ townOrCityOwn
 						+ "     \n"
 						+ "                |    "
-						+ robberloc
+						+board1.getHexes().get(rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |        \n"
 						+ "                |        |    |        |    |        |          \n"
 						+ "              "
@@ -129,11 +153,11 @@ public class TestingMainClass {
 						+ "       \n"
 						+ "                |        |    |        |    |        |          \n"
 						+ "                |    "
-						+ board1.getHexes().get(nn).getNumber()
+						+ board1.getHexes().get(nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |          \n"
 						+ "             "
 						+ townOrCityOwn
@@ -164,15 +188,25 @@ public class TestingMainClass {
 						+ "      \n"
 						+ "            /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\        \n"
 						+ "           /    \\        /    \\        /    \\        /    \\       \n"
-						+ "          / -3,0 \\      / -1,1 \\      /  1,2 \\      /  3,3 \\       \n"
+						+ "      "
+						+ townOrCityOwn
+						+ "  / -3,0 \\  "
+						+ townOrCityOwn
+						+ "  / -1,1 \\  "
+						+ townOrCityOwn
+						+ "  /  1,2 \\  "
+						+ townOrCityOwn
+						+ "  /  3,3 \\  "
+						+ townOrCityOwn
+						+ "   \n"
 						+ "         |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |        \n"
 						+ "         |        |    |        |    |        |    |        |         \n"
 						+ "       "
@@ -196,15 +230,25 @@ public class TestingMainClass {
 						+ "      \n"
 						+ "         |        |    |        |    |        |    |        |          \n"
 						+ "         |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |         \n"
-						+ "          \\      /      \\      /      \\      /      \\      /            \n"
+						+ "      "
+						+ townOrCityOwn
+						+ "  \\      /  "
+						+ townOrCityOwn
+						+ "  \\      /   "
+						+ townOrCityOwn
+						+ " \\      /  "
+						+ townOrCityOwn
+						+ "  \\      /  "
+						+ townOrCityOwn
+						+ "        \n"
 						+ "           \\    /        \\    /        \\    /        \\    /               \n"
 						+ "   "
 						+ roadOwn
@@ -229,7 +273,8 @@ public class TestingMainClass {
 						+ "          \n"
 						+ "     /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\              \n"
 						+ "    /    \\        /    \\        /    \\        /    \\        /    \\             \n"
-						+ "   /-4,-2 \\  "
+						+ townOrCityOwn
+						+ " /-4,-2 \\  "
 						+ townOrCityOwn
 						+ "  /-2,-1 \\  "
 						+ townOrCityOwn
@@ -241,15 +286,15 @@ public class TestingMainClass {
 						+ townOrCityOwn
 						+ "        \n"
 						+ "  |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |           \n"
 						+ "  |        |    |        |    |        |    |        |    |        |           \n"
 						+ "1 |    "
@@ -275,17 +320,18 @@ public class TestingMainClass {
 						+ "      \n"
 						+ "  |        |    |        |    |        |    |        |    |        |           \n"
 						+ "  |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |           \n"
-						+ "   \\      /  "
+						+ townOrCityOwn
+						+ " \\      /  "
 						+ townOrCityOwn
 						+ "  \\      /  "
 						+ townOrCityOwn
@@ -320,15 +366,25 @@ public class TestingMainClass {
 						+ "       \n"
 						+ "      \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/         \n"
 						+ "           /    \\        /    \\        /    \\        /    \\             \n"
-						+ "          /-3,-3 \\      /-1,-2 \\      / 1,-1 \\      /  3,0 \\            \n"
+						+ "       "
+						+ townOrCityOwn
+						+ " /-3,-3 \\  "
+						+ townOrCityOwn
+						+ "  /-1,-2 \\   "
+						+ townOrCityOwn
+						+ " / 1,-1 \\  "
+						+ townOrCityOwn
+						+ "  /  3,0 \\  "
+						+ townOrCityOwn
+						+ "        \n"
 						+ "         |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |         \n"
 						+ "         |        |    |        |    |        |    |        |        \n"
 						+ "       "
@@ -352,15 +408,25 @@ public class TestingMainClass {
 						+ "     \n"
 						+ "         |        |    |        |    |        |    |        |        \n"
 						+ "         |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |     \n"
-						+ "          \\      /      \\      /      \\      /      \\      /       \n"
+						+ "       "
+						+ townOrCityOwn
+						+ " \\      /  "
+						+ townOrCityOwn
+						+ "  \\      /  "
+						+ townOrCityOwn
+						+ "  \\      /  "
+						+ townOrCityOwn
+						+ "  \\      /  "
+						+ townOrCityOwn
+						+ "   \n"
 						+ "           \\    /        \\    /        \\    /        \\    /         \n"
 						+ "          "
 						+ roadOwn
@@ -391,11 +457,11 @@ public class TestingMainClass {
 						+ townOrCityOwn
 						+ "    \n"
 						+ "                |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |    |    "
-						+ robberloc
+						+board1.getHexes().get(++rn).getisRbberHere()
 						+ "   |      \n"
 						+ "                |        |    |        |    |        |      \n"
 						+ "              "
@@ -415,11 +481,11 @@ public class TestingMainClass {
 						+ "   \n"
 						+ "                |        |    |        |    |        |      \n"
 						+ "                |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |    |    "
-						+ board1.getHexes().get(++nn).getNumber()
+						+ board1.getHexes().get(++nn).getnumString()
 						+ "  |      \n"
 						+ "             "
 						+ townOrCityOwn
@@ -445,7 +511,9 @@ public class TestingMainClass {
 						+ roadOwn
 						+ "     \n"
 						+ "                    \\/            \\/            \\/        \n"
-						+ "                                                         \n");
+						+ "                    " + townOrCityOwn
+						+ "            " + townOrCityOwn + "            "
+						+ townOrCityOwn + "                   \n");
 
 	}
 
