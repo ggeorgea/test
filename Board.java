@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Board {
 
@@ -9,6 +10,7 @@ public class Board {
 	private ArrayList<Road> roads = new ArrayList<Road>();
 	private ArrayList<Intersection> buildings = new ArrayList<Intersection>();
 	private location[][] boardLocations;
+	private HashMap roadmap;
 	
 	public Board() {
 		
@@ -27,6 +29,14 @@ public class Board {
 		this.boardLocations = boardLocations;
 	}
 	
+	public HashMap getRoadmap() {
+		return roadmap;
+	}
+
+	public void setRoadmap(HashMap roadmap) {
+		this.roadmap = roadmap;
+	}
+
 	public location[][] getBoardLocations() {
 		return boardLocations;
 	}
