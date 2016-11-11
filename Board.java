@@ -8,14 +8,15 @@ public class Board {
 	private ArrayList<Port> ports = new ArrayList<Port>();
 	private ArrayList<Road> roads = new ArrayList<Road>();
 	private ArrayList<Intersection> buildings = new ArrayList<Intersection>();
-
+	private location[][] boardLocations;
+	
 	public Board() {
 		
 	}
 	
 	public Board(int size, Coordinate robber, ArrayList<Hex> hexes,
 			ArrayList<Port> ports, ArrayList<Road> roads,
-			ArrayList<Intersection> buildings) {
+			ArrayList<Intersection> buildings, location[][] boardLocations) {
 		
 		this.size = size;
 		this.robber = robber;
@@ -23,8 +24,17 @@ public class Board {
 		this.ports = ports;
 		this.roads = roads;
 		this.buildings = buildings;
+		this.boardLocations = boardLocations;
 	}
 	
+	public location[][] getBoardLocations() {
+		return boardLocations;
+	}
+
+	public void setBoardLocations(location[][] boardLocations) {
+		this.boardLocations = boardLocations;
+	}
+
 	public int getSize() {
 		
 		return size;
