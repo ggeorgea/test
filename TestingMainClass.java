@@ -197,9 +197,11 @@ public class TestingMainClass {
 		int tn = 0;
 		int nn = 0;
 		// these must be replaced to iterate through roads and cities
+
 		int roadOwn = 1;
 		String townOrCityOwn = "3t";
 		String getPort = "P";
+		//Below is a printout of the board 
 		System.out
 				.println(
 						"                                         "+getPort+"                           \n"                                                                                    
