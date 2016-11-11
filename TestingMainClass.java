@@ -17,27 +17,41 @@ public class TestingMainClass {
 		
 		Hex centre =   (Hex) board1.getBoardLocations()[5][5].getContains();
 		centre.setisRobberHere("!");
+		Arraylist<Intersection> interestionsal  = new ArrayList<Intersection>(); 
 		//along the top
+		//hi = high coordinate 
+		//chi = changed hi 
+		//wi=width 
+		//goes diagonally through a 2D array 
 		for (int hi = 0; hi<board1.getBoardLocations().length  ;hi++){
 			int chi = hi;
 			for (int wi = 0; wi<=hi;wi++){
+				// we start at the top right corner of the board (10-chi achieved this)
 				//System.out.print("("+(10-chi) +", "+(10-wi) +")");
 				System.out.print(board1.getBoardLocations()[10-chi][10-wi].getType()+"  ");
+				//if statment 
+				if (board1.getBoardLocations()[10-chi][10-wi].getType().equals("Intersection")){
+					//adds a reference to the intersection objects to the arraylist 
+					intersectional.add(board1.getBoardLocations()[10-chi][10-wi]).getContains(); 
+				}
 				chi--;
 			}
 			System.out.println();
 		}
+		//second diagonal loop, starts in the top left corner of the board
 		for (int hi = board1.getBoardLocations().length-2; hi>=0  ;hi--){
 			int chi = hi;
 			for (int wi = 0; wi<=hi;wi++){
 				//System.out.print("("+(10-chi) +", "+(10-wi) +")");
 				System.out.print(board1.getBoardLocations()[chi][wi].getType()+"  ");
+				if (board1.getBoardLocations()[chi][wi].getType().equals("Intersection")){
+					//adds a reference to the intersection objects to the arraylist 
+					intersectional.add(board1.getBoardLocations()[chi][wi]).getContains(); 
+				}
 				chi--;
 			}
 			System.out.println();
 		}
-		
-		
 		printMap(game1.getBoard());
 
 	}
