@@ -51,7 +51,6 @@ public class TestingMainClass {
 		//of course if I wasnt being lazy there would be seperate methods for hexes and intersections that did the casting for you or something, but im not sure thats even better
 		
 		printMap(game1.getBoard());
-		//TO DO make a method to add the ports to their own array, and add the ports to the 2d array list, make sure to correctly randomly assign their resource type
 
 	}
 	
