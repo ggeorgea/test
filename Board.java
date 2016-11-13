@@ -9,7 +9,9 @@ public class Board {
 	private ArrayList<Port> ports = new ArrayList<Port>();
 	private ArrayList<Road> roads = new ArrayList<Road>();
 	private ArrayList<Intersection> buildings = new ArrayList<Intersection>();
+	//this location 2d array is used for getting locations with just coordinates
 	private location[][] boardLocations;
+	//this hashmap is used for getting roads with their endpoint coordinates
 	private HashMap roadmap;
 	
 	public Board() {
@@ -104,4 +106,64 @@ public class Board {
 		
 		this.buildings = buildings;
 	}	
+	
+	//these last four methods ensure that the hashmap and the 2d array are accessed properly
+	
+	public Road getRoadFromCo(Coordinate coA, Coordinate coB){
+		Coordinate cFirst;
+		Coordinate cSecond;
+		if(coA.getY()==coB.getY()){
+			if(coA.getX()<coB.getX()){
+				cFirst = coA;
+				cSecond = coB;
+			}
+			else{
+				cFirst = coB;
+				cSecond = coA;
+			}
+		}
+		else if(coA.getY()>coB.getY()){
+			cFirst = coA;
+			cSecond = coB;
+		}
+		else{
+			cFirst = coB;
+			cSecond = coA;
+		}
+		String keys = new StringBuilder().append(cFirst.getX()).append(cFirst.getY()).append(cSecond.getX()).append(cSecond.getY()).toString();
+		return (Road) this.getRoadmap().get(keys);
+	}
+	
+	public location getLocationFromCoordinate(Coordinate coA){
+		return boardLocations[coA.getX()+5][coA.getY()+5];
+	}
+	
+	public void setLocationFromCoordinate(Coordinate coA, location location1){
+		 boardLocations[coA.getX()+5][coA.getY()+5] = location1 ;
+	}
+	
+	public void setRoadFromCo(Road road1, Coordinate coA, Coordinate coB){
+		Coordinate cFirst;
+		Coordinate cSecond;
+		if(coA.getY()==coB.getY()){
+			if(coA.getX()<coB.getX()){
+				cFirst = coA;
+				cSecond = coB;
+			}
+			else{
+				cFirst = coB;
+				cSecond = coA;
+			}
+		}
+		else if(coA.getY()>coB.getY()){
+			cFirst = coA;
+			cSecond = coB;
+		}
+		else{
+			cFirst = coB;
+			cSecond = coA;
+		}
+		String keys = new StringBuilder().append(cFirst.getX()).append(cFirst.getY()).append(cSecond.getX()).append(cSecond.getY()).toString();
+		this.getRoadmap().put(keys, road1);
+	}
 }
