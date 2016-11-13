@@ -1,9 +1,11 @@
+import java.util.ArrayList;
 
 public class Intersection {
 
 	private Coordinate coordinate;
 	private Player owner;
 	private Building building;
+	private ArrayList<Intersection> illegal = new ArrayList<Intersection>();
 	
 	public Intersection() {
 		
@@ -44,5 +46,15 @@ public class Intersection {
 	public void setBuilding(Building building) {
 	
 		this.building = building;
-	}	
+	}
+
+	public ArrayList<Intersection> getIllegal() {
+		
+		return illegal;
+	}
+
+	public void setIllegal(ArrayList<Intersection> illegal) {
+		
+		this.illegal = illegal;
+	}		
 }

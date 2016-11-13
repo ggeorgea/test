@@ -43,6 +43,7 @@ public class TestingMainClass {
 		getPlayerOrder(game1, scanner);
 		
 		//place roads and settlements
+		setInitialRoadsAndSettlements(game1, scanner);
 		
 		
 		/*
@@ -109,6 +110,7 @@ public class TestingMainClass {
 		player.setCurrentRoll(dice1+dice2);
 	}
 	
+	//gets each player to roll the dice to determine the player order
 	public static ArrayList<Player> getPlayerOrder(Game game1, Scanner scanner) {
 		
 		ArrayList<Player> current = game1.getPlayers();
@@ -145,6 +147,131 @@ public class TestingMainClass {
 		}
 		
 		return current;
+	}
+	
+	//gets the players to set the initial roads and settlements before turn 1
+	public static void setInitialRoadsAndSettlements(Game game1, Scanner scanner) {
+		
+		ArrayList<Player> players = game1.getPlayers();
+		Board board1 = game1.getBoard();
+		
+		for (int i = 0; i < players.size(); i++) {
+			
+			//each player places road, then settlement
+			Road road = placeRoad(players.get(i), board1, scanner);
+			placeSettlement(players.get(i), road, board1, scanner);
+		}
+		
+		for (int i = players.size()-1; i >= 0; i--) {
+			
+			//each player places road, then settlement
+			Road road = placeRoad(players.get(i), board1, scanner);
+			placeSettlement(players.get(i), road, board1, scanner);
+		}
+		
+		game1.setPlayers(players);
+		game1.setBoard(board1);
+	}
+	
+	//lets the player place a road free of charge
+	//also does not depend on nearby roads
+	public static Road placeRoad(Player player, Board board1, Scanner scanner) {
+		
+		System.out.println("Player " + player.getName() + ": Please select where to place your road");
+		
+		System.out.println("Coordinate 1: ");
+		System.out.println("Select X coordinate");
+		int x1 = scanner.nextInt();
+		
+		System.out.println("Select Y coordinate");
+		int y1 = scanner.nextInt();
+		
+		System.out.println("Coordinate 2: ");
+		System.out.println("Select X coordinate");
+		int x2 = scanner.nextInt();
+		
+		System.out.println("Select Y coordinate");
+		int y2 = scanner.nextInt();
+		
+		//checks the coordinates are in the correct range
+		if (x1 < -4 || x1 > 4 || y1 < -4 || y1 > 4 || x2 < -4 || x2 > 4 || y2 < -4 || y2 > 4) {
+			System.out.println("Invalid coordinates. Please choose again");
+			placeRoad(player, board1, scanner);
+		}
+		
+		Coordinate a = new Coordinate(x1, y1);
+		Coordinate b = new Coordinate(x2, y2);
+		
+		Road road = board1.getRoadFromCo(a, b);
+		
+		if (road == null) {
+			System.out.println("Invalid coordinates. Please choose again");
+			road = placeRoad(player, board1, scanner);
+		}
+		
+		if (road.getOwner().getName() != null) {
+			System.out.println("A road has already been placed here. Please choose again");
+			road = placeRoad(player, board1, scanner);
+		}
+		
+		System.out.println("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
+		road.setOwner(player);
+		
+		player.setNoRoads(player.getNoRoads() + 1);
+		return road;
+	}
+	
+	//TODO needs to be two roads away from another settlement
+	
+	//lets a player place a settlement free of charge
+	//needs to be beside road just placed?
+	public static void placeSettlement(Player player, Road road, Board board1, Scanner scanner) {
+		
+		System.out.println("Player " + player.getName() + ": Please select where to place your settlement");
+		
+		System.out.println("Select X coordinate");
+		int x = scanner.nextInt();
+		
+		System.out.println("Select Y coordinate");
+		int y = scanner.nextInt();
+		
+		//checks the coordinates are in the correct range
+		if (x < -4 || x > 4 || y < -4 || y > 4) {
+			System.out.println("Invalid coordinates. Please choose again");
+			placeSettlement(player, road, board1, scanner);
+		}
+		
+		Coordinate a = new Coordinate(x, y);
+		
+		Intersection settlement = (Intersection) board1.getLocationFromCoordinate(a).getContains();
+		ArrayList<Intersection> illegal = settlement.getIllegal();
+		
+		if (!(road.getCoordinateA().getX() == x && road.getCoordinateA().getY() == y) 
+				&& !(road.getCoordinateB().getX() == x && road.getCoordinateB().getY() == y)) {
+			
+			System.out.println("Settlement must be placed beside road. Please choose again");
+			placeSettlement(player, road, board1, scanner);
+		}
+			
+		if (settlement.getOwner().getName() != null) {
+			System.out.println("A settlement has already been placed here. Please choose again");
+			placeSettlement(player, road, board1, scanner);
+		}
+		
+		for (int i = 0; i < illegal.size(); i++) {
+			
+			Intersection inter = illegal.get(i);
+			
+			if (inter.getOwner().getName() != null) {
+				System.out.println("Settlement must be placed more than two roads away.");
+				placeSettlement(player, road, board1, scanner);
+			}
+		}
+		
+		System.out.println("Player " + player.getName() + " placed settlement at: (" + x + "," + y + ")");
+		settlement.setOwner(player);
+		
+		player.setNoSettlements(player.getNoSettlements() + 1);
 	}
 	
 	//gets the dev cards and shuffles the deck
@@ -370,7 +497,7 @@ public class TestingMainClass {
 		String keys = new StringBuilder().append(x+off1).append(y+off2).append(x+off3).append(y+off4).toString();
 		if(!roadmap.containsKey(keys)){
 			Player noPlater = new Player();
-			noPlater.setName(" ");
+			noPlater.setName(null);
 			roadmap.put(keys, new Road( new Coordinate(x+off1,y+off2),new Coordinate(x+off3,y+off4), noPlater));
 		}
 	}
@@ -446,7 +573,7 @@ public class TestingMainClass {
 			Player noPlayer = new Player();
 			Building noBuild = new Building();
 			noBuild.setType(" ");
-			noPlayer.setName(" ");
+			noPlayer.setName(null);
 			Intersection newIn = new Intersection(new Coordinate(x-5,y-5),noPlayer,noBuild);
 			boardLocations[x][y].setContains(newIn);
 			boardLocations[x][y].setType("Intersection");			
