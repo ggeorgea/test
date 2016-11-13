@@ -37,14 +37,15 @@ public class TestingMainClass {
 		//sets players
 		ArrayList<Player> players = setPlayers(scanner);
 		game1.setPlayers(players);
-		
-		
+				
 		//roll dice for each player
-		//player with smallest dice roll will go become player 1, then clockwise (update array list maybe)?
+		//changes player order with largest dice roll first
+		getPlayerOrder(game1, scanner);
+		
 		//place roads and settlements
 		
 		
-		
+		/*
 		//GENERAL
 		//the above methods set up a board, with roads, intersections and hexes, all set up in the right places, with random terrains and probabilities
 		//the ways these items on the board should be interacted with are as follows:
@@ -80,23 +81,70 @@ public class TestingMainClass {
 		hex1.setisRobberHere("R");
 		//it should now appear that there is also a robber on the central hex!
 		//of course if I wasnt being lazy there would be seperate methods for hexes and intersections that did the casting for you or something, but im not sure thats even better
-		
+		*/
 		
 		printMap(game1.getBoard());
 
 	}
 	
 	//rolls the two dice
-	public static int rollDice(Player player) {
+	public static void rollDice(Player player, Scanner scanner) {
 		
 		Random random = new Random();
+		
+		System.out.println("Player " + player.getName() + ": press 'R' to roll.");
+		String enter = scanner.next().toUpperCase();
+		
+		if (!(enter.equals("R"))) {
+			
+			System.out.println("Invalid input. Please roll again.");
+			rollDice(player, scanner);
+		}
 		
 		int dice1 = random.nextInt(6) + 1;
 		int dice2 = random.nextInt(6) + 1;
 		
 		System.out.println("Player " + player.getName() + " rolls: " + (dice1+dice2));
 		
-		return dice1 + dice2;
+		player.setCurrentRoll(dice1+dice2);
+	}
+	
+	public static ArrayList<Player> getPlayerOrder(Game game1, Scanner scanner) {
+		
+		ArrayList<Player> current = game1.getPlayers();
+		
+		for (int i = 0; i < current.size(); i++) {
+						
+			rollDice(current.get(i), scanner);			
+		}		
+		
+		for (int i = 0; i < current.size(); i++) {
+			for (int j = 1; j < current.size()-i; j++) {
+				
+				Player player1 = current.get(j-1);
+				Player player2 = current.get(j);
+				
+				if (player1.getCurrentRoll() < player2.getCurrentRoll()) {
+					
+					Player temp = player1;
+					player1 = player2;
+					player2 = temp;
+					
+					current.set(j-1, player1);
+					current.set(j, player2);
+					
+				}
+			}
+		}
+
+		System.out.println("Player order: ");
+		
+		for (int i = 0; i < current.size(); i++) {
+			
+			System.out.println((i+1)+ ": " + current.get(i).getName());
+		}
+		
+		return current;
 	}
 	
 	//gets the dev cards and shuffles the deck

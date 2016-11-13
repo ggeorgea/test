@@ -9,7 +9,8 @@ public class Game {
 	private ArrayList<ResourceCard> grain = new ArrayList<ResourceCard>();
 	private ArrayList<ResourceCard> lumber = new ArrayList<ResourceCard>();
 	private ArrayList<ResourceCard> wool = new ArrayList<ResourceCard>();
-
+	private ArrayList<ResourceCard> brick = new ArrayList<ResourceCard>();
+	
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
 	private ArrayList<Player> players = new ArrayList<Player>();
 		
@@ -17,15 +18,21 @@ public class Game {
 		
 	}
 	
-	public Game(String id, Board board, ArrayList<ResourceCard> resourceCards,
-			ArrayList<Player> players) {
+	public Game(String id, Board board, ArrayList<ResourceCard> ore, ArrayList<ResourceCard> grain,
+			ArrayList<ResourceCard> lumber, ArrayList<ResourceCard> wool, ArrayList<ResourceCard> brick,
+			ArrayList<DevelopmentCard> developmentCards, ArrayList<Player> players) {
 		
 		this.id = id;
 		this.board = board;
-		this.resourceCards = resourceCards;
+		this.ore = ore;
+		this.grain = grain;
+		this.lumber = lumber;
+		this.wool = wool;
+		this.brick = brick;
+		this.developmentCards = developmentCards;
 		this.players = players;
 	}
-	
+
 	public String getId() {
 	
 		return id;
@@ -44,6 +51,11 @@ public class Game {
 	public void setBoard(Board board) {
 	
 		this.board = board;
+	}
+	
+	public ArrayList<ResourceCard> getOre() {
+		
+		return ore;
 	}
 
 	public void setOre(ArrayList<ResourceCard> ore) {
@@ -90,7 +102,7 @@ public class Game {
 		
 		this.brick = brick;
 	}
-	
+
 	public ArrayList<DevelopmentCard> getDevelopmentCards() {
 		
 		return developmentCards;

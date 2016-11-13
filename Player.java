@@ -5,6 +5,7 @@ public class Player {
 
 	private String name;
 	private int victoryPoints;
+	private int currentRoll;
 	
 	private int noRoads;
 	private int noSettlements;
@@ -22,7 +23,7 @@ public class Player {
 		
 	}
 	
-	public Player(String name, int victoryPoints, int noRoads,
+	public Player(String name, int victoryPoints, int currentRoll, int noRoads,
 			int noSettlements, int noCities, int longestRoad, int largestArmy,
 			boolean hasLongestRoad, boolean hasLargestArmy,
 			ArrayList<ResourceCard> resourceCards,
@@ -30,6 +31,7 @@ public class Player {
 		
 		this.name = name;
 		this.victoryPoints = victoryPoints;
+		this.currentRoll = currentRoll;
 		this.noRoads = noRoads;
 		this.noSettlements = noSettlements;
 		this.noCities = noCities;
@@ -61,6 +63,16 @@ public class Player {
 		this.victoryPoints = victoryPoints;
 	}	
 	
+	public int getCurrentRoll() {
+		
+		return currentRoll;
+	}
+
+	public void setCurrentRoll(int currentRoll) {
+		
+		this.currentRoll = currentRoll;
+	}
+
 	public int getNoRoads() {
 		
 		return noRoads;
