@@ -3,17 +3,48 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
+import java.util.Scanner;
 
 public class TestingMainClass {
 
 	public static void main(String[] args) {
-
+				
+		Scanner scanner = new Scanner(System.in);
 		
-		
+		//sets board
 		Board board1 = getMeABoard();
 		Game game1 = new Game();
 		game1.setBoard(board1);
-
+		
+		//sets development cards
+		ArrayList<DevelopmentCard> developmentCards = getDevCardDeck();
+		game1.setDevelopmentCards(developmentCards);
+		
+		//sets resource cards
+		ArrayList<ResourceCard> ore = getResourceCardDeck("ore");
+		ArrayList<ResourceCard> grain = getResourceCardDeck("grain");
+		ArrayList<ResourceCard> lumber = getResourceCardDeck("lumber");
+		ArrayList<ResourceCard> wool = getResourceCardDeck("wool");
+		ArrayList<ResourceCard> brick = getResourceCardDeck("brick");
+		
+		game1.setOre(ore);
+		game1.setGrain(grain);
+		game1.setLumber(lumber);
+		game1.setWool(wool);
+		game1.setBrick(brick);
+		
+		//sets players
+		ArrayList<Player> players = setPlayers(scanner);
+		game1.setPlayers(players);
+		
+		
+		//roll dice for each player
+		//player with smallest dice roll will go become player 1, then clockwise (update array list maybe)?
+		//place roads and settlements
+		
+		
+		
 		//GENERAL
 		//the above methods set up a board, with roads, intersections and hexes, all set up in the right places, with random terrains and probabilities
 		//the ways these items on the board should be interacted with are as follows:
@@ -50,8 +81,184 @@ public class TestingMainClass {
 		//it should now appear that there is also a robber on the central hex!
 		//of course if I wasnt being lazy there would be seperate methods for hexes and intersections that did the casting for you or something, but im not sure thats even better
 		
+		
 		printMap(game1.getBoard());
 
+	}
+	
+	//rolls the two dice
+	public static int rollDice(Player player) {
+		
+		Random random = new Random();
+		
+		int dice1 = random.nextInt(6) + 1;
+		int dice2 = random.nextInt(6) + 1;
+		
+		System.out.println("Player " + player.getName() + " rolls: " + (dice1+dice2));
+		
+		return dice1 + dice2;
+	}
+	
+	//gets the dev cards and shuffles the deck
+	public static ArrayList<DevelopmentCard> getDevCardDeck() {
+		
+		ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
+		
+		ArrayList<DevelopmentCard> knights = getKnightCards();
+		ArrayList<DevelopmentCard> progress = getProgressCards();
+		ArrayList<DevelopmentCard> victory = getVictoryPointCards();
+		
+		developmentCards.addAll(knights);
+		developmentCards.addAll(progress);
+		developmentCards.addAll(victory);
+		
+		Collections.shuffle(developmentCards);
+		return developmentCards;
+	}
+	
+	//instantiates correct number of knights
+	public static ArrayList<DevelopmentCard> getKnightCards() {
+		
+		ArrayList<DevelopmentCard> knights = new ArrayList<DevelopmentCard>();
+		
+		for (int i = 0; i < 14; i++) {
+			
+			DevelopmentCard knight = new DevelopmentCard("knight", true);
+			knights.add(knight);
+		}
+		
+		return knights;
+	}
+	
+	//instantiates correct number of progress cards
+	public static ArrayList<DevelopmentCard> getProgressCards() {
+		
+		ArrayList<DevelopmentCard> progress = new ArrayList<DevelopmentCard>();
+		
+		for (int i = 0; i < 2; i++) {
+			
+			DevelopmentCard roadBuilding = new DevelopmentCard("road building", true);
+			progress.add(roadBuilding);
+		}
+		for (int i = 2; i < 4; i++) {
+			
+			DevelopmentCard yearOfPlenty = new DevelopmentCard("year of plenty", true);
+			progress.add(yearOfPlenty);
+		}
+		for (int i = 4; i < 6; i++) {
+			
+			DevelopmentCard monopoly = new DevelopmentCard("monopoly", true);
+			progress.add(monopoly);
+		}
+		
+		return progress;
+	}
+	
+	//instantiates correct number of victory point cards
+	public static ArrayList<DevelopmentCard> getVictoryPointCards() {
+		
+		ArrayList<DevelopmentCard> victory = new ArrayList<DevelopmentCard>();
+		
+		for (int i = 0; i < 5; i++) {
+			
+			DevelopmentCard victoryPoint = new DevelopmentCard("victory point", true);
+			victory.add(victoryPoint);
+		}
+		
+		return victory;
+	}
+	
+	//gets the deck of resource cards
+	public static ArrayList<ResourceCard> getResourceCardDeck(String resource) {
+		
+		ArrayList<ResourceCard> resourceCards = new ArrayList<ResourceCard>();
+		
+		for (int i = 0; i < 19; i++) {
+			
+			ResourceCard card = new ResourceCard(resource);
+			resourceCards.add(card);
+		}
+		
+		return resourceCards;
+	}
+	
+	//gets an array list of players with unique identifiers
+	public static ArrayList<Player> setPlayers(Scanner scanner) {
+		
+		int n = requestPlayers(scanner);
+		
+		ArrayList<Player> players = new ArrayList<Player>();
+		
+		for (int i = 0; i < n; i++) {
+			
+			Player player = new Player();
+			
+			selectPlayerName(player, players, i, scanner);
+			players.add(player);			
+		}
+		
+		return players;
+	}
+	
+	//asks the client how many players there are
+	public static int requestPlayers(Scanner scanner) {
+		
+		System.out.println("How many players want to play? Enter 3 or 4.");
+		
+		int noPlayers = scanner.nextInt();
+		
+		if (!(noPlayers == 3 || noPlayers == 4)) {
+			System.out.println("Invalid number of players. Please choose again.");
+			return requestPlayers(scanner);
+		}
+		
+		return noPlayers;
+	}
+	
+	//asks each player to choose a unique identifier
+	public static void selectPlayerName(Player player, ArrayList<Player> players, int n, Scanner scanner) {
+		
+		System.out.println("Player " + (n+1) + ": Select a character to be your player name.");
+		System.out.println("Select from: !, #, &, %, *, @");
+		
+		String name = scanner.next();
+		char c = name.toCharArray()[0];
+		String check = "";
+		
+		switch(c) {
+		case '!' :
+			check = "!";
+			break;
+		case '#' :
+			check = "#";
+			break;
+		case '&' :
+			check = "&";
+			break;
+		case '%' :
+			check = "%";
+			break;
+		case '*' :
+			check = "*";
+			break;
+		case '@' :
+			check = "@";
+			break;
+		default :
+			System.out.println("Invalid character. Please choose again.");
+			selectPlayerName(player, players, n, scanner);
+		}
+		
+		for (int i = 0; i < players.size(); i++) {
+						
+			if (players.get(i).getName().equals(check)) {
+				
+				System.out.println("Another player is already using this character. Please choose again.");
+				selectPlayerName(player, players, n, scanner);
+			}
+		}
+		
+		player.setName(check);
 	}
 	
 	//this method adds the roads from the hashmap to the arraylist of roads, so they can be printed prettily, it works by go through the arraylist of intersection, and only adding already unadded roads
@@ -444,13 +651,4 @@ public class TestingMainClass {
 
 		
 	}
-	
-	
-
 }
-
-
-
-
-
-

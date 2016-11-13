@@ -4,7 +4,12 @@ public class Game {
 
 	private String id;
 	private Board board;
-	private ArrayList<ResourceCard> resourceCards = new ArrayList<ResourceCard>();
+	
+	private ArrayList<ResourceCard> ore = new ArrayList<ResourceCard>();
+	private ArrayList<ResourceCard> grain = new ArrayList<ResourceCard>();
+	private ArrayList<ResourceCard> lumber = new ArrayList<ResourceCard>();
+	private ArrayList<ResourceCard> wool = new ArrayList<ResourceCard>();
+
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
 	private ArrayList<Player> players = new ArrayList<Player>();
 		
@@ -40,15 +45,50 @@ public class Game {
 	
 		this.board = board;
 	}
-	
-	public ArrayList<ResourceCard> getResourceCards() {
-	
-		return resourceCards;
+
+	public void setOre(ArrayList<ResourceCard> ore) {
+		
+		this.ore = ore;
 	}
-	
-	public void setResourceCards(ArrayList<ResourceCard> resourceCards) {
-	
-		this.resourceCards = resourceCards;
+
+	public ArrayList<ResourceCard> getGrain() {
+		
+		return grain;
+	}
+
+	public void setGrain(ArrayList<ResourceCard> grain) {
+		
+		this.grain = grain;
+	}
+
+	public ArrayList<ResourceCard> getLumber() {
+		
+		return lumber;
+	}
+
+	public void setLumber(ArrayList<ResourceCard> lumber) {
+		
+		this.lumber = lumber;
+	}
+
+	public ArrayList<ResourceCard> getWool() {
+		
+		return wool;
+	}
+
+	public void setWool(ArrayList<ResourceCard> wool) {
+		
+		this.wool = wool;
+	}
+
+	public ArrayList<ResourceCard> getBrick() {
+		
+		return brick;
+	}
+
+	public void setBrick(ArrayList<ResourceCard> brick) {
+		
+		this.brick = brick;
 	}
 	
 	public ArrayList<DevelopmentCard> getDevelopmentCards() {
