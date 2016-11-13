@@ -10,7 +10,7 @@ public class TestingMainClass {
 
 		
 		
-		Board board1 = getMeABoard(3);
+		Board board1 = getMeABoard();
 		Game game1 = new Game();
 		game1.setBoard(board1);
 
@@ -51,9 +51,7 @@ public class TestingMainClass {
 		//of course if I wasnt being lazy there would be seperate methods for hexes and intersections that did the casting for you or something, but im not sure thats even better
 		
 		printMap(game1.getBoard());
-		
 		//TO DO make a method to add the ports to their own array, and add the ports to the 2d array list, make sure to correctly randomly assign their resource type
-		//TO DO make the robber and assign him to a square during the  setRandHexNumbersAndRob method
 
 	}
 	
@@ -204,7 +202,8 @@ public class TestingMainClass {
 	
 	//this is the method that adds random terrain from the catan box to each hex, it also calls all the other methods involved in making a board
 	
-	public static Board getMeABoard(int Edgesize){
+	public static Board getMeABoard(){
+		int Edgesize = 3;
 		Board board1 = getHexBoard(Edgesize);
 
 		// this generates a random arrangement of terrain
@@ -228,13 +227,12 @@ public class TestingMainClass {
 		setUpLocations(board1);
 		makeIntersectionOrdering(board1);
 		setRoadArrayAndMap(board1);
+		addPorts(board1);
 		return board1;
 	}
 	
 	
-	// this method adds a random number from the array of numbers needed on a catan board to each hex, since this happens after terrain allocation, it is also where the desert and the number 7 are matched up, and when the robber is fleshed out, he will need to be made, and placed here
-
-	//this method that gives each hex its number between 2-12, since by this point we know the desert, it is also the place where the 7 and the desert are pared up, and given the robber, when the robber is fleshed out, it should be at least a bit in here
+	// this method adds a random number from the array of numbers needed on a catan board to each hex, since this happens after terrain allocation, it is also where the desert and the number 7 are matched up, and when the robber is allocated
 	
 	public static Board setRandHexNumbersAndRob(Board board1, int givenDesert) {
 		int given7 = 0;
@@ -262,19 +260,16 @@ public class TestingMainClass {
 		hexwDes.setNumber(7);
 		hexw7.setTerrain(otherterr);
 		hexw7.setNumber(otherNum);
-		//at the momment this string is all that represents the robber, when doing more robber code, I suggest adding the robber here!
+		board1.setRobber(hexwDes.getCoordinate());
 		hexwDes.setisRobberHere("R");
 		board1.getHexes().set(givenDesert, hexwDes);
 		board1.getHexes().set(given7, hexw7);
 		return board1;
 	}
 
-	// This will make hexes and fill in the coordinates as long as the board is
-	// a hexagon
 	
 	//this method adds the hexes,with just coordinates set, to the arraylist in such a way to get them to print out prettily by just iterating through them
 	
-	//this method adds makes the hexes and puts them into an arraylist in such away as to ensure they can be easily printed
 	
 	public static Board getHexBoard(int Edgesize) {
 		Board board1 = new Board();
@@ -314,7 +309,6 @@ public class TestingMainClass {
 	
 	//the big thing that prints the map, if this doesnt work, its probably because you were using the set methods that take coordinates
 	
-	//this is the text that that prints out in the console
 	
 	public static void printMap(Board board1) {
 
@@ -332,15 +326,15 @@ public class TestingMainClass {
 		
 		// these must be replaced to iterate through roads and cities
 		int roadOwn = 0;
-		
+		int getPort = 0;
 
-		String getPort = "P";
+		//String getPort = "P";
 		//Below is a printout of the board 
 		System.out
 				.println(
-						"                                         "+getPort+"                           \n"                                                                                    
+						"                                         "+board1.getPorts().get(getPort++).getResource()+"                           \n"                                                                                    
 								+"                    "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"            "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"   /        "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"                                      \n"
-								+"             "+getPort+"   "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"      "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"      "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"        \n"
+								+"             "+board1.getPorts().get(getPort++).getResource()+"   "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"      "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"      "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"        \n"
 								+"               \\   /  \\          /  \\          /  \\          \n"
 								+"                  /    \\        /    \\        /    \\          \n"
 								+"             "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  / -2,2 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  0,3 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  2,4 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"     \n" 
@@ -351,13 +345,13 @@ public class TestingMainClass {
 								+"                |    "+board1.getHexes().get(nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |          \n"
 								+"             "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"       \n"
 								+"                  \\    /        \\    /        \\    /             \n"
-								+"          "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  / "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  / "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  / "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"    "+getPort+"      \n"
+								+"          "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  / "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  / "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  / "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"    "+board1.getPorts().get(getPort++).getResource()+"      \n"
 								+"            /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\    /    \n"
 								+"           /    \\        /    \\        /    \\        /    \\       \n"
 								+"      "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  / -3,0 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  / -1,1 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  1,2 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  3,3 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"   \n"
 								+"         |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |        \n"
 								+"         |        |    |        |    |        |    |        |         \n"
-								+"   "+getPort+" - "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"      \n"
+								+"   "+board1.getPorts().get(getPort++).getResource()+" - "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"      \n"
 								+"         |        |    |        |    |        |    |        |          \n"
 								+"         |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |         \n"
 								+"      "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /   "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+" \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"        \n"
@@ -368,7 +362,7 @@ public class TestingMainClass {
 								+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+" /-4,-2 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  /-2,-1 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  0,0 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  2,1 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  4,2 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"        \n"
 								+"  |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |           \n"
 								+"  |        |    |        |    |        |    |        |    |        |           \n"
-								+board1.getRoads().get(roadOwn++).getOwner().getName()+" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" - "+getPort+"      \n"
+								+board1.getRoads().get(roadOwn++).getOwner().getName()+" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" - "+board1.getPorts().get(getPort++).getResource()+"      \n"
 								+"  |        |    |        |    |        |    |        |    |        |           \n"
 								+"  |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |           \n"
 								+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"       \n"
@@ -379,14 +373,14 @@ public class TestingMainClass {
 								+"       "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+" /-3,-3 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  /-1,-2 \\   "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+" / 1,-1 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  3,0 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"        \n"
 								+"         |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |         \n"
 								+"         |        |    |        |    |        |    |        |        \n"
-								+"   "+getPort+" - "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"     \n"
+								+"   "+board1.getPorts().get(getPort++).getResource()+" - "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"     \n"
 								+"         |        |    |        |    |        |    |        |        \n"
 								+"         |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |     \n"
 								+"       "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+" \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"   \n"      
 								+"           \\    /        \\    /        \\    /        \\    /         \n" 
 								+"          "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  / "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  / "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  / "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  /\\  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  /  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"     \n"
 								+"             \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/  \\       \n"
-								+"                  /    \\        /    \\        /    \\         "+getPort+"          \n"
+								+"                  /    \\        /    \\        /    \\         "+board1.getPorts().get(getPort++).getResource()+"          \n"
 								+"             "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  /-2,-4 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  / 0,-3 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"  / 2,-2 \\  "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"    \n"
 								+"                |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |      \n"
 								+"                |        |    |        |    |        |      \n"
@@ -397,15 +391,15 @@ public class TestingMainClass {
 								+"                  \\    /        \\    /        \\    /       \n"
 								+"                "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"  \\  /  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"     "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  /  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"     "+ board1.getRoads().get(roadOwn++).getOwner().getName() +" \\  /  "+ board1.getRoads().get(roadOwn++).getOwner().getName() +"     \n"
 								+"                 /  \\/            \\/ \\          \\/        \n"
-								+"                "+getPort+"   "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"            "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"   "+getPort+"        "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"                   \n"
-
+								+"                "+board1.getPorts().get(getPort++).getResource()+"   "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"            "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"   "+board1.getPorts().get(getPort++).getResource()+"        "+board1.getBuildings().get(++ton).getOwner().getName()+board1.getBuildings().get(++btn).getBuilding().getType()+"                   \n"
+						
 						);
+		System.out.println("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
+
 
 	}
 
-	
-	//this is just a bit of modularity, that shuffles the terrain and returns an iterator over the shuffled terrain
-	
+		
 	//this is just a bit of modularity that shuffles the terrain needed in a catan game and returns an iterator over them
 	
 	public static Iterator<String> getTerrainArrangement() {
@@ -419,6 +413,39 @@ public class TestingMainClass {
 		Iterator<String> terrainSt = s1.iterator();
 		return terrainSt;
 	}
+	
+	//this is also just a bit of modularity that shuffles the port types and returns an iterator
+	
+	public static Iterator<String> getPortArrangement() {
+		String[] Ports = { "F", "M","G", "P", "H","?","?","?","?" };
+		ArrayList<String> s1 = new ArrayList<String>();
+		for (int f = 0; f < Ports.length; f++) {
+			s1.add(Ports[f]);
+		}
+		Collections.shuffle(s1);
+		Iterator<String> PortSt = s1.iterator();
+		return PortSt;
+	}
+	
+	//this method adds the ports to an arrraylist in a way in which they can be printed nicely
+	
+	public static void addPorts(Board board1){
+		Iterator<String> resIt = getPortArrangement();
+		ArrayList<Port> ports = new ArrayList<Port>();
+		board1.getPorts().add(new Port(new Coordinate(0,4),new Coordinate(1,4),resIt.next()));
+		board1.getPorts().add(new Port(new Coordinate(-2,3),new Coordinate(-3,2),resIt.next()));
+		board1.getPorts().add(new Port(new Coordinate(3,4),new Coordinate(4,4),resIt.next()));
+		board1.getPorts().add(new Port(new Coordinate(-4,0),new Coordinate(-4,-1),resIt.next()));
+		board1.getPorts().add(new Port(new Coordinate(5,3),new Coordinate(5,2),resIt.next()));
+		board1.getPorts().add(new Port(new Coordinate(-4,-3),new Coordinate(-4,-4),resIt.next()));
+		board1.getPorts().add(new Port(new Coordinate(4,0),new Coordinate(3,-1),resIt.next()));
+		board1.getPorts().add(new Port(new Coordinate(-3,-5),new Coordinate(-2,-5),resIt.next()));
+		board1.getPorts().add(new Port(new Coordinate(1,-3),new Coordinate(0,-4),resIt.next()));
+
+
+		
+	}
+	
 	
 
 }
