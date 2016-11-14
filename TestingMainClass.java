@@ -16,11 +16,12 @@ public class TestingMainClass {
 		Board board1 = getMeABoard();
 		Game game1 = new Game();
 		game1.setBoard(board1);
-		/*
-		Player testPlayer = new Player();
-		testPlayer.setName("$");
-		placeSettlement(testPlayer, placeRoad(testPlayer,board1,scanner), board1, scanner);
-		*/
+		
+		
+
+		
+		
+		
 		printMap(game1.getBoard());
 
 		
@@ -93,6 +94,67 @@ public class TestingMainClass {
 		
 		printMap(game1.getBoard());
 
+	}
+	public static void setIllegals(Board board1){
+		for(int j = 0; j< board1.getBoardLocations().length;j++){
+			for(int g = 0; g<board1.getBoardLocations()[j].length;g++){
+				location thisLoc = board1.getBoardLocations()[j][g];
+				if(thisLoc.getType().equals("Intersection")){
+					Intersection thisint = (Intersection) thisLoc.getContains();
+					ArrayList<Intersection> illegals = new ArrayList<Intersection>();
+
+					Intersection returnedLoc  = isOwned(board1,j,g+1);
+					if(returnedLoc!=null){
+						illegals.add(returnedLoc);
+					}
+					
+					 returnedLoc = isOwned(board1,j,g-1);
+					if(returnedLoc!=null){
+						illegals.add(returnedLoc);
+					}
+					
+					 returnedLoc = isOwned(board1,j+1,g);
+					if(returnedLoc!=null){
+						illegals.add(returnedLoc);
+					}
+					
+					 returnedLoc = isOwned(board1,j-1,g);
+					if(returnedLoc!=null){
+						illegals.add(returnedLoc);
+					}
+					
+					 returnedLoc = isOwned(board1,j+1,g-1);
+					if(returnedLoc!=null){
+						illegals.add(returnedLoc);
+					}
+					
+					 returnedLoc = isOwned(board1,j+1,g+1);
+					if(returnedLoc!=null){
+						illegals.add(returnedLoc);
+					}
+					
+					 returnedLoc = isOwned(board1,j-1,g-1);
+					if(returnedLoc!=null){
+						illegals.add(returnedLoc);
+					}
+					thisint.setIllegal(illegals);
+
+					
+				}
+			}
+		}
+	}
+	
+	
+	
+	public static Intersection isOwned(Board board1, int j, int g){
+		try{
+			Intersection orb = (Intersection) board1.getBoardLocations()[j][g].getContains();
+				return orb;
+		}
+		catch(Exception e){
+		}
+		return null;
 	}
 	
 	//rolls the two dice
@@ -270,7 +332,7 @@ public class TestingMainClass {
 		for (int i = 0; i < illegal.size(); i++) {
 			
 			Intersection inter = illegal.get(i);
-			
+			System.out.println("A");
 			if (inter.getOwner().getName() != null) {
 				System.out.println("Settlement must be placed more than two roads away.");
 				placeSettlement(player, road, board1, scanner);
@@ -619,6 +681,7 @@ public class TestingMainClass {
 		makeIntersectionOrdering(board1);
 		setRoadArrayAndMap(board1);
 		addPorts(board1);
+		setIllegals(board1);
 		return board1;
 	}
 	
