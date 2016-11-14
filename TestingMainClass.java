@@ -120,18 +120,18 @@ public class TestingMainClass {
 	//gets each player to roll the dice to determine the player order
 	public static ArrayList<Player> getPlayerOrder(Game game1, Scanner scanner) {
 		
-		ArrayList<Player> current = game1.getPlayers();
+		ArrayList<Player> players = game1.getPlayers();
 		
-		for (int i = 0; i < current.size(); i++) {
-						
-			rollDice(current.get(i), scanner);			
+		for (int i = 0; i < players.size(); i++) {
+			
+			rollDice(players.get(i), scanner);			
 		}		
 		
-		for (int i = 0; i < current.size(); i++) {
-			for (int j = 1; j < current.size()-i; j++) {
+		for (int i = 0; i < players.size(); i++) {
+			for (int j = 1; j < players.size()-i; j++) {
 				
-				Player player1 = current.get(j-1);
-				Player player2 = current.get(j);
+				Player player1 = players.get(j-1);
+				Player player2 = players.get(j);
 				
 				if (player1.getCurrentRoll() < player2.getCurrentRoll()) {
 					
@@ -139,21 +139,20 @@ public class TestingMainClass {
 					player1 = player2;
 					player2 = temp;
 					
-					current.set(j-1, player1);
-					current.set(j, player2);
-					
+					players.set(j-1, player1);
+					players.set(j, player2);
 				}
 			}
 		}
 
 		System.out.println("Player order: ");
 		
-		for (int i = 0; i < current.size(); i++) {
+		for (int i = 0; i < players.size(); i++) {
 			
-			System.out.println((i+1)+ ": " + current.get(i).getName());
+			System.out.println((i+1)+ ": " + players.get(i).getName());
 		}
 		
-		return current;
+		return players;
 	}
 	
 	//gets the players to set the initial roads and settlements before turn 1
@@ -202,32 +201,40 @@ public class TestingMainClass {
 		
 		//checks the coordinates are in the correct range
 		if (x1 < -4 || x1 > 4 || y1 < -4 || y1 > 4 || x2 < -4 || x2 > 4 || y2 < -4 || y2 > 4) {
+			
 			System.out.println("Invalid coordinates. Please choose again");
 			placeRoad(player, board1, scanner);
 			return null;
 		}
-		else{
-		Coordinate a = new Coordinate(x1, y1);
-		Coordinate b = new Coordinate(x2, y2);
+		else {
 		
-		Road road = board1.getRoadFromCo(a, b);
+			Coordinate a = new Coordinate(x1, y1);
+			Coordinate b = new Coordinate(x2, y2);
 		
-		if (road == null) {
-			System.out.println("Invalid coordinates. Please choose again");
-			road = placeRoad(player, board1, scanner);
+			Road road = board1.getRoadFromCo(a, b);
+			
+			if (road == null) {
+				
+				System.out.println("Invalid coordinates. Please choose again");
+				road = placeRoad(player, board1, scanner);
+			}
+			else if (road.getOwner().getName() != null) {
+				
+				System.out.println("A road has already been placed here. Please choose again");
+				road = placeRoad(player, board1, scanner);
+			}
+			else {
+				
+				System.out.println("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
+				road.setOwner(player);
+		
+				player.setNoRoads(player.getNoRoads() + 1);
+				
+				return road;
+			}
+		
+			return null;
 		}
-		
-		else if (road.getOwner().getName() != null) {
-			System.out.println("A road has already been placed here. Please choose again");
-			road = placeRoad(player, board1, scanner);
-		}
-		else{
-		System.out.println("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
-		road.setOwner(player);
-		
-		player.setNoRoads(player.getNoRoads() + 1);
-		return road;}
-		return null;}
 	}
 	
 	//TODO needs to be two roads away from another settlement
@@ -246,6 +253,7 @@ public class TestingMainClass {
 		
 		//checks the coordinates are in the correct range
 		if (x < -4 || x > 4 || y < -4 || y > 4) {
+			
 			System.out.println("Invalid coordinates. Please choose again");
 			placeSettlement(player, road, board1, scanner);
 		}
@@ -263,6 +271,7 @@ public class TestingMainClass {
 		}
 			
 		if (settlement.getOwner().getName() != null) {
+			
 			System.out.println("A settlement has already been placed here. Please choose again");
 			placeSettlement(player, road, board1, scanner);
 		}
