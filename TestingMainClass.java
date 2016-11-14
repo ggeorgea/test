@@ -17,14 +17,8 @@ public class TestingMainClass {
 		Game game1 = new Game();
 		game1.setBoard(board1);
 		
-		
-
-		
-		
-		
 		printMap(game1.getBoard());
 
-		
 		//sets development cards
 		ArrayList<DevelopmentCard> developmentCards = getDevCardDeck();
 		game1.setDevelopmentCards(developmentCards);
@@ -52,7 +46,6 @@ public class TestingMainClass {
 		
 		//place roads and settlements
 		setInitialRoadsAndSettlements(game1, scanner);
-		
 		
 		/*
 		//GENERAL
@@ -95,6 +88,7 @@ public class TestingMainClass {
 		printMap(game1.getBoard());
 
 	}
+	
 	public static void setIllegals(Board board1){
 		for(int j = 0; j< board1.getBoardLocations().length;j++){
 			for(int g = 0; g<board1.getBoardLocations()[j].length;g++){
@@ -144,8 +138,6 @@ public class TestingMainClass {
 			}
 		}
 	}
-	
-	
 	
 	public static Intersection isOwned(Board board1, int j, int g){
 		try{
@@ -475,30 +467,30 @@ public class TestingMainClass {
 	public static void selectPlayerName(Player player, ArrayList<Player> players, int n, Scanner scanner) {
 		
 		System.out.println("Player " + (n+1) + ": Select a character to be your player name.");
-		System.out.println("Select from: !, #, &, %, *, @");
+		System.out.println("Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow");
 		
-		String name = scanner.next();
+		String name = scanner.next().toUpperCase();
 		char c = name.toCharArray()[0];
 		String check = "";
 		
 		switch(c) {
-		case '!' :
-			check = "!";
+		case 'W' :
+			check = "W";
 			break;
-		case '#' :
-			check = "#";
+		case 'R' :
+			check = "R";
 			break;
-		case '&' :
-			check = "&";
+		case 'G' :
+			check = "G";
 			break;
-		case '%' :
-			check = "%";
+		case 'B' :
+			check = "B";
 			break;
-		case '*' :
-			check = "*";
+		case 'O' :
+			check = "O";
 			break;
-		case '@' :
-			check = "@";
+		case 'Y' :
+			check = "Y";
 			break;
 		default :
 			System.out.println("Invalid character. Please choose again.");
