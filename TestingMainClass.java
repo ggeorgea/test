@@ -16,9 +16,11 @@ public class TestingMainClass {
 		Board board1 = getMeABoard();
 		Game game1 = new Game();
 		game1.setBoard(board1);
+		/*
 		Player testPlayer = new Player();
 		testPlayer.setName("$");
-		placeRoad(testPlayer,board1,scanner);
+		placeSettlement(testPlayer, placeRoad(testPlayer,board1,scanner), board1, scanner);
+		*/
 		printMap(game1.getBoard());
 
 		
@@ -224,7 +226,6 @@ public class TestingMainClass {
 		road.setOwner(player);
 		
 		player.setNoRoads(player.getNoRoads() + 1);
-		System.out.println("!!");
 		return road;}
 		return null;}
 	}
@@ -278,6 +279,7 @@ public class TestingMainClass {
 		
 		System.out.println("Player " + player.getName() + " placed settlement at: (" + x + "," + y + ")");
 		settlement.setOwner(player);
+		settlement.setBuilding(new Building("t",1));;
 		
 		player.setNoSettlements(player.getNoSettlements() + 1);
 	}
@@ -721,11 +723,12 @@ public class TestingMainClass {
 		//Below is a printout of the board 
 		System.out
 		.println(
+
 				"                                         "+board1.getPorts().get(getPort++).getResource()+"                           \n"                                                                                    
 						+"                    "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"            "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"   /        "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"                                      \n"
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"            "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"   /        "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"                                      \n"
 						+"             "+board1.getPorts().get(getPort++).getResource()+"   "+  
 ((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
 ((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"      "+  
@@ -736,10 +739,10 @@ public class TestingMainClass {
 						+"               \\   /  \\          /  \\          /  \\          \n"
 						+"                  /    \\        /    \\        /    \\          \n"
 						+"             "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  / -2,2 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  0,3 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  2,4 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"     \n" 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  / -2,2 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  0,3 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  2,4 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"     \n" 
 						+"                |    "+board1.getHexes().get(rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |        \n"
 						+"                |        |    |        |    |        |          \n"
 						+"              "+  
@@ -750,10 +753,10 @@ public class TestingMainClass {
 						+"                |        |    |        |    |        |          \n"
 						+"                |    "+board1.getHexes().get(nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |          \n"
 						+"             "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"       \n"
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"       \n"
 						+"                  \\    /        \\    /        \\    /             \n"
 						+"          "+  
 ((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
@@ -767,11 +770,11 @@ public class TestingMainClass {
 						+"            /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\    /    \n"
 						+"           /    \\        /    \\        /    \\        /    \\       \n"
 						+"      "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  / -3,0 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  / -1,1 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  1,2 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  3,3 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"   \n"
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  / -3,0 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  / -1,1 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  1,2 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  3,3 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"   \n"
 						+"         |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |        \n"
 						+"         |        |    |        |    |        |    |        |         \n"
 						+"   "+board1.getPorts().get(getPort++).getResource()+" - "+  
@@ -783,11 +786,11 @@ public class TestingMainClass {
 						+"         |        |    |        |    |        |    |        |          \n"
 						+"         |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |         \n"
 						+"      "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /   "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+" \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"        \n"
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /   "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+" \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"        \n"
 						+"           \\    /        \\    /        \\    /        \\    /               \n"
 						+"   "+  
 ((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
@@ -803,12 +806,12 @@ public class TestingMainClass {
 						+"     /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\              \n"
 						+"    /    \\        /    \\        /    \\        /    \\        /    \\             \n"
 						+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+" /-4,-2 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  /-2,-1 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  0,0 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  2,1 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  4,2 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"        \n"
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+" /-4,-2 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /-2,-1 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  0,0 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  2,1 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  4,2 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"        \n"
 						+"  |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |           \n"
 						+"  |        |    |        |    |        |    |        |    |        |           \n"
 						+ 
@@ -820,12 +823,12 @@ public class TestingMainClass {
 ((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" - "+board1.getPorts().get(getPort++).getResource()+"      \n"
 						+"  |        |    |        |    |        |    |        |    |        |           \n"
 						+"  |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |           \n"
-						+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"       \n"
+						+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"       \n"
 						+"    \\    /        \\    /        \\    /        \\    /        \\    /          \n"    
 						+"   "+  
 ((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  /  "+  
@@ -841,11 +844,11 @@ public class TestingMainClass {
 						+"      \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/         \n"
 						+"           /    \\        /    \\        /    \\        /    \\             \n"
 						+"       "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+" /-3,-3 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  /-1,-2 \\   "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+" / 1,-1 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  /  3,0 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"        \n"
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+" /-3,-3 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /-1,-2 \\   "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+" / 1,-1 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  3,0 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"        \n"
 						+"         |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |         \n"
 						+"         |        |    |        |    |        |    |        |        \n"
 						+"   "+board1.getPorts().get(getPort++).getResource()+" - "+  
@@ -857,11 +860,11 @@ public class TestingMainClass {
 						+"         |        |    |        |    |        |    |        |        \n"
 						+"         |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |     \n"
 						+"       "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+" \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"   \n"      
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+" \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"   \n"      
 						+"           \\    /        \\    /        \\    /        \\    /         \n" 
 						+"          "+  
 ((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  / "+  
@@ -875,10 +878,10 @@ public class TestingMainClass {
 						+"             \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/  \\       \n"
 						+"                  /    \\        /    \\        /    \\         "+board1.getPorts().get(getPort++).getResource()+"          \n"
 						+"             "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  /-2,-4 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  / 0,-3 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  / 2,-2 \\  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"    \n"
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /-2,-4 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  / 0,-3 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  / 2,-2 \\  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"    \n"
 						+"                |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRbberHere()+"   |      \n"
 						+"                |        |    |        |    |        |      \n"
 						+"              "+  
@@ -889,10 +892,10 @@ public class TestingMainClass {
 						+"                |        |    |        |    |        |      \n"
 						+"                |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |      \n"
 						+"             "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"  \\      /  "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"   \n"
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"   \n"
 						+"                  \\    /        \\    /        \\    /       \n"
 						+"                "+  
 ((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  \\  /  "+  
@@ -903,11 +906,11 @@ public class TestingMainClass {
 ((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"     \n"
 						+"                 /  \\/            \\/ \\          \\/        \n"
 						+"                "+board1.getPorts().get(getPort++).getResource()+"   "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"            "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"   "+board1.getPorts().get(getPort++).getResource()+"        "+ 
-((board1.getBuildings().get(++ton).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+board1.getBuildings().get(++btn).getBuilding().getType()+"                   \n"
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"            "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"   "+board1.getPorts().get(getPort++).getResource()+"        "+ 
+((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"                   \n"
 
-				
+
 				);
 		System.out.println("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
 
