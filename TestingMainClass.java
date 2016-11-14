@@ -16,6 +16,9 @@ public class TestingMainClass {
 		Board board1 = getMeABoard();
 		Game game1 = new Game();
 		game1.setBoard(board1);
+		Player testPlayer = new Player();
+		testPlayer.setName("$");
+		placeRoad(testPlayer,board1,scanner);
 		printMap(game1.getBoard());
 
 		
@@ -199,8 +202,9 @@ public class TestingMainClass {
 		if (x1 < -4 || x1 > 4 || y1 < -4 || y1 > 4 || x2 < -4 || x2 > 4 || y2 < -4 || y2 > 4) {
 			System.out.println("Invalid coordinates. Please choose again");
 			placeRoad(player, board1, scanner);
+			return null;
 		}
-		
+		else{
 		Coordinate a = new Coordinate(x1, y1);
 		Coordinate b = new Coordinate(x2, y2);
 		
@@ -211,16 +215,18 @@ public class TestingMainClass {
 			road = placeRoad(player, board1, scanner);
 		}
 		
-		if (road.getOwner().getName() != null) {
+		else if (road.getOwner().getName() != null) {
 			System.out.println("A road has already been placed here. Please choose again");
 			road = placeRoad(player, board1, scanner);
 		}
-		
+		else{
 		System.out.println("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
 		road.setOwner(player);
 		
 		player.setNoRoads(player.getNoRoads() + 1);
-		return road;
+		System.out.println("!!");
+		return road;}
+		return null;}
 	}
 	
 	//TODO needs to be two roads away from another settlement
