@@ -226,7 +226,8 @@ public class TestingMainClass {
 			
 			//each player places road, then settlement
 			Road road = placeRoad(players.get(i), board1, scanner);
-			placeSettlement(players.get(i), road, board1, scanner);
+			Intersection settlement = placeSettlement(players.get(i), road, board1, scanner);
+			initialResourceAllocation(players.get(i), settlement, game1);
 		}
 		
 		game1.setPlayers(players);
@@ -295,7 +296,7 @@ public class TestingMainClass {
 	
 	//lets a player place a settlement free of charge
 	//needs to be beside road just placed?
-	public static void placeSettlement(Player player, Road road, Board board1, Scanner scanner) {
+	public static Intersection placeSettlement(Player player, Road road, Board board1, Scanner scanner) {
 		
 		System.out.println("Player " + player.getName() + ": Please select where to place your settlement");
 		
@@ -345,6 +346,72 @@ public class TestingMainClass {
 		settlement.setBuilding(new Building("t",1));;
 		
 		player.setNoSettlements(player.getNoSettlements() + 1);
+		return settlement;
+	}
+	
+	//TODO doesn't work yet: need to find the nearby hexes
+	//gets the resources based on the placement of the second settlement for the player
+	public static void initialResourceAllocation(Player player, Intersection settlement, Game game1) {
+		
+		//gets the type of each hex bordering the intersection
+		ArrayList<Hex> nearbyHexes = new ArrayList<Hex>();
+		
+		//adds one of each type of resource card to the players hand
+		
+		ArrayList<ResourceCard> resourceCards = player.getResourceCards();
+		
+		for (int i = 0; i < nearbyHexes.size(); i++) {
+			
+			String terrain = nearbyHexes.get(i).getTerrain();
+			ResourceCard card = null;
+			
+			switch(terrain) {
+			case "P" : 
+				ArrayList<ResourceCard> wool = game1.getWool();
+				card = wool.get(0);
+				wool.remove(0);
+				game1.setWool(wool);
+				break;
+			case "F" :
+				ArrayList<ResourceCard> lumber = game1.getLumber();
+				card = lumber.get(0);
+				lumber.remove(0);
+				game1.setLumber(lumber);
+				break;
+			case "M" :
+				ArrayList<ResourceCard> ore = game1.getOre();
+				card = ore.get(0);
+				ore.remove(0);
+				game1.setOre(ore);
+				break;
+			case "H" :
+				ArrayList<ResourceCard> brick = game1.getBrick();
+				card = brick.get(0);
+				brick.remove(0);
+				game1.setBrick(brick);
+				break;
+			case "G" :
+				ArrayList<ResourceCard> grain = game1.getGrain();
+				card = grain.get(0);
+				grain.remove(0);
+				game1.setGrain(grain);
+				break;
+			}
+			
+			if (card != null) {
+				
+				resourceCards.add(card);
+			}
+		}
+		
+		System.out.println("Player " + player.getName() + " gets: ");
+		
+		for (int i = 0; i < resourceCards.size(); i++) {
+			
+			System.out.print("1x " + resourceCards.get(i).getResource() + " ");
+		}
+		
+ 		player.setResourceCards(resourceCards);
 	}
 	
 	//gets the dev cards and shuffles the deck
