@@ -48,16 +48,89 @@ public class Turn {
 		
 		Map.printMap(game1.getBoard());
 	}
+
+//-----Methods to perform the resource allocation for the turn-----//
+	
 	
 	public static void resourceAllocation(int hexValue, Game game1, Scanner scanner) {
 		
-		//loops every hex
-		//checks for hexes with same hexValue
-		//if the hex has the robber don't use it
-		//checks the intersections around the hex
-		//if a player owns one they get resources
-		//1 for settlement, 2 for city
+		ArrayList<Hex> hexes = game1.getBoard().getHexes();
+		
+		for (int i = 0; i < hexes.size(); i++) {
+			
+			Hex hex = hexes.get(i);
+			
+			if (hex.getNumber() == hexValue) {
+				if (!(hex.getisRbberHere().equals("R"))) {
+					
+					//checks the intersections around the hex
+					//if a player owns one they get resources
+					//1 for settlement, 2 for city
+					
+					/*if (player owns settlement) {
+						String terrain = hex.getTerrain();
+						getResources(player, terrain, 1);
+					}*/
+					/*if (player owns city) {
+					String terrain = hex.getTerrain();
+					getResources(player, terrain, 2);
+					}*/
+				}
+			}
+		}
 	}
+	
+	public void getResources(Player player, String terrain, Game game1, int n) {
+		
+		ArrayList<ResourceCard> cards = player.getResourceCards();
+		
+		for (int i = 0; i < n; i++) {
+		
+			ResourceCard card = null;
+
+			switch(terrain) {
+			case "P" : 
+				ArrayList<ResourceCard> wool = game1.getWool();
+				card = wool.get(0);
+				wool.remove(0);
+				game1.setWool(wool);
+				break;
+			case "F" :
+				ArrayList<ResourceCard> lumber = game1.getLumber();
+				card = lumber.get(0);
+				lumber.remove(0);
+				game1.setLumber(lumber);
+				break;
+			case "M" :
+				ArrayList<ResourceCard> ore = game1.getOre();
+				card = ore.get(0);
+				ore.remove(0);
+				game1.setOre(ore);
+				break;
+			case "H" :
+				ArrayList<ResourceCard> brick = game1.getBrick();
+				card = brick.get(0);
+				brick.remove(0);
+				game1.setBrick(brick);
+				break;
+			case "G" :
+				ArrayList<ResourceCard> grain = game1.getGrain();
+				card = grain.get(0);
+				grain.remove(0);
+				game1.setGrain(grain);
+				break;
+			}
+
+			if (card != null) {
+				cards.add(card);
+			}
+		}
+		
+		player.setResourceCards(cards);
+	}
+	
+//-----Methods to play the robber for the turn-----//
+	
 	
 	public static void checkCardRemoval(Game game1, Scanner scanner) {
 		
