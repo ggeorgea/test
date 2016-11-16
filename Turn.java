@@ -3,9 +3,7 @@ import java.util.Scanner;
 
 public class Turn {
 	
-	private static final int BUILD = 1;
-	private static final int TRADE = 2;
-	private static final int END_TURN = 3;
+	private static final int END_TURN = 4;
 	private static final int ROBBER = 7;
 	
 	public static void newTurn(Player player, Game game1, Scanner scanner) {
@@ -22,11 +20,12 @@ public class Turn {
 		
 		int choice = 0;
 		
-		while (choice != 3) {
+		while (choice != END_TURN) {
 			System.out.println("Player " + player.getName() + ": What do you want to do?");
-			System.out.println("1: Build a road, settlement or city?");
-			System.out.println("2: Trade with the bank, ports or other players?");
-			System.out.println("3: End turn?");
+			System.out.println("1: Build a road, settlement, city or development card?");
+			System.out.println("2: Play a development card?");
+			System.out.println("3: Trade with the bank, ports or other players?");
+			System.out.println("4: End turn?");
 			
 			choice = scanner.nextInt();
 			
@@ -34,10 +33,13 @@ public class Turn {
 			case 1 :
 				//build stuff
 				break;
-			case 2 : 
+			case 2 :
+				//play dev card
+				break;
+			case 3 : 
 				//trade
 				break;
-			case 3 :
+			case 4 :
 				break;
 			default :
 				System.out.println("Invalid choice. Please choose again");
