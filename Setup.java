@@ -78,6 +78,7 @@ public class Setup {
 		default :
 			System.out.println("Invalid character. Please choose again.");
 			selectPlayerName(player, players, n, scanner);
+			return;
 		}
 			
 		for (int i = 0; i < players.size(); i++) {
@@ -85,6 +86,7 @@ public class Setup {
 			if (players.get(i).getName().equals(check)) {
 				System.out.println("Another player is already using this character. Please choose again.");
 				selectPlayerName(player, players, n, scanner);
+				return;
 			}
 		}
 			
