@@ -3,13 +3,17 @@ import java.util.Scanner;
 
 public class Turn {
 	
+	private static final boolean END_GAME = true;
 	private static final int END_TURN = 4;
 	private static final int ROBBER = 7;
 	private static final int NO_ROADS = 15;
 	private static final int NO_SETTLEMENTS = 5;
 	private static final int NO_CITIES = 4;
 	
-	public static void newTurn(Player player, Game game1, Scanner scanner) {
+	//allows the player to have their turn
+	public static boolean newTurn(Player player, Game game1, Scanner scanner) {
+		
+		Map.printMap(game1.getBoard());
 		
 		Dice.rollDice(player, scanner);
 		
@@ -22,8 +26,10 @@ public class Turn {
 		}
 		
 		int choice = 0;
+		boolean hasEnded = !END_GAME;
 		
-		while (choice != END_TURN) {
+		while (choice != END_TURN && !hasEnded) {
+			
 			System.out.println("Player " + player.getName() + ": What do you want to do?");
 			System.out.println("1: Build a road, settlement, city or development card?");
 			System.out.println("2: Play a development card?");
@@ -47,11 +53,31 @@ public class Turn {
 			default :
 				System.out.println("Invalid choice. Please choose again");
 			}
+			
+			hasEnded = checkEndOfGame(player);
 		}
 		
-		Map.printMap(game1.getBoard());
+		return hasEnded;
 	}
 
+	//checks if the game has ended
+	public static boolean checkEndOfGame(Player player) {
+		
+		if (player.getVictoryPoints() >= 10) {
+			
+			endGame(player);
+			return END_GAME;
+		}
+		
+		return !END_GAME;
+	}
+	
+	//prints a statement ending the game
+	public static void endGame(Player player) {
+		
+		System.out.println("Player " + player.getName() + " Wins!");
+	}
+	
 //-----Methods to perform the resource allocation for the turn-----//
 	
 	//TODO what if the bank doesn't have resources?
@@ -229,8 +255,8 @@ public class Turn {
 		
 		Coordinate a = new Coordinate(x, y);
 		
-		//gets the hex and puts the robber there
-		//lets the player steal a card
+		//TODO gets the hex and puts the robber there
+		//TODO lets the player steal a card
 	}
 	
 //-----Methods to build and buy things for the turn-----//

@@ -2,46 +2,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Catan {
+	
+	private static final boolean END_GAME = true;
+	
 	public static void main(String[] args) {
-		
-		System.out.println("----------SETTLERS OF CATAN----------\n\n");
-		
-		Scanner scanner = new Scanner(System.in);
-		
-		//sets board
-		Board board1 = Setup.getMeABoard();
-		Game game1 = new Game();
-		game1.setBoard(board1);
-		
-		Map.printMap(game1.getBoard());
-
-		//sets development cards
-		ArrayList<DevelopmentCard> developmentCards = Setup.getDevCardDeck();
-		game1.setDevelopmentCards(developmentCards);
-		
-		//sets resource cards
-		ArrayList<ResourceCard> ore = Setup.getResourceCardDeck("ore");
-		ArrayList<ResourceCard> grain = Setup.getResourceCardDeck("grain");
-		ArrayList<ResourceCard> lumber = Setup.getResourceCardDeck("lumber");
-		ArrayList<ResourceCard> wool = Setup.getResourceCardDeck("wool");
-		ArrayList<ResourceCard> brick = Setup.getResourceCardDeck("brick");
-		
-		game1.setOre(ore);
-		game1.setGrain(grain);
-		game1.setLumber(lumber);
-		game1.setWool(wool);
-		game1.setBrick(brick);
-		
-		//sets players
-		ArrayList<Player> players = Setup.setPlayers(scanner);
-		game1.setPlayers(players);
-				
-		//roll dice for each player
-		//changes player order with largest dice roll first
-		Setup.getPlayerOrder(game1, scanner);
-		
-		//place roads and settlements
-		Setup.setInitialRoadsAndSettlements(game1, scanner);
 		
 		/*
 		//GENERAL
@@ -79,8 +43,94 @@ public class Catan {
 		hex1.setisRobberHere("R");
 		//it should now appear that there is also a robber on the central hex!
 		//of course if I wasnt being lazy there would be seperate methods for hexes and intersections that did the casting for you or something, but im not sure thats even better
-		*/
+		 */
 		
-		Map.printMap(game1.getBoard());
+		boolean keepPlaying = true;
+		
+		//will let the players play another game if they wish
+		while (keepPlaying) {
+		
+			System.out.println("----------SETTLERS OF CATAN----------\n\n");
+		
+			Scanner scanner = new Scanner(System.in);
+		
+			//sets board
+			Board board1 = Setup.getMeABoard();
+			Game game1 = new Game();
+			game1.setBoard(board1);
+		
+			Map.printMap(game1.getBoard());
+
+			//sets development cards
+			ArrayList<DevelopmentCard> developmentCards = Setup.getDevCardDeck();
+			game1.setDevelopmentCards(developmentCards);
+		
+			//sets resource cards
+			ArrayList<ResourceCard> ore = Setup.getResourceCardDeck("ore");
+			ArrayList<ResourceCard> grain = Setup.getResourceCardDeck("grain");
+			ArrayList<ResourceCard> lumber = Setup.getResourceCardDeck("lumber");
+			ArrayList<ResourceCard> wool = Setup.getResourceCardDeck("wool");
+			ArrayList<ResourceCard> brick = Setup.getResourceCardDeck("brick");
+		
+			game1.setOre(ore);
+			game1.setGrain(grain);
+			game1.setLumber(lumber);
+			game1.setWool(wool);
+			game1.setBrick(brick);
+			
+			//sets players
+			ArrayList<Player> players = Setup.setPlayers(scanner);
+			game1.setPlayers(players);
+			
+			//roll dice for each player
+			//changes player order with largest dice roll first
+			Setup.getPlayerOrder(game1, scanner);
+			
+			//place roads and settlements
+			Setup.setInitialRoadsAndSettlements(game1, scanner);
+		
+			boolean hasEnded = !END_GAME;
+		
+			//will keep letting players take turns when noone has won
+			while (!hasEnded) {
+				for (int i = 0; i < game1.getPlayers().size(); i++) {
+					
+					hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1, scanner);
+				
+					if (hasEnded) {
+						break;
+					}
+				}
+			}
+		
+			keepPlaying = playAgain(scanner);
+		}
+		
+		System.out.println("Goodbye!");
+	}
+	
+	//asks the players if they want to play again
+	public static boolean playAgain(Scanner scanner) {
+		
+		System.out.println("Do you want to play again?");
+		System.out.println("Y or N");
+		
+		boolean keepPlaying = false;
+		String choice = scanner.next().toUpperCase();
+		char c = choice.toCharArray()[0];
+		
+		switch(c) {
+		case 'Y' :
+			keepPlaying = true;
+			break;
+		case 'N' :
+			keepPlaying = false;
+			break;
+		default :
+			System.out.println("Invalid choice. Please choose again");
+			keepPlaying = playAgain(scanner);
+		}
+		
+		return keepPlaying;
 	}
 }
