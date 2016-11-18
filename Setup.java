@@ -354,14 +354,14 @@ public class Setup {
 			Intersection inter = illegal.get(i);
 			System.out.println("A");
 			if (inter.getOwner().getName() != null) {
-				System.out.println("Settlement must be placed more than two roads away.");
+				System.out.println("Settlement must be placed more than two roads away. Please choose again");
 				placeSettlement(player, road, board1, scanner);
 			}
 		}
 		
 		System.out.println("Player " + player.getName() + " placed settlement at: (" + x + "," + y + ")");
 		settlement.setOwner(player);
-		settlement.setBuilding(new Building("t",1));;
+		settlement.setBuilding(new Building("t",1));
 		
 		player.setNoSettlements(player.getNoSettlements() + 1);
 		return settlement;
