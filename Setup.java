@@ -550,11 +550,11 @@ public class Setup {
 	
 	//this method makes a 2d array which is then used for accessing the hexes and intersections by coordinate, it also adds the hexes and the intersections(by calling another method) around the hexes
 	public static void setUpLocations(Board board1){
-		location[][] boardLocations = new location[11][11];
+		Location[][] boardLocations = new Location[11][11];
 		board1.setBoardLocations(boardLocations);
 		for(int xv = 0; xv<11; xv++){
 			for(int yv = 0; yv<11; yv++){
-				boardLocations[xv][yv]=new location(new Coordinate(xv-5,yv-5),"empty", null);
+				boardLocations[xv][yv]=new Location(new Coordinate(xv-5,yv-5),"empty", null);
 			}
 		}
 		for(int ci = 0; ci<board1.getHexes().size();ci++ ){
@@ -583,7 +583,7 @@ public class Setup {
 	}
 	
 	//this method takes up an informal coordinate, and 2d array and adds a new intersection in the specified place
-	public static void setUpInter(int x, int y,  location[][] boardLocations, Board board1){
+	public static void setUpInter(int x, int y,  Location[][] boardLocations, Board board1){
 		if (boardLocations[x][y].getType().equals("empty")){
 			Player noPlayer = new Player();
 			Building noBuild = new Building();
@@ -710,7 +710,7 @@ public class Setup {
 	public static void setIllegals(Board board1){
 		for(int j = 0; j< board1.getBoardLocations().length;j++){
 			for(int g = 0; g<board1.getBoardLocations()[j].length;g++){
-				location thisLoc = board1.getBoardLocations()[j][g];
+				Location thisLoc = board1.getBoardLocations()[j][g];
 				if(thisLoc.getType().equals("Intersection")){
 					Intersection thisint = (Intersection) thisLoc.getContains();
 					ArrayList<Intersection> illegals = new ArrayList<Intersection>();

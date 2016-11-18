@@ -10,7 +10,7 @@ public class Board {
 	private ArrayList<Road> roads = new ArrayList<Road>();
 	private ArrayList<Intersection> buildings = new ArrayList<Intersection>();
 	//this location 2d array is used for getting locations with just coordinates
-	private location[][] boardLocations;
+	private Location[][] boardLocations;
 	//this hashmap is used for getting roads with their endpoint coordinates
 	private HashMap roadmap;
 	
@@ -20,7 +20,7 @@ public class Board {
 	
 	public Board(int size, Coordinate robber, ArrayList<Hex> hexes,
 			ArrayList<Port> ports, ArrayList<Road> roads,
-			ArrayList<Intersection> buildings, location[][] boardLocations) {
+			ArrayList<Intersection> buildings, Location[][] boardLocations) {
 		
 		this.size = size;
 		this.robber = robber;
@@ -39,11 +39,11 @@ public class Board {
 		this.roadmap = roadmap;
 	}
 
-	public location[][] getBoardLocations() {
+	public Location[][] getBoardLocations() {
 		return boardLocations;
 	}
 
-	public void setBoardLocations(location[][] boardLocations) {
+	public void setBoardLocations(Location[][] boardLocations) {
 		this.boardLocations = boardLocations;
 	}
 
@@ -134,11 +134,11 @@ public class Board {
 		return (Road) this.getRoadmap().get(keys);
 	}
 	
-	public location getLocationFromCoordinate(Coordinate coA){
+	public Location getLocationFromCoordinate(Coordinate coA){
 		return boardLocations[coA.getX()+5][coA.getY()+5];
 	}
 	
-	public void setLocationFromCoordinate(Coordinate coA, location location1){
+	public void setLocationFromCoordinate(Coordinate coA, Location location1){
 		 boardLocations[coA.getX()+5][coA.getY()+5] = location1 ;
 	}
 	
