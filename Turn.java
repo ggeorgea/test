@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class contains all the methods to allow players to do things on their turn
+ */
 public class Turn {
 	
 	private static final boolean END_GAME = true;

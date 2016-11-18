@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 
+/**
+ * Class contains all the methods to set up the game and board
+ */
 public class Setup {
 
 	private static final int NO_KNIGHTS = 14;

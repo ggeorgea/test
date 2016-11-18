@@ -18,11 +18,15 @@ public class Dice {
 			return;
 		}
 			
+		//rolls the two dice and adds the sum
+		//this preserves the probability of rolling values from
+		//the actual game
 		int dice1 = random.nextInt(6) + 1;
 		int dice2 = random.nextInt(6) + 1;
+		int diceRoll = dice1 + dice2;
 			
-		System.out.println("Player " + player.getName() + " rolls: " + (dice1+dice2));
+		System.out.println("Player " + player.getName() + " rolls: " + (diceRoll));
 			
-		player.setCurrentRoll(dice1+dice2);
+		player.setCurrentRoll(diceRoll);
 	}
 }

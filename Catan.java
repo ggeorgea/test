@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class that contains the main method for the game
+ */
 public class Catan {
 	
 	private static final boolean END_GAME = true;
@@ -91,12 +94,14 @@ public class Catan {
 		
 			boolean hasEnded = !END_GAME;
 		
-			//will keep letting players take turns when noone has won
+			//will keep letting players take turns until someone wins
 			while (!hasEnded) {
 				for (int i = 0; i < game1.getPlayers().size(); i++) {
 					
+					//lets the player have a turn
 					hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1, scanner);
 				
+					//if a player has won then no other player takes their turn
 					if (hasEnded) {
 						break;
 					}

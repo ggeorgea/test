@@ -9,13 +9,15 @@ public class Board {
 	private ArrayList<Port> ports = new ArrayList<Port>();
 	private ArrayList<Road> roads = new ArrayList<Road>();
 	private ArrayList<Intersection> buildings = new ArrayList<Intersection>();
+	
 	//this location 2d array is used for getting locations with just coordinates
 	private Location[][] boardLocations;
+	
 	//this hashmap is used for getting roads with their endpoint coordinates
 	private HashMap roadmap;
 	
-	public Board() {
-		
+	public Board() {	
+	
 	}
 	
 	public Board(int size, Coordinate robber, ArrayList<Hex> hexes,
@@ -107,8 +109,9 @@ public class Board {
 		this.buildings = buildings;
 	}	
 	
-	//these last four methods ensure that the hashmap and the 2d array are accessed properly
+//-----Methods to ensure that the hash map and the 2D array are accessed properly-----//	
 	
+	//returns a road from the hash map based when given coordinates
 	public Road getRoadFromCo(Coordinate coA, Coordinate coB){
 		Coordinate cFirst;
 		Coordinate cSecond;
@@ -134,14 +137,7 @@ public class Board {
 		return (Road) this.getRoadmap().get(keys);
 	}
 	
-	public Location getLocationFromCoordinate(Coordinate coA){
-		return boardLocations[coA.getX()+5][coA.getY()+5];
-	}
-	
-	public void setLocationFromCoordinate(Coordinate coA, Location location1){
-		 boardLocations[coA.getX()+5][coA.getY()+5] = location1 ;
-	}
-	
+	//creates a road at the given coordinates and puts it in the hash map
 	public void setRoadFromCo(Road road1, Coordinate coA, Coordinate coB){
 		Coordinate cFirst;
 		Coordinate cSecond;
@@ -165,5 +161,15 @@ public class Board {
 		}
 		String keys = new StringBuilder().append(cFirst.getX()).append(cFirst.getY()).append(cSecond.getX()).append(cSecond.getY()).toString();
 		this.getRoadmap().put(keys, road1);
+	}
+	
+	//gets a location from the array based of coordinates
+	public Location getLocationFromCoordinate(Coordinate coA){
+		return boardLocations[coA.getX()+5][coA.getY()+5];
+	}
+	
+	//puts a location into the array at the given coordinates
+	public void setLocationFromCoordinate(Coordinate coA, Location location1){
+		 boardLocations[coA.getX()+5][coA.getY()+5] = location1 ;
 	}
 }

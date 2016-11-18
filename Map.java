@@ -1,4 +1,7 @@
 
+/**
+ * Class that contains the print statement for the Settlers Of Catan Board
+ */
 public class Map {
 	//the big thing that prints the map, if this doesnt work, its probably because you were using the set methods that take coordinates
 	
@@ -215,7 +218,5 @@ public class Map {
 
 				);
 		System.out.println("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
-
-
 	}
 }
