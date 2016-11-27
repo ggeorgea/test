@@ -12,12 +12,10 @@ import java.util.Scanner;
 public class Catan {
 	
 	private static final boolean END_GAME = true;
+	ArrayList<Player> players = new ArrayList<Player>(); 
 	
 	public static void main(String[] args) throws Exception {
 		Board board1 = new Board();
-
-			
-
 		/*
 		//GENERAL
 		//the above methods set up a board, with roads, intersections and hexes, all set up in the right places, with random terrains and probabilities
@@ -60,7 +58,6 @@ public class Catan {
 		
 		//will let the players play another game if they wish
 		while (keepPlaying) {
-			
 			System.out.println("----------SETTLERS OF CATAN----------\n\n");			
 			Scanner scanner = new Scanner(new File("./src/test.txt"));
  
@@ -90,7 +87,7 @@ public class Catan {
 			game1.setBrick(brick);
 			
 			//sets players
-			ArrayList<Player> players = Setup.setPlayers(scanner);
+			players = Setup.setPlayers(scanner);
 			game1.setPlayers(players);
 			
 			//roll dice for each player
@@ -153,4 +150,29 @@ public class Catan {
 		
 		return keepPlaying;
 	}
+
+
+	//************ Look for the player with the longest road ********
+	public static Player longestRoad(){ 
+		//initial longest road to be compared with the players longest road 
+		int longestRoad = 0 ; 
+		Player hasRoad = players.get(0);
+
+		//iterate the list of player and find the longest road 
+		for (Player p : players){ 
+			if(p.getLongestRoad() > longestRoad){ 
+				longestRoad = p.getLongestRoad(); 
+				hasRoad = p; 
+			}
+		}
+		hasRoad.setHasLongestRoad = True; 
+		return hasRoad; 
+
+	}
+
+
+
+
+
+
 }
