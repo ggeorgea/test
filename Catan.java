@@ -166,13 +166,9 @@ public class Catan {
 			}
 		}
 		hasRoad.setHasLongestRoad = True; 
+		system.out.println("player" + hasRoad.getName() + "has the longest road.");
 		return hasRoad; 
 
 	}
-
-
-
-
-
 
 }
