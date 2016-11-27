@@ -153,7 +153,8 @@ public class Catan {
 
 
 	//************ Look for the player with the longest road ********
-	public static Player longestRoad(){ 
+	//eventually we will need to write a remove method when a player achieves a higher road than the current holder 
+	public static Player checkLongestRoad(){ 
 		//initial longest road to be compared with the players longest road 
 		int longestRoad = 0 ; 
 		Player hasRoad = players.get(0);
@@ -171,8 +172,10 @@ public class Catan {
 		return hasRoad; 
 
 	}
+	//Eventually we will need to write a method that keeps track of victory points
+	//we need a method to remove the largest army card when a player exceeds the current holder 
 
-	public static Player hasLargestArmy(){ 
+	public static Player checkLargestArmy(){ 
 
 		int armySize = 0 ; 
 		Player largestArmy = players.get(0);
