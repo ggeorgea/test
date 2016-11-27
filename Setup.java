@@ -276,8 +276,8 @@ public class Setup {
 		int y2 = scanner.nextInt();
 		
 		//checks the coordinates are in the correct range
-		if (x1 < -4 || x1 > 4 || y1 < -4 || y1 > 4 || x2 < -4 || x2 > 4 || y2 < -4 || y2 > 4) {
-			
+		//if (x1 < -4 || x1 > 4 || y1 < -4 || y1 > 4 || x2 < -4 || x2 > 4 || y2 < -4 || y2 > 4) {
+		if(!((2*y1 <= x1 +8)||(2*y1>=x1-8)||(y1<=2*x1+8)||(y1>=2*x1-8)||(y1>=-x1-8)||(y1<=-x1+8))){
 			System.out.println("Invalid coordinates. Please choose again");
 			placeRoad(player, board1, scanner);
 			return null;
