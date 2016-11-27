@@ -1,4 +1,9 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -8,8 +13,11 @@ public class Catan {
 	
 	private static final boolean END_GAME = true;
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws Exception {
+		Board board1 = new Board();
+
+			
+
 		/*
 		//GENERAL
 		//the above methods set up a board, with roads, intersections and hexes, all set up in the right places, with random terrains and probabilities
@@ -52,13 +60,13 @@ public class Catan {
 		
 		//will let the players play another game if they wish
 		while (keepPlaying) {
-		
-			System.out.println("----------SETTLERS OF CATAN----------\n\n");
-		
-			Scanner scanner = new Scanner(System.in);
-		
+			
+			System.out.println("----------SETTLERS OF CATAN----------\n\n");			
+			Scanner scanner = new Scanner(new File("./src/test.txt"));
+ 
+
 			//sets board
-			Board board1 = Setup.getMeABoard();
+			board1 = Setup.getMeABoard();
 			Game game1 = new Game();
 			game1.setBoard(board1);
 		
@@ -91,7 +99,13 @@ public class Catan {
 			
 			//place roads and settlements
 			Setup.setInitialRoadsAndSettlements(game1, scanner);
-		
+			
+			
+			//pass from automated set up to actually playing the game
+			System.out.println("-----now in manual mode-------");
+			scanner = new Scanner(System.in);
+			
+			
 			boolean hasEnded = !END_GAME;
 		
 			//will keep letting players take turns until someone wins
@@ -112,6 +126,7 @@ public class Catan {
 		}
 		
 		System.out.println("Goodbye!");
+
 	}
 	
 	//asks the players if they want to play again

@@ -355,7 +355,7 @@ public class Setup {
 		for (int i = 0; i < illegal.size(); i++) {
 			
 			Intersection inter = illegal.get(i);
-			System.out.println("A");
+			//System.out.println("A");
 			if (inter.getOwner().getName() != null) {
 				System.out.println("Settlement must be placed more than two roads away. Please choose again");
 				placeSettlement(player, road, board1, scanner);
@@ -433,6 +433,7 @@ public class Setup {
 		}
 		
  		player.setResourceCards(resourceCards);
+ 		
 	}
 
 //-----Methods to get the initialise the board and hexes for the game-----//
