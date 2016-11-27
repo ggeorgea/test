@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class Catan {
 	
 	private static final boolean END_GAME = true;
-	ArrayList<Player> players = new ArrayList<Player>(); 
 	
 	public static void main(String[] args) throws Exception {
 		Board board1 = new Board();
@@ -87,7 +86,7 @@ public class Catan {
 			game1.setBrick(brick);
 			
 			//sets players
-			players = Setup.setPlayers(scanner);
+			ArrayList<Player> players = Setup.setPlayers(scanner);
 			game1.setPlayers(players);
 			
 			//roll dice for each player
@@ -153,7 +152,8 @@ public class Catan {
 
 
 	//************ Look for the player with the longest road ********
-	public static Player longestRoad(){ 
+	public static Player longestRoad(Game game1){ 
+		ArrayList<Player> players = game1.getPlayers();
 		//initial longest road to be compared with the players longest road 
 		int longestRoad = 0 ; 
 		Player hasRoad = players.get(0);
@@ -165,8 +165,8 @@ public class Catan {
 				hasRoad = p; 
 			}
 		}
-		hasRoad.setHasLongestRoad = True; 
-		system.out.println("player" + hasRoad.getName() + "has the longest road.");
+		hasRoad.setHasLongestRoad(true); 
+		System.out.println("player" + hasRoad.getName() + "has the longest road.");
 		return hasRoad; 
 
 	}

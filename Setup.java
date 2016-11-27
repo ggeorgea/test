@@ -328,7 +328,7 @@ public class Setup {
 		int y = scanner.nextInt();
 		
 		//checks the coordinates are in the correct range
-		if (x < -4 || x > 4 || y < -4 || y > 4) {
+		if(!((2*y <= x +8)||(2*y>=x-8)||(y<=2*x+8)||(y>=2*x-8)||(y>=-x-8)||(y<=-x+8))){
 			
 			System.out.println("Invalid coordinates. Please choose again");
 			placeSettlement(player, road, board1, scanner);
