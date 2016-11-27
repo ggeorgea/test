@@ -17,6 +17,8 @@ public class Player {
 	
 	private ArrayList<ResourceCard> resourceCards = new ArrayList<ResourceCard>();
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
+	//make an array list of roads 
+	
 	
 	public Player() {
 		
@@ -40,6 +42,11 @@ public class Player {
 		this.hasLargestArmy = hasLargestArmy;
 		this.resourceCards = resourceCards;
 		this.developmentCards = developmentCards;
+	}
+
+	public int findLongestRoadLength(){ 
+
+
 	}
 
 	public String getName() {
@@ -106,11 +113,12 @@ public class Player {
 	
 		return longestRoad;
 	}
-	
+	/*
 	public void setLongestRoad(int longestRoad) {
 	
 		this.longestRoad = longestRoad;
 	}
+	*/
 	
 	public int getLargestArmy() {
 	

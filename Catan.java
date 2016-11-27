@@ -166,9 +166,28 @@ public class Catan {
 			}
 		}
 		hasRoad.setHasLongestRoad = True; 
+		hasRoad.setVictoryPoints(hasRoad.getVictoryPoints()+2); 
 		system.out.println("player" + hasRoad.getName() + "has the longest road.");
 		return hasRoad; 
 
+	}
+
+	public static Player hasLargestArmy(){ 
+
+		int armySize = 0 ; 
+		Player largestArmy = players.get(0);
+
+		//iterate the list of player and find the longest road 
+		for (Player p : players){ 
+			if(p.getLargestArmy() > armySize){ 
+				armySize = p.getLargestArmy(); 
+				largestArmy = p; 
+			}
+		}
+		largestArmy.setHasLargestArmy = True; 
+		largestArmy.setVictoryPoints(largestArmy.getVictoryPoints()+2);
+		system.out.println("player" + largestArmy.getName() + "has the largest army.");
+		return largestArmy; 
 	}
 
 }
