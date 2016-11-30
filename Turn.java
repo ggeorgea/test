@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -32,15 +34,18 @@ public class Turn {
 		boolean hasEnded = !END_GAME;
 		
 		while (choice != END_TURN && !hasEnded) {
-			
+			try{
 			System.out.println("Player " + player.getName() + ": What do you want to do?");
 			System.out.println("1: Build a road, settlement, city or development card?");
 			System.out.println("2: Play a development card?");
 			System.out.println("3: Trade with the bank, ports or other players?");
 			System.out.println("4: End turn?");
+			System.out.println("5: Show your hand?");
 			
 			choice = scanner.nextInt();
+		
 			
+			int ch = 0;
 			switch(choice) {
 			case 1 :
 				build(player, game1, scanner);
@@ -53,11 +58,30 @@ public class Turn {
 				break;
 			case 4 :
 				break;
+			case 5:
+				System.out.print("(");
+				Iterator<ResourceCard> it = player.getResourceCards().iterator();
+				while(it.hasNext()){
+					System.out.print(it.next().getResource());
+					if(it.hasNext()){
+						System.out.print(", ");
+					}
+				}
+				System.out.print(")\n");
+				continue;
+				
 			default :
+				
 				System.out.println("Invalid choice. Please choose again");
+				
 			}
 			
 			hasEnded = checkEndOfGame(player);
+		}
+			catch(InputMismatchException e){
+				System.out.println("Invalid choice. Please choose again");
+				scanner.nextLine();
+			}
 		}
 		
 		return hasEnded;
@@ -86,6 +110,7 @@ public class Turn {
 	//TODO what if the bank doesn't have resources?
 	//code to get the resources from a dice roll
 	public static void resourceAllocation(int hexValue, Game game1, Scanner scanner) {
+		Board board1 = game1.getBoard();
 		
 		ArrayList<Hex> hexes = game1.getBoard().getHexes();
 		
@@ -108,13 +133,65 @@ public class Turn {
 					String terrain = hex.getTerrain();
 					getResources(player, terrain, 2);
 					}*/
+				
+
+					int coX = hex.getCoordinate().getX();
+					int coY = hex.getCoordinate().getY();
+					
+					String terrain = hex.getTerrain();
+					
+					Coordinate coNe;
+					 
+					 coNe = new Coordinate(coX+1,coY);
+					 testLocForRex(coNe,terrain,game1);
+					 
+					 coNe = new Coordinate(coX,coY+1);
+					 testLocForRex(coNe,terrain,game1);
+	
+					 coNe = new Coordinate(coX+1,coY+1);
+					 testLocForRex(coNe,terrain,game1);
+
+					 coNe = new Coordinate(coX-1,coY-1);
+					 testLocForRex(coNe,terrain,game1);
+
+					 coNe = new Coordinate(coX-1,coY);
+					 testLocForRex(coNe,terrain,game1);
+			
+					 coNe = new Coordinate(coX,coY-1);				
+					 testLocForRex(coNe,terrain,game1);
+
+			
+					
+	
+					
 				}
 			}
 		}
 	}
 	
+	//part of the resource allocation method
+	public static void testLocForRex(Coordinate co1, String terrain, Game game1) {
+		Board board1 = game1.getBoard();
+		Location loc = board1.getLocationFromCoordinate(co1);
+		if(loc.getType().equals("Intersection")&&
+				(! (((Intersection) loc.getContains()).getOwner().getName()==null))){
+			
+			Intersection build = (Intersection) loc.getContains();
+			System.out.println(terrain + " produces a resource at "+ co1.getX()+co1.getY()+" for " + build.getOwner().getName());
+			if(build.getBuilding().getType().equals("c")){
+				getResources(build.getOwner(),terrain,game1,2);
+			}
+			else{
+				getResources(build.getOwner(),terrain,game1,1);
+
+			}
+		}
+		
+	}
+
+	
 	//gives the resources to a player
-	public void getResources(Player player, String terrain, Game game1, int n) {
+	public static void getResources(Player player, String terrain, Game game1, int n) {
 		
 		ArrayList<ResourceCard> cards = player.getResourceCards();
 		
@@ -240,7 +317,7 @@ public class Turn {
 	
 	//allows the player to move the robber and steal a card from a player
 	public static void moveRobber(Player player, Game game1, Scanner scanner) {
-		
+		try{
 		System.out.println("Player " + player.getName() + ": Please select where to place the robber");
 		
 		System.out.println("Select X coordinate");
@@ -248,18 +325,29 @@ public class Turn {
 		
 		System.out.println("Select Y coordinate");
 		int y = scanner.nextInt();
-		
+		Coordinate a = new Coordinate(x, y);
 		//checks the coordinates are in the correct range
-		if (x < -4 || x > 4 || y < -4 || y > 4) {
+		if((!((2*y <= x +8)&&(2*y>=x-8)&&(y<=2*x+8)&&(y>=2*x-8)&&(y>=-x-8)&&(y<=-x+8)))
+				||
+				(!game1.getBoard().getLocationFromCoordinate(a).getType().equals("hex"))){
 			
 			System.out.println("Invalid coordinates. Please choose again");
 			moveRobber(player, game1, scanner);
+			return;
 		}
 		
-		Coordinate a = new Coordinate(x, y);
 		
+		
+		Hex hex1 = (Hex) game1.getBoard().getLocationFromCoordinate(a).getContains();
+		hex1.setisRobberHere("R");
+		game1.getBoard().setRobber(a);
 		//TODO gets the hex and puts the robber there
 		//TODO lets the player steal a card
+		}
+		catch(InputMismatchException e){
+			scanner.nextLine();
+			 moveRobber(player,game1,scanner);
+		}
 	}
 	
 //-----Methods to build and buy things for the turn-----//
@@ -401,7 +489,7 @@ public class Turn {
 		int y2 = scanner.nextInt();
 		
 		//checks the coordinates are in the correct range
-		if (x1 < -4 || x1 > 4 || y1 < -4 || y1 > 4 || x2 < -4 || x2 > 4 || y2 < -4 || y2 > 4) {
+		if(!((2*y1 <= x1 +8)&&(2*y1>=x1-8)&&(y1<=2*x1+8)&&(y1>=2*x1-8)&&(y1>=-x1-8)&&(y1<=-x1+8))){
 			
 			System.out.println("Invalid coordinates. Please choose again");
 			buildRoad(player, game1, scanner);
@@ -532,16 +620,18 @@ public class Turn {
 		
 		System.out.println("Select Y coordinate");
 		int y = scanner.nextInt();
-		
+		Coordinate a = new Coordinate(x, y);
+
 		//checks the coordinates are in the correct range
-		if (x < -4 || x > 4 || y < -4 || y > 4) {
+		if(!((2*y <= x +8)&&(2*y>=x-8)&&(y<=2*x+8)&&(y>=2*x-8)&&(y>=-x-8)&&(y<=-x+8))
+				||(!game1.getBoard().getLocationFromCoordinate(a).getType().equals("Intersection"))
+				){
 			
 			System.out.println("Invalid coordinates. Please choose again");
 			buildSettlement(player, game1, scanner);
 			return null;
 		}
 		
-		Coordinate a = new Coordinate(x, y);
 		
 		Intersection settlement = (Intersection) game1.getBoard().getLocationFromCoordinate(a).getContains();
 		
@@ -641,16 +731,18 @@ public class Turn {
 		
 		System.out.println("Select Y coordinate");
 		int y = scanner.nextInt();
-		
+		Coordinate a = new Coordinate(x, y);
+
 		//checks the coordinates are in the correct range
-		if (x < -4 || x > 4 || y < -4 || y > 4) {
+		if(!((2*y <= x +8)&&(2*y>=x-8)&&(y<=2*x+8)&&(y>=2*x-8)&&(y>=-x-8)&&(y<=-x+8))
+				||(!game1.getBoard().getLocationFromCoordinate(a).getType().equals("Intersection"))
+				){
 			
 			System.out.println("Invalid coordinates. Please choose again");
 			buildCity(player, game1, scanner);
 			return null;
 		}
 		
-		Coordinate a = new Coordinate(x, y);
 		
 		Intersection city = (Intersection) game1.getBoard().getLocationFromCoordinate(a).getContains();
 		
@@ -704,6 +796,7 @@ public class Turn {
 		ResourceCard grain = null;
 		int i = 0;
 		
+		try{
 		while (ore == null || wool == null || grain == null) {
 			
 			ResourceCard card = cards.get(i);
@@ -723,7 +816,11 @@ public class Turn {
 			
 			i++;
 		}
-		
+		}
+		catch(IndexOutOfBoundsException e)
+		{
+			return new ArrayList<ResourceCard>();
+		}
 		if (ore != null && wool != null && grain != null) {
 			
 			resources.add(ore);

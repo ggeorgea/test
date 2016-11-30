@@ -277,7 +277,7 @@ public class Setup {
 		
 		//checks the coordinates are in the correct range
 		//if (x1 < -4 || x1 > 4 || y1 < -4 || y1 > 4 || x2 < -4 || x2 > 4 || y2 < -4 || y2 > 4) {
-		if(!((2*y1 <= x1 +8)||(2*y1>=x1-8)||(y1<=2*x1+8)||(y1>=2*x1-8)||(y1>=-x1-8)||(y1<=-x1+8))){
+		if((!((2*y1 <= x1 +8)||(2*y1>=x1-8)&&(y1<=2*x1+8)&&(y1>=2*x1-8)&&(y1>=-x1-8)&&(y1<=-x1+8)))&&(!((2*y2 <= x2 +8)||(2*y2>=x2-8)&&(y2<=2*x2+8)&&(y2>=2*x2-8)&&(y2>=-x2-8)))){
 			System.out.println("Invalid coordinates. Please choose again");
 			return placeRoad(player, board1, scanner);
 		}
@@ -324,15 +324,18 @@ public class Setup {
 		
 		System.out.println("Select Y coordinate");
 		int y = scanner.nextInt();
-		
+		Coordinate a = new Coordinate(x, y);
+
 		//checks the coordinates are in the correct range
-		if(!((2*y <= x +8)||(2*y>=x-8)||(y<=2*x+8)||(y>=2*x-8)||(y>=-x-8)||(y<=-x+8))){
+		if((!((2*y <= x +8)||(2*y>=x-8)&&(y<=2*x+8)&&(y>=2*x-8)&&(y>=-x-8)&&(y<=-x+8)))
+				||
+				(!(board1.getLocationFromCoordinate(a).getType().equals("Intersection")))
+				){
 			
 			System.out.println("Invalid coordinates. Please choose again");
 			return placeSettlement(player, road, board1, scanner);
 		}
 		
-		Coordinate a = new Coordinate(x, y);
 		
 		Intersection settlement = (Intersection) board1.getLocationFromCoordinate(a).getContains();
 		ArrayList<Intersection> illegal = settlement.getIllegal();
