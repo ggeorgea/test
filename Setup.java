@@ -376,7 +376,8 @@ public class Setup {
 			}
 		}
 		
-		System.out.println("Player " + player.getName() + " placed settlement at: (" + x + "," + y + ")");
+		System.out.println("Player " + player.getName() + ""
+				+ " placed settlement at: (" + x + "," + y + ")");
 		settlement.setOwner(player);
 		settlement.setBuilding(new Building("t",1));
 		

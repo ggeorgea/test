@@ -265,7 +265,7 @@ public class Turn {
 	
 	//asks players with more than seven cards to choose the cards they remove
 	public static void cardRemoval(Player player, ArrayList<ResourceCard> cards, Game game1, Scanner scanner) {
-		
+		try{
 		int noCardsToRemove = cards.size()/2;
 		
 		System.out.println("Player " + player.getName() + ": Please select " + noCardsToRemove + " cards to remove");
@@ -312,6 +312,12 @@ public class Turn {
 			}
 			
 			cards.remove(choice);
+		}
+		}
+		catch(InputMismatchException e){
+			System.out.println("Invalid choice. Please choose again");
+			scanner.nextLine();
+			cardRemoval(player,cards,game1,scanner);
 		}
 	}
 	
@@ -489,7 +495,7 @@ public class Turn {
 		ResourceCard brick = null;
 		ResourceCard lumber = null;
 		int i = 0;
-		
+		try{
 		while (brick == null || lumber == null) {
 			
 			ResourceCard card = cards.get(i);
@@ -505,7 +511,11 @@ public class Turn {
 			
 			i++;
 		}
-	
+	}
+	catch(IndexOutOfBoundsException e)
+	{
+		return new ArrayList<ResourceCard>();
+	}
 		if (brick != null && lumber != null) {
 			
 			resources.add(brick);
@@ -558,9 +568,12 @@ public class Turn {
 		int settlementsLeft = NO_SETTLEMENTS - player.getNoSettlements();
 		Intersection settlement = getSettlementCoordinates(player, game1, scanner);
 		
+		
+		
 		if (resources.size() != 4) {
 			
 			System.out.println("You do not have enough resources to build a settlement");
+			
 			return;
 		}
 		else if (settlementsLeft <= 0) {
@@ -568,28 +581,77 @@ public class Turn {
 			System.out.println("You do not have enough settlements left to place");
 			return;
 		}
+		
+		
+		ArrayList<Intersection> illegal = settlement.getIllegal();
+		for (int i = 0; i < illegal.size(); i++) {
+			Intersection inter = illegal.get(i);
+			if (inter.getOwner().getName() != null) {
+				System.out.println("Settlement must be placed more than two roads away. " +
+				 		"Please choose again");
+				buildSettlement(player, game1, scanner);
+				return;
+			}
+		}
+		
+		
+		boolean foundSuitible = false;
+		do{
+			Road tryRoad;
+			int j = settlement.getCoordinate().getX();
+			int g = settlement.getCoordinate().getY();
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j,g+1));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j,g-1));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1,g));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1,g));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1,g+1));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1,g-1));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+		}while(false);
+		
+		
+		
+		
+		
+		if (!foundSuitible) {
+		 
+		 	System.out.println("Settlement must be placed beside one of your roads. " +
+		 		"Please choose again");
+		 	buildSettlement(player, game1, scanner);
+		 	return;
+		 }
+		
 		else if (settlement.getOwner().getName() != null) {
 			
 			System.out.println("A settlement has already been placed here. Please choose again");
 			buildSettlement(player, game1, scanner);
 			return;
 		}
-		/*else if (settlement is not next to any of that players roads) {
-		 
-		 	System.out.println("Settlement must be placed beside one of your roads. " +
-		 		"Please choose again");
-		 	buildSettlement(player, game1, scanner);
-		 	return;
-		 }*/
-		/*else if (settlement is not two roads away from another settlement) {
-		 	
-		 	System.out.println("Settlement must be placed more than two roads away. " +
-		 		"Please choose again");
-		 	buildSettlement(player, game1, scanner);
-		 	return;
-		 }*/
 		else {
-			
+
 			ArrayList<ResourceCard> cards = player.getResourceCards();
 			
 			for (int i = 0; i < 4; i++) {
@@ -620,7 +682,7 @@ public class Turn {
 		ResourceCard wool = null;
 		ResourceCard grain = null;
 		int i = 0;
-		
+		try{
 		while (brick == null || lumber == null || wool == null || grain == null) {
 			
 			ResourceCard card = cards.get(i);
@@ -644,6 +706,11 @@ public class Turn {
 			
 			i++;
 		}
+	}
+	catch(IndexOutOfBoundsException e)
+	{
+		return new ArrayList<ResourceCard>();
+	}
 		
 		if (brick != null && lumber != null && wool != null && grain != null) {
 			
