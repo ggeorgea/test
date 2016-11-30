@@ -279,8 +279,7 @@ public class Setup {
 		//if (x1 < -4 || x1 > 4 || y1 < -4 || y1 > 4 || x2 < -4 || x2 > 4 || y2 < -4 || y2 > 4) {
 		if(!((2*y1 <= x1 +8)||(2*y1>=x1-8)||(y1<=2*x1+8)||(y1>=2*x1-8)||(y1>=-x1-8)||(y1<=-x1+8))){
 			System.out.println("Invalid coordinates. Please choose again");
-			placeRoad(player, board1, scanner);
-			return null;
+			return placeRoad(player, board1, scanner);
 		}
 		else {
 		
@@ -292,12 +291,12 @@ public class Setup {
 			if (road == null) {
 				
 				System.out.println("Invalid coordinates. Please choose again");
-				road = placeRoad(player, board1, scanner);
+				return placeRoad(player, board1, scanner);
 			}
 			else if (road.getOwner().getName() != null) {
 				
 				System.out.println("A road has already been placed here. Please choose again");
-				road = placeRoad(player, board1, scanner);
+				return placeRoad(player, board1, scanner);
 			}
 			else {
 				
@@ -309,7 +308,6 @@ public class Setup {
 				return road;
 			}
 		
-			return null;
 		}
 	}
 	
@@ -331,7 +329,7 @@ public class Setup {
 		if(!((2*y <= x +8)||(2*y>=x-8)||(y<=2*x+8)||(y>=2*x-8)||(y>=-x-8)||(y<=-x+8))){
 			
 			System.out.println("Invalid coordinates. Please choose again");
-			placeSettlement(player, road, board1, scanner);
+			return placeSettlement(player, road, board1, scanner);
 		}
 		
 		Coordinate a = new Coordinate(x, y);
@@ -343,22 +341,22 @@ public class Setup {
 				&& !(road.getCoordinateB().getX() == x && road.getCoordinateB().getY() == y)) {
 			
 			System.out.println("Settlement must be placed beside road. Please choose again");
-			placeSettlement(player, road, board1, scanner);
+			return placeSettlement(player, road, board1, scanner);
 		}
 			
 		if (settlement.getOwner().getName() != null) {
 			
 			System.out.println("A settlement has already been placed here. Please choose again");
-			placeSettlement(player, road, board1, scanner);
+			return placeSettlement(player, road, board1, scanner);
 		}
 		
 		for (int i = 0; i < illegal.size(); i++) {
 			
 			Intersection inter = illegal.get(i);
-			//System.out.println("A");
+			//System.out.println("A"+illegal.get(i).getCoordinate().getX()+","+illegal.get(i).getCoordinate().getY());
 			if (inter.getOwner().getName() != null) {
 				System.out.println("Settlement must be placed more than two roads away. Please choose again");
-				placeSettlement(player, road, board1, scanner);
+				return placeSettlement(player, road, board1, scanner);
 			}
 		}
 		
@@ -739,10 +737,10 @@ public class Setup {
 						illegals.add(returnedLoc);
 					}
 					
-					 returnedLoc = isOwned(board1,j+1,g-1);
-					if(returnedLoc!=null){
-						illegals.add(returnedLoc);
-					}
+//					 returnedLoc = isOwned(board1,j+1,g-1);
+//					if(returnedLoc!=null){
+//						illegals.add(returnedLoc);
+//					}
 					
 					 returnedLoc = isOwned(board1,j+1,g+1);
 					if(returnedLoc!=null){
