@@ -255,6 +255,15 @@ public class Setup {
 		game1.setBoard(board1);
 	}
 	
+	public static boolean checkNear(Board board1, int x1, int y1, int x2, int y2){
+		Location loca1 = board1.getLocationFromCoordinate(new Coordinate(x1,y1));
+		Location loca2 = board1.getLocationFromCoordinate(new Coordinate(x2,y2));
+		if((!(loca1.getType().equals("Intersection")))||(!(loca2.getType().equals("Intersection")))||(!(((Intersection)loca1.getContains()).getOwner().getName()==null))||(!(((Intersection)loca2.getContains()).getOwner().getName()==null))){
+			return false;
+		}
+		return true;
+	}
+	
 	//lets the player place a road free of charge
 	//also does not depend on nearby roads
 	public static Road placeRoad(Player player, Board board1, Scanner scanner) {
@@ -278,6 +287,10 @@ public class Setup {
 		//checks the coordinates are in the correct range
 		//if (x1 < -4 || x1 > 4 || y1 < -4 || y1 > 4 || x2 < -4 || x2 > 4 || y2 < -4 || y2 > 4) {
 		if((!((2*y1 <= x1 +8)||(2*y1>=x1-8)&&(y1<=2*x1+8)&&(y1>=2*x1-8)&&(y1>=-x1-8)&&(y1<=-x1+8)))&&(!((2*y2 <= x2 +8)||(2*y2>=x2-8)&&(y2<=2*x2+8)&&(y2>=2*x2-8)&&(y2>=-x2-8)))){
+			System.out.println("Invalid coordinates. Please choose again");
+			return placeRoad(player, board1, scanner);
+		}
+		else if(!checkNear(board1, x1,y1,x2,y2)){
 			System.out.println("Invalid coordinates. Please choose again");
 			return placeRoad(player, board1, scanner);
 		}

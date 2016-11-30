@@ -382,13 +382,59 @@ public class Turn {
 		}
 	}
 	
+	//checks if a road is connected to your other roads
+	public static boolean checkConnected(Road road, Player player, Game game1){
+	//	game1.getBoard().getLocationFromCoordinate(road.getCoordinateA())
+		//vertical
+		Board board1 = game1.getBoard();
+		//note: coordinateA is always the higher up coordinate on the printed represenation
+		int x1 = road.getCoordinateA().getX();
+		int y1 = road.getCoordinateA().getY();
+		int x2 = road.getCoordinateB().getX();
+		int y2 = road.getCoordinateB().getY();
+		Road road1;
+		Road road2;
+		Road road3;
+		Road road4;
+		if(road.getCoordinateA().getX()==road.getCoordinateB().getX()){
+			 road1= board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1-1,y1));
+			 road2= board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1+1,y1+1));
+			 road3= board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2+1,y2));
+			 road4= board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2-1,y2-1));
+
+		}
+		//negslope
+		else if(road.getCoordinateA().getY()==road.getCoordinateB().getY()){
+			 road1 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1,y1+1));
+			 road2 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1-1,y1-1));
+			 road3 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2+1,y2+1));
+			 road4 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2,y2-1));
+		}
+		//poslope
+		else{
+			 road1 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1,y1+1));
+			 road2 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1+1,y1));
+			 road3 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2+1,y2));
+			 road4 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2,y2-1));
+		}
+		if(
+				((road1!=null)&&(road1.getOwner().equals(player)))
+				||((road2!=null)&&road2.getOwner().equals(player))
+				||((road3!=null)&&road3.getOwner().equals(player))
+				||((road4!=null)&&road4.getOwner().equals(player))
+				){
+		return true;}
+		else{return false;}
+	}
+	
+	
 	//lets the player build a road
 	public static void buildRoad(Player player, Game game1, Scanner scanner) {
 
 		ArrayList<ResourceCard> resources = hasRoadResources(player);
 		int roadsLeft = NO_ROADS - player.getNoRoads();
 		Road road = getRoadCoordinates(player, game1, scanner);
-		
+		 
 		if (resources.size() != 2) {
 			
 			System.out.println("You do not have enough resources to build a road");
@@ -411,13 +457,13 @@ public class Turn {
 			buildRoad(player, game1, scanner);
 			return;
 		}
-		/*else if (coordinate not next to players roads/settlements) {
+		else if (!checkConnected(road,player,game1)) {
 			
 			System.out.println("Road must be placed beside your other roads " +
 				"and settlements. Please choose again");
 			buildRoad(player, game1, scanner);
 			return;
-		 }*/
+		 }
 		else {
 			ArrayList<ResourceCard> cards = player.getResourceCards();
 			cards.remove(resources.get(0));
