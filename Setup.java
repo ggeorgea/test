@@ -380,7 +380,7 @@ public class Setup {
 				+ " placed settlement at: (" + x + "," + y + ")");
 		settlement.setOwner(player);
 		settlement.setBuilding(new Building("t",1));
-		
+		player.getFirstSettlements().add(settlement);
 		player.setNoSettlements(player.getNoSettlements() + 1);
 		return settlement;
 	}

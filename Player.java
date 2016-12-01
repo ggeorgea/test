@@ -18,6 +18,16 @@ public class Player {
 	private ArrayList<ResourceCard> resourceCards = new ArrayList<ResourceCard>();
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
 	
+	private ArrayList<Intersection> firstSettlements = new ArrayList<Intersection>();	
+	
+	public ArrayList<Intersection> getFirstSettlements() {
+		return firstSettlements;
+	}
+
+	public void setFirstSettlements(ArrayList<Intersection> firstSettlements) {
+		this.firstSettlements = firstSettlements;
+	}
+	
 	public Player() {
 		
 	}

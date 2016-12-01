@@ -58,6 +58,9 @@ public class Turn {
 				break;
 			case 4 :
 				break;
+			case 6 :
+				Map.printMap(game1.getBoard());
+				break;
 			case 5:
 				System.out.print("(");
 				Iterator<ResourceCard> it = player.getResourceCards().iterator();
@@ -441,6 +444,8 @@ public class Turn {
 		int roadsLeft = NO_ROADS - player.getNoRoads();
 		Road road = getRoadCoordinates(player, game1, scanner);
 		 
+		//RELEASE TEST
+		/*
 		if (resources.size() != 2) {
 			
 			System.out.println("You do not have enough resources to build a road");
@@ -451,7 +456,7 @@ public class Turn {
 			System.out.println("You do not have any roads left to place");
 			return;
 		}
-		else if (road == null) {
+		else*/ if (road == null) {
 				
 			System.out.println("Invalid coordinates. Please choose again");
 			buildRoad(player, game1, scanner);
@@ -471,11 +476,13 @@ public class Turn {
 			return;
 		 }
 		else {
+			//RELEASE TEST
+			/*
 			ArrayList<ResourceCard> cards = player.getResourceCards();
 			cards.remove(resources.get(0));
 			cards.remove(resources.get(1));
 			player.setResourceCards(cards);
-			
+			*/
 			road.setOwner(player);
 			player.setNoRoads(player.getNoRoads() - 1);
 			
