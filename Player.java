@@ -10,7 +10,7 @@ public class Player {
 	private int noSettlements;
 	private int noCities;
 	
-	private int longestRoad;
+	private int longestRoad=1;
 	private int largestArmy;
 	private boolean hasLongestRoad = false;
 	private boolean hasLargestArmy = false;

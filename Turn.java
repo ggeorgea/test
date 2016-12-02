@@ -41,6 +41,9 @@ public class Turn {
 			System.out.println("3: Trade with the bank, ports or other players?");
 			System.out.println("4: End turn?");
 			System.out.println("5: Show your hand?");
+			System.out.println("6: Print map?");
+			System.out.println("7: Length of your Longest Road?");
+
 			
 			choice = scanner.nextInt();
 		
@@ -60,6 +63,9 @@ public class Turn {
 				break;
 			case 6 :
 				Map.printMap(game1.getBoard());
+				break;
+			case 7 :
+				System.out.println("Your Longest Road Length is: "+player.getLongestRoad());
 				break;
 			case 5:
 				System.out.print("(");
@@ -488,6 +494,9 @@ public class Turn {
 			
 			System.out.println("Player " + player.getName() + " placed road at: (" + road.getCoordinateA().getX() 
 					+ "," + road.getCoordinateA().getY() + "),(" + road.getCoordinateB().getX() + "," + road.getCoordinateB().getY() + ")");
+			
+			
+			Catan.CheckPlayerLongestRoad(player, game1, road);
 			//TODO update road length
 			//TODO check end of game?
 		}
