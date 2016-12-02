@@ -459,20 +459,20 @@ public class Turn {
 		else*/ if (road == null) {
 				
 			System.out.println("Invalid coordinates. Please choose again2");
-			buildRoad(player, game1, scanner);
+			buildRoad(player, game1, scanner, roadBuilding);
 			return;
 		}
 		else if (road.getOwner().getName() != null) {
 				
 			System.out.println("A road has already been placed here. Please choose again");
-			buildRoad(player, game1, scanner);
+			buildRoad(player, game1, scanner, roadBuilding);
 			return;
 		}
 		else if (!checkConnected(road,player,game1)) {
 			
 			System.out.println("Road must be placed beside your other roads " +
 				"and settlements. Please choose again");
-			buildRoad(player, game1, scanner);
+			buildRoad(player, game1, scanner, roadBuilding);
 			return;
 		 }
 		else {
@@ -972,34 +972,40 @@ public class Turn {
 		
 		if (type.equals("knight")) {
 			
-			playKnightCard(player, game1, play, scanner);
+			playKnightCard(player, game1, scanner);
 		}
 		if (type.equals("road building")) {
 			
-			playRoadBuildingCard(player, game1, play, scanner);
+			playRoadBuildingCard(player, game1, scanner);
 		}
 		if (type.equals("year of plenty")) {
 			
-			playYearOfPlentyCard(player, game1, play, scanner);
+			playYearOfPlentyCard(player, game1, scanner);
 		}
 		if (type.equals("monopoly")) {
 			
-			playMonopolyCard(player, game1, play, scanner);
+			playMonopolyCard(player, game1, scanner);
 		}
 		if (type.equals("victory point")) {
 			
-			playVictoryPointCard(player, game1, play, scanner);
+			playVictoryPointCard(player);
 		}
 				
 		cards.remove(play);
 		player.setDevelopmentCards(cards);
 	}
 	
-	public static void playKnightCard(Player player, Game game1, DevelopmentCard knight, Scanner scanner) {
+	public static void playKnightCard(Player player, Game game1, Scanner scanner) {
 		
+		moveRobber(player, game1, scanner);
+		
+		player.setLargestArmy(player.getLargestArmy() + 1);
+		
+		//TODO check for largest army
+		checkEndOfGame(player);
 	}
 	
-	public static void playRoadBuildingCard(Player player, Game game1, DevelopmentCard progress, Scanner scanner) {
+	public static void playRoadBuildingCard(Player player, Game game1, Scanner scanner) {
 		
 		boolean roadBuilding = true;
 		
@@ -1007,5 +1013,133 @@ public class Turn {
 			
 			buildRoad(player, game1, scanner, roadBuilding);
 		}
+	}
+	
+	public static void playYearOfPlentyCard(Player player, Game game1, Scanner scanner) {
+		
+		ArrayList<ResourceCard> cards = player.getResourceCards();
+		
+		for (int i = 0; i < 2; i++) {
+			
+			chooseResourceYOP(cards, game1, scanner);
+		}
+		
+		player.setResourceCards(cards);
+	}
+	
+	public static void chooseResourceYOP(ArrayList<ResourceCard> cards, Game game1, Scanner scanner) {
+		
+		System.out.println("Pick a resource");
+		System.out.println("1. Brick");
+		System.out.println("2. Lumber");
+		System.out.println("3. Wool");
+		System.out.println("4. Ore");
+		System.out.println("5. Grain");
+		
+		int choice = scanner.nextInt();
+		
+		switch (choice) {
+		case 1 :
+			ResourceCard brick = game1.getBrick().get(0);
+			cards.add(brick);
+			game1.getBrick().remove(brick);
+			break;
+		case 2:
+			ResourceCard lumber = game1.getLumber().get(0);
+			cards.add(lumber);
+			game1.getLumber().remove(lumber);
+			break;
+		case 3:
+			ResourceCard wool = game1.getWool().get(0);
+			cards.add(wool);
+			game1.getWool().remove(wool);
+			break;
+		case 4 :
+			ResourceCard ore = game1.getOre().get(0);
+			cards.add(ore);
+			game1.getOre().remove(ore);
+			break;
+		case 5 :
+			ResourceCard grain = game1.getGrain().get(0);
+			cards.add(grain);
+			game1.getGrain().remove(grain);
+			break;
+		default :
+			System.out.println("Invalid choice. Please choose again");
+			chooseResourceYOP(cards, game1, scanner);
+		}
+	}
+	
+	public static void playMonopolyCard(Player player, Game game1, Scanner scanner) {
+		
+		String resource = chooseResourceMonopoly(scanner);
+		ArrayList<ResourceCard> cards = player.getResourceCards();
+		
+		ArrayList<Player> players = game1.getPlayers();
+		players.remove(player);
+		
+		for (int i = 0; i < players.size(); i++) {
+			
+			Player player2 = players.get(i);
+			ArrayList<ResourceCard> player2Cards = player2.getResourceCards();
+			
+			for (int j = 0; j < player2Cards.size(); j++) {
+				
+				ResourceCard card = player2Cards.get(i);
+				
+				if (card.getResource().equals(resource)) {
+					
+					player2Cards.remove(card);
+					cards.add(card);
+				}
+			}
+			
+			player2.setResourceCards(player2Cards);
+		}
+	
+		player.setResourceCards(cards);
+	}
+	
+	public static String chooseResourceMonopoly(Scanner scanner) {
+		
+		System.out.println("Pick a resource");
+		System.out.println("1. Brick");
+		System.out.println("2. Lumber");
+		System.out.println("3. Wool");
+		System.out.println("4. Ore");
+		System.out.println("5. Grain");
+		
+		int choice = scanner.nextInt();
+		String resource = "";
+		
+		switch (choice) {
+		case 1 :
+			resource = "brick";
+			break;
+		case 2 : 
+			resource = "lumber";
+			break;
+		case 3 :
+			resource = "wool";
+			break;
+		case 4 :
+			resource = "ore";
+			break;
+		case 5 :
+			resource = "grain";
+			break;
+		default :
+			System.out.println("Invalid choice. Please choose again");
+			chooseResourceMonopoly(scanner);
+		}
+		
+		return resource;
+	}
+	
+	public static void playVictoryPointCard(Player player) {
+				
+		player.setVictoryPoints(player.getVictoryPoints() + 1);
+		
+		checkEndOfGame(player);
 	}
 }
