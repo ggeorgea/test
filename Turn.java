@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Turn {
 	
 	private static final boolean END_GAME = true;
-	private static final int END_TURN = 4;
+	private static final int END_TURN = 7;
 	private static final int ROBBER = 7;
 	private static final int NO_ROADS = 15;
 	private static final int NO_SETTLEMENTS = 5;
@@ -39,10 +39,10 @@ public class Turn {
 			System.out.println("1: Build a road, settlement, city or development card?");
 			System.out.println("2: Play a development card?");
 			System.out.println("3: Trade with the bank, ports or other players?");
-			System.out.println("4: End turn?");
-			System.out.println("5: Show your hand?");
-			System.out.println("6: Print map?");
-			System.out.println("7: Length of your Longest Road?");
+			System.out.println("4: Show your hand?");
+			System.out.println("5: Print map?");
+			System.out.println("6: Length of your Longest Road?");
+			System.out.println("7: End turn?");
 
 			
 			choice = scanner.nextInt();
@@ -54,20 +54,12 @@ public class Turn {
 				build(player, game1, scanner);
 				break;
 			case 2 :
-				//play dev card
+				playDevelopmentCard(player, game1, scanner);
 				break;
 			case 3 : 
 				//trade
 				break;
 			case 4 :
-				break;
-			case 6 :
-				Map.printMap(game1.getBoard());
-				break;
-			case 7 :
-				System.out.println("Your Longest Road Length is: "+player.getLongestRoad());
-				break;
-			case 5:
 				System.out.print("(");
 				Iterator<ResourceCard> it = player.getResourceCards().iterator();
 				while(it.hasNext()){
@@ -77,8 +69,15 @@ public class Turn {
 					}
 				}
 				System.out.print(")\n");
-				continue;
-				
+				break;
+			case 5 :
+				Map.printMap(game1.getBoard());
+				break;
+			case 6 :
+				System.out.println("Your Longest Road Length is: "+player.getLongestRoad());
+				break;
+			case 7:
+				break;				
 			default :
 				
 				System.out.println("Invalid choice. Please choose again");
@@ -167,12 +166,7 @@ public class Turn {
 					 testLocForRex(coNe,terrain,game1);
 			
 					 coNe = new Coordinate(coX,coY-1);				
-					 testLocForRex(coNe,terrain,game1);
-
-			
-					
-	
-					
+					 testLocForRex(coNe,terrain,game1);				
 				}
 			}
 		}
@@ -380,7 +374,7 @@ public class Turn {
 		
 		switch(choice) {
 		case 1 :
-			buildRoad(player, game1, scanner);
+			buildRoad(player, game1, scanner, false);
 			break;
 		case 2 :
 			buildSettlement(player, game1, scanner);
@@ -444,9 +438,9 @@ public class Turn {
 	
 	
 	//lets the player build a road
-	public static void buildRoad(Player player, Game game1, Scanner scanner) {
+	public static void buildRoad(Player player, Game game1, Scanner scanner, boolean roadBuilding) {
 
-		ArrayList<ResourceCard> resources = hasRoadResources(player);
+		ArrayList<ResourceCard> resources = hasRoadResources(player, roadBuilding);
 		int roadsLeft = NO_ROADS - player.getNoRoads();
 		Road road = getRoadCoordinates(player, game1, scanner);
 		 
@@ -503,7 +497,7 @@ public class Turn {
 	}
 
 	//checks if the player has the required resources to build a road
-	public static ArrayList<ResourceCard> hasRoadResources(Player player) {
+	public static ArrayList<ResourceCard> hasRoadResources(Player player, boolean roadBuilding) {
 	
 		ArrayList<ResourceCard> cards = player.getResourceCards();
 		ArrayList<ResourceCard> resources = new ArrayList<ResourceCard>();
@@ -532,7 +526,7 @@ public class Turn {
 	{
 		return new ArrayList<ResourceCard>();
 	}
-		if (brick != null && lumber != null) {
+		if ((brick != null && lumber != null) || roadBuilding) {
 			
 			resources.add(brick);
 			resources.add(lumber);
@@ -958,5 +952,60 @@ public class Turn {
 		}
 		
 		return resources;
+	}
+	
+	public static void playDevelopmentCard(Player player, Game game1, Scanner scanner) {
+		
+		ArrayList<DevelopmentCard> cards = player.getDevelopmentCards();
+		
+		System.out.println("What development card do you want to play?");
+		
+		for (int i = 0; i < cards.size(); i++) {
+			
+			System.out.println((i+1) + ": " + cards.get(i).getType());
+		}
+		
+		int choice = scanner.nextInt();
+		DevelopmentCard play = cards.get(choice);
+		
+		String type = play.getType();
+		
+		if (type.equals("knight")) {
+			
+			playKnightCard(player, game1, play, scanner);
+		}
+		if (type.equals("road building")) {
+			
+			playRoadBuildingCard(player, game1, play, scanner);
+		}
+		if (type.equals("year of plenty")) {
+			
+			playYearOfPlentyCard(player, game1, play, scanner);
+		}
+		if (type.equals("monopoly")) {
+			
+			playMonopolyCard(player, game1, play, scanner);
+		}
+		if (type.equals("victory point")) {
+			
+			playVictoryPointCard(player, game1, play, scanner);
+		}
+				
+		cards.remove(play);
+		player.setDevelopmentCards(cards);
+	}
+	
+	public static void playKnightCard(Player player, Game game1, DevelopmentCard knight, Scanner scanner) {
+		
+	}
+	
+	public static void playRoadBuildingCard(Player player, Game game1, DevelopmentCard progress, Scanner scanner) {
+		
+		boolean roadBuilding = true;
+		
+		for (int i = 0; i < 2; i++) {
+			
+			buildRoad(player, game1, scanner, roadBuilding);
+		}
 	}
 }
