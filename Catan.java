@@ -388,7 +388,7 @@ public class Catan {
 		if((startRoad1!=null&&startRoad1.getOwner().equals(player))
 				&&((int1Ill==null)||!int1Ill.equals((Intersection)game1.getBoard().getLocationFromCoordinate(new Coordinate(j-1,g)).getContains()))
 				&&((int2Ill==null)||!int2Ill.equals((Intersection)game1.getBoard().getLocationFromCoordinate(new Coordinate(j-1,g)).getContains()))){				
-			System.out.println("returning a road between: "+startRoad1.getCoordinateA().getX()+","+startRoad1.getCoordinateA().getY()+" and "+startRoad1.getCoordinateB().getX()+", "+startRoad1.getCoordinateB().getY());
+			//System.out.println("returning a road between: "+startRoad1.getCoordinateA().getX()+","+startRoad1.getCoordinateA().getY()+" and "+startRoad1.getCoordinateB().getX()+", "+startRoad1.getCoordinateB().getY());
 
 			return startRoad1;
 		}
@@ -397,7 +397,7 @@ public class Catan {
 		if((startRoad1!=null&&startRoad1.getOwner().equals(player))
 				&&((int1Ill==null)||!int1Ill.equals((Intersection)game1.getBoard().getLocationFromCoordinate(new Coordinate(j+1,g+1)).getContains()))
 				&&((int2Ill==null)||!int2Ill.equals((Intersection)game1.getBoard().getLocationFromCoordinate(new Coordinate(j+1,g+1)).getContains()))){				
-			System.out.println("returning a road between: "+startRoad1.getCoordinateA().getX()+","+startRoad1.getCoordinateA().getY()+" and "+startRoad1.getCoordinateB().getX()+", "+startRoad1.getCoordinateB().getY());
+			//System.out.println("returning a road between: "+startRoad1.getCoordinateA().getX()+","+startRoad1.getCoordinateA().getY()+" and "+startRoad1.getCoordinateB().getX()+", "+startRoad1.getCoordinateB().getY());
 			return startRoad1;
 		}
 		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(), new Coordinate(j-1,g-1));
@@ -405,7 +405,7 @@ public class Catan {
 		if((startRoad1!=null&&startRoad1.getOwner().equals(player))
 				&&(((int1Ill==null)||!int1Ill.equals((Intersection)game1.getBoard().getLocationFromCoordinate(new Coordinate(j-1,g-1)).getContains())))
 				&&(((int2Ill==null)||!int2Ill.equals((Intersection)game1.getBoard().getLocationFromCoordinate(new Coordinate(j-1,g-1)).getContains())))){				
-			System.out.println("returning a road between: "+startRoad1.getCoordinateA().getX()+","+startRoad1.getCoordinateA().getY()+" and "+startRoad1.getCoordinateB().getX()+", "+startRoad1.getCoordinateB().getY());
+//			System.out.println("returning a road between: "+startRoad1.getCoordinateA().getX()+","+startRoad1.getCoordinateA().getY()+" and "+startRoad1.getCoordinateB().getX()+", "+startRoad1.getCoordinateB().getY());
 			return startRoad1;
 		}
 		return null;

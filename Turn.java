@@ -464,7 +464,7 @@ public class Turn {
 		}
 		else*/ if (road == null) {
 				
-			System.out.println("Invalid coordinates. Please choose again");
+			System.out.println("Invalid coordinates. Please choose again2");
 			buildRoad(player, game1, scanner);
 			return;
 		}
@@ -563,8 +563,8 @@ public class Turn {
 		//checks the coordinates are in the correct range
 		if(!((2*y1 <= x1 +8)&&(2*y1>=x1-8)&&(y1<=2*x1+8)&&(y1>=2*x1-8)&&(y1>=-x1-8)&&(y1<=-x1+8))){
 			
-			System.out.println("Invalid coordinates. Please choose again");
-			buildRoad(player, game1, scanner);
+			System.out.println("Invalid coordinates. Please choose again1");
+			//buildRoad(player, game1, scanner);
 			return null;
 		}
 		else {
