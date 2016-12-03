@@ -287,7 +287,7 @@ public class Catan {
 			if (toplens2 > botLens2) {
 				longests2 = toplens2;
 			}
-
+			//deciding on what to return
 			if (loop) {
 				if (longests2 > longests1) {
 					longest = longests2;
@@ -389,6 +389,8 @@ public class Catan {
 		}
 		loop = false;
 	}
+	
+	
 
 	public static int Branch(Game game1, Player player, Intersection pointInt,
 			Intersection fromInt, Road carrying, ArrayList<Integer> idArray,
@@ -447,6 +449,16 @@ public class Catan {
 		if (hMapDist > currdist) {
 			return currdist;
 		}
+		
+		
+		
+		//THIS IS THE CODE FOR FINDING NEW BRANCHES FROM NOTHING,I.E STARTING AGAIN IF YOU FIND A 3ER OR AND END
+		if(sector!=null){
+			//todofill!!
+		}
+		
+		
+		
 		Road option1 = getRoadFromInt(game1, pointInt, player, fromInt, null);
 		if (option1 == null) {
 			return currdist;
