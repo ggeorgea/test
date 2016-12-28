@@ -490,7 +490,7 @@ public class Turn {
 					+ "," + road.getCoordinateA().getY() + "),(" + road.getCoordinateB().getX() + "," + road.getCoordinateB().getY() + ")");
 			
 			
-			Catan.CheckPlayerLongestRoad(player, game1, road);
+			LongestRoad.CheckPlayerLongestRoad(player, game1, road);
 			//TODO update road length
 			//TODO check end of game?
 		}
