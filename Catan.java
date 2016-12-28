@@ -108,15 +108,19 @@ public class Catan {
 			Setup.setInitialRoadsAndSettlements(game1, scanner);
 
 			// pass from automated set up to actually playing the game
+
 			System.out.println("-----now in manual mode-------");
 			scanner = new Scanner(System.in);
-
 			boolean hasEnded = !END_GAME;
 
 			// will keep letting players take turns until someone wins
 			while (!hasEnded) {
 				for (int i = 0; i < game1.getPlayers().size(); i++) {
-
+//for a test of longest road:
+//					if (i>0){
+//						System.out.println("-----now in manual mode-------");
+//						scanner = new Scanner(System.in);
+//					}
 					// lets the player have a turn
 					hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1,
 							scanner);

@@ -6,12 +6,13 @@ import java.util.Iterator;
 public class LongestRoad {
 	static int id = 0;
 	static boolean loop = false;
-
+	//static int s2wrongroad = -2;
 	public static void CheckPlayerLongestRoad(Player player, Game game1,
 			Road road1) {
 
 		//the unique id for each node visit that takes place
 		id = 0;
+		loop = false;
 
 		Board board1 = game1.getBoard();
 		//old longest road
@@ -60,14 +61,14 @@ public class LongestRoad {
 				&& (end2A != null || end2B != null)) {
 			id = 0;
 			//this maps a point to a sector for the purpose of finding overlap
-			HashMap sectorMap = new HashMap();
+			HashMap<Intersection, String> sectorMap = new HashMap<Intersection, String>();
 					
 			
 			//END 1
 			int longests1 = 0;
-			HashMap distancesMaps1 = new HashMap();
-			HashMap visitorsMaps1 = new HashMap();
-			ArrayList<Integer> namesLists1 = new ArrayList();
+			HashMap<Intersection, Integer> distancesMaps1 = new HashMap<Intersection, Integer>();
+			HashMap<Intersection, ArrayList<Integer>> visitorsMaps1 = new HashMap<Intersection, ArrayList<Integer>>();
+			ArrayList<Integer> namesLists1 = new ArrayList<Integer>();
 			namesLists1.add(new Integer(0));
 			namesLists1.add(new Integer(-1));
 			ArrayList<Integer> idArray1s1 = new ArrayList<Integer>();
@@ -75,57 +76,70 @@ public class LongestRoad {
 			idArray1s1.add(new Integer(id));
 			idArray2s1.add(new Integer(id - 1));
 			visitorsMaps1.put(intB, idArray1s1);
-			visitorsMaps1.put(intA, idArray2s1);
-			int toplens1 = 0;
-			int botLens1 = 0;
-			if (end1A != null) {
-				toplens1 = Branch(game1, player,
-						getOtherInt(board1, end1A, intA), intA, end1A,
-						(ArrayList<Integer>) namesLists1.clone(), toplens1 + 1,
-						distancesMaps1, visitorsMaps1, "s1", sectorMap);
-			}
-			if (end1B != null) {
-				toplens1 = Branch(game1, player,
-						getOtherInt(board1, end1B, intA), intA, end1B,
-						(ArrayList<Integer>) namesLists1.clone(), botLens1 + 1,
-						distancesMaps1, visitorsMaps1, "s1", sectorMap);
-			}
-			if (toplens1 > botLens1) {
-				longests1 = toplens1;
-			}
+		//	visitorsMaps1.put(intA, idArray2s1);
+			longests1 = Branch(game1, player,
+					 intA,intB,  road1,
+					(ArrayList<Integer>) namesLists1.clone(),  1,
+					distancesMaps1, visitorsMaps1, "s1", sectorMap);
+			
+			
+//			int toplens1 = 0;
+//			int botLens1 = 0;
+//			if (end1A != null) {
+//				toplens1 = Branch(game1, player,
+//						getOtherInt(board1, end1A, intA), intA, end1A,
+//						(ArrayList<Integer>) namesLists1.clone(), toplens1 + 1,
+//						distancesMaps1, visitorsMaps1, "s1", sectorMap);
+//			}
+//			if (end1B != null) {
+//				toplens1 = Branch(game1, player,
+//						getOtherInt(board1, end1B, intA), intA, end1B,
+//						(ArrayList<Integer>) namesLists1.clone(), botLens1 + 1,
+//						distancesMaps1, visitorsMaps1, "s1", sectorMap);
+//			}
+//			if (toplens1 > botLens1) {
+//				longests1 = toplens1;
+//			}
+			
 
 			
 			
 			// END2
 			int longests2 = 0;
-			HashMap distancesMaps2 = new HashMap();
-			HashMap visitorsMaps2 = new HashMap();
-			ArrayList<Integer> namesLists2 = new ArrayList();
+			HashMap<Intersection, Integer> distancesMaps2 = new HashMap<Intersection, Integer>();
+			HashMap<Intersection, ArrayList<Integer>> visitorsMaps2 = new HashMap<Intersection, ArrayList<Integer>>();
+			ArrayList<Integer> namesLists2 = new ArrayList<Integer>();
 			namesLists2.add(new Integer(id));
 			namesLists2.add(new Integer(id-1));
+	//		s2wrongroad = id-1;
 			ArrayList<Integer> idArray1s2 = new ArrayList<Integer>();
 			ArrayList<Integer> idArray2s2 = new ArrayList<Integer>();
 			idArray1s2.add(new Integer(id));
 			idArray2s2.add(new Integer(id-1 ));
 			visitorsMaps2.put(intA, idArray1s2);
-			visitorsMaps2.put(intB, idArray2s2);
-			int toplens2 = 0;
-			int botLens2 = 0;
-			if (end2A != null) {
-				toplens2 = Branch(game1, player,
-						getOtherInt(board1, end2A, intB), intB, end2A,
-						(ArrayList<Integer>) namesLists2.clone(), toplens2 + 1,
-						distancesMaps2, visitorsMaps2, "s2", sectorMap);
-			}
-			if (end2B != null) {
-				toplens2 = Branch(game1, player,
-						getOtherInt(board1, end2B, intB), intB, end2B,
-						(ArrayList<Integer>) namesLists2.clone(), botLens2 + 1,
-						distancesMaps2, visitorsMaps2, "s2", sectorMap);
-			}
-			if (toplens2 > botLens2) {
-				longests2 = toplens2;
-			}
+			//visitorsMaps2.put(intB, idArray2s2);
+			longests2 = Branch(game1, player,
+					 intB, intA, road1,
+					(ArrayList<Integer>) namesLists2.clone(),  1,
+					distancesMaps2, visitorsMaps2, "s2", sectorMap);
+//			
+//			int toplens2 = 0;
+//			int botLens2 = 0;
+//			if (end2A != null) {
+//				toplens2 = Branch(game1, player,
+//						getOtherInt(board1, end2A, intB), intB, end2A,
+//						(ArrayList<Integer>) namesLists2.clone(), toplens2 + 1,
+//						distancesMaps2, visitorsMaps2, "s2", sectorMap);
+//			}
+//			if (end2B != null) {
+//				toplens2 = Branch(game1, player,
+//						getOtherInt(board1, end2B, intB), intB, end2B,
+//						(ArrayList<Integer>) namesLists2.clone(), botLens2 + 1,
+//						distancesMaps2, visitorsMaps2, "s2", sectorMap);
+//			}
+//			if (toplens2 > botLens2) {
+//				longests2 = toplens2;
+//			}
 			
 			
 			
@@ -137,7 +151,7 @@ public class LongestRoad {
 					longest = longests1;
 				}
 			} else {
-				longest = 1 + longests1 + longests2;
+				longest = -1 + longests1 + longests2;
 			}
 
 		} 
@@ -154,11 +168,11 @@ public class LongestRoad {
 			// setup
 			id = 0;
 			//this hashmap will record the distances to various points, using points as keys, longest distances as values, will update with longer distances
-			HashMap distancesMap = new HashMap();
+			HashMap<Intersection, Integer> distancesMap = new HashMap<Intersection, Integer>();
 			//this hashmap will map points to an arraylist of ints
-			HashMap visitorsMap = new HashMap();
+			HashMap<Intersection, ArrayList<Integer>> visitorsMap = new HashMap<Intersection, ArrayList<Integer>>();
 			//this arraylist will be cloned to represent all the things that have been visited by a route, all routes have visited 0 and -1 (the two start intersections)
-			ArrayList<Integer> namesList = new ArrayList();
+			ArrayList<Integer> namesList = new ArrayList<Integer>();
 			namesList.add(new Integer(0));
 			namesList.add(new Integer(-1));
 			
@@ -251,8 +265,8 @@ public class LongestRoad {
 
 	public static int Branch(Game game1, Player player, Intersection pointInt,
 			Intersection fromInt, Road carrying, ArrayList<Integer> idArray,
-			int currdist, HashMap distancesMap, HashMap visitorsMap,
-			String sector, HashMap sectorMap) {
+			int currdist, HashMap<Intersection, Integer> distancesMap, HashMap<Intersection, ArrayList<Integer>> visitorsMap,
+			String sector, HashMap<Intersection, String> sectorMap) {
 		
 		//this is code for when the built road connected two other roads
 		if (sector != null) {
@@ -268,7 +282,7 @@ public class LongestRoad {
 			}
 		}
 		
-		//
+		// some testing code!
 		for (int p = 1; p < currdist; p++) {
 			System.out.print("   ");
 		}
@@ -276,22 +290,31 @@ public class LongestRoad {
 				+ "," + pointInt.getCoordinate().getY() + " from "
 				+ fromInt.getCoordinate().getX() + ","
 				+ fromInt.getCoordinate().getY() + "\n");
+		//end of testing code!
+		
 		int thisId = ++id;
+		//adds a new id to the idarray carried with this branch head
 		idArray.add(thisId);
-		Iterator it = idArray.iterator();
+		//this is an iterator over the id array so we can see who has visited the point
+		Iterator<Integer> it = idArray.iterator();
 		boolean visited = false;
+		//this gets the integer array stored in the visitorsMap hashMap for the point in question
 		ArrayList<Integer> visitors = (ArrayList<Integer>) visitorsMap
 				.get(pointInt);
+		//if this is the first time this has been visited, all is well. but we must add our id to a new idarraay for this place
 		if (visitors == null) {
 			ArrayList<Integer> newVisitors = new ArrayList<Integer>();
 			newVisitors.add(new Integer(thisId));
 			visitorsMap.put(pointInt, newVisitors);
 		} else {
+			//we must check every id that this head has ever been against every id that has ever visited the node
 			while (it.hasNext()) {
 				int myId = ((Integer) it.next()).intValue();
-				Iterator vIt = visitors.iterator();
+				Iterator<Integer> vIt = visitors.iterator();
 				while (vIt.hasNext()) {
-					if (myId == ((Integer) vIt.next()).intValue()) {
+					Integer Vnext = (Integer) vIt.next();
+					//all obvious except !(loop&& (Vnext.intValue()!=-1)) which is there because if there is a loop we no longer count the original road as a part!
+					if (myId == (Vnext).intValue()) {
 						visited = true;
 						break;
 					}
@@ -301,7 +324,11 @@ public class LongestRoad {
 				}
 			}
 		}
+		//we cannot go over the same spot twice so we return now
+		//THIS MIGHT NEED TO CHANGE AS WE MAY WELL BE ABLE TO AS LONG AS WE CAN FIND SOMEWHERE UNVISITED TO GO NEXT!
+		//ACTUALLY IT WONT BECAUSE EVERY NODE HAS ONLY 3 BRANCHES, and any other visitor must have exited with one!
 		if (visited) {
+			System.out.println("returning due to loop: "+currdist);
 			return currdist;
 		}
 		Integer hMapDist = (Integer) distancesMap.get(pointInt);
@@ -317,10 +344,10 @@ public class LongestRoad {
 		
 		
 		
-		//THIS IS THE CODE FOR FINDING NEW BRANCHES FROM NOTHING,I.E STARTING AGAIN IF YOU FIND A 3ER OR AND END
-		if(sector!=null){
-			//todofill!!
-		}
+//		//THIS IS THE CODE FOR FINDING NEW BRANCHES FROM NOTHING,I.E STARTING AGAIN IF YOU FIND A 3ER OR AND END
+//		if(sector!=null){
+//			//todofill!!
+//		}
 		
 		
 		
