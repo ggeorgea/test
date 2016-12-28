@@ -31,6 +31,7 @@ public class Turn {
 		}
 		
 		int choice = 0;
+		boolean hasPlayedDevelopmentCard = false;
 		boolean hasEnded = !END_GAME;
 		
 		while (choice != END_TURN && !hasEnded) {
@@ -54,7 +55,13 @@ public class Turn {
 				build(player, game1, scanner);
 				break;
 			case 2 :
-				playDevelopmentCard(player, game1, scanner);
+				if (hasPlayedDevelopmentCard) {
+					System.out.println("You can only play one development card on your turn. Please choose again");	
+				}
+				else {
+					playDevelopmentCard(player, game1, scanner);
+					hasPlayedDevelopmentCard = true;
+				}
 				break;
 			case 3 : 
 				//trade
@@ -77,11 +84,17 @@ public class Turn {
 				System.out.println("Your Longest Road Length is: "+player.getLongestRoad());
 				break;
 			case 7:
+				ArrayList<DevelopmentCard> cards = player.getDevelopmentCards();
+				
+				for (int i = 0; i < cards.size(); i++) {
+					DevelopmentCard card = cards.get(i);
+					card.setHidden(false);
+				}
+				
+				player.setDevelopmentCards(cards);
 				break;				
 			default :
-				
-				System.out.println("Invalid choice. Please choose again");
-				
+				System.out.println("Invalid choice. Please choose again");				
 			}
 			
 			hasEnded = checkEndOfGame(player);
@@ -901,11 +914,16 @@ public class Turn {
 			developmentCards.remove(developmentCard);
 			game1.setDevelopmentCards(developmentCards);
 			
-			player.getDevelopmentCards().add(developmentCard);
+			if (developmentCard.getType().equals("victory point")) {
+				
+				playVictoryPointCard(player);
+			}
+			else {
+				
+				player.getDevelopmentCards().add(developmentCard);
+			}
 			
 			System.out.println("Player " + player.getName() + " bought a development card");
-			//TODO check type of development card?
-			//TODO check end of game
 		}
 	}
 	
@@ -957,16 +975,32 @@ public class Turn {
 	public static void playDevelopmentCard(Player player, Game game1, Scanner scanner) {
 		
 		ArrayList<DevelopmentCard> cards = player.getDevelopmentCards();
-		
-		System.out.println("What development card do you want to play?");
+		ArrayList<DevelopmentCard> notHiddenCards = new ArrayList<DevelopmentCard>();
 		
 		for (int i = 0; i < cards.size(); i++) {
 			
-			System.out.println((i+1) + ": " + cards.get(i).getType());
+			DevelopmentCard card = cards.get(i);
+			
+			if (!card.isHidden()) {
+				notHiddenCards.add(card);
+			}
+		}
+		
+		if (notHiddenCards.size() <= 0) {
+			
+			System.out.println("You do not have any development cards to play.");
+			return;
+		}
+		
+		System.out.println("What development card do you want to play?");
+		
+		for (int i = 0; i < notHiddenCards.size(); i++) {
+			
+			System.out.println((i+1) + ": " + notHiddenCards.get(i).getType());
 		}
 		
 		int choice = scanner.nextInt();
-		DevelopmentCard play = cards.get(choice);
+		DevelopmentCard play = notHiddenCards.get(choice-1);
 		
 		String type = play.getType();
 		
@@ -985,10 +1019,6 @@ public class Turn {
 		if (type.equals("monopoly")) {
 			
 			playMonopolyCard(player, game1, scanner);
-		}
-		if (type.equals("victory point")) {
-			
-			playVictoryPointCard(player);
 		}
 				
 		cards.remove(play);
