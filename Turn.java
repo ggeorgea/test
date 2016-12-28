@@ -436,14 +436,14 @@ public class Turn {
 		else{
 			 road1 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1,y1+1));
 			 road2 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1+1,y1));
-			 road3 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2+1,y2));
+			 road3 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2-1,y2));
 			 road4 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2,y2-1));
 		}
 		if(
-				((road1!=null)&&(road1.getOwner().equals(player)))
-				||((road2!=null)&&road2.getOwner().equals(player))
-				||((road3!=null)&&road3.getOwner().equals(player))
-				||((road4!=null)&&road4.getOwner().equals(player))
+			      ((road1!=null)&&(road1.getOwner().equals(player)))
+				||((road2!=null)&&(road2.getOwner().equals(player)))
+				||((road3!=null)&&(road3.getOwner().equals(player)))
+				||((road4!=null)&&(road4.getOwner().equals(player)))
 				){
 		return true;}
 		else{return false;}
