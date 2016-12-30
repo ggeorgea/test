@@ -385,20 +385,54 @@ public class Setup {
 		return settlement;
 	}
 	
-	//TODO doesn't work yet: need to find the nearby hexes
 	//gets the resources based on the placement of the second settlement for the player
 	public static void initialResourceAllocation(Player player, Intersection settlement, Game game1) {
 		
-		//gets the type of each hex bordering the intersection
-		ArrayList<Hex> nearbyHexes = new ArrayList<Hex>();
-		
-		//adds one of each type of resource card to the players hand
-		
 		ArrayList<ResourceCard> resourceCards = player.getResourceCards();
+
+		int x = settlement.getCoordinate().getX();
+		int y = settlement.getCoordinate().getY();
 		
-		for (int i = 0; i < nearbyHexes.size(); i++) {
+		Coordinate nearbyHex;
+		
+		nearbyHex = new Coordinate(x, y-1);
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		
+		nearbyHex = new Coordinate(x, y+1);
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		
+		nearbyHex = new Coordinate(x-1, y);
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		
+		nearbyHex = new Coordinate(x+1, y);
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		
+		nearbyHex = new Coordinate(x-1, y-1);
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		
+		nearbyHex = new Coordinate(x+1, y+1);
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+				
+		System.out.println("Player " + player.getName() + " gets: ");
+		
+		for (int i = 0; i < resourceCards.size(); i++) {
 			
-			String terrain = nearbyHexes.get(i).getTerrain();
+			System.out.print("1x " + resourceCards.get(i).getResource() + " ");
+		}
+		
+ 		player.setResourceCards(resourceCards); 		
+	}
+	
+	public static ArrayList<ResourceCard> getResources(Player player, ArrayList<ResourceCard> resourceCards, Coordinate nearbyHex, Game game1) {
+		
+		Board board1 = game1.getBoard();
+		Location location = board1.getLocationFromCoordinate(nearbyHex);
+		
+		if (location.getType().equals("hex")) {
+			
+			Hex hex = (Hex) location.getContains();
+			String terrain = hex.getTerrain();
+			
 			ResourceCard card = null;
 			
 			switch(terrain) {
@@ -440,15 +474,7 @@ public class Setup {
 			}
 		}
 		
-		System.out.println("Player " + player.getName() + " gets: ");
-		
-		for (int i = 0; i < resourceCards.size(); i++) {
-			
-			System.out.print("1x " + resourceCards.get(i).getResource() + " ");
-		}
-		
- 		player.setResourceCards(resourceCards);
- 		
+		return resourceCards;
 	}
 
 //-----Methods to get the initialise the board and hexes for the game-----//
