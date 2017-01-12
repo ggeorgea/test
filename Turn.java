@@ -1186,23 +1186,66 @@ public class Turn {
 	}
 
 	public static void trade(Player player, Scanner scanner){
-		ArrayList<Port> settledPorts = new ArrayList<Port>();
-		for(int i = 0; i < 9; i++){
-
-		}
 		boolean bank = tradeBankOrPlayer(scanner);
+		ArrayList<Port> standardPorts = new ArrayList<Port>();
+		ArrayList<Port> specialPorts = new ArrayList<Port>();
 		if(bank){
-			boolean hasStandardPort = checkStandardPorts(player);
+			tradeBank(player, scanner);
 		}
 		else{
 
 		}
 	}
 
+	public static void tradeBank(Player player, Scanne,r scanner){
+		for(int i = 0; i < board1.getPorts().size(); i+){
+			if(board1.getPorts().get(i).getOwner() == player){
+				if(board1.getPorts().get(i).getResource().equals("?")){
+					standardPorts.add(board1.getPorts().get(i));
+				}
+				else { specialPorts.add(board1.getPorts().get(i)); }
+			}
+			boolean hasStandard = false; if(standardPorts.size() != 0) hasStandard = true;
+			boolean hasSpecial = false; if(specialPorts.size() != 0) hasSpecial = true;
+			System.out.println("Trading options:\nDirectly with bank (4:1 receiving a resource of your choice) - press 4");
+			if(hasStandard) System.out.println("Through a standard port (3:1 receiving a resource of your choice) - press 3");
+			if(hasSpecial) System.out.println("Through a special port (2:1 receiving a specific resource) - press 2");
+			int choice = scanner.next();
+			switch (choice){
+				case 4 :
+					tradeBank(player, scanner);
+					break;
+				case 3 :
+					if(hasStandard) tradeStandard(player, scanner);
+					else System.out.println("Invalid choice. Please choose again"); tradeBank(player, scanner);
+					break;
+				case 2 :
+					if(hasSpecial) tradeSpecial(player, scanner);
+					else System.out.println("Invalid choice. Please choose again"); tradeBank(player, scanner);
+					break;
+				default:
+					System.out.println("Invalid choice. Please choose again."); tradeBank(player, scanner);
+					break;
+			}
+		}
+	}
+
+	public static void tradeBank(Player player, Scanner, scanner){
+
+	}
+
+	public static void tradeStandard(Player player, Scanner scanner){
+
+	}
+
+	public static void tradeSpecial(Player player, Scanner scanner){
+
+	}
+
 	public static boolean tradeBankOrPlayer(Scanner scanner){
 		System.out.println("Press 'B' to trade with the bank, and 'P' to trade with other players:");
-		char choice = scanner.next().toUpperCase;
-		switch (choice) {
+		char choice = scanner.next();
+		switch (choice.toUpperCase()) {
 			case 'B' :
 				return true;
 				break;
@@ -1213,10 +1256,5 @@ public class Turn {
 				System.out.println("Invalid choice. Please choose again");
 				tradeBankOrPlayer(scanner);
 		}
-	}
-
-	public static boolean hasStandardPort(Player player){
-
-		return false;
 	}
 }
