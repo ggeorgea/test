@@ -10,10 +10,19 @@ public class Robber{
 	private Player  p = new Player(); 
 
 
-	public Robber(Coordinate c , Player p){ 
+
+	//new logic
+	//player will roll dice and if they land on 7 robber will be activated
+	//robber will only perform actions if he is activated otherwise it cannot move 
+
+	boolean activated = false; 
+
+
+	public Robber(Coordinate c , Player p, Boolean activate){ 
 
 		this.c = c ; 
 		this.p = p; 
+		this.activated = activate;
 	}
 
 	public Player getCurrentPlayer(){
@@ -22,6 +31,14 @@ public class Robber{
 
 	public Coordinate getCurrentCoordinate(){ 
 		return c; 
+	}
+
+	public boolean getActivationStatus(){
+		return activated;
+	}
+
+	public void setToActivated(){
+		activated = true;
 	}
 
 
