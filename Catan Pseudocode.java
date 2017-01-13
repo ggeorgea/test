@@ -1,6 +1,18 @@
 //CATAN PSEUDOCODE
 
 -------------------------------------------------------------------------------
+//Board Setup
+//carried out at the very start of play
+
+//create terrain hexes (store in array?)
+
+//shuffle hexes and place randomly on the board
+
+//Place port pieces on the harbours
+
+//Place number tokens randomly on hexes (red tokens can't be on adjascent hexes, and desert tile doesn't get one)
+
+-------------------------------------------------------------------------------
 //Longest Road
 //guess this would be checked every time a road is placed
 
