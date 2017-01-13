@@ -183,7 +183,7 @@ public class Turn {
 			Player player = players.get(i);
 			ArrayList<ResourceCard> cards = player.getResourceCards();
 			
-			if (cards.size() > ROBBER) {
+			if (cards.size() > 7) {
 					
 				cardRemoval(player, cards, game1, scanner);
 				player.setResourceCards(cards);
@@ -263,8 +263,7 @@ public class Turn {
 			moveRobber(player, game1, scanner);
 		}
 		
-		Coordinate a = new Coordinate(x, y);
-		
+		c = new Coordinate(x, y);
 
 		//TODO gets the hex and puts the robber there
 		//TODO lets the player steal a card
