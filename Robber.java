@@ -10,10 +10,19 @@ public class Robber{
 	private Player  p = new Player(); 
 
 
-	public Robber(Coordinate coordinate , Player player){ 
+	public Robber(Coordinate c , Player p){ 
 
+		this.c = c ; 
+		this.p = p; 
 	}
 
+	public getCurrentPlayer(){
+		return p;
+	}
+
+	public getCurrentCoordinate(){ 
+		return c; 
+	}
 
 
 
