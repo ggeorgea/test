@@ -11,7 +11,7 @@ public class Turn {
 
 	//why is the robber initialized as 7? 
 	//private static final int ROBBER = 7;
-	
+
 	//create an instance of robber and a coordinate where it begins 
 	Coordinate c = new coordinate(); 
 	Robber robber = newRobber(c, null);
@@ -27,7 +27,7 @@ public class Turn {
 		
 		Dice.rollDice(player, scanner);
 		
-		if (player.getCurrentRoll() != ROBBER) {
+		if (player.getCurrentRoll() != 7 {
 			resourceAllocation(player.getCurrentRoll(), game1, scanner);
 		}
 		else {
