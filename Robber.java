@@ -16,13 +16,15 @@ public class Robber{
 		this.p = p; 
 	}
 
-	public getCurrentPlayer(){
+	public Player getCurrentPlayer(){
 		return p;
 	}
 
-	public getCurrentCoordinate(){ 
+	public Coordinate getCurrentCoordinate(){ 
 		return c; 
 	}
+
+
 
 
 

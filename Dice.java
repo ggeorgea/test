@@ -3,11 +3,15 @@ import java.util.Scanner;
 
 public class Dice {
 
+	public int valueDice = 0 ; 
 	//rolls the two dice
 	public static void rollDice(Player player, Scanner scanner) {
+
+
 			
 		Random random = new Random();
 		
+		//prompts player to roll the dice and scans input
 		System.out.println("Player " + player.getName() + ": press 'R' to roll.");
 		String enter = scanner.next().toUpperCase();
 			
@@ -24,9 +28,18 @@ public class Dice {
 		int dice1 = random.nextInt(6) + 1;
 		int dice2 = random.nextInt(6) + 1;
 		int diceRoll = dice1 + dice2;
-			
+		valueDice = diceRoll;
 		System.out.println("Player " + player.getName() + " rolls: " + (diceRoll));
 			
 		player.setCurrentRoll(diceRoll);
 	}
+
+	//method to return the value of the dice 
+
+	public int getCurrentValueOfDice(){
+
+		return valueDice();
+
+	}
+
 }
