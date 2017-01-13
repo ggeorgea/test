@@ -18,7 +18,8 @@ public class Player {
 	private ArrayList<ResourceCard> resourceCards = new ArrayList<ResourceCard>();
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
 	//make an array list of roads 
-	
+	private ArrayList<
+
 	
 	public Player() {
 		

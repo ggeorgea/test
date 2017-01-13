@@ -8,6 +8,8 @@ public class Turn {
 	
 	private static final boolean END_GAME = true;
 	private static final int END_TURN = 4;
+	
+	//why is the robber initialized as 7? 
 	private static final int ROBBER = 7;
 	private static final int NO_ROADS = 15;
 	private static final int NO_SETTLEMENTS = 5;
