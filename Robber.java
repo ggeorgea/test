@@ -12,11 +12,10 @@ public class Robber{
 
 
 	//new logic
-	//player will roll dice and if they land on 7 robber will be activated
+	//player will roll dice and if they land on 7 robber will be activated or if someone plays knight card
 	//robber will only perform actions if he is activated otherwise it cannot move 
 
 	boolean activated = false; 
-
 
 	public Robber(Coordinate c , Player p, Boolean activate){ 
 
@@ -40,11 +39,6 @@ public class Robber{
 	public void setToActivated(){
 		activated = true;
 	}
-
-
-
-
-
 
 
 }

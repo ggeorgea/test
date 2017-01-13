@@ -16,6 +16,8 @@ public class Turn {
 	Coordinate c = new coordinate(); 
 	Robber robber = newRobber(c, null);
 
+	
+
 	private static final int NO_ROADS = 15;
 	private static final int NO_SETTLEMENTS = 5;
 	private static final int NO_CITIES = 4;
