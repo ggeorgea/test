@@ -96,7 +96,15 @@ public class Turn {
 	//code to get the resources from a dice roll
 	public static void resourceAllocation(int hexValue, Game game1, Scanner scanner) {
 		
+		ArrayList<Player> players = game1.getPlayers();
 		ArrayList<Hex> hexes = game1.getBoard().getHexes();
+		
+		//resets cards
+		for (int i = 0; i < players.size(); i++) {
+			
+			ArrayList<ResourceCard> newResourceCards = new ArrayList<ResourceCard>();
+			players.get(0).setNewResourceCards(newResourceCards);
+		}
 		
 		for (int i = 0; i < hexes.size(); i++) {
 			
@@ -111,21 +119,43 @@ public class Turn {
 					
 					/*if (player owns settlement) {
 						String terrain = hex.getTerrain();
-						getResources(player, terrain, 1);
+						if (!getResources(player, terrain, 1)) {
+							System.out.println("There are not enough resources left. No player gets new resources this turn.");
+							return;
+						}
+						
 					}*/
 					/*if (player owns city) {
-					String terrain = hex.getTerrain();
-					getResources(player, terrain, 2);
+						String terrain = hex.getTerrain();
+						if (!getResources(player, terrain, 2)) {
+							System.out.println("There are not enough resources left. No player gets new resources this turn.");
+							return;
+						}
 					}*/
 				}
 			}
 		}
+		
+		//sets resource cards
+		for (int i = 0; i < players.size(); i++) {
+			
+			Player player = players.get(i);
+			ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
+			ArrayList<ResourceCard> cards = player.getResourceCards();
+			
+			for (int j = 0; j < newResourceCards.size(); j++) {
+				
+				cards.add(newResourceCards.get(j));
+			}
+			
+			player.setResourceCards(cards);
+		}
 	}
 	
 	//gives the resources to a player
-	public void getResources(Player player, String terrain, Game game1, int n) {
+	public static boolean getResources(Player player, String terrain, Game game1, int n) {
 		
-		ArrayList<ResourceCard> cards = player.getResourceCards();
+		ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
 		
 		for (int i = 0; i < n; i++) {
 		
@@ -134,30 +164,55 @@ public class Turn {
 			switch(terrain) {
 			case "P" : 
 				ArrayList<ResourceCard> wool = game1.getWool();
+				
+				if (wool.size() <= 0) {
+					return false;
+				}
+				
 				card = wool.get(0);
 				wool.remove(0);
 				game1.setWool(wool);
 				break;
 			case "F" :
 				ArrayList<ResourceCard> lumber = game1.getLumber();
+				
+				if (lumber.size() <= 0) {
+					return false;
+				}
+				
 				card = lumber.get(0);
 				lumber.remove(0);
 				game1.setLumber(lumber);
 				break;
 			case "M" :
 				ArrayList<ResourceCard> ore = game1.getOre();
+				
+				if (ore.size() <= 0) {
+					return false;
+				}
+				
 				card = ore.get(0);
 				ore.remove(0);
 				game1.setOre(ore);
 				break;
 			case "H" :
 				ArrayList<ResourceCard> brick = game1.getBrick();
+				
+				if (brick.size() <= 0) {
+					return false;
+				}
+				
 				card = brick.get(0);
 				brick.remove(0);
 				game1.setBrick(brick);
 				break;
 			case "G" :
 				ArrayList<ResourceCard> grain = game1.getGrain();
+				
+				if (grain.size() <= 0) {
+					return false;
+				}
+				
 				card = grain.get(0);
 				grain.remove(0);
 				game1.setGrain(grain);
@@ -165,11 +220,12 @@ public class Turn {
 			}
 
 			if (card != null) {
-				cards.add(card);
+				newResourceCards.add(card);
 			}
 		}
 		
-		player.setResourceCards(cards);
+		player.setNewResourceCards(newResourceCards);
+		return true;
 	}
 	
 //-----Methods to play the robber for the turn-----//
