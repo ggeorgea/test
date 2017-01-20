@@ -92,19 +92,13 @@ public class Turn {
 	
 //-----Methods to perform the resource allocation for the turn-----//
 	
-	//TODO what if the bank doesn't have resources?
 	//code to get the resources from a dice roll
 	public static void resourceAllocation(int hexValue, Game game1, Scanner scanner) {
 		
 		ArrayList<Player> players = game1.getPlayers();
 		ArrayList<Hex> hexes = game1.getBoard().getHexes();
 		
-		//resets cards
-		for (int i = 0; i < players.size(); i++) {
-			
-			ArrayList<ResourceCard> newResourceCards = new ArrayList<ResourceCard>();
-			players.get(0).setNewResourceCards(newResourceCards);
-		}
+		resetNewResources(players);
 		
 		for (int i = 0; i < hexes.size(); i++) {
 			
@@ -117,39 +111,83 @@ public class Turn {
 					//if a player owns one they get resources
 					//1 for settlement, 2 for city
 					
-					/*if (player owns settlement) {
-						String terrain = hex.getTerrain();
-						if (!getResources(player, terrain, 1)) {
-							System.out.println("There are not enough resources left. No player gets new resources this turn.");
-							return;
-						}
-						
-					}*/
-					/*if (player owns city) {
-						String terrain = hex.getTerrain();
-						if (!getResources(player, terrain, 2)) {
-							System.out.println("There are not enough resources left. No player gets new resources this turn.");
-							return;
-						}
-					}*/
+					//TODO checks intersections for players
+					
+					/*int x = hex.getCoordinate().getX();
+					int y = hex.getCoordinate().getY();
+					
+					Coordinate nearbyIntersection;
+					
+					nearbyIntersection = new Coordinate(x, y-1);
+					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+						return;
+					}
+
+					nearbyIntersection = new Coordinate(x, y+1);
+					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+						return;
+					}
+					
+					nearbyIntersection = new Coordinate(x-1, y);
+					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+						return;
+					}
+					
+					nearbyIntersection = new Coordinate(x+1, y);
+					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+						return;
+					}
+					
+					nearbyIntersection = new Coordinate(x-1, y-1);
+					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+						return;
+					}
+					
+					nearbyIntersection = new Coordinate(x+1, y+1);
+					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+						return;
+					}
+					*/
 				}
 			}
 		}
 		
-		//sets resource cards
+		setResources(players);
+		game1.setPlayers(players);
+	}
+	
+	//resets the 'newResourceCards' field in each player object
+	public static void resetNewResources(ArrayList<Player> players) {
+		
 		for (int i = 0; i < players.size(); i++) {
 			
-			Player player = players.get(i);
-			ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
-			ArrayList<ResourceCard> cards = player.getResourceCards();
-			
-			for (int j = 0; j < newResourceCards.size(); j++) {
-				
-				cards.add(newResourceCards.get(j));
-			}
-			
-			player.setResourceCards(cards);
+			ArrayList<ResourceCard> newResourceCards = new ArrayList<ResourceCard>();
+			players.get(0).setNewResourceCards(newResourceCards);
 		}
+	}
+	
+	//gets the resources for the settlement/city
+	public static boolean getIntersectionResources(Intersection nearbyIntersection, Hex hex, Game game1) {
+		/*
+		String type = nearbyIntersection.getType();
+		Player owner = nearbyIntersection.getOwner();
+		
+		if (type = "settlement") {
+			String terrain = hex.getTerrain();
+			if (!getResources(owner, terrain, game1, 1)) {
+				System.out.println("There are not enough resources left. No player gets new resources this turn.");
+				return false;
+			}
+		}
+		else if (type = "city") {
+			String terrain = hex.getTerrain();
+			if (!getResources(owner, terrain, game1, 2)) {
+				System.out.println("There are not enough resources left. No player gets new resources this turn.");
+				return false;
+			}
+		}
+		*/
+		return true;
 	}
 	
 	//gives the resources to a player
@@ -226,6 +264,24 @@ public class Turn {
 		
 		player.setNewResourceCards(newResourceCards);
 		return true;
+	}
+	
+	//adds the cards in 'newResourceCards' to 'resourceCards' for each player
+	public static void setResources(ArrayList<Player> players) {
+		
+		for (int i = 0; i < players.size(); i++) {
+					
+			Player player = players.get(i);
+			ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
+			ArrayList<ResourceCard> cards = player.getResourceCards();
+					
+			for (int j = 0; j < newResourceCards.size(); j++) {
+						
+				cards.add(newResourceCards.get(j));
+			}
+					
+			player.setResourceCards(cards);
+		}
 	}
 	
 //-----Methods to play the robber for the turn-----//
