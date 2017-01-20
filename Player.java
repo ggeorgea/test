@@ -17,26 +17,12 @@ public class Player {
 
 	private ArrayList<ResourceCard> resourceCards = new ArrayList<ResourceCard>();
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
-<<<<<<< HEAD
-	//make an array list of roads 
-	private ArrayList<
 
-	
-=======
+	//make an array list of roads 
 
 	private ArrayList<Intersection> firstSettlements = new ArrayList<Intersection>();
-
 	private ArrayList<Port> settledPorts = new ArrayList<Port>();
 
-	public ArrayList<Intersection> getFirstSettlements() {
-		return firstSettlements;
-	}
-
-	public void setFirstSettlements(ArrayList<Intersection> firstSettlements) {
-		this.firstSettlements = firstSettlements;
-	}
-
->>>>>>> d058faf9545f0228bfe0f6444fd0d96743637bf7
 	public Player() {
 
 	}
@@ -59,11 +45,6 @@ public class Player {
 		this.hasLargestArmy = hasLargestArmy;
 		this.resourceCards = resourceCards;
 		this.developmentCards = developmentCards;
-	}
-
-	public int findLongestRoadLength(){ 
-
-
 	}
 
 	public String getName() {
@@ -130,21 +111,17 @@ public class Player {
 
 		return longestRoad;
 	}
-<<<<<<< HEAD
-	/*
-=======
-
->>>>>>> d058faf9545f0228bfe0f6444fd0d96743637bf7
+	
 	public void setLongestRoad(int longestRoad) {
 
 		this.longestRoad = longestRoad;
 	}
-<<<<<<< HEAD
-	*/
 	
-=======
+	//TODO: What is this??
+	/*public int findLongestRoadLength(){ 
 
->>>>>>> d058faf9545f0228bfe0f6444fd0d96743637bf7
+	}*/
+	
 	public int getLargestArmy() {
 
 		return largestArmy;
@@ -193,6 +170,14 @@ public class Player {
 	public void setDevelopmentCards(ArrayList<DevelopmentCard> developmentCards) {
 
 		this.developmentCards = developmentCards;
+	}
+	
+	public ArrayList<Intersection> getFirstSettlements() {
+		return firstSettlements;
+	}
+
+	public void setFirstSettlements(ArrayList<Intersection> firstSettlements) {
+		this.firstSettlements = firstSettlements;
 	}
 
 	public ArrayList<Port> getSettledPorts(){

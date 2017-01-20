@@ -29,7 +29,7 @@ public class Turn {
 		
 		Dice.rollDice(player, scanner);
 		
-		if (player.getCurrentRoll() != 7 {
+		if (player.getCurrentRoll() != 7) {
 			resourceAllocation(player.getCurrentRoll(), game1, scanner);
 		}
 		else {

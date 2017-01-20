@@ -116,11 +116,13 @@ public class Catan {
 			// will keep letting players take turns until someone wins
 			while (!hasEnded) {
 				for (int i = 0; i < game1.getPlayers().size(); i++) {
+
 //for a test of longest road:
 //					if (i>0){
 //						System.out.println("-----now in manual mode-------");
 //						scanner = new Scanner(System.in);
 //					}
+					
 					// lets the player have a turn
 					hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1,
 							scanner);
@@ -136,10 +138,7 @@ public class Catan {
 		}
 
 		System.out.println("Goodbye!");
-
 	}
-
-
 
 	// asks the players if they want to play again
 	public static boolean playAgain(Scanner scanner) {
@@ -166,20 +165,14 @@ public class Catan {
 		return keepPlaying;
 	}
 
-<<<<<<< HEAD
 
-	//************ Look for the player with the longest road ********
-	//eventually we will need to write a remove method when a player achieves a higher road than the current holder 
-	public static Player checkLongestRoad(){ 
-		//initial longest road to be compared with the players longest road 
-		int longestRoad = 0 ; 
-=======
 	// ************ Look for the player with the longest road ********
 	public static Player longestRoad(Game game1) {
+		
 		ArrayList<Player> players = game1.getPlayers();
 		// initial longest road to be compared with the players longest road
 		int longestRoad = 0;
->>>>>>> d058faf9545f0228bfe0f6444fd0d96743637bf7
+
 		Player hasRoad = players.get(0);
 
 		// iterate the list of player and find the longest road
@@ -189,24 +182,20 @@ public class Catan {
 				hasRoad = p;
 			}
 		}
-<<<<<<< HEAD
-		hasRoad.setHasLongestRoad = True; 
+		
+		hasRoad.setHasLongestRoad(true); 
 		hasRoad.setVictoryPoints(hasRoad.getVictoryPoints()+2); 
-		system.out.println("player" + hasRoad.getName() + "has the longest road.");
-		return hasRoad; 
-=======
-		hasRoad.setHasLongestRoad(true);
-		System.out.println("player" + hasRoad.getName()
-				+ "has the longest road.");
+		System.out.println("player" + hasRoad.getName() + "has the longest road.");
 		return hasRoad;
->>>>>>> d058faf9545f0228bfe0f6444fd0d96743637bf7
-
 	}
+	
 	//Eventually we will need to write a method that keeps track of victory points
 	//we need a method to remove the largest army card when a player exceeds the current holder 
 
-	public static Player checkLargestArmy(){ 
+	public static Player checkLargestArmy(Game game1){ 
 
+		ArrayList<Player> players = game1.getPlayers();
+		
 		int armySize = 0 ; 
 		Player largestArmy = players.get(0);
 
@@ -217,10 +206,10 @@ public class Catan {
 				largestArmy = p; 
 			}
 		}
-		largestArmy.setHasLargestArmy = True; 
+		
+		largestArmy.setHasLargestArmy(true); 
 		largestArmy.setVictoryPoints(largestArmy.getVictoryPoints()+2);
-		system.out.println("player" + largestArmy.getName() + "has the largest army.");
+		System.out.println("player" + largestArmy.getName() + "has the largest army.");
 		return largestArmy; 
 	}
-
 }

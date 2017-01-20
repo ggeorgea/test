@@ -3,7 +3,8 @@ import java.util.Scanner;
 
 public class Dice {
 
-	public int valueDice = 0 ; 
+	public static int valueDice = 0; 
+	
 	//rolls the two dice
 	public static void rollDice(Player player, Scanner scanner) {
 
@@ -38,7 +39,7 @@ public class Dice {
 
 	public int getCurrentValueOfDice(){
 
-		return valueDice();
+		return valueDice;
 
 	}
 
