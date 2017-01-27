@@ -528,20 +528,28 @@ public class Turn {
 	//lets the player build a road
 	public static void buildRoad(Player player, Game game1, Scanner scanner, boolean roadBuilding) {
 
+		//COMMENTS FOR LONGEST ROAD TEST
+		///*
 		//gets the resources needed to build a road
 		ArrayList<ResourceCard> resources = hasRoadResources(player, roadBuilding);
+		//*/
+		
 		
 		//asks the player for coordinates for the road
 		Road road = getRoadCoordinates(player, game1, scanner, roadBuilding);
 		int roadsLeft = NO_ROADS - player.getNoRoads();
-		
+		//COMMENTS FOR LONGEST ROAD TEST
+		///*
 		//checks that the player can buy and place the road at the specified coordinates
 		if (resources.size() != 2) {
 			
 			System.out.println("You do not have enough resources to build a road");
 			return;
 		}
-		else if (roadsLeft <= 0) {
+		
+		else
+			//*/
+			if (roadsLeft <= 0) {
 			
 			System.out.println("You do not have any roads left to place");
 			return;
@@ -565,17 +573,12 @@ public class Turn {
 			buildRoad(player, game1, scanner, roadBuilding);
  			return;
  		 }
-		/*else if (coordinate not next to players roads/settlements) {
-			
-			System.out.println("Road must be placed beside your other roads " +
-				"and settlements. Please choose again");
-			buildRoad(player, game1, scanner);
-			return;
-		 }*/
 		
 		//if the road is valid, the resource cards are removed from the player's hand
 		//and the road is placed on the board
 		else {
+			//COMMENTS FOR LONGEST ROAD TEST
+			///*
 			ArrayList<ResourceCard> cards = player.getResourceCards();
 			
 			if (!roadBuilding) {
@@ -584,7 +587,7 @@ public class Turn {
 				cards.remove(resources.get(1));
 				player.setResourceCards(cards);
 			}
-			
+			//*/
 			road.setOwner(player);
 			player.setNoRoads(player.getNoRoads() - 1);
 						
@@ -616,7 +619,7 @@ public class Turn {
 				if(!longer&&!player.hasLongestRoad()){
 					player.setHasLongestRoad(true); 
 					player.setVictoryPoints(player.getVictoryPoints()+2); 
-					System.out.println("player" + player.getName() + "has the longest road.");
+					System.out.println("player " + player.getName() + " now has the longest road!");
 				}
 			}
 			

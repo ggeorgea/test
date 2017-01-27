@@ -107,22 +107,26 @@ public class Catan {
 			// place roads and settlements
 			Setup.setInitialRoadsAndSettlements(game1, scanner);
 
+			//COMMENTS FOR A TEST OF LONGEST ROAD
+			///*
 			// pass from automated set up to actually playing the game
 
 			System.out.println("-----now in manual mode-------");
 			scanner = new Scanner(System.in);
+			//*/
 			boolean hasEnded = !END_GAME;
 
 			// will keep letting players take turns until someone wins
 			while (!hasEnded) {
 				for (int i = 0; i < game1.getPlayers().size(); i++) {
 
-//for a test of longest road:
-//					if (i>0){
-//						System.out.println("-----now in manual mode-------");
-//						scanner = new Scanner(System.in);
-//					}
-					
+					//  for a test of longest road:
+					/*
+					if (i>0){
+						System.out.println("-----now in manual mode-------");
+						scanner = new Scanner(System.in);
+					}
+					*/
 					// lets the player have a turn
 					hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1,
 							scanner);
@@ -165,7 +169,7 @@ public class Catan {
 		return keepPlaying;
 	}
 
-
+/* code modified/copied in build road method in turn class
 	// ************ Look for the player with the longest road ********
 	public static Player longestRoad(Game game1) {
 		
@@ -187,7 +191,7 @@ public class Catan {
 		hasRoad.setVictoryPoints(hasRoad.getVictoryPoints()+2); 
 		System.out.println("player" + hasRoad.getName() + "has the longest road.");
 		return hasRoad;
-	}
+	}*/
 	
 	//Eventually we will need to write a method that keeps track of victory points
 	//we need a method to remove the largest army card when a player exceeds the current holder 
