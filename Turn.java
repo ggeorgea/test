@@ -16,8 +16,6 @@ public class Turn {
 	Coordinate c = new Coordinate(); 
 	Robber robber = new Robber(c, null, null);
 
-	
-
 	private static final int NO_ROADS = 15;
 	private static final int NO_SETTLEMENTS = 5;
 	private static final int NO_CITIES = 4;
@@ -434,10 +432,14 @@ public class Turn {
 	//lets the player build a road
 	public static void buildRoad(Player player, Game game1, Scanner scanner, boolean roadBuilding) {
 
+		//gets the resources needed to build a road
 		ArrayList<ResourceCard> resources = hasRoadResources(player, roadBuilding);
-		int roadsLeft = NO_ROADS - player.getNoRoads();
-		Road road = getRoadCoordinates(player, game1, scanner);
 		
+		//asks the player for coordinates for the road
+		Road road = getRoadCoordinates(player, game1, scanner, roadBuilding);
+		int roadsLeft = NO_ROADS - player.getNoRoads();
+		
+		//checks that the player can buy and place the road at the specified coordinates
 		if (resources.size() != 2) {
 			
 			System.out.println("You do not have enough resources to build a road");
@@ -474,19 +476,26 @@ public class Turn {
 			buildRoad(player, game1, scanner);
 			return;
 		 }*/
+		
+		//if the road is valid, the resource cards are removed from the player's hand
+		//and the road is placed on the board
 		else {
 			ArrayList<ResourceCard> cards = player.getResourceCards();
-			cards.remove(resources.get(0));
-			cards.remove(resources.get(1));
-			player.setResourceCards(cards);
+			
+			if (!roadBuilding) {
+			
+				cards.remove(resources.get(0));
+				cards.remove(resources.get(1));
+				player.setResourceCards(cards);
+			}
 			
 			road.setOwner(player);
 			player.setNoRoads(player.getNoRoads() - 1);
 			
 			System.out.println("Player " + player.getName() + " placed road at: (" + road.getCoordinateA().getX() 
 					+ "," + road.getCoordinateA().getY() + "),(" + road.getCoordinateB().getX() + "," + road.getCoordinateB().getY() + ")");
+			//TODO check longest road
 			//TODO update road length
-			//TODO check end of game?
 		}
 	}
 
@@ -500,6 +509,7 @@ public class Turn {
 		ResourceCard lumber = null;
 		int i = 0;
 		
+		//loops through the players resource cards to find the cards needed to buy a road
 		while (brick == null || lumber == null) {
 			
 			ResourceCard card = cards.get(i);
@@ -516,6 +526,7 @@ public class Turn {
 			i++;
 		}
 	
+		//if the player has the resources, the road can be built
 		if ((brick != null && lumber != null) || roadBuilding) {
 			
 			resources.add(brick);
@@ -526,7 +537,7 @@ public class Turn {
 	}
 	
 	//asks the player for the coordinates for the road they want to build
-	public static Road getRoadCoordinates(Player player, Game game1, Scanner scanner) {
+	public static Road getRoadCoordinates(Player player, Game game1, Scanner scanner, boolean roadBuilding) {
 		
 		System.out.println("Please select where to place your road");
 		
@@ -548,7 +559,7 @@ public class Turn {
 		if(!((2*y1 <= x1 +8)&&(2*y1>=x1-8)&&(y1<=2*x1+8)&&(y1>=2*x1-8)&&(y1>=-x1-8)&&(y1<=-x1+8))) {
 			
 			System.out.println("Invalid coordinates. Please choose again");
-			//buildRoad(player, game1, scanner);
+			getRoadCoordinates(player, game1, scanner, roadBuilding);
 			return null;
 		}
 		else {
@@ -556,6 +567,7 @@ public class Turn {
 			Coordinate a = new Coordinate(x1, y1);
 			Coordinate b = new Coordinate(x2, y2);
 		
+			//finds the road at the specified coordinates and returns it
 			Road road = game1.getBoard().getRoadFromCo(a, b);
 			return road;
 		}
@@ -566,10 +578,14 @@ public class Turn {
 	//lets the player build a settlement
 	public static void buildSettlement(Player player, Game game1, Scanner scanner) {
 		
+		//checks if the player has the resources
 		ArrayList<ResourceCard> resources = hasSettlementResources(player);
-		int settlementsLeft = NO_SETTLEMENTS - player.getNoSettlements();
+
+		//asks the player for coordinates to place the settlement
 		Intersection settlement = getSettlementCoordinates(player, game1, scanner);
+		int settlementsLeft = NO_SETTLEMENTS - player.getNoSettlements();
 		
+		//checks that the player can buy and place a settlement at the specified coordinates
 		if (resources.size() != 4) {
 			
 			System.out.println("You do not have enough resources to build a settlement");
@@ -600,6 +616,9 @@ public class Turn {
 		 	buildSettlement(player, game1, scanner);
 		 	return;
 		 }*/
+		
+		//if the settlement is valid, the resources are removed from the player's hand,
+		//the settlement is placed on the board and victory points are updated
 		else {
 			
 			ArrayList<ResourceCard> cards = player.getResourceCards();
@@ -632,6 +651,7 @@ public class Turn {
 		ResourceCard grain = null;
 		int i = 0;
 		
+		//checks the player has the specified resources needed to build a settlement
 		while (brick == null || lumber == null || wool == null || grain == null) {
 			
 			ResourceCard card = cards.get(i);
@@ -656,6 +676,7 @@ public class Turn {
 			i++;
 		}
 		
+		//if the player has all the resources they are returned
 		if (brick != null && lumber != null && wool != null && grain != null) {
 			
 			resources.add(brick);
@@ -688,6 +709,7 @@ public class Turn {
 			return null;
 		}
 		
+		//if the coordinates are valid, the intersection is found and returned
 		Intersection settlement = (Intersection) game1.getBoard().getLocationFromCoordinate(a).getContains();
 		
 		return settlement;
@@ -698,10 +720,14 @@ public class Turn {
 	//lets the player build a city
 	public static void buildCity(Player player, Game game1, Scanner scanner) {
 		
+		//checks the player has the corret resources to build the city
 		ArrayList<ResourceCard> resources = hasCityResources(player);
-		int citiesLeft = NO_CITIES - player.getNoCities();
-		Intersection city = getCityCoordinates(player, game1, scanner);
 		
+		//asks the player for coordinates to place the city
+		Intersection city = getCityCoordinates(player, game1, scanner);
+		int citiesLeft = NO_CITIES - player.getNoCities();
+		
+		//checks the player has enough resources and the coordinates are valid
 		if (resources.size() != 5) {
 			
 			System.out.println("You do not have enough resources to build a city");
@@ -723,6 +749,9 @@ public class Turn {
 			buildCity(player, game1, scanner);
 			return;
 		}
+		
+		//if the city can be placed, the resource cards are removed from the player's hand,
+		//the settlement is upgraded and victory points are updated
 		else {
 			
 			ArrayList<ResourceCard> cards = player.getResourceCards();
@@ -752,6 +781,7 @@ public class Turn {
 		ArrayList<ResourceCard> ore = new ArrayList<ResourceCard>();
 		ArrayList<ResourceCard> grain = new ArrayList<ResourceCard>();
 		
+		//checks the player has the correct resources
 		for (int i = 0; i < cards.size(); i++) {
 			
 			ResourceCard card = cards.get(i);
@@ -767,6 +797,7 @@ public class Turn {
 			}
 		}
 		
+		//if the player has enough of each resource, they are returned
 		if (ore.size() >= 3 && grain.size() >= 2) {
 			
 			for (int i = 0; i < 3; i++) {
@@ -801,6 +832,7 @@ public class Turn {
 			return null;
 		}
 		
+		//finds the intersection at the coordinates and returns it
 		Intersection city = (Intersection) game1.getBoard().getLocationFromCoordinate(a).getContains();
 		
 		return city;
@@ -811,10 +843,12 @@ public class Turn {
 	//lets the player buy a development card
 	public static void buyDevelopmentCard(Player player, Game game1, Scanner scanner) {
 		
+		//checks the player has the correct resources to buy a development card
 		ArrayList<ResourceCard> resources = hasDevelopmentCardResources(player);
 		ArrayList<DevelopmentCard> developmentCards = game1.getDevelopmentCards();
 		ArrayList<DevelopmentCard> playerDevCards = player.getDevelopmentCards();
 		
+		//checks if a development card can be bought
 		if (resources.size() != 3) {
 			
 			System.out.println("You do not have enough resources to buy a development card");
@@ -825,6 +859,9 @@ public class Turn {
 			System.out.println("There are no development cards left in the deck");
 			return;			
 		}
+		
+		//if a development card can be bought, the resources are removed from
+		//the player's hand and the development card is added
 		else {
 			
 			ArrayList<ResourceCard> cards = player.getResourceCards();
@@ -845,6 +882,8 @@ public class Turn {
 			
 			String type = developmentCard.getType();
 			
+			//if the development card is a victory point card, it is 
+			//played immediately
 			if (type.equals("victory point")) {
 				
 				playVictoryPointCard(player);
@@ -866,6 +905,7 @@ public class Turn {
 		ResourceCard grain = null;
 		int i = 0;
 		
+		//checks the player has the correct number of resources
 		try {
 			while (ore == null || wool == null || grain == null) {
 				
@@ -891,6 +931,7 @@ public class Turn {
  			return new ArrayList<ResourceCard>();
  		}
 		
+		//if the player has the resources then they are returned
 		if (ore != null && wool != null && grain != null) {
 			
 			resources.add(ore);
@@ -919,6 +960,7 @@ public class Turn {
  		int choice = scanner.nextInt();
  		DevelopmentCard play = cards.get(choice);
  		
+ 		//if the card is hidden then it cannot be played on that turn
  		if (play.isHidden()) {
  			System.out.println("You cannot play a development card you bought this turn. Please choose again");
  			playDevelopmentCard(player, game1, scanner);
@@ -927,6 +969,7 @@ public class Turn {
  		
  		String type = play.getType();
  		
+ 		//selects the correct method depending on the type of card being played
  		if (type.equals("knight")) {
  			
 			playKnightCard(player, game1, scanner);
@@ -943,11 +986,15 @@ public class Turn {
  			
  			playMonopolyCard(player, game1, scanner);
  		}
+ 		//should not ever be needed since victory point cards are played immediately
+ 		//here in case
  		if (type.equals("victory point")) {
  			
 			playVictoryPointCard(player);
  		}
  		
+ 		//if the card has been played, it is removed from the player's hand
+
  		if (cardPlayed) {
  			
  			cards.remove(play);
@@ -959,6 +1006,7 @@ public class Turn {
 	public static void playKnightCard(Player player, Game game1, Scanner scanner) {
 		
 		moveRobber(player, game1, scanner);
+		//TODO card steal?
 		
 		player.setLargestArmy(player.getLargestArmy() + 1);
  		
@@ -971,6 +1019,7 @@ public class Turn {
  		
  		boolean roadBuilding = true;
  		
+ 		//lets the player build two roads
  		for (int i = 0; i < 2; i++) {
  			
  			buildRoad(player, game1, scanner, roadBuilding);
@@ -983,12 +1032,15 @@ public class Turn {
 		ArrayList<ResourceCard> cards = player.getResourceCards();
 		boolean hasResource = true;
 		
+		//lets the player choose two resources from the bank
 		for (int i = 0; i < 2; i++) {
 			
 			hasResource = chooseResourceYOP(cards, game1, scanner);
 		}
 		
 		player.setResourceCards(cards);
+		
+		//if there are no resources in the bank the card cannot be played
 		return hasResource;
 	}
 	
@@ -1001,6 +1053,8 @@ public class Turn {
 		ArrayList<ResourceCard> ore = game1.getOre();
 		ArrayList<ResourceCard> grain = game1.getGrain();
 		
+		//checks if resources can be taken
+		//if not the card is not played
 		if (brick.size() <= 0 && lumber.size() <= 0 && wool.size() <= 0 && ore.size() <= 0 && grain.size() <= 0) {
 			
 			System.out.println("There are no resources left in the bank. You cannot play this development card.");
@@ -1016,6 +1070,7 @@ public class Turn {
 		
 		int choice = scanner.nextInt();
 		
+		//lets the player take a card from the bank
 		switch (choice) {
 		case 1 :
 			if (brick.size() <= 0) {
@@ -1079,6 +1134,8 @@ public class Turn {
 		ArrayList<Player> players = game1.getPlayers();
 		players.remove(player);
 		
+		//takes the resources of specified type from each of the other
+		//players' hands and gives them to the player
 		for (int i = 0; i < players.size(); i++) {
 			
 			Player player2 = players.get(i);
