@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Scanner;
 public class Turn {
 	
 	private static final boolean END_GAME = true;
-	private static final int END_TURN = 4;
+	private static final int END_TURN = 8;
 
 	//why is the robber initialized as 7? 
 	//private static final int ROBBER = 7;
@@ -39,15 +41,19 @@ public class Turn {
 		boolean hasEnded = !END_GAME;
 		
 		while (choice != END_TURN && !hasEnded) {
-			
+			try{
 			System.out.println("Player " + player.getName() + ": What do you want to do?");
 			System.out.println("1: Build a road, settlement, city or development card?");
 			System.out.println("2: Play a development card?");
 			System.out.println("3: Trade with the bank, ports or other players?");
-			System.out.println("4: End turn?");
+			System.out.println("4: Show your hand?");
+			System.out.println("5: Print map?");
+			System.out.println("6: Length of your Longest Road?");
+			System.out.println("7: Count your victory pionts");
+			System.out.println("8: End turn?");
 			
 			choice = scanner.nextInt();
-			
+			int ch = 0;
 			switch(choice) {
 			case 1 :
 				build(player, game1, scanner);
@@ -56,21 +62,47 @@ public class Turn {
 				playDevelopmentCard(player, game1, scanner);
 				break;
 			case 3 : 
-				//trade
+				trade(player, scanner);
 				break;
 			case 4 :
+				System.out.print("(");
+				Iterator<ResourceCard> it = player.getResourceCards().iterator();
+				while(it.hasNext()){
+					System.out.print(it.next().getResource());
+					if(it.hasNext()){
+						System.out.print(", ");
+					}
+				}
+				System.out.print(")\n");
+				break;
+			case 5 :
+				Map.printMap(game1.getBoard());
+				break;
+			case 6 :
+				System.out.println("Your Longest Road Length is: "+player.getLongestRoad());
+				break;
+			case 7:
+				System.out.println("You have "+player.getVictoryPoints()+" victory points");
+				break;
+			case 8:
 				break;
 			default :
 				System.out.println("Invalid choice. Please choose again");
 			}
 			
 			hasEnded = checkEndOfGame(player);
+			}
+			catch(InputMismatchException e){
+				System.out.println("Invalid choice. Please choose again");
+				scanner.nextLine();
+			}
 		}
 		
 		updateDevelopmentCards(player);
 		
 		return hasEnded;
 	}
+
 
 	//checks if the game has ended
 	public static boolean checkEndOfGame(Player player) {
@@ -333,7 +365,7 @@ public class Turn {
 				
 				System.out.println(j + ": " + cards.get(j).getResource());
 			}
-			
+			try{
 			int choice = scanner.nextInt();
 			
 			if (choice < 0 || choice >= cards.size()) {
@@ -367,33 +399,50 @@ public class Turn {
 			}
 			
 			cards.remove(choice);
+			}
+			catch(InputMismatchException e){
+				System.out.println("Invalid choice. Please choose again");
+				scanner.nextLine();
+				cardRemoval(player,cards,game1,scanner);
+			}
 		}
 	}
 	
 	//allows the player to move the robber and steal a card from a player
 	public static void moveRobber(Player player, Game game1, Scanner scanner) {
-		
+		try{
 		System.out.println("Player " + player.getName() + ": Please select where to place the robber");
-		
+
 		System.out.println("Select X coordinate");
 		int x = scanner.nextInt();
-		
+
 		System.out.println("Select Y coordinate");
 		int y = scanner.nextInt();
-		
+		Coordinate a = new Coordinate(x, y);
 		//checks the coordinates are in the correct range
-		//if (x < -4 || x > 4 || y < -4 || y > 4) {
-		if((!((2*y <= x +8)||(2*y>=x-8)&&(y<=2*x+8)&&(y>=2*x-8)&&(y>=-x-8)&&(y<=-x+8)))) {
-			
+		if((!((2*y <= x +8)&&(2*y>=x-8)&&(y<=2*x+8)&&(y>=2*x-8)&&(y>=-x-8)&&(y<=-x+8)))
+				||
+				(!game1.getBoard().getLocationFromCoordinate(a).getType().equals("hex"))){
+
 			System.out.println("Invalid coordinates. Please choose again");
 			moveRobber(player, game1, scanner);
+			return;
 		}
-		
-		Coordinate c = new Coordinate(x, y);
 
+
+
+		Hex hex1 = (Hex) game1.getBoard().getLocationFromCoordinate(a).getContains();
+		hex1.setisRobberHere("R");
+		game1.getBoard().setRobber(a);
 		//TODO gets the hex and puts the robber there
 		//TODO lets the player steal a card
+		}
+		catch(InputMismatchException e){
+			scanner.nextLine();
+			 moveRobber(player,game1,scanner);
+		}
 	}
+
 	
 //-----Methods to build and buy things for the turn-----//
 	
@@ -429,6 +478,53 @@ public class Turn {
 	
 //----Methods to build a road----//
 	
+
+	//checks if a road is connected to your other roads
+	public static boolean checkConnected(Road road, Player player, Game game1){
+	//	game1.getBoard().getLocationFromCoordinate(road.getCoordinateA())
+		//vertical
+		Board board1 = game1.getBoard();
+		//note: coordinateA is always the higher up coordinate on the printed represenation
+		int x1 = road.getCoordinateA().getX();
+		int y1 = road.getCoordinateA().getY();
+		int x2 = road.getCoordinateB().getX();
+		int y2 = road.getCoordinateB().getY();
+		Road road1;
+		Road road2;
+		Road road3;
+		Road road4;
+		if(road.getCoordinateA().getX()==road.getCoordinateB().getX()){
+			 road1= board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1-1,y1));
+			 road2= board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1+1,y1+1));
+			 road3= board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2+1,y2));
+			 road4= board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2-1,y2-1));
+
+		}
+		//negslope
+		else if(road.getCoordinateA().getY()==road.getCoordinateB().getY()){
+			 road1 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1,y1+1));
+			 road2 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1-1,y1-1));
+			 road3 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2+1,y2+1));
+			 road4 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2,y2-1));
+		}
+		//poslope
+		else{
+			 road1 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1,y1+1));
+			 road2 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1+1,y1));
+			 road3 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2-1,y2));
+			 road4 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2,y2-1));
+		}
+		if(
+			      ((road1!=null)&&(road1.getOwner().equals(player)))
+				||((road2!=null)&&(road2.getOwner().equals(player)))
+				||((road3!=null)&&(road3.getOwner().equals(player)))
+				||((road4!=null)&&(road4.getOwner().equals(player)))
+				){
+		return true;}
+		else{return false;}
+	}
+	
+	
 	//lets the player build a road
 	public static void buildRoad(Player player, Game game1, Scanner scanner, boolean roadBuilding) {
 
@@ -462,13 +558,13 @@ public class Turn {
 			buildRoad(player, game1, scanner, roadBuilding);
 			return;
 		}
- 		/*else if (!checkConnected(road,player,game1)) {
+ 		else if (!checkConnected(road,player,game1)) {
  			
  			System.out.println("Road must be placed beside your other roads " +
  				"and settlements. Please choose again");
 			buildRoad(player, game1, scanner, roadBuilding);
  			return;
- 		 }*/
+ 		 }
 		/*else if (coordinate not next to players roads/settlements) {
 			
 			System.out.println("Road must be placed beside your other roads " +
@@ -491,9 +587,40 @@ public class Turn {
 			
 			road.setOwner(player);
 			player.setNoRoads(player.getNoRoads() - 1);
-			
+						
 			System.out.println("Player " + player.getName() + " placed road at: (" + road.getCoordinateA().getX() 
 					+ "," + road.getCoordinateA().getY() + "),(" + road.getCoordinateB().getX() + "," + road.getCoordinateB().getY() + ")");
+			
+			
+			
+			
+			//checks for longest road
+			int oldlong = player.getLongestRoad();
+			LongestRoad.CheckPlayerLongestRoad(player, game1, road);
+			int newLong = player.getLongestRoad();
+			//has to have improved and be longer than 4 to matter
+			if(newLong>oldlong && newLong>4){
+				boolean longer = false;
+				ArrayList<Player> players = game1.getPlayers();
+				//checks to see if any other players have a longer or equal road already
+				for (Player p : players) {
+					if (p.getLongestRoad() >= newLong && !p.equals(player)) {
+						longer = true;
+					}
+					//if p doesnt have the longest road, but thinks they do
+					else if(!p.equals(player)&&p.hasLongestRoad()){
+						p.setHasLongestRoad(false);
+						p.setVictoryPoints(p.getVictoryPoints()-2);
+					}
+				}
+				if(!longer&&!player.hasLongestRoad()){
+					player.setHasLongestRoad(true); 
+					player.setVictoryPoints(player.getVictoryPoints()+2); 
+					System.out.println("player" + player.getName() + "has the longest road.");
+				}
+			}
+			
+			
 			//TODO check longest road
 			//TODO update road length
 		}
@@ -508,7 +635,7 @@ public class Turn {
 		ResourceCard brick = null;
 		ResourceCard lumber = null;
 		int i = 0;
-		
+		try{
 		//loops through the players resource cards to find the cards needed to buy a road
 		while (brick == null || lumber == null) {
 			
@@ -525,7 +652,11 @@ public class Turn {
 			
 			i++;
 		}
-	
+		}
+		catch(IndexOutOfBoundsException e)
+		{
+			return new ArrayList<ResourceCard>();
+		}
 		//if the player has the resources, the road can be built
 		if ((brick != null && lumber != null) || roadBuilding) {
 			
@@ -596,26 +727,77 @@ public class Turn {
 			System.out.println("You do not have enough settlements left to place");
 			return;
 		}
+		
+		
+		ArrayList<Intersection> illegal = settlement.getIllegal();
+		for (int i = 0; i < illegal.size(); i++) {
+			Intersection inter = illegal.get(i);
+			if (inter.getOwner().getName() != null) {
+				System.out.println("Settlement must be placed more than two roads away. " +
+				 		"Please choose again");
+				buildSettlement(player, game1, scanner);
+				return;
+			}
+		}
+
+
+		boolean foundSuitible = false;
+		do{
+			Road tryRoad;
+			int j = settlement.getCoordinate().getX();
+			int g = settlement.getCoordinate().getY();
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j,g+1));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j,g-1));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1,g));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1,g));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1,g+1));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1,g-1));
+			if(tryRoad!=null&&tryRoad.getOwner().equals(player)){
+				foundSuitible = true;
+				break;
+			}
+		}while(false);
+
+
+
+
+
+		if (!foundSuitible) {
+
+		 	System.out.println("Settlement must be placed beside one of your roads. " +
+		 		"Please choose again");
+		 	buildSettlement(player, game1, scanner);
+		 	return;
+		 }
+		
+		
 		else if (settlement.getOwner().getName() != null) {
 			
 			System.out.println("A settlement has already been placed here. Please choose again");
 			buildSettlement(player, game1, scanner);
 			return;
 		}
-		/*else if (settlement is not next to any of that players roads) {
-		 
-		 	System.out.println("Settlement must be placed beside one of your roads. " +
-		 		"Please choose again");
-		 	buildSettlement(player, game1, scanner);
-		 	return;
-		 }*/
-		/*else if (settlement is not two roads away from another settlement) {
-		 	
-		 	System.out.println("Settlement must be placed more than two roads away. " +
-		 		"Please choose again");
-		 	buildSettlement(player, game1, scanner);
-		 	return;
-		 }*/
+
 		
 		//if the settlement is valid, the resources are removed from the player's hand,
 		//the settlement is placed on the board and victory points are updated
@@ -650,7 +832,7 @@ public class Turn {
 		ResourceCard wool = null;
 		ResourceCard grain = null;
 		int i = 0;
-		
+		try{
 		//checks the player has the specified resources needed to build a settlement
 		while (brick == null || lumber == null || wool == null || grain == null) {
 			
@@ -675,7 +857,11 @@ public class Turn {
 			
 			i++;
 		}
-		
+	}
+	catch(IndexOutOfBoundsException e)
+	{
+		return new ArrayList<ResourceCard>();
+	}
 		//if the player has all the resources they are returned
 		if (brick != null && lumber != null && wool != null && grain != null) {
 			
@@ -1202,4 +1388,59 @@ public class Turn {
 		
 		checkEndOfGame(player);
 	}
+
+	
+	
+	
+	//methods found in old turn class
+	public static void checkIfPortSettled(Player player, Intersection settlement){
+		int xCoord = settlement.getCoordinate().getX();
+		int yCoord = settlement.getCoordinate().getY();
+		for(int i = 0; i < board1.getPorts().size(); i++){
+			if((xCoord == board1.getPorts().getCoordinateA().getX()) && (yCoord == board1.getPorts().getCoordinateA().getY())){
+				board1.getPorts().get(i).setOwner(player);
+			}
+		}
+	}
+
+	public static void trade(Player player, Scanner scanner){
+		ArrayList<Port> settledPorts = new ArrayList<Port>();
+		for(int i = 0; i < 9; i++){
+
+		}
+		boolean bank = tradeBankOrPlayer(scanner);
+		if(bank){
+			boolean hasStandardPort = checkStandardPorts(player);
+		}
+		else{
+
+		}
+	}
+
+	public static boolean tradeBankOrPlayer(Scanner scanner){
+		System.out.println("Press 'B' to trade with the bank, and 'P' to trade with other players:");
+		char choice = scanner.next().toUpperCase();
+		switch (choice) {
+			case 'B' :
+				return true;
+				break;
+			case 'P' :
+				return false;
+				break;
+			default :
+				System.out.println("Invalid choice. Please choose again");
+				tradeBankOrPlayer(scanner);
+		}
+	}
+
+	public static boolean hasStandardPort(Player player){
+
+		return false;
+	}
+
+
 }
+
+
+
+
