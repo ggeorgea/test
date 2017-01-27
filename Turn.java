@@ -604,9 +604,6 @@ public class Turn {
 			System.out.println("Player " + player.getName() + " placed road at: (" + road.getCoordinateA().getX() 
 					+ "," + road.getCoordinateA().getY() + "),(" + road.getCoordinateB().getX() + "," + road.getCoordinateB().getY() + ")");
 			
-			
-			
-			
 			//checks for longest road
 			int oldlong = player.getLongestRoad();
 			LongestRoad.CheckPlayerLongestRoad(player, game1, road);
@@ -632,10 +629,6 @@ public class Turn {
 					System.out.println("player " + player.getName() + " now has the longest road!");
 				}
 			}
-			
-			
-			//TODO check longest road
-			//TODO update road length
 		}
 	}
 
@@ -1143,7 +1136,6 @@ public class Turn {
 	
 //----Methods to play a development card----//
 	
-	//TODO what if all development cards are hidden - get stuck in loop
 	//lets the player select a development card to play
  	public static void playDevelopmentCard(Player player, Game game1, Scanner scanner) {
  		
@@ -1219,10 +1211,51 @@ public class Turn {
 		//TODO card steal?
 		
 		player.setLargestArmy(player.getLargestArmy() + 1);
- 		
-		//TODO check for largest army
-		checkEndOfGame(player);
+ 				
+		//checks for largest army
+		checkLargestArmy(player, game1);
+		
  	}
+	
+	//updates who has the largest army card
+	public static void checkLargestArmy(Player player, Game game1) {
+		
+		int noKnights = player.getLargestArmy();
+		
+		//will only check if the player who just played a knight card
+		//has at least three knight cards
+		if (noKnights >= 3) {
+			
+			boolean larger = false;
+			ArrayList<Player> players = game1.getPlayers();
+	
+			//checks if there is another player with more knights than the
+			//current player
+			for (Player p : players) {
+				
+				if (p.getLargestArmy() >= noKnights && !p.equals(player)) {
+					
+					larger = true;
+				}
+				//if there is a player that has less knights than the player
+				//that has the largest army card, the points are taken away from them
+				else if (!p.equals(player) && p.hasLargestArmy()) {
+					
+					p.setHasLargestArmy(false);
+					p.setVictoryPoints(p.getVictoryPoints()-2);
+				}
+			}
+			
+			//if there is no player with more knights and the player does not
+			//already have largest army, they are given the victory points
+			if (!larger && !player.hasLargestArmy()) {
+				
+				player.setHasLargestArmy(true); 
+				player.setVictoryPoints(player.getVictoryPoints()+2); 
+				System.out.println("player " + player.getName() + " now has the largest army!");
+			}
+		}		
+	}
  	
 	//plays a road building card
 	public static void playRoadBuildingCard(Player player, Game game1, Scanner scanner) {
