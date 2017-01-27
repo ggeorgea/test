@@ -30,67 +30,78 @@ public class Turn {
 		Dice.rollDice(player, scanner);
 		
 		if (player.getCurrentRoll() != 7) {
+			
 			resourceAllocation(player.getCurrentRoll(), game1, scanner);
 		}
+		
 		else {
+			
 			checkCardRemoval(game1, scanner);
 			moveRobber(player, game1, scanner);
 		}
 		
 		int choice = 0;
+		boolean hasPlayedDevCard = false;
 		boolean hasEnded = !END_GAME;
 		
 		while (choice != END_TURN && !hasEnded) {
 			try{
-			System.out.println("Player " + player.getName() + ": What do you want to do?");
-			System.out.println("1: Build a road, settlement, city or development card?");
-			System.out.println("2: Play a development card?");
-			System.out.println("3: Trade with the bank, ports or other players?");
-			System.out.println("4: Show your hand?");
-			System.out.println("5: Print map?");
-			System.out.println("6: Length of your Longest Road?");
-			System.out.println("7: Count your victory pionts");
-			System.out.println("8: End turn?");
+				System.out.println("Player " + player.getName() + ": What do you want to do?");
+				System.out.println("1: Build a road, settlement, city or development card?");
+				System.out.println("2: Play a development card?");
+				System.out.println("3: Trade with the bank, ports or other players?");
+				System.out.println("4: Show your hand?");
+				System.out.println("5: Print map?");
+				System.out.println("6: Length of your Longest Road?");
+				System.out.println("7: Count your victory pionts");
+				System.out.println("8: End turn?");
 			
-			choice = scanner.nextInt();
-			int ch = 0;
-			switch(choice) {
-			case 1 :
-				build(player, game1, scanner);
-				break;
-			case 2 :
-				playDevelopmentCard(player, game1, scanner);
-				break;
-			case 3 : 
-				trade(player, scanner);
-				break;
-			case 4 :
-				System.out.print("(");
-				Iterator<ResourceCard> it = player.getResourceCards().iterator();
-				while(it.hasNext()){
-					System.out.print(it.next().getResource());
-					if(it.hasNext()){
-						System.out.print(", ");
+				choice = scanner.nextInt();
+				int ch = 0;
+			
+				switch(choice) {
+				case 1 :
+					build(player, game1, scanner);
+					break;
+				case 2 :
+					if (!hasPlayedDevCard) {
+						playDevelopmentCard(player, game1, scanner);
+						hasPlayedDevCard = true;
 					}
+					else {
+						System.out.println("You can only play one development card on your turn.");
+					}
+					break;
+				case 3 : 
+					trade(player, scanner);
+					break;
+				case 4 :
+					System.out.print("(");
+					Iterator<ResourceCard> it = player.getResourceCards().iterator();
+					while(it.hasNext()){
+						System.out.print(it.next().getResource());
+						if(it.hasNext()){
+							System.out.print(", ");
+						}	
+					}
+					System.out.print(")\n");
+					break;
+				case 5 :
+					Map.printMap(game1.getBoard());
+					break;
+				case 6 :
+					System.out.println("Your Longest Road Length is: " + player.getLongestRoad());
+					break;
+				case 7:
+					System.out.println("You have " + player.getVictoryPoints() + " victory points");
+					break;
+				case 8:
+					break;
+				default :
+					System.out.println("Invalid choice. Please choose again");
 				}
-				System.out.print(")\n");
-				break;
-			case 5 :
-				Map.printMap(game1.getBoard());
-				break;
-			case 6 :
-				System.out.println("Your Longest Road Length is: "+player.getLongestRoad());
-				break;
-			case 7:
-				System.out.println("You have "+player.getVictoryPoints()+" victory points");
-				break;
-			case 8:
-				break;
-			default :
-				System.out.println("Invalid choice. Please choose again");
-			}
 			
-			hasEnded = checkEndOfGame(player);
+				hasEnded = checkEndOfGame(player);
 			}
 			catch(InputMismatchException e){
 				System.out.println("Invalid choice. Please choose again");
@@ -99,7 +110,6 @@ public class Turn {
 		}
 		
 		updateDevelopmentCards(player);
-		
 		return hasEnded;
 	}
 
@@ -1133,28 +1143,40 @@ public class Turn {
 	
 //----Methods to play a development card----//
 	
+	//TODO what if all development cards are hidden - get stuck in loop
 	//lets the player select a development card to play
  	public static void playDevelopmentCard(Player player, Game game1, Scanner scanner) {
  		
  		ArrayList<DevelopmentCard> cards = player.getDevelopmentCards();
+ 		ArrayList<DevelopmentCard> playCards = new ArrayList<DevelopmentCard>();
  		boolean cardPlayed = true;
+ 		 		
+ 		for (int i = 0; i < cards.size(); i++) {
+ 			
+ 			DevelopmentCard card = cards.get(i);
+ 			
+ 			if (!card.isHidden()) {
+ 				playCards.add(card);
+ 			}
+ 		}
+ 		
+ 		if (playCards.size() <= 0) {
+ 			
+ 			System.out.println("You do not have any development cards in your hand to play");
+ 			return;
+ 		}
  		
  		System.out.println("What development card do you want to play?");
  		
- 		for (int i = 0; i < cards.size(); i++) {
+ 		for (int i = 0; i < playCards.size(); i++) {
  			
- 			System.out.println((i+1) + ": " + cards.get(i).getType());
+ 			System.out.println((i+1) + ": " + playCards.get(i).getType());
  		}
  		
  		int choice = scanner.nextInt();
- 		DevelopmentCard play = cards.get(choice);
+ 		DevelopmentCard play = playCards.get(choice);
  		
  		//if the card is hidden then it cannot be played on that turn
- 		if (play.isHidden()) {
- 			System.out.println("You cannot play a development card you bought this turn. Please choose again");
- 			playDevelopmentCard(player, game1, scanner);
- 			return;
- 		}
  		
  		String type = play.getType();
  		
@@ -1183,7 +1205,6 @@ public class Turn {
  		}
  		
  		//if the card has been played, it is removed from the player's hand
-
  		if (cardPlayed) {
  			
  			cards.remove(play);
@@ -1440,10 +1461,4 @@ public class Turn {
 
 		return false;
 	}
-
-
 }
-
-
-
-
