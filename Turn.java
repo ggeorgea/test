@@ -55,7 +55,7 @@ public class Turn {
 				build(player, game1, scanner);
 				break;
 			case 2 :
-				//play dev card
+				playDevelopmentCard(player, game1, scanner);
 				break;
 			case 3 : 
 				//trade
@@ -68,6 +68,8 @@ public class Turn {
 			
 			hasEnded = checkEndOfGame(player);
 		}
+		
+		updateDevelopmentCards(player);
 		
 		return hasEnded;
 	}
@@ -88,6 +90,17 @@ public class Turn {
 	public static void endGame(Player player) {
 		
 		System.out.println("Player " + player.getName() + " Wins!");
+	}
+	
+	//updates development cards so ones bought this turn can be played next turn
+	public static void updateDevelopmentCards(Player player) {
+		
+		ArrayList<DevelopmentCard> developmentCards = player.getDevelopmentCards();
+		
+		for (int i = 0; i < developmentCards.size(); i++) {
+		
+			developmentCards.get(i).setHidden(false);
+		}
 	}
 	
 //-----Methods to perform the resource allocation for the turn-----//
@@ -800,6 +813,7 @@ public class Turn {
 		
 		ArrayList<ResourceCard> resources = hasDevelopmentCardResources(player);
 		ArrayList<DevelopmentCard> developmentCards = game1.getDevelopmentCards();
+		ArrayList<DevelopmentCard> playerDevCards = player.getDevelopmentCards();
 		
 		if (resources.size() != 3) {
 			
@@ -825,10 +839,19 @@ public class Turn {
 			developmentCards.remove(developmentCard);
 			game1.setDevelopmentCards(developmentCards);
 			
-			player.getDevelopmentCards().add(developmentCard);
+			playerDevCards.add(developmentCard);
 			
 			System.out.println("Player " + player.getName() + " bought a development card");
-			//TODO check type of development card?
+			
+			String type = developmentCard.getType();
+			
+			if (type.equals("victory point")) {
+				
+				playVictoryPointCard(player);
+				playerDevCards.remove(developmentCard);
+			}
+			
+			player.setDevelopmentCards(playerDevCards);
 		}
 	}
 	
@@ -895,6 +918,12 @@ public class Turn {
  		
  		int choice = scanner.nextInt();
  		DevelopmentCard play = cards.get(choice);
+ 		
+ 		if (play.isHidden()) {
+ 			System.out.println("You cannot play a development card you bought this turn. Please choose again");
+ 			playDevelopmentCard(player, game1, scanner);
+ 			return;
+ 		}
  		
  		String type = play.getType();
  		
