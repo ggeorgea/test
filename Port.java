@@ -10,7 +10,7 @@ public class Port {
 
 	}
 
-	public Port(Coordinate coordinateA, Coordinate coordinateB, String resource) {
+	public Port(Coordinate coordinateA, Coordinate coordinateB, String resource, Player owner) {
 
 		this.coordinateA = coordinateA;
 		this.coordinateB = coordinateB;

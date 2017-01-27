@@ -13,8 +13,8 @@ public class Turn {
 	//private static final int ROBBER = 7;
 
 	//create an instance of robber and a coordinate where it begins 
-	Coordinate c = new coordinate(); 
-	Robber robber = newRobber(c, null);
+	Coordinate c = new Coordinate(); 
+	Robber robber = new Robber(c, null, null);
 
 	
 
@@ -97,6 +97,7 @@ public class Turn {
 		
 		ArrayList<Player> players = game1.getPlayers();
 		ArrayList<Hex> hexes = game1.getBoard().getHexes();
+		Board board = game1.getBoard();
 		
 		resetNewResources(players);
 		
@@ -113,41 +114,40 @@ public class Turn {
 					
 					//TODO checks intersections for players
 					
-					/*int x = hex.getCoordinate().getX();
+					int x = hex.getCoordinate().getX();
 					int y = hex.getCoordinate().getY();
 					
 					Coordinate nearbyIntersection;
 					
 					nearbyIntersection = new Coordinate(x, y-1);
-					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
 						return;
 					}
 
 					nearbyIntersection = new Coordinate(x, y+1);
-					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
 						return;
 					}
 					
 					nearbyIntersection = new Coordinate(x-1, y);
-					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
 						return;
 					}
 					
 					nearbyIntersection = new Coordinate(x+1, y);
-					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
 						return;
 					}
 					
 					nearbyIntersection = new Coordinate(x-1, y-1);
-					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
 						return;
 					}
 					
 					nearbyIntersection = new Coordinate(x+1, y+1);
-					if(!getIntersectionResources(nearbyIntersection, hex, game1)) {
+					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
 						return;
 					}
-					*/
 				}
 			}
 		}
@@ -167,26 +167,26 @@ public class Turn {
 	}
 	
 	//gets the resources for the settlement/city
-	public static boolean getIntersectionResources(Intersection nearbyIntersection, Hex hex, Game game1) {
-		/*
-		String type = nearbyIntersection.getType();
-		Player owner = nearbyIntersection.getOwner();
+	public static boolean getIntersectionResources(Board board, Coordinate nearbyIntersection, Hex hex, Game game1) {
 		
-		if (type = "settlement") {
+		String type = board.getLocationFromCoordinate(nearbyIntersection).getType();
+		Player owner = ((Intersection) board.getLocationFromCoordinate(nearbyIntersection).getContains()).getOwner();
+		
+		if (type.equals("settlement")) {
 			String terrain = hex.getTerrain();
 			if (!getResources(owner, terrain, game1, 1)) {
 				System.out.println("There are not enough resources left. No player gets new resources this turn.");
 				return false;
 			}
 		}
-		else if (type = "city") {
+		else if (type.equals("city")) {
 			String terrain = hex.getTerrain();
 			if (!getResources(owner, terrain, game1, 2)) {
 				System.out.println("There are not enough resources left. No player gets new resources this turn.");
 				return false;
 			}
 		}
-		*/
+		
 		return true;
 	}
 	
@@ -371,13 +371,14 @@ public class Turn {
 		int y = scanner.nextInt();
 		
 		//checks the coordinates are in the correct range
-		if (x < -4 || x > 4 || y < -4 || y > 4) {
+		//if (x < -4 || x > 4 || y < -4 || y > 4) {
+		if((!((2*y <= x +8)||(2*y>=x-8)&&(y<=2*x+8)&&(y>=2*x-8)&&(y>=-x-8)&&(y<=-x+8)))) {
 			
 			System.out.println("Invalid coordinates. Please choose again");
 			moveRobber(player, game1, scanner);
 		}
 		
-		c = new Coordinate(x, y);
+		Coordinate c = new Coordinate(x, y);
 
 		//TODO gets the hex and puts the robber there
 		//TODO lets the player steal a card

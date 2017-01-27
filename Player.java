@@ -17,8 +17,17 @@ public class Player {
 
 	private ArrayList<ResourceCard> resourceCards = new ArrayList<ResourceCard>();
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
+	private ArrayList<ResourceCard> newResourceCards = new ArrayList<ResourceCard>();
 
 	//make an array list of roads 
+
+	public ArrayList<ResourceCard> getNewResourceCards() {
+		return newResourceCards;
+	}
+
+	public void setNewResourceCards(ArrayList<ResourceCard> newResourceCards) {
+		this.newResourceCards = newResourceCards;
+	}
 
 	private ArrayList<Intersection> firstSettlements = new ArrayList<Intersection>();
 	private ArrayList<Port> settledPorts = new ArrayList<Port>();
