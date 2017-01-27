@@ -5,6 +5,7 @@ public class Board {
 
 	private int size;
 	private Coordinate robber;
+	private Robber theRobber;
 	private ArrayList<Hex> hexes = new ArrayList<Hex>();
 	private ArrayList<Port> ports = new ArrayList<Port>();
 	private ArrayList<Road> roads = new ArrayList<Road>();
@@ -33,6 +34,15 @@ public class Board {
 		this.boardLocations = boardLocations;
 	}
 	
+	
+	public Robber getTheRobber() {
+		return theRobber;
+	}
+
+	public void setTheRobber(Robber theRobber) {
+		this.theRobber = theRobber;
+	}
+
 	public HashMap getRoadmap() {
 		return roadmap;
 	}

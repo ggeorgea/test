@@ -586,6 +586,8 @@ public class Setup {
 		hexwDes.setNumber(7);
 		hexw7.setTerrain(otherterr);
 		hexw7.setNumber(otherNum);
+		Robber robber1 = new Robber(hexwDes.getCoordinate(),null,false);
+		board1.setTheRobber(robber1);
 		board1.setRobber(hexwDes.getCoordinate());
 		hexwDes.setisRobberHere("R");
 		board1.getHexes().set(givenDesert, hexwDes);

@@ -1,5 +1,5 @@
 
-public class location {
+public class Location {
 private Coordinate Coord;
 private String type;
 private Object contains;
@@ -21,11 +21,11 @@ public Object getContains() {
 public void setContains(Object contains) {
 	this.contains = contains;
 }
-public location(Coordinate coord, String type, Object contains) {
+public Location(Coordinate coord, String type, Object contains) {
 	super();
 	Coord = coord;
 	this.type = type;
 	this.contains = contains;
 }
-public location() {}
+public Location() {}
 }
