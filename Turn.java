@@ -416,6 +416,8 @@ public class Turn {
 		}
 	}
 	
+//----Methods to build a road----//
+	
 	//lets the player build a road
 	public static void buildRoad(Player player, Game game1, Scanner scanner, boolean roadBuilding) {
 
@@ -545,6 +547,8 @@ public class Turn {
 			return road;
 		}
 	}
+	
+//----Methods to build a settlement----//
 	
 	//lets the player build a settlement
 	public static void buildSettlement(Player player, Game game1, Scanner scanner) {
@@ -676,6 +680,9 @@ public class Turn {
 		return settlement;
 	}
 	
+//----Methods to build a city----//
+	
+	//lets the player build a city
 	public static void buildCity(Player player, Game game1, Scanner scanner) {
 		
 		ArrayList<ResourceCard> resources = hasCityResources(player);
@@ -723,6 +730,7 @@ public class Turn {
 		}
 	}
 	
+	//checks if the player has enough resources to build the city
 	public static ArrayList<ResourceCard> hasCityResources(Player player) {
 		
 		ArrayList<ResourceCard> cards = player.getResourceCards();
@@ -759,6 +767,7 @@ public class Turn {
 		return resources;
 	}
 	
+	//asks the player for the coordinates for the settlement they want to build
 	public static Intersection getCityCoordinates(Player player, Game game1, Scanner scanner) {
 
 		System.out.println("Please select the settlement you want to upgrade to a city");
@@ -784,6 +793,9 @@ public class Turn {
 		return city;
 	}
 	
+//----Methods to buy a development card----//
+	
+	//lets the player buy a development card
 	public static void buyDevelopmentCard(Player player, Game game1, Scanner scanner) {
 		
 		ArrayList<ResourceCard> resources = hasDevelopmentCardResources(player);
@@ -820,6 +832,7 @@ public class Turn {
 		}
 	}
 	
+	//checks if the player enough resources to build the settlement
 	public static ArrayList<ResourceCard> hasDevelopmentCardResources(Player player) {
 		
 		ArrayList<ResourceCard> cards = player.getResourceCards();
@@ -865,10 +878,13 @@ public class Turn {
 		return resources;
 	}
 	
-
+//----Methods to play a development card----//
+	
+	//lets the player select a development card to play
  	public static void playDevelopmentCard(Player player, Game game1, Scanner scanner) {
  		
  		ArrayList<DevelopmentCard> cards = player.getDevelopmentCards();
+ 		boolean cardPlayed = true;
  		
  		System.out.println("What development card do you want to play?");
  		
@@ -892,7 +908,7 @@ public class Turn {
  		}
  		if (type.equals("year of plenty")) {
  			
- 			playYearOfPlentyCard(player, game1, scanner);
+ 			cardPlayed = playYearOfPlentyCard(player, game1, scanner);
  		}
  		if (type.equals("monopoly")) {
  			
@@ -902,11 +918,15 @@ public class Turn {
  			
 			playVictoryPointCard(player);
  		}
- 				
- 		cards.remove(play);
- 		player.setDevelopmentCards(cards);
+ 		
+ 		if (cardPlayed) {
+ 			
+ 			cards.remove(play);
+ 			player.setDevelopmentCards(cards);
+ 		}
  	}
  	
+ 	//plays a knight card
 	public static void playKnightCard(Player player, Game game1, Scanner scanner) {
 		
 		moveRobber(player, game1, scanner);
@@ -917,6 +937,7 @@ public class Turn {
 		checkEndOfGame(player);
  	}
  	
+	//plays a road building card
 	public static void playRoadBuildingCard(Player player, Game game1, Scanner scanner) {
  		
  		boolean roadBuilding = true;
@@ -927,19 +948,35 @@ public class Turn {
  		}
  	}
 	
-	public static void playYearOfPlentyCard(Player player, Game game1, Scanner scanner) {
+	//plays a year of plenty card
+	public static boolean playYearOfPlentyCard(Player player, Game game1, Scanner scanner) {
 		
 		ArrayList<ResourceCard> cards = player.getResourceCards();
+		boolean hasResource = true;
 		
 		for (int i = 0; i < 2; i++) {
 			
-			chooseResourceYOP(cards, game1, scanner);
+			hasResource = chooseResourceYOP(cards, game1, scanner);
 		}
 		
 		player.setResourceCards(cards);
+		return hasResource;
 	}
 	
-	public static void chooseResourceYOP(ArrayList<ResourceCard> cards, Game game1, Scanner scanner) {
+	//lets the player choose the resource for YOP
+	public static boolean chooseResourceYOP(ArrayList<ResourceCard> cards, Game game1, Scanner scanner) {
+		
+		ArrayList<ResourceCard> brick = game1.getBrick();
+		ArrayList<ResourceCard> lumber = game1.getLumber();
+		ArrayList<ResourceCard> wool = game1.getWool();
+		ArrayList<ResourceCard> ore = game1.getOre();
+		ArrayList<ResourceCard> grain = game1.getGrain();
+		
+		if (brick.size() <= 0 && lumber.size() <= 0 && wool.size() <= 0 && ore.size() <= 0 && grain.size() <= 0) {
+			
+			System.out.println("There are no resources left in the bank. You cannot play this development card.");
+			return false;
+		}
 		
 		System.out.println("Pick a resource");
 		System.out.println("1. Brick");
@@ -952,36 +989,59 @@ public class Turn {
 		
 		switch (choice) {
 		case 1 :
-			ResourceCard brick = game1.getBrick().get(0);
-			cards.add(brick);
+			if (brick.size() <= 0) {
+				System.out.println("There are no brick resource cards left. Please choose again.");
+				chooseResourceYOP(cards, game1, scanner);
+			}
+			
+			cards.add(brick.get(0));
 			game1.getBrick().remove(brick);
 			break;
 		case 2:
-			ResourceCard lumber = game1.getLumber().get(0);
-			cards.add(lumber);
+			if (lumber.size() <= 0) {
+				System.out.println("There are no lumber resource cards left. Please choose again.");
+				chooseResourceYOP(cards, game1, scanner);
+			}
+			
+			cards.add(lumber.get(0));
 			game1.getLumber().remove(lumber);
 			break;
 		case 3:
-			ResourceCard wool = game1.getWool().get(0);
-			cards.add(wool);
+			if (wool.size() <= 0) {
+				System.out.println("There are no wool resource cards left. Please choose again.");
+				chooseResourceYOP(cards, game1, scanner);
+			}
+			
+			cards.add(wool.get(0));
 			game1.getWool().remove(wool);
 			break;
-		case 4 :
-			ResourceCard ore = game1.getOre().get(0);
-			cards.add(ore);
+		case 4 :			
+			if (ore.size() <= 0) {
+				System.out.println("There are no ore resource cards left. Please choose again.");
+				chooseResourceYOP(cards, game1, scanner);
+			}
+			
+			cards.add(ore.get(0));
 			game1.getOre().remove(ore);
 			break;
 		case 5 :
-			ResourceCard grain = game1.getGrain().get(0);
-			cards.add(grain);
+			if (grain.size() <= 0) {
+				System.out.println("There are no grain resource cards left. Please choose again.");
+				chooseResourceYOP(cards, game1, scanner);
+			}
+			
+			cards.add(grain.get(0));
 			game1.getGrain().remove(grain);
 			break;
 		default :
 			System.out.println("Invalid choice. Please choose again");
 			chooseResourceYOP(cards, game1, scanner);
 		}
+		
+		return true;
 	}
 	
+	//plays a monopoly card
 	public static void playMonopolyCard(Player player, Game game1, Scanner scanner) {
 		
 		String resource = chooseResourceMonopoly(scanner);
@@ -1012,6 +1072,7 @@ public class Turn {
 		player.setResourceCards(cards);
 	}
 	
+	//lets the player choose the resource for monopoly
 	public static String chooseResourceMonopoly(Scanner scanner) {
 		
 		System.out.println("Pick a resource");
@@ -1048,6 +1109,7 @@ public class Turn {
 		return resource;
 	}
 	
+	//plays a victory point card
 	public static void playVictoryPointCard(Player player) {
 				
 		player.setVictoryPoints(player.getVictoryPoints() + 1);
