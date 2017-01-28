@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * Class to randomise locations
  */
-public class RandomLocationIterator {
+public class RandomLocationIterator implements Iterator{
 	
 	int Xindex =0;
 	int Yindex = 0;
@@ -36,7 +37,7 @@ public class RandomLocationIterator {
 		this.YLen = shuffledAL.get(0).size();
 	}
 	
-	public Location getNext() {
+	public Location next() {
 		
 		Location nextLoc = shuffledAL.get(Xindex).get(Yindex);
 		//finish makinng here
@@ -50,7 +51,9 @@ public class RandomLocationIterator {
 	}
 	
 	public Location getNextHex() {
-		
+		if(!hasNext()){
+			return null;
+		}
 		Location nextLoc = shuffledAL.get(Xindex).get(Yindex);
 		boolean found = false;
 		if (nextLoc.getType().equals("hex")) {
@@ -76,7 +79,7 @@ public class RandomLocationIterator {
 	
 	public boolean hasNext() {
 		
-		if (Xindex < XLen || Yindex < YLen) {
+		if ( !  ((Xindex == XLen-1 && Yindex >= YLen)|| (Xindex>=XLen) ) ) {
 			return true;
 		}
 		else {

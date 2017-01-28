@@ -633,7 +633,6 @@ public class Setup {
 				}
 				if (thisHex.getNumber() == -1) {
 					found = true;				
-					System.out.println(thisLoc.getCoord().getX()+","+thisLoc.getCoord().getY()+"!!!"+no);
 					thisHex.setNumber(no);
 					setHexNumberTest( thisLoc,  board1,  normIt, -1, +1);
 					setHexNumberTest( thisLoc,  board1,  normIt, +1, +2);
@@ -661,6 +660,17 @@ public class Setup {
 					}
 				}
 			}
+		Location robL = hexIt.getNextHex();
+		while(robL!=null){
+			Hex robLoc = (Hex)(robL.getContains());
+			if(robLoc.getNumber()==-1&&robLoc.getisRobberHere().equals("R")){
+				System.out.println("the robber was left out "+robLoc.getisRobberHere()+robLoc.getNumber());
+				robLoc.setNumber(7);
+
+				break;
+			}
+			robL = hexIt.getNextHex();
+		}
 
 		return board1;
 	}
@@ -673,7 +683,10 @@ public class Setup {
 		if(((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8))) {
 
 			Location l1 = board1.getLocationFromCoordinate(new Coordinate(x,y));
-			if(l1.getType().equals("hex")&&((Hex)l1.getContains()).getNumber()==-1&&((Hex)l1.getContains()).getisRobberHere()!="R") {
+			if(l1.getType().equals("hex")
+					&&((Hex)l1.getContains()).getNumber()==-1
+					&& (!((Hex)l1.getContains()).getisRobberHere().equals("R"))) 
+			{
 				((Hex)l1.getContains()).setNumber(((Integer)normIt.next()).intValue());
 			}
 		}
