@@ -221,17 +221,18 @@ public class Turn {
 	//gets the resources for the settlement/city
 	public static boolean getIntersectionResources(Board board, Coordinate nearbyIntersection, Hex hex, Game game1) {
 		
-		String type = board.getLocationFromCoordinate(nearbyIntersection).getType();
+		//String type = board.getLocationFromCoordinate(nearbyIntersection).getType();
+		String type = ((Intersection) board.getLocationFromCoordinate(nearbyIntersection).getContains()).getBuilding().getType();
 		Player owner = ((Intersection) board.getLocationFromCoordinate(nearbyIntersection).getContains()).getOwner();
 		
-		if (type.equals("settlement")) {
+		if (type.equals("t")) { //settlement")) {
 			String terrain = hex.getTerrain();
 			if (!getResources(owner, terrain, game1, 1)) {
 				System.out.println("There are not enough resources left. No player gets new resources this turn.");
 				return false;
 			}
 		}
-		else if (type.equals("city")) {
+		else if (type.equals("c")) { //city")) {
 			String terrain = hex.getTerrain();
 			if (!getResources(owner, terrain, game1, 2)) {
 				System.out.println("There are not enough resources left. No player gets new resources this turn.");
@@ -326,13 +327,19 @@ public class Turn {
 			Player player = players.get(i);
 			ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
 			ArrayList<ResourceCard> cards = player.getResourceCards();
-					
-			for (int j = 0; j < newResourceCards.size(); j++) {
+				
+			if (newResourceCards.size() > 0) {
+				System.out.println("Player " + player.getName() + " gets: ");
+			
+				for (int j = 0; j < newResourceCards.size(); j++) {
 						
-				cards.add(newResourceCards.get(j));
+					cards.add(newResourceCards.get(j));
+					System.out.print("1x " + newResourceCards.get(j).getResource());
+				}
+				
+				System.out.println();
+				player.setResourceCards(cards);
 			}
-					
-			player.setResourceCards(cards);
 		}
 	}
 	
