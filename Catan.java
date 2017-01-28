@@ -169,7 +169,9 @@ public class Catan {
 		return keepPlaying;
 	}
 
-/* code modified/copied in buildRoad method in turn class
+	//TODO delete these methods from this class
+	
+/* code modified/copied in build road method in turn class
 	// ************ Look for the player with the longest road ********
 	public static Player longestRoad(Game game1) {
 		
@@ -196,7 +198,8 @@ public class Catan {
 	//Eventually we will need to write a method that keeps track of victory points
 	//we need a method to remove the largest army card when a player exceeds the current holder 
 
-	public static Player checkLargestArmy(Game game1){ 
+	//been transferred to turn class
+	/*public static Player checkLargestArmy(Game game1){ 
 
 		ArrayList<Player> players = game1.getPlayers();
 		
@@ -215,5 +218,5 @@ public class Catan {
 		largestArmy.setVictoryPoints(largestArmy.getVictoryPoints()+2);
 		System.out.println("player" + largestArmy.getName() + "has the largest army.");
 		return largestArmy; 
-	}
+	}*/
 }
