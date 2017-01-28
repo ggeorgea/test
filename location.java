@@ -1,28 +1,21 @@
 
-/**
- * Class to store data on location
- */
-public class location {
+public class Location {
 	
 	private Coordinate coord;
 	private String type;
 	private Object contains;
 	
-//----Constructors----//
-	
-	public location() {
+	public Location() {
 		
 	}
 	
-	public location(Coordinate coord, String type, Object contains) {
+	public Location(Coordinate coord, String type, Object contains) {
 		
 		this.coord = coord;
 		this.type = type;
 		this.contains = contains;
 	}
 
-//----Getters and Setters----//
-	
 	public Coordinate getCoord() {
 		
 		return coord;
