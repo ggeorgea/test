@@ -169,7 +169,7 @@ public class Catan {
 		return keepPlaying;
 	}
 
-/* code modified/copied in build road method in turn class
+/* code modified/copied in buildRoad method in turn class
 	// ************ Look for the player with the longest road ********
 	public static Player longestRoad(Game game1) {
 		

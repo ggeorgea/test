@@ -501,8 +501,9 @@ public class Setup {
 			}
 		}
 
-		board1 = setRandHexNumbersAndRob(board1, givenDesert);
 		setUpLocations(board1);
+		board1 = setRandHexNumbersAndRob(board1, givenDesert);
+
 		makeIntersectionOrdering(board1);
 		setRoadArrayAndMap(board1);
 		addPorts(board1);
@@ -561,39 +562,101 @@ public class Setup {
 
 	// this method adds a random number from the array of numbers needed on a catan board to each hex, since this happens after terrain allocation, it is also where the desert and the number 7 are matched up, and when the robber is allocated
 	public static Board setRandHexNumbersAndRob(Board board1, int givenDesert) {
-		int given7 = 0;
-		int[] hexnumbers = { 7, 5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4,
-				5, 6, 3, 11 };
-		ArrayList<Integer> x1 = new ArrayList<Integer>();
-		for (int i = 0; i < hexnumbers.length; i++) {
-			x1.add(hexnumbers[i]);
-		}
-		Collections.shuffle(x1);
-		Iterator numberIt = x1.iterator();
-		for (int y = 0; y < hexnumbers.length; y++) {
-			int toset = (int) numberIt.next();
-			Hex hexer = board1.getHexes().get(y);
-			hexer.setNumber(toset);
-			if (toset == 7) {
-				given7 = y;
-			}
-			board1.getHexes().set(y, hexer);
-		}
+
+		int[] normalNumbers = {5,2,3,10,9,12,11,4,10,9,4,5,3,11};
+		int[] redNumbers = {6,8,8,6};
 		Hex hexwDes = board1.getHexes().get(givenDesert);
-		Hex hexw7 = board1.getHexes().get(given7);
-		int otherNum = hexwDes.getNumber();
-		String otherterr = hexw7.getTerrain();
-		hexwDes.setNumber(7);
-		hexw7.setTerrain(otherterr);
-		hexw7.setNumber(otherNum);
 		Robber robber1 = new Robber(hexwDes.getCoordinate(),null,false);
 		board1.setTheRobber(robber1);
 		board1.setRobber(hexwDes.getCoordinate());
 		hexwDes.setisRobberHere("R");
-		board1.getHexes().set(givenDesert, hexwDes);
-		board1.getHexes().set(given7, hexw7);
+		
+		ArrayList<Integer> normalAL = new ArrayList<Integer>();
+		for (int i = 0; i < normalNumbers.length; i++) {
+			normalAL.add(normalNumbers[i]);
+		}
+		Collections.shuffle(normalAL);
+		
+		ArrayList<Integer> redAL = new ArrayList<Integer>();
+		for (int i = 0; i < redNumbers.length; i++) {
+			redAL.add(redNumbers[i]);
+		}
+		Collections.shuffle(redAL);
+		RandomLocationIterator hexIt = new RandomLocationIterator(board1);
+		
+		ArrayList<ArrayList<Location>> shuffledAL= new ArrayList<ArrayList<Location>>();
+		Location[][] boardClone = board1.getBoardLocations().clone();
+		ArrayList<Location[]> boardCloneX = new ArrayList<Location[]>();
+		Collections.shuffle(boardCloneX);
+		for(int u = 0;u<boardCloneX.size();u++)
+		{
+			ArrayList<Location> CloneY = new ArrayList<Location>();
+			for(int j = 0; j< boardCloneX.get(u).length;j++){
+				CloneY.add(boardCloneX.get(u)[j]);
+			}
+			Collections.shuffle(CloneY);
+			shuffledAL.add(CloneY);
+		}
+		Iterator redIt = redAL.iterator();
+		Iterator normIt = normalAL.iterator();
+		
+		while(redIt.hasNext()){
+			int no = ((Integer) redIt.next()).intValue();
+			boolean found = false;
+			while(!found){
+				Location thisLoc = hexIt.getNextHex();
+				Hex thisHex = (Hex) thisLoc.getContains();
+				if(thisHex.getisRbberHere().equals("R")){
+					thisHex.setNumber(7);
+					thisLoc = hexIt.getNextHex();
+					thisHex= (Hex) thisLoc.getContains();
+				}
+				if(thisHex.getNumber()==-1){
+					found = true;				
+					System.out.println(thisLoc.getCoord().getX()+","+thisLoc.getCoord().getY()+"!!!"+no);
+					thisHex.setNumber(no);
+					setHexNumberTest( thisLoc,  board1,  normIt, -1, +1);
+					setHexNumberTest( thisLoc,  board1,  normIt, +1, +2);
+					setHexNumberTest( thisLoc,  board1,  normIt, +2, +1);
+					setHexNumberTest( thisLoc,  board1,  normIt, +1, -1);
+					setHexNumberTest( thisLoc,  board1,  normIt, -1, -2);
+					setHexNumberTest( thisLoc,  board1,  normIt, -2, -1);	
+				}
+			}
+		}
+		while(normIt.hasNext()){
+			int no = ((Integer) normIt.next()).intValue();
+			boolean found = false;
+			while(!found){
+				Location thisLoc = hexIt.getNextHex();
+				Hex thisHex = (Hex) thisLoc.getContains();
+				if(thisHex.getisRbberHere().equals("R")){
+					thisHex.setNumber(7);
+					thisLoc = hexIt.getNextHex();
+					thisHex= (Hex) thisLoc.getContains();
+				}
+				if(thisHex.getNumber()==-1){
+					thisHex.setNumber(no);
+					found = true;
+					}
+				}
+			}
+
 		return board1;
 	}
+	
+	public static void setHexNumberTest(Location thisLoc, Board board1, Iterator normIt, int xc, int yc){
+		int x =thisLoc.getCoord().getX()+xc;
+		int y = thisLoc.getCoord().getY()+yc;
+		if(((2*y <= x +8)&&(2*y>=x-8)&&(y<=2*x+8)&&(y>=2*x-8)&&(y>=-x-8)&&(y<=-x+8))){
+
+		Location l1 = board1.getLocationFromCoordinate(new Coordinate(x,y));
+		if(l1.getType().equals("hex")&&((Hex)l1.getContains()).getNumber()==-1&&((Hex)l1.getContains()).getisRbberHere()!="R"){
+			((Hex)l1.getContains()).setNumber(((Integer)normIt.next()).intValue());
+		}
+		}
+	}
+	
 
 	//this method makes a 2d array which is then used for accessing the hexes and intersections by coordinate, it also adds the hexes and the intersections(by calling another method) around the hexes
 	public static void setUpLocations(Board board1){

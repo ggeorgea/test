@@ -3,7 +3,7 @@ public class Hex {
 
 	private Coordinate coordinate;
 	private String terrain;
-	private int number;
+	private int number=-1;
 	private String numString;
 	private String isRobberHere = " ";
 	
