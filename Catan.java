@@ -16,7 +16,9 @@ public class Catan {
 	private static final boolean END_GAME = true;
 
 	public static void main(String[] args) throws Exception {
+		
 		Board board1 = new Board();
+		
 		/*
 		 * //GENERAL //the above methods set up a board, with roads,
 		 * intersections and hexes, all set up in the right places, with random
@@ -67,26 +69,26 @@ public class Catan {
 
 		// will let the players play another game if they wish
 		while (keepPlaying) {
+			
 			System.out.println("----------SETTLERS OF CATAN----------\n\n");
 			Scanner scanner = new Scanner(new File("./src/test.txt"));
 
-			// sets board
+			//sets up board
 			board1 = Setup.getMeABoard();
 			Game game1 = new Game();
 			game1.setBoard(board1);
 
 			Map.printMap(game1.getBoard());
 
-			// sets development cards
+			//sets up development cards
 			ArrayList<DevelopmentCard> developmentCards = Setup
 					.getDevCardDeck();
 			game1.setDevelopmentCards(developmentCards);
 
-			// sets resource cards
+			//sets up resource cards
 			ArrayList<ResourceCard> ore = Setup.getResourceCardDeck("ore");
 			ArrayList<ResourceCard> grain = Setup.getResourceCardDeck("grain");
-			ArrayList<ResourceCard> lumber = Setup
-					.getResourceCardDeck("lumber");
+			ArrayList<ResourceCard> lumber = Setup.getResourceCardDeck("lumber");
 			ArrayList<ResourceCard> wool = Setup.getResourceCardDeck("wool");
 			ArrayList<ResourceCard> brick = Setup.getResourceCardDeck("brick");
 
@@ -96,24 +98,22 @@ public class Catan {
 			game1.setWool(wool);
 			game1.setBrick(brick);
 
-			// sets players
+			//sets up players
 			ArrayList<Player> players = Setup.setPlayers(scanner);
 			game1.setPlayers(players);
 
-			// roll dice for each player
-			// changes player order with largest dice roll first
+			//roll dice for each player
+			//changes player order with largest dice roll first
 			Setup.getPlayerOrder(game1, scanner);
 
-			// place roads and settlements
+			//place roads and settlements
 			Setup.setInitialRoadsAndSettlements(game1, scanner);
 
-			//COMMENTS FOR A TEST OF LONGEST ROAD
-			///*
-			// pass from automated set up to actually playing the game
 
+			//pass from automated set up to actually playing the game
 			System.out.println("-----now in manual mode-------");
 			scanner = new Scanner(System.in);
-			//*/
+			
 			boolean hasEnded = !END_GAME;
 
 			// will keep letting players take turns until someone wins
@@ -127,6 +127,7 @@ public class Catan {
 						scanner = new Scanner(System.in);
 					}
 					*/
+					
 					// lets the player have a turn
 					hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1,
 							scanner);

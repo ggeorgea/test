@@ -1,8 +1,13 @@
 
+/**
+ * Class to store information about types of building
+ */
 public class Building {
 
 	private String type;
 	private int victoryPoints;
+	
+//----Constructors----//
 	
 	public Building() {
 		
@@ -13,6 +18,8 @@ public class Building {
 		this.type = type;
 		this.victoryPoints = victoryPoints;
 	}
+	
+//----Getters and Setters----//
 	
 	public String getType() {
 		

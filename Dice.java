@@ -1,6 +1,9 @@
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Class used to roll the dice
+ */
 public class Dice {
 
 	public static int valueDice = 0; 
@@ -8,14 +11,13 @@ public class Dice {
 	//rolls the two dice
 	public static void rollDice(Player player, Scanner scanner) {
 
-
-			
 		Random random = new Random();
 		
 		//prompts player to roll the dice and scans input
 		System.out.println("Player " + player.getName() + ": press 'R' to roll.");
 		String enter = scanner.next().toUpperCase();
 			
+		//makes sure the user enters the correct input
 		if (!(enter.equals("R"))) {
 				
 			System.out.println("Invalid input. Please roll again.");
@@ -36,11 +38,8 @@ public class Dice {
 	}
 
 	//method to return the value of the dice 
-
 	public int getCurrentValueOfDice(){
 
 		return valueDice;
-
 	}
-
 }

@@ -1,6 +1,8 @@
 
-
-
+/**
+ * Class to store information and methods concerning 
+ * the robber
+ */
 public class Robber{
 
 	//robber will be put on different coordinates based on where the player has placed it 
@@ -39,6 +41,4 @@ public class Robber{
 	public void setToActivated(){
 		activated = true;
 	}
-
-
 }

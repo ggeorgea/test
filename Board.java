@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Class that keeps track of the state of the board
+ */
 public class Board {
 
 	private int size;
@@ -11,11 +14,13 @@ public class Board {
 	private ArrayList<Road> roads = new ArrayList<Road>();
 	private ArrayList<Intersection> buildings = new ArrayList<Intersection>();
 	
-	//this location 2d array is used for getting locations with just coordinates
+	//this location 2D array is used for getting locations with just coordinates
 	private Location[][] boardLocations;
 	
 	//this hashmap is used for getting roads with their endpoint coordinates
 	private HashMap roadmap;
+	
+//----Constructors----//
 	
 	public Board() {	
 	
@@ -33,32 +38,9 @@ public class Board {
 		this.buildings = buildings;
 		this.boardLocations = boardLocations;
 	}
+
+//----Getters and Setters----//
 	
-	
-	public Robber getTheRobber() {
-		return theRobber;
-	}
-
-	public void setTheRobber(Robber theRobber) {
-		this.theRobber = theRobber;
-	}
-
-	public HashMap getRoadmap() {
-		return roadmap;
-	}
-
-	public void setRoadmap(HashMap roadmap) {
-		this.roadmap = roadmap;
-	}
-
-	public Location[][] getBoardLocations() {
-		return boardLocations;
-	}
-
-	public void setBoardLocations(Location[][] boardLocations) {
-		this.boardLocations = boardLocations;
-	}
-
 	public int getSize() {
 		
 		return size;
@@ -77,6 +59,16 @@ public class Board {
 	public void setRobber(Coordinate robber) {
 		
 		this.robber = robber;
+	}
+	
+	public Robber getTheRobber() {
+		
+		return theRobber;
+	}
+
+	public void setTheRobber(Robber theRobber) {
+		
+		this.theRobber = theRobber;
 	}
 	
 	public ArrayList<Hex> getHexes() {
@@ -117,69 +109,97 @@ public class Board {
 	public void setBuildings(ArrayList<Intersection> buildings) {
 		
 		this.buildings = buildings;
-	}	
+	}
 	
-//-----Methods to ensure that the hash map and the 2D array are accessed properly-----//	
+	public Location[][] getBoardLocations() {
+		
+		return boardLocations;
+	}
+
+	public void setBoardLocations(Location[][] boardLocations) {
+		
+		this.boardLocations = boardLocations;
+	}
+	
+	public HashMap getRoadmap() {
+		
+		return roadmap;
+	}
+
+	public void setRoadmap(HashMap roadmap) {
+		
+		this.roadmap = roadmap;
+	}
+	
+//----Methods to ensure that the hash map and the 2D array are accessed properly----//	
 	
 	//returns a road from the hash map based when given coordinates
-	public Road getRoadFromCo(Coordinate coA, Coordinate coB){
+	public Road getRoadFromCo(Coordinate coA, Coordinate coB) {
+		
 		Coordinate cFirst;
 		Coordinate cSecond;
-		if(coA.getY()==coB.getY()){
-			if(coA.getX()<coB.getX()){
+		
+		if (coA.getY() == coB.getY()) {
+			if (coA.getX() < coB.getX()) {
 				cFirst = coA;
 				cSecond = coB;
 			}
-			else{
+			else {
 				cFirst = coB;
 				cSecond = coA;
 			}
 		}
-		else if(coA.getY()>coB.getY()){
+		else if (coA.getY() > coB.getY()) {
 			cFirst = coA;
 			cSecond = coB;
 		}
-		else{
+		else {
 			cFirst = coB;
 			cSecond = coA;
 		}
+		
 		String keys = new StringBuilder().append(cFirst.getX()).append(cFirst.getY()).append(cSecond.getX()).append(cSecond.getY()).toString();
 		return (Road) this.getRoadmap().get(keys);
 	}
 	
 	//creates a road at the given coordinates and puts it in the hash map
-	public void setRoadFromCo(Road road1, Coordinate coA, Coordinate coB){
+	public void setRoadFromCo(Road road1, Coordinate coA, Coordinate coB) {
+		
 		Coordinate cFirst;
 		Coordinate cSecond;
-		if(coA.getY()==coB.getY()){
-			if(coA.getX()<coB.getX()){
+		
+		if (coA.getY() == coB.getY()) {
+			if (coA.getX() < coB.getX()) {
 				cFirst = coA;
 				cSecond = coB;
 			}
-			else{
+			else {
 				cFirst = coB;
 				cSecond = coA;
 			}
 		}
-		else if(coA.getY()>coB.getY()){
+		else if (coA.getY() > coB.getY()) {
 			cFirst = coA;
 			cSecond = coB;
 		}
-		else{
+		else {
 			cFirst = coB;
 			cSecond = coA;
 		}
+		
 		String keys = new StringBuilder().append(cFirst.getX()).append(cFirst.getY()).append(cSecond.getX()).append(cSecond.getY()).toString();
 		this.getRoadmap().put(keys, road1);
 	}
 	
 	//gets a location from the array based of coordinates
-	public Location getLocationFromCoordinate(Coordinate coA){
+	public Location getLocationFromCoordinate(Coordinate coA) {
+		
 		return boardLocations[coA.getX()+5][coA.getY()+5];
 	}
 	
 	//puts a location into the array at the given coordinates
-	public void setLocationFromCoordinate(Coordinate coA, Location location1){
-		 boardLocations[coA.getX()+5][coA.getY()+5] = location1 ;
+	public void setLocationFromCoordinate(Coordinate coA, Location location1) {
+		
+		 boardLocations[coA.getX()+5][coA.getY()+5] = location1;
 	}
 }

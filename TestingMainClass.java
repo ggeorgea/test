@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
+//TODO this class is not used anymore
+//TODO delete this class
+
 public class TestingMainClass {
 
 	/*public static void main(String[] args) {

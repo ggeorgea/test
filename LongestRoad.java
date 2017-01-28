@@ -2,11 +2,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-
+/**
+ * Class that contains the method to calculate a 
+ * player's longest road
+ */
 public class LongestRoad {
+	
 	static int id = 0;
 	static boolean loop = false;
 	//static int s2wrongroad = -2;
+	
 	public static void CheckPlayerLongestRoad(Player player, Game game1,
 			Road road1) {
 
@@ -49,13 +54,6 @@ public class LongestRoad {
 					getOtherInt(board1, end2A, intB));
 		}
 
-		
-		
-		
-
-		
-		
-		
 		// connecting, i.e. if this road links to other  roads together
 		if ((end1A != null || end1B != null)
 				&& (end2A != null || end2B != null)) {
@@ -63,7 +61,6 @@ public class LongestRoad {
 			//this maps a point to a sector for the purpose of finding overlap
 			HashMap<Intersection, String> sectorMap = new HashMap<Intersection, String>();
 					
-			
 			//END 1
 			int longests1 = 0;
 			HashMap<Intersection, Integer> distancesMaps1 = new HashMap<Intersection, Integer>();
@@ -82,7 +79,6 @@ public class LongestRoad {
 					(ArrayList<Integer>) namesLists1.clone(),  1,
 					distancesMaps1, visitorsMaps1, "s1", sectorMap);
 			
-			
 //			int toplens1 = 0;
 //			int botLens1 = 0;
 //			if (end1A != null) {
@@ -100,9 +96,6 @@ public class LongestRoad {
 //			if (toplens1 > botLens1) {
 //				longests1 = toplens1;
 //			}
-			
-
-			
 			
 			// END2
 			int longests2 = 0;
@@ -141,8 +134,6 @@ public class LongestRoad {
 //				longests2 = toplens2;
 //			}
 			
-			
-			
 			//deciding on what to return
 			if (loop) {
 				if (longests2 > longests1) {
@@ -155,13 +146,6 @@ public class LongestRoad {
 			}
 
 		} 
-		
-		
-		
-		
-		
-		
-		
 		
 		//this is what happens if only one end connected to anything, this works!
 		else {
@@ -249,11 +233,8 @@ public class LongestRoad {
 				} else {
 					longest = botLen;
 				}
-			}
-			
-			
+			}			
 		}
-		
 		
 		if (longest > currLongest) {
 			player.setLongestRoad(longest);
@@ -261,8 +242,6 @@ public class LongestRoad {
 		loop = false;
 	}
 	
-	
-
 	public static int Branch(Game game1, Player player, Intersection pointInt,
 			Intersection fromInt, Road carrying, ArrayList<Integer> idArray,
 			int currdist, HashMap<Intersection, Integer> distancesMap, HashMap<Intersection, ArrayList<Integer>> visitorsMap,
@@ -342,14 +321,10 @@ public class LongestRoad {
 			return currdist;
 		}
 		
-		
-		
 //		//THIS IS THE CODE FOR FINDING NEW BRANCHES FROM NOTHING,I.E STARTING AGAIN IF YOU FIND A 3ER OR AND END
 //		if(sector!=null){
 //			//todofill!!
 //		}
-		
-		
 		
 		Road option1 = getRoadFromInt(game1, pointInt, player, fromInt, null);
 		if (option1 == null) {
@@ -375,11 +350,8 @@ public class LongestRoad {
 		return option2Result;
 	}
 	
-	
-	
 	//returns the other intersection of a road where one intersection is given as a parameter
 	//WORKS
-		
 	public static Intersection getOtherInt(Board board1, Road road1,
 			Intersection int1) {
 		Intersection endA = (Intersection) board1.getLocationFromCoordinate(
@@ -395,7 +367,6 @@ public class LongestRoad {
 	
 	//returns a road from an intersection, in the game an intersection given, belonging to the player give, that does not go to either of the two other intersections specified
 	//WORKS	
-	
 	public static Road getRoadFromInt(Game game1, Intersection sett1,
 			Player player, Intersection int1Ill, Intersection int2Ill) {
 		Road startRoad1 = null;

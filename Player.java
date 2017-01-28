@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Class that stores information about players
+ */
 public class Player {
 
 	private String name;
@@ -10,28 +13,22 @@ public class Player {
 	private int noSettlements;
 	private int noCities;
 
-	private int longestRoad=1;
+	private int longestRoad = 1;
 	private int largestArmy;
 	private boolean hasLongestRoad = false;
 	private boolean hasLargestArmy = false;
 
 	private ArrayList<ResourceCard> resourceCards = new ArrayList<ResourceCard>();
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
-	private ArrayList<ResourceCard> newResourceCards = new ArrayList<ResourceCard>();
-
-	//make an array list of roads 
-
-	public ArrayList<ResourceCard> getNewResourceCards() {
-		return newResourceCards;
-	}
-
-	public void setNewResourceCards(ArrayList<ResourceCard> newResourceCards) {
-		this.newResourceCards = newResourceCards;
-	}
+	private ArrayList<ResourceCard> newResourceCards = new ArrayList<ResourceCard>(); 
 
 	private ArrayList<Intersection> firstSettlements = new ArrayList<Intersection>();
 	private ArrayList<Port> settledPorts = new ArrayList<Port>();
+	
+	//make an array list of roads
 
+//----Constructors----//
+	
 	public Player() {
 
 	}
@@ -56,6 +53,8 @@ public class Player {
 		this.developmentCards = developmentCards;
 	}
 
+//----Getters and Setters----//
+	
 	public String getName() {
 
 		return name;
@@ -181,11 +180,23 @@ public class Player {
 		this.developmentCards = developmentCards;
 	}
 	
+	public ArrayList<ResourceCard> getNewResourceCards() {
+		
+		return newResourceCards;
+	}
+
+	public void setNewResourceCards(ArrayList<ResourceCard> newResourceCards) {
+		
+		this.newResourceCards = newResourceCards;
+	}
+	
 	public ArrayList<Intersection> getFirstSettlements() {
+		
 		return firstSettlements;
 	}
 
 	public void setFirstSettlements(ArrayList<Intersection> firstSettlements) {
+		
 		this.firstSettlements = firstSettlements;
 	}
 

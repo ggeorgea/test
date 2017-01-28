@@ -1,4 +1,7 @@
 
+/**
+ * Class that stores information about ports
+ */
 public class Port {
 
 	private Coordinate coordinateA;
@@ -6,6 +9,8 @@ public class Port {
 	private String resource;
 	private Player owner;
 
+//----Constructors----//
+	
 	public Port() {
 
 	}
@@ -18,6 +23,8 @@ public class Port {
 		this.owner = owner;
 	}
 
+//----Getters and Setters----//
+	
 	public Coordinate getCoordinateA() {
 
 		return coordinateA;
@@ -48,9 +55,9 @@ public class Port {
 		this.resource = resource;
 	}
 
-	public String getOwner() {
+	public Player getOwner() {
 
-		return resource;
+		return owner;
 	}
 
 	public void setOwner(Player owner) {

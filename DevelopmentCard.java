@@ -1,8 +1,14 @@
 
+/**
+ * Class to store information about 
+ * development cards
+ */
 public class DevelopmentCard {
 
 	private String type;
 	private boolean hidden;
+	
+//----Constructors----//
 	
 	public DevelopmentCard() {
 		
@@ -14,6 +20,8 @@ public class DevelopmentCard {
 		this.hidden = hidden;
 	}
 
+//----Getters and Setters----//
+	
 	public String getType() {
 	
 		return type;

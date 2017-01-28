@@ -4,7 +4,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//TODO check when to use method check end of game
+//TODO this should not be needed anymore
+//TODO delete this class
 
 public class RandomMethods {
 

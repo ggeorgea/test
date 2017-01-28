@@ -1,11 +1,16 @@
 
+/**
+ * Class to store data about hexes
+ */
 public class Hex {
 
 	private Coordinate coordinate;
 	private String terrain;
-	private int number=-1;
+	private int number = -1;
 	private String numString;
 	private String isRobberHere = " ";
+	
+//----Constructors----//
 	
 	public Hex() {
 		
@@ -17,6 +22,8 @@ public class Hex {
 		this.terrain = terrain;
 		this.number = number;
 	}
+
+//----Getters and Setters----//
 	
 	public Coordinate getCoordinate() {
 	
@@ -89,7 +96,7 @@ public class Hex {
 		return numString;
 	}
 	
-	public String getisRbberHere(){
+	public String getisRobberHere(){
 		
 		return isRobberHere;
 	}

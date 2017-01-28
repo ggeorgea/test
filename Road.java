@@ -1,9 +1,14 @@
 
+/**
+ * Stores information about roads
+ */
 public class Road {
 
 	private Coordinate coordinateA;
 	private Coordinate coordinateB;
 	private Player owner;
+	
+//----Constructors----//
 	
 	public Road() {
 		
@@ -15,6 +20,8 @@ public class Road {
 		this.coordinateB = coordinateB;
 		this.owner = owner;
 	}
+	
+//----Getters and Setters----//
 	
 	public Coordinate getCoordinateA() {
 	

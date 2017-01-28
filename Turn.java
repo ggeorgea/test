@@ -158,7 +158,7 @@ public class Turn {
 			Hex hex = hexes.get(i);
 			
 			if (hex.getNumber() == hexValue) {
-				if (!(hex.getisRbberHere().equals("R"))) {
+				if (!(hex.getisRobberHere().equals("R"))) {
 					
 					//checks the intersections around the hex
 					//if a player owns one they get resources
@@ -356,6 +356,8 @@ public class Turn {
 			Player player = players.get(i);
 			ArrayList<ResourceCard> cards = player.getResourceCards();
 			
+			//if the player has more than seven cards, they must
+			//remove cards from their hand
 			if (cards.size() > 7) {
 					
 				cardRemoval(player, cards, game1, scanner);
@@ -369,6 +371,7 @@ public class Turn {
 	//asks players with more than seven cards to choose the cards they remove
 	public static void cardRemoval(Player player, ArrayList<ResourceCard> cards, Game game1, Scanner scanner) {
 		
+		//calculates how many cards to be removed
 		int noCardsToRemove = cards.size()/2;
 		
 		System.out.println("Player " + player.getName() + ": Please select " + noCardsToRemove + " cards to remove");
@@ -377,46 +380,49 @@ public class Turn {
 			
 			System.out.println("Card " + i);
 			
+			//aaks the player to choose a card to remove
 			for (int j = 0; j < cards.size(); j++) {
 				
 				System.out.println(j + ": " + cards.get(j).getResource());
 			}
-			try{
-			int choice = scanner.nextInt();
 			
-			if (choice < 0 || choice >= cards.size()) {
-				System.out.println("Invalid choice. Please choose again");
-				cardRemoval(player, cards, game1, scanner);
-			}
+			//removes the card they choose
+			try {
+				int choice = scanner.nextInt();
 			
-			ResourceCard card = cards.get(choice);
+				if (choice < 0 || choice >= cards.size()) {
+					System.out.println("Invalid choice. Please choose again");
+					cardRemoval(player, cards, game1, scanner);
+				}
 			
-			switch (card.getResource()) {
-			case "ore" :
-				ArrayList<ResourceCard> ore = game1.getOre();
-				ore.add(card);
-				break;
-			case "lumber" :
-				ArrayList<ResourceCard> lumber = game1.getLumber();
-				lumber.add(card);
-				break;
-			case "brick" :
-				ArrayList<ResourceCard> brick = game1.getBrick();
-				brick.add(card);
-				break;
-			case "wool" :
-				ArrayList<ResourceCard> wool = game1.getWool();
-				wool.add(card);
-				break;
-			case "grain" :
-				ArrayList<ResourceCard> grain = game1.getGrain();
-				grain.add(card);
+				ResourceCard card = cards.get(choice);
+			
+				switch (card.getResource()) {
+				case "ore" :
+					ArrayList<ResourceCard> ore = game1.getOre();
+					ore.add(card);
+					break;
+				case "lumber" :
+					ArrayList<ResourceCard> lumber = game1.getLumber();
+					lumber.add(card);
+					break;
+				case "brick" :
+					ArrayList<ResourceCard> brick = game1.getBrick();
+					brick.add(card);
+					break;
+				case "wool" :
+					ArrayList<ResourceCard> wool = game1.getWool();
+					wool.add(card);
+					break;
+				case "grain" :
+					ArrayList<ResourceCard> grain = game1.getGrain();
+					grain.add(card);
 				break;				
-			}
+				}
 			
-			cards.remove(choice);
+				cards.remove(choice);
 			}
-			catch(InputMismatchException e){
+			catch(InputMismatchException e) {
 				System.out.println("Invalid choice. Please choose again");
 				scanner.nextLine();
 				cardRemoval(player,cards,game1,scanner);
@@ -426,36 +432,35 @@ public class Turn {
 	
 	//allows the player to move the robber and steal a card from a player
 	public static void moveRobber(Player player, Game game1, Scanner scanner) {
-		try{
-		System.out.println("Player " + player.getName() + ": Please select where to place the robber");
+		
+		try {
+			System.out.println("Player " + player.getName() + ": Please select where to place the robber");
 
-		System.out.println("Select X coordinate");
-		int x = scanner.nextInt();
+			System.out.println("Select X coordinate");
+			int x = scanner.nextInt();
 
-		System.out.println("Select Y coordinate");
-		int y = scanner.nextInt();
-		Coordinate a = new Coordinate(x, y);
-		//checks the coordinates are in the correct range
-		if((!((2*y <= x +8)&&(2*y>=x-8)&&(y<=2*x+8)&&(y>=2*x-8)&&(y>=-x-8)&&(y<=-x+8)))
-				||
-				(!game1.getBoard().getLocationFromCoordinate(a).getType().equals("hex"))){
+			System.out.println("Select Y coordinate");
+			int y = scanner.nextInt();
+			Coordinate a = new Coordinate(x, y);
+			
+			//checks the coordinates are in the correct range
+			if((!((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8)))
+					|| (!game1.getBoard().getLocationFromCoordinate(a).getType().equals("hex"))) {
 
-			System.out.println("Invalid coordinates. Please choose again");
-			moveRobber(player, game1, scanner);
-			return;
-		}
+				System.out.println("Invalid coordinates. Please choose again");
+				moveRobber(player, game1, scanner);
+				return;
+			}
 
-
-
-		Hex hex1 = (Hex) game1.getBoard().getLocationFromCoordinate(a).getContains();
-		hex1.setisRobberHere("R");
-		game1.getBoard().setRobber(a);
-		//TODO gets the hex and puts the robber there
-		//TODO lets the player steal a card
+			Hex hex1 = (Hex) game1.getBoard().getLocationFromCoordinate(a).getContains();
+			hex1.setisRobberHere("R");
+			game1.getBoard().setRobber(a);
+			//TODO gets the hex and puts the robber there
+			//TODO lets the player steal a card
 		}
 		catch(InputMismatchException e){
 			scanner.nextLine();
-			 moveRobber(player,game1,scanner);
+			moveRobber(player,game1,scanner);
 		}
 	}
 
