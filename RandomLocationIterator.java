@@ -11,13 +11,13 @@ public class RandomLocationIterator implements Iterator{
 	int Yindex = 0;
 	int XLen = 0;
 	int YLen = 0;
-	ArrayList<ArrayList<Location>> shuffledAL= new ArrayList<ArrayList<Location>>();
+	ArrayList<ArrayList<location>> shuffledAL= new ArrayList<ArrayList<location>>();
 
 	public RandomLocationIterator(Board board1) {
 		
-		ArrayList<ArrayList<Location>> shuffledAL= new ArrayList<ArrayList<Location>>();
-		Location[][] boardClone = board1.getBoardLocations().clone();
-		ArrayList<Location[]> boardCloneX = new ArrayList<Location[]>();
+		ArrayList<ArrayList<location>> shuffledAL= new ArrayList<ArrayList<location>>();
+		location[][] boardClone = board1.getBoardLocations().clone();
+		ArrayList<location[]> boardCloneX = new ArrayList<location[]>();
 		
 		for (int g = 0; g < boardClone.length;g++) {
 			boardCloneX.add(boardClone[g]);
@@ -25,7 +25,7 @@ public class RandomLocationIterator implements Iterator{
 		
 		Collections.shuffle(boardCloneX);
 		for (int u = 0;u<boardCloneX.size();u++) {
-			ArrayList<Location> CloneY = new ArrayList<Location>();
+			ArrayList<location> CloneY = new ArrayList<location>();
 			for (int j = 0; j< boardCloneX.get(u).length;j++) {
 				CloneY.add(boardCloneX.get(u)[j]);
 			}
@@ -37,9 +37,9 @@ public class RandomLocationIterator implements Iterator{
 		this.YLen = shuffledAL.get(0).size();
 	}
 	
-	public Location next() {
+	public location next() {
 		
-		Location nextLoc = shuffledAL.get(Xindex).get(Yindex);
+		location nextLoc = shuffledAL.get(Xindex).get(Yindex);
 		//finish makinng here
 		
 		Yindex++;
@@ -50,11 +50,11 @@ public class RandomLocationIterator implements Iterator{
 		return nextLoc;
 	}
 	
-	public Location getNextHex() {
+	public location getNextHex() {
 		if(!hasNext()){
 			return null;
 		}
-		Location nextLoc = shuffledAL.get(Xindex).get(Yindex);
+		location nextLoc = shuffledAL.get(Xindex).get(Yindex);
 		boolean found = false;
 		if (nextLoc.getType().equals("hex")) {
 			found = true;

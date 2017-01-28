@@ -271,8 +271,8 @@ public class Setup {
 
 	public static boolean checkNear(Board board1, int x1, int y1, int x2, int y2) {
 		
-		Location loca1 = board1.getLocationFromCoordinate(new Coordinate(x1,y1));
-		Location loca2 = board1.getLocationFromCoordinate(new Coordinate(x2,y2));
+		location loca1 = board1.getLocationFromCoordinate(new Coordinate(x1,y1));
+		location loca2 = board1.getLocationFromCoordinate(new Coordinate(x2,y2));
 		
 		if ((!(loca1.getType().equals("Intersection"))) || (!(loca2.getType().equals("Intersection")))
 				|| (!(((Intersection)loca1.getContains()).getOwner().getName() == null)) 
@@ -440,7 +440,7 @@ public class Setup {
 	public static ArrayList<ResourceCard> getResources(Player player, ArrayList<ResourceCard> resourceCards, Coordinate nearbyHex, Game game1) {
 
 		Board board1 = game1.getBoard();
-		Location location = board1.getLocationFromCoordinate(nearbyHex);
+		location location = board1.getLocationFromCoordinate(nearbyHex);
 
 		if (location.getType().equals("hex")) {
 
@@ -605,12 +605,12 @@ public class Setup {
 		Collections.shuffle(redAL);
 		RandomLocationIterator hexIt = new RandomLocationIterator(board1);
 		
-		ArrayList<ArrayList<Location>> shuffledAL= new ArrayList<ArrayList<Location>>();
-		Location[][] boardClone = board1.getBoardLocations().clone();
-		ArrayList<Location[]> boardCloneX = new ArrayList<Location[]>();
+		ArrayList<ArrayList<location>> shuffledAL= new ArrayList<ArrayList<location>>();
+		location[][] boardClone = board1.getBoardLocations().clone();
+		ArrayList<location[]> boardCloneX = new ArrayList<location[]>();
 		Collections.shuffle(boardCloneX);
 		for (int u = 0;u<boardCloneX.size();u++) {
-			ArrayList<Location> CloneY = new ArrayList<Location>();
+			ArrayList<location> CloneY = new ArrayList<location>();
 			for (int j = 0; j< boardCloneX.get(u).length;j++) {
 				CloneY.add(boardCloneX.get(u)[j]);
 			}
@@ -624,7 +624,7 @@ public class Setup {
 			int no = ((Integer) redIt.next()).intValue();
 			boolean found = false;
 			while (!found) {
-				Location thisLoc = hexIt.getNextHex();
+				location thisLoc = hexIt.getNextHex();
 				Hex thisHex = (Hex) thisLoc.getContains();
 				if(thisHex.getisRobberHere().equals("R")){
 					thisHex.setNumber(7);
@@ -647,7 +647,7 @@ public class Setup {
 			int no = ((Integer) normIt.next()).intValue();
 			boolean found = false;
 			while (!found) {
-				Location thisLoc = hexIt.getNextHex();
+				location thisLoc = hexIt.getNextHex();
 				Hex thisHex = (Hex) thisLoc.getContains();
 				if (thisHex.getisRobberHere().equals("R")) {
 					thisHex.setNumber(7);
@@ -660,7 +660,7 @@ public class Setup {
 					}
 				}
 			}
-		Location robL = hexIt.getNextHex();
+		location robL = hexIt.getNextHex();
 		while(robL!=null){
 			Hex robLoc = (Hex)(robL.getContains());
 			if(robLoc.getNumber()==-1&&robLoc.getisRobberHere().equals("R")){
@@ -675,14 +675,14 @@ public class Setup {
 		return board1;
 	}
 	
-	public static void setHexNumberTest(Location thisLoc, Board board1, Iterator normIt, int xc, int yc) {
+	public static void setHexNumberTest(location thisLoc, Board board1, Iterator normIt, int xc, int yc) {
 		
 		int x = thisLoc.getCoord().getX() + xc;
 		int y = thisLoc.getCoord().getY() + yc;
 		
 		if(((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8))) {
 
-			Location l1 = board1.getLocationFromCoordinate(new Coordinate(x,y));
+			location l1 = board1.getLocationFromCoordinate(new Coordinate(x,y));
 			if(l1.getType().equals("hex")
 					&&((Hex)l1.getContains()).getNumber()==-1
 					&& (!((Hex)l1.getContains()).getisRobberHere().equals("R"))) 
@@ -695,11 +695,11 @@ public class Setup {
 	//this method makes a 2d array which is then used for accessing the hexes and intersections by coordinate, it also adds the hexes and the intersections(by calling another method) around the hexes
 	public static void setUpLocations(Board board1) {
 		
-		Location[][] boardLocations = new Location[11][11];
+		location[][] boardLocations = new location[11][11];
 		board1.setBoardLocations(boardLocations);
 		for (int xv = 0; xv<11; xv++) {
 			for (int yv = 0; yv<11; yv++) {
-				boardLocations[xv][yv]=new Location(new Coordinate(xv-5,yv-5),"empty", null);
+				boardLocations[xv][yv]=new location(new Coordinate(xv-5,yv-5),"empty", null);
 			}
 		}
 		for (int ci = 0; ci<board1.getHexes().size();ci++ ) {
@@ -728,7 +728,7 @@ public class Setup {
 	}
 
 	//this method takes up an informal coordinate, and 2d array and adds a new intersection in the specified place
-	public static void setUpInter(int x, int y,  Location[][] boardLocations, Board board1) {
+	public static void setUpInter(int x, int y,  location[][] boardLocations, Board board1) {
 		
 		if (boardLocations[x][y].getType().equals("empty")) {
 			Player noPlayer = new Player();
@@ -872,7 +872,7 @@ public class Setup {
 		for (int j = 0; j < board1.getBoardLocations().length; j++) {
 			for (int g = 0; g < board1.getBoardLocations()[j].length; g++) {
 				
-				Location thisLoc = board1.getBoardLocations()[j][g];
+				location thisLoc = board1.getBoardLocations()[j][g];
 				
 				if (thisLoc.getType().equals("Intersection")) {
 					Intersection thisint = (Intersection) thisLoc.getContains();

@@ -2,7 +2,7 @@
 /**
  * Class to store data on location
  */
-public class Location {
+public class location {
 	
 	private Coordinate coord;
 	private String type;
@@ -10,11 +10,11 @@ public class Location {
 	
 //----Constructors----//
 	
-	public Location() {
+	public location() {
 		
 	}
 	
-	public Location(Coordinate coord, String type, Object contains) {
+	public location(Coordinate coord, String type, Object contains) {
 		
 		this.coord = coord;
 		this.type = type;
