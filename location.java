@@ -1,10 +1,21 @@
 
+<<<<<<< HEAD
+=======
+/**
+ * Class to store data on location
+ */
+>>>>>>> parent of 22cec3e... so this is strange, and i dont really understand why it is happening but apparently git gets confused with the names of files changing?
 public class Location {
 	
 	private Coordinate coord;
 	private String type;
 	private Object contains;
 	
+<<<<<<< HEAD
+=======
+//----Constructors----//
+	
+>>>>>>> parent of 22cec3e... so this is strange, and i dont really understand why it is happening but apparently git gets confused with the names of files changing?
 	public Location() {
 		
 	}
