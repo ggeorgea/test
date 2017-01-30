@@ -464,6 +464,16 @@ public class Turn {
 		}
 	}
 
+	public static void robberStealCard(Player player, Game game1, Scanner scanner) {
+		//choose a player to steal a card from 
+		System.out.println("Please select player to steal from ");
+		String  name = scanner.nextLine();
+		//check that the player chose is valid
+		//the chosen player must have a settlement next to the current coordinates 
+		//randomly choose a card from the player and give to other player
+
+	}
+
 	
 //-----Methods to build and buy things for the turn-----//
 	
