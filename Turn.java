@@ -456,7 +456,7 @@ public class Turn {
 			hex1.setisRobberHere("R");
 			game1.getBoard().setRobber(a);
 			//TODO gets the hex and puts the robber there
-			//TODO lets the player steal a card
+			//steal card 
 		}
 		catch(InputMismatchException e){
 			scanner.nextLine();
@@ -470,7 +470,11 @@ public class Turn {
 		String  name = scanner.nextLine();
 		//check that the player chose is valid
 		//the chosen player must have a settlement next to the current coordinates 
-		//randomly choose a card from the player and give to other player
+		//randomly choose a card from the player and give to other player 
+
+	}
+	//method that finds all nearbyPlayers from a specific coordinate 
+	public static ArrayList<Player> findNearbyPlayer(Coordinate c){
 
 	}
 
