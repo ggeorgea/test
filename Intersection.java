@@ -10,7 +10,7 @@ public class Intersection {
 	private Building building;
 	private ArrayList<Intersection> illegal = new ArrayList<Intersection>();
 	
-//----Constructors----//
+//-----Constructors-----//
 	
 	public Intersection() {
 		
@@ -23,7 +23,7 @@ public class Intersection {
 		this.building = building;
 	}
 	
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public Coordinate getCoordinate() {
 	

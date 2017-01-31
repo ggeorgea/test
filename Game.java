@@ -17,7 +17,7 @@ public class Game {
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
 	private ArrayList<Player> players = new ArrayList<Player>();
 
-//----Constructors----//
+//-----Constructors-----//
 	
 	public Game() {
 
@@ -38,7 +38,7 @@ public class Game {
 		this.players = players;
 	}
 
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public String getId() {
 

@@ -9,7 +9,7 @@ public class Port {
 	private String resource;
 	private Player owner;
 
-//----Constructors----//
+//-----Constructors-----//
 	
 	public Port() {
 
@@ -23,7 +23,7 @@ public class Port {
 		this.owner = owner;
 	}
 
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public Coordinate getCoordinateA() {
 

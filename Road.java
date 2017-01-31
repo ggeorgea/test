@@ -8,7 +8,7 @@ public class Road {
 	private Coordinate coordinateB;
 	private Player owner;
 	
-//----Constructors----//
+//-----Constructors-----//
 	
 	public Road() {
 		
@@ -21,7 +21,7 @@ public class Road {
 		this.owner = owner;
 	}
 	
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public Coordinate getCoordinateA() {
 	

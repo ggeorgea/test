@@ -20,7 +20,7 @@ public class Board {
 	//this hashmap is used for getting roads with their endpoint coordinates
 	private HashMap roadmap;
 	
-//----Constructors----//
+//-----Constructors-----//
 	
 	public Board() {	
 	
@@ -39,7 +39,7 @@ public class Board {
 		this.boardLocations = boardLocations;
 	}
 
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public int getSize() {
 		
@@ -131,7 +131,7 @@ public class Board {
 		this.roadmap = roadmap;
 	}
 	
-//----Methods to ensure that the hash map and the 2D array are accessed properly----//	
+//-----Methods to ensure that the hash map and the 2D array are accessed properly-----//	
 	
 	//returns a road from the hash map based when given coordinates
 	public Road getRoadFromCo(Coordinate coA, Coordinate coB) {

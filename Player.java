@@ -26,8 +26,9 @@ public class Player {
 	private ArrayList<Port> settledPorts = new ArrayList<Port>();
 	
 	//make an array list of roads
+	//TODO do we need this?^^
 
-//----Constructors----//
+//-----Constructors-----//
 	
 	public Player() {
 
@@ -53,7 +54,7 @@ public class Player {
 		this.developmentCards = developmentCards;
 	}
 
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public String getName() {
 

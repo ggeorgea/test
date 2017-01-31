@@ -7,7 +7,7 @@ public class Coordinate {
 	private int x;
 	private int y;
 	
-//----Constructors----//
+//-----Constructors-----//
 	
 	public Coordinate() {
 		
@@ -19,7 +19,7 @@ public class Coordinate {
 		this.y = y;
 	}
 
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public int getX() {
 	

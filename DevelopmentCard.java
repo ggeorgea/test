@@ -8,7 +8,7 @@ public class DevelopmentCard {
 	private String type;
 	private boolean hidden;
 	
-//----Constructors----//
+//-----Constructors-----//
 	
 	public DevelopmentCard() {
 		
@@ -20,7 +20,7 @@ public class DevelopmentCard {
 		this.hidden = hidden;
 	}
 
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public String getType() {
 	

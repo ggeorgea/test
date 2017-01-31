@@ -7,7 +7,7 @@ public class Building {
 	private String type;
 	private int victoryPoints;
 	
-//----Constructors----//
+//-----Constructors-----//
 	
 	public Building() {
 		
@@ -19,7 +19,7 @@ public class Building {
 		this.victoryPoints = victoryPoints;
 	}
 	
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public String getType() {
 		

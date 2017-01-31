@@ -269,6 +269,7 @@ public class Setup {
 		game1.setBoard(board1);
 	}
 
+	//checks a road can be placed at the coordinate specified
 	public static boolean checkNear(Board board1, int x1, int y1, int x2, int y2) {
 		
 		Location loca1 = board1.getLocationFromCoordinate(new Coordinate(x1,y1));
