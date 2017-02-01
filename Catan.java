@@ -16,7 +16,9 @@ public class Catan {
 	private static final boolean END_GAME = true;
 
 	public static void main(String[] args) throws Exception {
+		
 		Board board1 = new Board();
+		
 		/*
 		 * //GENERAL //the above methods set up a board, with roads,
 		 * intersections and hexes, all set up in the right places, with random
@@ -67,26 +69,26 @@ public class Catan {
 
 		// will let the players play another game if they wish
 		while (keepPlaying) {
+			
 			System.out.println("----------SETTLERS OF CATAN----------\n\n");
 			Scanner scanner = new Scanner(new File("./src/test.txt"));
 
-			// sets board
+			//sets up board
 			board1 = Setup.getMeABoard();
 			Game game1 = new Game();
 			game1.setBoard(board1);
 
 			Map.printMap(game1.getBoard());
 
-			// sets development cards
+			//sets up development cards
 			ArrayList<DevelopmentCard> developmentCards = Setup
 					.getDevCardDeck();
 			game1.setDevelopmentCards(developmentCards);
 
-			// sets resource cards
+			//sets up resource cards
 			ArrayList<ResourceCard> ore = Setup.getResourceCardDeck("ore");
 			ArrayList<ResourceCard> grain = Setup.getResourceCardDeck("grain");
-			ArrayList<ResourceCard> lumber = Setup
-					.getResourceCardDeck("lumber");
+			ArrayList<ResourceCard> lumber = Setup.getResourceCardDeck("lumber");
 			ArrayList<ResourceCard> wool = Setup.getResourceCardDeck("wool");
 			ArrayList<ResourceCard> brick = Setup.getResourceCardDeck("brick");
 
@@ -96,31 +98,36 @@ public class Catan {
 			game1.setWool(wool);
 			game1.setBrick(brick);
 
-			// sets players
+			//sets up players
 			ArrayList<Player> players = Setup.setPlayers(scanner);
 			game1.setPlayers(players);
 
-			// roll dice for each player
-			// changes player order with largest dice roll first
+			//roll dice for each player
+			//changes player order with largest dice roll first
 			Setup.getPlayerOrder(game1, scanner);
 
-			// place roads and settlements
+			//place roads and settlements
 			Setup.setInitialRoadsAndSettlements(game1, scanner);
 
-			// pass from automated set up to actually playing the game
 
+			//pass from automated set up to actually playing the game
 			System.out.println("-----now in manual mode-------");
 			scanner = new Scanner(System.in);
+			
 			boolean hasEnded = !END_GAME;
 
 			// will keep letting players take turns until someone wins
 			while (!hasEnded) {
 				for (int i = 0; i < game1.getPlayers().size(); i++) {
-//for a test of longest road:
-//					if (i>0){
-//						System.out.println("-----now in manual mode-------");
-//						scanner = new Scanner(System.in);
-//					}
+
+					//  for a test of longest road:
+					/*
+					if (i>0){
+						System.out.println("-----now in manual mode-------");
+						scanner = new Scanner(System.in);
+					}
+					*/
+					
 					// lets the player have a turn
 					hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1,
 							scanner);
@@ -136,10 +143,7 @@ public class Catan {
 		}
 
 		System.out.println("Goodbye!");
-
 	}
-
-
 
 	// asks the players if they want to play again
 	public static boolean playAgain(Scanner scanner) {
@@ -166,11 +170,16 @@ public class Catan {
 		return keepPlaying;
 	}
 
+	//TODO delete these methods from this class
+	
+/* code modified/copied in build road method in turn class
 	// ************ Look for the player with the longest road ********
 	public static Player longestRoad(Game game1) {
+		
 		ArrayList<Player> players = game1.getPlayers();
 		// initial longest road to be compared with the players longest road
 		int longestRoad = 0;
+
 		Player hasRoad = players.get(0);
 
 		// iterate the list of player and find the longest road
@@ -180,11 +189,35 @@ public class Catan {
 				hasRoad = p;
 			}
 		}
-		hasRoad.setHasLongestRoad(true);
-		System.out.println("player" + hasRoad.getName()
-				+ "has the longest road.");
+		
+		hasRoad.setHasLongestRoad(true); 
+		hasRoad.setVictoryPoints(hasRoad.getVictoryPoints()+2); 
+		System.out.println("player" + hasRoad.getName() + "has the longest road.");
 		return hasRoad;
+	}*/
+	
+	//Eventually we will need to write a method that keeps track of victory points
+	//we need a method to remove the largest army card when a player exceeds the current holder 
 
-	}
+	//been transferred to turn class
+	/*public static Player checkLargestArmy(Game game1){ 
 
+		ArrayList<Player> players = game1.getPlayers();
+		
+		int armySize = 0 ; 
+		Player largestArmy = players.get(0);
+
+		//iterate the list of player and find the longest road 
+		for (Player p : players){ 
+			if(p.getLargestArmy() > armySize){ 
+				armySize = p.getLargestArmy(); 
+				largestArmy = p; 
+			}
+		}
+		
+		largestArmy.setHasLargestArmy(true); 
+		largestArmy.setVictoryPoints(largestArmy.getVictoryPoints()+2);
+		System.out.println("player" + largestArmy.getName() + "has the largest army.");
+		return largestArmy; 
+	}*/
 }

@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Class to store the state of the Catan game
+ */
 public class Game {
 
 	private String id;
@@ -14,6 +17,8 @@ public class Game {
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
 	private ArrayList<Player> players = new ArrayList<Player>();
 
+//-----Constructors-----//
+	
 	public Game() {
 
 	}
@@ -33,6 +38,8 @@ public class Game {
 		this.players = players;
 	}
 
+//-----Getters and Setters-----//
+	
 	public String getId() {
 
 		return id;

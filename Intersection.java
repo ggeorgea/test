@@ -1,11 +1,16 @@
 import java.util.ArrayList;
 
+/**
+ * Class to store all intersections on the board
+ */
 public class Intersection {
 
 	private Coordinate coordinate;
 	private Player owner;
 	private Building building;
 	private ArrayList<Intersection> illegal = new ArrayList<Intersection>();
+	
+//-----Constructors-----//
 	
 	public Intersection() {
 		
@@ -17,6 +22,8 @@ public class Intersection {
 		this.owner = owner;
 		this.building = building;
 	}
+	
+//-----Getters and Setters-----//
 	
 	public Coordinate getCoordinate() {
 	

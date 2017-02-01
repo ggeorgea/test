@@ -1,8 +1,13 @@
 
+/**
+ * Class to store information about resource cards
+ */
 public class ResourceCard {
 
 	private String resource;
 
+//-----Constructors-----//
+	
 	public ResourceCard() {
 		
 	}
@@ -12,6 +17,8 @@ public class ResourceCard {
 		this.resource = resource;
 	}
 
+//-----Getters and Setters-----//
+	
 	public String getResource() {
 		
 		return resource;

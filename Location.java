@@ -1,9 +1,14 @@
 
+/**
+ * Class to store data on location
+ */
 public class Location {
 	
 	private Coordinate coord;
 	private String type;
 	private Object contains;
+	
+//----Constructors----//
 	
 	public Location() {
 		
@@ -16,6 +21,8 @@ public class Location {
 		this.contains = contains;
 	}
 
+//----Getters and Setters----//
+	
 	public Coordinate getCoord() {
 		
 		return coord;
