@@ -427,7 +427,7 @@ public class Turn {
 				case "grain" :
 					ArrayList<ResourceCard> grain = game1.getGrain();
 					grain.add(card);
-				break;				
+					break;				
 				}
 			
 				cards.remove(choice);
@@ -1529,7 +1529,7 @@ public class Turn {
 		}
 	}
 
-	public static void tradeBank(Player player, Scanne,r scanner){
+	public static void tradeBank(Player player, Scanner scanner){
 		for(int i = 0; i < board1.getPorts().size(); i+){
 			if(board1.getPorts().get(i).getOwner() == player){
 				if(board1.getPorts().get(i).getResource().equals("?")){
@@ -1562,7 +1562,7 @@ public class Turn {
 		}
 	}
 
-	public static void tradeBank(Player player, Scanner, scanner){
+	public static void tradeBank(Player player, Scanner scanner){
 
 	}
 
@@ -1576,13 +1576,10 @@ public class Turn {
 
 	public static boolean tradeBankOrPlayer(Scanner scanner){
 		System.out.println("Press 'B' to trade with the bank, and 'P' to trade with other players:");
-<<<<<<< HEAD
 		char choice = scanner.next();
 		switch (choice.toUpperCase()) {
-=======
 		char choice = scanner.next().toUpperCase();
 		switch (choice) {
->>>>>>> origin/master
 			case 'B' :
 				return true;
 				break;
@@ -1594,13 +1591,9 @@ public class Turn {
 				tradeBankOrPlayer(scanner);
 		}
 	}
-<<<<<<< HEAD
-}
-=======
 
 	public static boolean hasStandardPort(Player player){
 
 		return false;
 	}
 }
->>>>>>> origin/master
