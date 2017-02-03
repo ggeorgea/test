@@ -1695,6 +1695,15 @@ public class Turn {
 			choice = chooseMoreResources(scanner);
 		}
 		
+		boolean validTrade = checkOffer(playerToTrade, playerTradeToTrade);
+		
+		//checks if the trade is valid
+		if (!validTrade) {
+			System.out.println("You cannot trade the same resources i.e 1 wool for 2 wool. Please choose again.");
+			restoreResources(player, playerTrade, playerToTrade, playerTradeToTrade);
+			return proposeTrade(player, playerTrade, scanner);
+		}
+		
 		//asks the other player if the offer is to be accepted
 		String offer = printOffer(player, playerTrade, playerToTrade, playerTradeToTrade, scanner);	
 		
@@ -1745,6 +1754,30 @@ public class Turn {
 		}
 		
 		return choice;
+	}
+	
+	//checks the offer is valid against the rules
+	//cannot trade same resources i.e. 1 wool for 2 wool
+	public static boolean checkOffer(ArrayList<ResourceCard> playerToTrade, ArrayList<ResourceCard> playerTradeToTrade) {
+		
+		//checks each pair of cards from both array lists
+		for (int i = 0; i < playerToTrade.size(); i++) {
+			
+			String card1 = playerToTrade.get(i).getResource();
+			
+			for (int j = 0; j < playerTradeToTrade.size(); j++) {
+			
+				String card2 = playerTradeToTrade.get(j).getResource();
+				
+				//if two cards have the same type the trade is invalid
+				if (card1.equals(card2)) {
+					return false;
+				}
+			}
+		}
+		
+		//otherwise the trade is valid
+		return true;
 	}
 	
 	//prints the offer proposed by the player
