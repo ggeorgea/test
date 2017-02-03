@@ -24,6 +24,10 @@ public class Turn {
 	
 	private static final int SETTLEMENT_RESOURCES = 1;
 	private static final int CITY_RESOURCES = 2;
+	
+	private static final String ACCEPT_TRADE = "accept";
+	private static final String REJECT_TRADE = "reject";
+	private static final String COUNTER_TRADE = "counter";
 
 //-----Methods to actually let the player have their turn-----//
 	
@@ -1214,7 +1218,7 @@ public class Turn {
  		}
  		
  		if (hasPlayedDevCard) {
- 			System.out.println("You can only play one development crad on your turn");
+ 			System.out.println("You can only play one development card on your turn");
  			return;
  		}
  		if (playCards.size() <= 0) {
@@ -1384,7 +1388,7 @@ public class Turn {
 			cards.add(brick.get(0));
 			game1.getBrick().remove(brick);
 			break;
-		case 2:
+		case 2 :
 			if (lumber.size() <= 0) {
 				System.out.println("There are no lumber resource cards left. Please choose again.");
 				chooseResourceYOP(cards, game1, scanner);
@@ -1393,7 +1397,7 @@ public class Turn {
 			cards.add(lumber.get(0));
 			game1.getLumber().remove(lumber);
 			break;
-		case 3:
+		case 3 :
 			if (wool.size() <= 0) {
 				System.out.println("There are no wool resource cards left. Please choose again.");
 				chooseResourceYOP(cards, game1, scanner);
@@ -1525,7 +1529,7 @@ public class Turn {
 			tradeBank(player, scanner);
 		}
 		else{
-
+			tradePlayer(player, scanner, game1);
 		}
 	}
 
@@ -1562,9 +1566,9 @@ public class Turn {
 		}
 	}
 
-	public static void tradeBank(Player player, Scanner scanner){
+	/*public static void tradeBank(Player player, Scanner scanner){
 
-	}
+	}*/
 
 	public static void tradeStandard(Player player, Scanner scanner){
 
@@ -1595,5 +1599,257 @@ public class Turn {
 	public static boolean hasStandardPort(Player player){
 
 		return false;
+	}
+
+//-----Methods for player to player trade-----//
+	
+	//allows the player to trade with other players
+	public static void tradePlayer(Player player, Scanner scanner, Game game1) {
+		
+		ArrayList<Player> players = game1.getPlayers();
+		players.remove(player);
+		
+		//asks the player to choose a player to trade with
+		System.out.println("Who do you want to trade with?");
+		
+		for (int i = 0; i < players.size(); i++) {
+			
+			System.out.println((i+1) + ". " + players.get(i).getName());
+		}
+		
+		int choice = scanner.nextInt();
+		
+		//checks for correct input
+		if (choice > players.size()+1 || choice <= 0) {
+			System.out.println("Invalid choice. Please choose again.");
+			tradePlayer(player, scanner, game1);
+			return;
+		}
+		
+		//gets the player to trade with
+		Player playerTrade = players.get(choice-1);
+		String trade = COUNTER_TRADE;
+		int tradeNumber = 0;
+		
+		//lets the players trade until someone accepts or rejects
+		while (trade.equals(COUNTER_TRADE)) {
+			
+			//if it is an even trade number, the player whose turn it 
+			//is makes the offer
+			if (tradeNumber%2 == 0) {
+				trade = proposeTrade(player, playerTrade, scanner);
+			}
+			
+			//if it is an odd trade number, the player who is being
+			//traded with makes the offer
+			else {
+				trade = proposeTrade(playerTrade, player, scanner);
+			}
+		}
+		
+		if (trade.equals(REJECT_TRADE)) {
+			System.out.println("Offer rejected. Trading stopped.");
+		}
+		else if (trade.equals(ACCEPT_TRADE)) {
+			System.out.println("Offer accepted. Trading stopped.");
+		}
+				
+		players.add(player);
+		game1.setPlayers(players);
+	}
+	
+	//lets the player propose a trade with another player
+	public static String proposeTrade(Player player, Player playerTrade, Scanner scanner) {
+		
+		ArrayList<ResourceCard> playerResources = player.getResourceCards();
+		ArrayList<ResourceCard> playerTradeResources = playerTrade.getResourceCards();
+		
+		ArrayList<ResourceCard> playerToTrade = new ArrayList<ResourceCard>();
+		ArrayList<ResourceCard> playerTradeToTrade = new ArrayList<ResourceCard>();
+		
+		int choice = 1;
+		
+		//lets the player choose what to trade from their own hand
+		while (choice == 1) {
+			
+			System.out.println("What do you want to trade from your hand?");
+		
+			choice = chooseResources(playerResources, scanner);
+			playerToTrade.add(playerResources.get(choice));
+			playerResources.remove(choice);
+		
+			choice = chooseMoreResources(scanner);
+		}
+		
+		choice = 1;
+		
+		//lets the player choose what resources they want from the other player's hand
+		while (choice == 1) {
+			
+			System.out.println("What do you want from " + playerTrade.getName() + "'s hand?");
+		
+			choice = chooseResources(playerTradeResources, scanner);
+			playerTradeToTrade.add(playerTradeResources.get(choice));
+			playerTradeResources.remove(choice);
+			
+			choice = chooseMoreResources(scanner);
+		}
+		
+		//asks the other player if the offer is to be accepted
+		String offer = printOffer(player, playerTrade, playerToTrade, playerTradeToTrade, scanner);	
+		
+		//if the offer is accepted, the trade takes place
+		if (offer.equals(ACCEPT_TRADE)) {
+			tradePlayerResources(player, playerTrade, playerToTrade, playerTradeToTrade);
+		}
+		
+		//otherwise the resources have to be added back in to both players' hands
+		else {
+			restoreResources(player, playerTrade, playerToTrade, playerTradeToTrade);
+		}
+
+		return offer;
+	}
+	
+	//lets the player decide what resources to trade
+	public static int chooseResources(ArrayList<ResourceCard> playerResources, Scanner scanner) {
+		
+		//asks the player to choose a resource to trade
+		for (int i = 0; i < playerResources.size(); i++) {
+			System.out.println(i+1 + ". " + playerResources.get(i).getResource());
+		}
+		
+		int choice = scanner.nextInt();
+		
+		//checks for correct input
+		if (choice > playerResources.size()+1 || choice <= 0) {
+			System.out.println("Invalid input. Please choose again");
+			return chooseResources(playerResources, scanner);			
+		}
+		
+		return choice-1;		
+	}
+	
+	//asks the user if they want to trade more than one resource
+	public static int chooseMoreResources(Scanner scanner) {
+		
+		System.out.println("Do you want to trade more cards?");
+		System.out.println("1. Yes");
+		System.out.println("2. No");
+		
+		int choice = scanner.nextInt();
+		
+		if (choice != 1 || choice != 2) {
+			System.out.println("Invalid choice. Please choose again.");
+			return chooseMoreResources(scanner);
+		}
+		
+		return choice;
+	}
+	
+	//prints the offer proposed by the player
+	public static String printOffer(Player player, Player playerTrade, ArrayList<ResourceCard> playerToTrade, 
+			ArrayList<ResourceCard> playerTradeToTrade, Scanner scanner) {
+		
+		//prints out the trade that has been proposed
+		System.out.println("Player " + playerTrade.getName() + ": Player " + player.getName() + " has proposed a trade: ");
+		
+		for (int i = 0; i < playerToTrade.size(); i++) {
+			System.out.print("1x " + playerToTrade.get(i) + " ");
+		}
+		
+		System.out.print("from their hand for ");
+		
+		for (int i = 0; i < playerTradeToTrade.size(); i++) {
+			System.out.print("1x " + playerTradeToTrade.get(i) + " ");
+		}
+		
+		System.out.print("from your hand");
+		
+		//asks the player if they want to accept the offer
+		int choice = chooseOffer(scanner);
+		
+		//returns the correct string based on the player's choice
+		switch (choice) {
+		case 1 :
+			return ACCEPT_TRADE;
+		case 2 :
+			return REJECT_TRADE;
+		case 3 : 
+			return COUNTER_TRADE;
+		default :
+			return REJECT_TRADE;
+		}		
+	}
+	
+	//lets the other player during trade accept or reject the offer
+	public static int chooseOffer(Scanner scanner) {
+		
+		System.out.println("What do you want to do?");
+		System.out.println("1. Accept Trade");
+		System.out.println("2. Reject Trade");
+		System.out.println("3. Propose a Counter-offer");
+		
+		int choice = scanner.nextInt();
+		
+		//checks for correct input
+		if (choice != 1 || choice != 2 || choice != 3) {
+			System.out.println("Invalid input. Please choose again.");
+			return chooseOffer(scanner);
+		}
+		
+		return choice;
+	}
+	
+	//trades the resources between players
+	public static void tradePlayerResources(Player player, Player playerTrade, ArrayList<ResourceCard> playerToTrade, 
+			ArrayList<ResourceCard> playerTradeToTrade) {
+		
+		ArrayList<ResourceCard> playerResources = player.getResourceCards();
+		ArrayList<ResourceCard> playerTradeResources = playerTrade.getResourceCards();
+	
+		for (int i = 0; i < playerToTrade.size(); i++) {
+			
+			ResourceCard card = playerToTrade.get(i);
+			
+			playerResources.remove(card);
+			playerTradeResources.add(card);
+		}
+		
+		for (int i = 0; i < playerTradeToTrade.size(); i++) {
+			
+			ResourceCard card = playerTradeToTrade.get(i);
+			
+			playerTradeResources.remove(card);
+			playerResources.add(card);
+		}
+		
+		player.setResourceCards(playerResources);
+		playerTrade.setResourceCards(playerTradeResources);
+	}
+	
+	//puts the trade resources back into players' hands
+	public static void restoreResources(Player player, Player playerTrade, ArrayList<ResourceCard> playerToTrade, 
+			ArrayList<ResourceCard> playerTradeToTrade) {
+			
+		ArrayList<ResourceCard> playerResources = player.getResourceCards();
+		ArrayList<ResourceCard> playerTradeResources = playerTrade.getResourceCards();
+			
+		for (int i = 0; i < playerToTrade.size(); i++) {
+			
+			ResourceCard card = playerToTrade.get(i);
+			
+			playerResources.add(card);
+		}
+			
+		for (int i = 0; i < playerTradeToTrade.size(); i++) {
+			
+			ResourceCard card = playerTradeToTrade.get(i);
+			
+			playerTradeResources.add(card);
+		}
+			
+		player.setResourceCards(playerResources);
+		playerTrade.setResourceCards(playerTradeResources);
 	}
 }
