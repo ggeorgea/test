@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Class to store all intersections on the board
@@ -63,5 +64,5 @@ public class Intersection {
 	public void setIllegal(ArrayList<Intersection> illegal) {
 		
 		this.illegal = illegal;
-	}		
+	}
 }

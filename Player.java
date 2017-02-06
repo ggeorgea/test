@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Class that stores information about players
@@ -209,5 +210,35 @@ public class Player {
 	public void setSettledPorts(ArrayList<Port> settledPorts){
 
 		this.settledPorts = settledPorts;
+	}
+	
+//-----Extra methods used in turn-----//
+	
+	//prints the player's hand
+	public static void printResourceCards(Player player) {
+	
+		Iterator<ResourceCard> it = player.getResourceCards().iterator();
+		System.out.print("(");
+		
+		while (it.hasNext()) {
+			System.out.print(it.next().getResource());
+			
+			if (it.hasNext()) {
+				System.out.print(", ");
+			}	
+		}
+		
+		System.out.print(")\n");
+	}
+	
+	//updates development cards so ones bought this turn can be played next turn
+	public static void updateDevelopmentCards(Player player) {
+		
+		ArrayList<DevelopmentCard> developmentCards = player.getDevelopmentCards();
+		
+		for (int i = 0; i < developmentCards.size(); i++) {
+		
+			developmentCards.get(i).setHidden(false);
+		}
 	}
 }

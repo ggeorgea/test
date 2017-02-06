@@ -145,7 +145,7 @@ public class Catan {
 		System.out.println("Goodbye!");
 	}
 
-	// asks the players if they want to play again
+	//asks the players if they want to play again
 	public static boolean playAgain(Scanner scanner) {
 
 		System.out.println("Do you want to play again?");
