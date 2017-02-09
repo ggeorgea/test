@@ -21,16 +21,18 @@ public class Player {
 
 	private ArrayList<ResourceCard> resourceCards = new ArrayList<ResourceCard>();
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
-	private ArrayList<ResourceCard> newResourceCards = new ArrayList<ResourceCard>(); 
+	private ArrayList<ResourceCard> newResourceCards = new ArrayList<ResourceCard>();
 
 	private ArrayList<Intersection> firstSettlements = new ArrayList<Intersection>();
 	private ArrayList<Port> settledPorts = new ArrayList<Port>();
-	
+	private ArrayList<Port> standardPorts = new ArrayList<Port>();
+	private ArrayList<Port> specialPorts = new ArrayList<Port>();
+
 	//make an array list of roads
 	//TODO do we need this?^^
 
 //-----Constructors-----//
-	
+
 	public Player() {
 
 	}
@@ -56,7 +58,7 @@ public class Player {
 	}
 
 //-----Getters and Setters-----//
-	
+
 	public String getName() {
 
 		return name;
@@ -121,17 +123,17 @@ public class Player {
 
 		return longestRoad;
 	}
-	
+
 	public void setLongestRoad(int longestRoad) {
 
 		this.longestRoad = longestRoad;
 	}
-	
+
 	//TODO: What is this??
-	/*public int findLongestRoadLength(){ 
+	/*public int findLongestRoadLength(){
 
 	}*/
-	
+
 	public int getLargestArmy() {
 
 		return largestArmy;
@@ -181,24 +183,24 @@ public class Player {
 
 		this.developmentCards = developmentCards;
 	}
-	
+
 	public ArrayList<ResourceCard> getNewResourceCards() {
-		
+
 		return newResourceCards;
 	}
 
 	public void setNewResourceCards(ArrayList<ResourceCard> newResourceCards) {
-		
+
 		this.newResourceCards = newResourceCards;
 	}
-	
+
 	public ArrayList<Intersection> getFirstSettlements() {
-		
+
 		return firstSettlements;
 	}
 
 	public void setFirstSettlements(ArrayList<Intersection> firstSettlements) {
-		
+
 		this.firstSettlements = firstSettlements;
 	}
 
@@ -211,33 +213,53 @@ public class Player {
 
 		this.settledPorts = settledPorts;
 	}
-	
+
+	public void setStandardPorts(ArrayList<Port> standardPorts){
+
+		this.standardPorts = standardPorts;
+	}
+
+	public ArrayList<Port> getStandardPorts(){
+
+		return standardPorts;
+	}
+
+	public void setSpecialPorts(ArrayList<Port> specialPorts){
+
+		this.specialPorts = specialPorts;
+	}
+
+	public ArrayList<Port> getSpecialPorts(){
+
+		return specialPorts;
+	}
+
 //-----Extra methods used in turn-----//
-	
+
 	//prints the player's hand
 	public static void printResourceCards(Player player) {
-	
+
 		Iterator<ResourceCard> it = player.getResourceCards().iterator();
 		System.out.print("(");
-		
+
 		while (it.hasNext()) {
 			System.out.print(it.next().getResource());
-			
+
 			if (it.hasNext()) {
 				System.out.print(", ");
-			}	
+			}
 		}
-		
+
 		System.out.print(")\n");
 	}
-	
+
 	//updates development cards so ones bought this turn can be played next turn
 	public static void updateDevelopmentCards(Player player) {
-		
+
 		ArrayList<DevelopmentCard> developmentCards = player.getDevelopmentCards();
-		
+
 		for (int i = 0; i < developmentCards.size(); i++) {
-		
+
 			developmentCards.get(i).setHidden(false);
 		}
 	}
