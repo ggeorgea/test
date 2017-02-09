@@ -9,6 +9,12 @@ public class ResourceAllocation {
 	private static final int SETTLEMENT_RESOURCES = 1;
 	private static final int CITY_RESOURCES = 2;
 	
+	public static final String WOOL = "wool";
+	public static final String LUMBER = "lumber";
+	public static final String ORE = "ore";
+	public static final String BRICK = "brick";
+	public static final String GRAIN = "grain";
+	
 	//-----Methods to perform the resource allocation for the turn-----//
 	
 	//code to get the resources from a dice roll
@@ -17,6 +23,7 @@ public class ResourceAllocation {
 		ArrayList<Player> players = game1.getPlayers();
 		ArrayList<Hex> hexes = game1.getBoard().getHexes();
 		Board board = game1.getBoard();
+		ArrayList<String> bankHasResources = new ArrayList<String>();
 			
 		resetNewResources(players);
 		
@@ -39,38 +46,27 @@ public class ResourceAllocation {
 					Coordinate nearbyIntersection;
 					
 					nearbyIntersection = new Coordinate(x, y-1);
-					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
-						return;
-					}
+					bankHasResources.add(getIntersectionResources(board, nearbyIntersection, hex, game1));
 
 					nearbyIntersection = new Coordinate(x, y+1);
-					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
-						return;
-					}
+					bankHasResources.add(getIntersectionResources(board, nearbyIntersection, hex, game1));
 						
 					nearbyIntersection = new Coordinate(x-1, y);
-					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
-						return;
-					}
+					bankHasResources.add(getIntersectionResources(board, nearbyIntersection, hex, game1));
 						
 					nearbyIntersection = new Coordinate(x+1, y);
-					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
-						return;
-					}
+					bankHasResources.add(getIntersectionResources(board, nearbyIntersection, hex, game1));
 						
 					nearbyIntersection = new Coordinate(x-1, y-1);
-					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
-						return;
-					}
+					bankHasResources.add(getIntersectionResources(board, nearbyIntersection, hex, game1));
 						
 					nearbyIntersection = new Coordinate(x+1, y+1);
-					if(!getIntersectionResources(board, nearbyIntersection, hex, game1)) {
-						return;
-					}
+					bankHasResources.add(getIntersectionResources(board, nearbyIntersection, hex, game1));
 				}
 			}
 		}
 			
+		removeIllegalResources(players, bankHasResources);
 		setResources(players);
 		game1.setPlayers(players);
 	}
@@ -86,8 +82,9 @@ public class ResourceAllocation {
 	}
 	
 	//gets the resources for the settlement/city
-	//returns false if the bank runs out of resource cards
-	public static boolean getIntersectionResources(Board board, Coordinate nearbyIntersection, Hex hex, Game game1) {
+	//returns the resource if the bank runs out of that resource card
+	//null otherwise
+	public static String getIntersectionResources(Board board, Coordinate nearbyIntersection, Hex hex, Game game1) {
 		
 		String type = ((Intersection) board.getLocationFromCoordinate(nearbyIntersection).getContains()).getBuilding().getType();
 		Player owner = ((Intersection) board.getLocationFromCoordinate(nearbyIntersection).getContains()).getOwner();
@@ -96,24 +93,31 @@ public class ResourceAllocation {
 		//if any player owns an intersection around the hex they get resources
 		//1 resource for a settlement and 1 for a settlement
 		if (type.equals("t")) {
-			if (!getResources(owner, terrain, game1, SETTLEMENT_RESOURCES)) {
-				System.out.println("There are not enough resources left. No player gets new resources this turn.");
-				return false;
+			
+			String bankHasResources = getResources(owner, terrain, game1, SETTLEMENT_RESOURCES);
+			
+			if (bankHasResources != null) {
+				System.out.println("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
+				return bankHasResources;
 			}
 		}
 		else if (type.equals("c")) {
-			if (!getResources(owner, terrain, game1, CITY_RESOURCES)) {
-				System.out.println("There are not enough resources left. No player gets new resources this turn.");
-				return false;
+			
+			String bankHasResources = getResources(owner, terrain, game1, CITY_RESOURCES);
+			
+			if (bankHasResources != null) {
+				System.out.println("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
+				return bankHasResources;
 			}
 		}
 		
-		return true;
+		return null;
 	}
 	
 	//gives the resources to a player
-	//returns false if the bank runs out of cards
-	public static boolean getResources(Player player, String terrain, Game game1, int n) {
+	//returns the resource if the bank runs out of that resource card
+	//null otherwise
+	public static String getResources(Player player, String terrain, Game game1, int n) {
 		
 		ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
 		
@@ -125,7 +129,7 @@ public class ResourceAllocation {
 				ArrayList<ResourceCard> wool = game1.getWool();
 				
 				if (wool.size() <= 0) {
-					return false;
+					return WOOL;
 				}
 					
 				card = wool.get(0);
@@ -136,7 +140,7 @@ public class ResourceAllocation {
 				ArrayList<ResourceCard> lumber = game1.getLumber();
 				
 				if (lumber.size() <= 0) {
-					return false;
+					return LUMBER;
 				}
 				
 				card = lumber.get(0);
@@ -147,7 +151,7 @@ public class ResourceAllocation {
 				ArrayList<ResourceCard> ore = game1.getOre();
 				
 				if (ore.size() <= 0) {
-					return false;
+					return ORE;
 				}
 				
 				card = ore.get(0);
@@ -158,7 +162,7 @@ public class ResourceAllocation {
 				ArrayList<ResourceCard> brick = game1.getBrick();
 				
 				if (brick.size() <= 0) {
-					return false;
+					return BRICK;
 				}
 				
 				card = brick.get(0);
@@ -169,7 +173,7 @@ public class ResourceAllocation {
 				ArrayList<ResourceCard> grain = game1.getGrain();
 				
 				if (grain.size() <= 0) {
-					return false;
+					return GRAIN;
 				}
 				
 				card = grain.get(0);
@@ -184,7 +188,33 @@ public class ResourceAllocation {
 		}
 			
 		player.setNewResourceCards(newResourceCards);
-		return true;
+		return null;
+	}
+	
+	//removes resource cards from the players 'newResourceCards' of the type of resource that the
+	//bank does not have
+	public static void removeIllegalResources(ArrayList<Player> players, ArrayList<String> illegalResources) {
+		
+		for (int i = 0; i < players.size(); i++) {
+			
+			Player player = players.get(i);
+			ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
+			
+			for (int j = 0; j < newResourceCards.size(); j++) {
+				
+				String card = newResourceCards.get(j).getResource();
+				
+				for (int k = 0; k < illegalResources.size(); k++) {
+					
+					String illegalResource = illegalResources.get(k);
+					
+					if (card.equals(illegalResource)) {
+						
+					newResourceCards.remove(j);
+					}
+				}
+			}	
+		}
 	}
 		
 	//adds the cards in 'newResourceCards' to 'resourceCards' for each player
