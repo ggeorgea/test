@@ -71,7 +71,7 @@ public class Turn {
 					hasPlayedDevCard = true;
 					break;
 				case 3 :
-					trade(player, scanner);
+					trade(player, scanner, game1);
 					break;
 				case 4 :
 					Player.printResourceCards(player);
@@ -274,33 +274,28 @@ public class Turn {
 //-----Methods to allow the player to trade-----//
 
 	//methods found in old turn class
-	public static void checkIfPortSettled(Player player, Intersection settlement){
+	public static void checkIfPortSettled(Player player, Intersection settlement, Game game1){
+		Board board1 = game1.getBoard();
 		int xCoord = settlement.getCoordinate().getX();
 		int yCoord = settlement.getCoordinate().getY();
 		for(int i = 0; i < board1.getPorts().size(); i++){
-			if((xCoord == board1.getPorts().getCoordinateA().getX()) && (yCoord == board1.getPorts().getCoordinateA().getY())){
+			if((xCoord == board1.getPorts().get(i).getCoordinateA().getX()) && (yCoord == board1.getPorts().get(i).getCoordinateA().getY())){
 				board1.getPorts().get(i).setOwner(player);
 			}
 		}
 	}
 
-	public static void trade(Player player, Scanner scanner){
+	public static void trade(Player player, Scanner scanner, Game game1){
 		boolean bank = tradeBankOrPlayer(scanner);
-		ArrayList<Port> standardPorts = new ArrayList<Port>();
-		ArrayList<Port> specialPorts = new ArrayList<Port>();
-		if(bank){
-			tradeBank(player, scanner, game1);
-		}
-		else{
-			tradePlayer(player, scanner, game1);
-		}
+		if(bank) tradeBank(player, scanner, game1);
+		else tradePlayer(player, scanner, game1);
 	}
 
 	public static void tradeBank(Player player, Scanner scanner, Game game1){
 		Board board1 = game1.getBoard();
-		ArrayList<Port> standardPorts = new ArrayList<Port>();
-		ArrayList<Port> specialPorts = new ArrayList<Port>();
 
+		player.updatePlayerPorts(player, game1);
+		
 		ArrayList<ResourceCard> resourceType = new ArrayList<ResourceCard>();
 		resourceType.addAll(game1.getBrick());
 		resourceType.addAll(game1.getGrain());
@@ -308,35 +303,28 @@ public class Turn {
 		resourceType.addAll(game1.getOre());
 		resourceType.addAll(game1.getWool());
 
-		for(int i = 0; i < board1.getPorts().size(); i++){
-			if(board1.getPorts().get(i).getOwner() == player){
-				if(board1.getPorts().get(i).getResource().equals("?")){
-					standardPorts.add(board1.getPorts().get(i));
-				}
-				else { specialPorts.add(board1.getPorts().get(i)); }
-			}
-			boolean hasStandard = false; if(standardPorts.size() != 0) hasStandard = true;
-			boolean hasSpecial = false; if(specialPorts.size() != 0) hasSpecial = true;
-			System.out.println("Trading options:\nDirectly with bank (4:1 receiving a resource of your choice) - press 4");
-			if(hasStandard) System.out.println("Through a standard port (3:1 receiving a resource of your choice) - press 3");
-			if(hasSpecial) System.out.println("Through a special port (2:1 receiving a specific resource) - press 2");
-			int choice = scanner.nextInt();
-			switch (choice){
-				case 4 :
-					tradeBank(player, scanner, game1);
-					break;
-				case 3 :
-					if(hasStandard) tradeStandard(player, scanner, game1, resourceType);
-					else System.out.println("Invalid choice. Please choose again"); tradeBank(player, scanner, game1);
-					break;
-				case 2 :
-					if(hasSpecial) tradeSpecial(player, scanner, game1, resourceType);
-					else System.out.println("Invalid choice. Please choose again"); tradeBank(player, scanner, game1);
-					break;
-				default:
-					System.out.println("Invalid choice. Please choose again."); tradeBank(player, scanner, game1);
-					break;
-			}
+		boolean hasStandard = false; if(player.getStandardPorts().size() > 0) hasStandard = true;
+		boolean hasSpecial = false; if(player.getSpecialPorts().size() > 0) hasSpecial = true;
+		
+		System.out.println("Trading options:\nDirectly with bank (4:1 receiving a resource of your choice) - press 4");
+		if(hasStandard) System.out.println("Through a standard port (3:1 receiving a resource of your choice) - press 3");
+		if(hasSpecial) System.out.println("Through a special port (2:1 receiving a specific resource) - press 2");
+		int choice = scanner.nextInt();
+		switch (choice){
+			case 4 :
+				tradeBank(player, scanner, game1);
+				break;
+			case 3 :
+				if(hasStandard) tradeStandard(player, scanner, game1, resourceType);
+				else System.out.println("Invalid choice. Please choose again"); tradeBank(player, scanner, game1);
+				break;
+			case 2 :
+				if(hasSpecial) tradeSpecial(player, scanner, game1, resourceType);
+				else System.out.println("Invalid choice. Please choose again"); tradeBank(player, scanner, game1);
+				break;
+			default:
+				System.out.println("Invalid choice. Please choose again."); tradeBank(player, scanner, game1);
+				break;
 		}
 	}
 
@@ -361,6 +349,7 @@ public class Turn {
 		gameResources.addAll(game1.getLumber());
 		gameResources.addAll(game1.getOre());
 		gameResources.addAll(game1.getWool());
+		
 		System.out.println("Please select a resource to gain from trading with the bank:");
 		System.out.println("Brick - press 1\nGrain - press 2\nLumber - press 3\nOre - press 4\nWool - press 5");
 		int choice = scanner.nextInt();
@@ -473,7 +462,7 @@ public class Turn {
 		int choice = scanner.nextInt();
 		switch (choice) {
 			case 1 :
-				if(portTypes.size() <= 1) gainChoiceName = portTypes.get(0);
+				if(portTypes.size() == 1) gainChoiceName = portTypes.get(0);
 				else System.out.println("Invalid choice. Please choose again."); tradeSpecial(player, scanner, game1, resourceType);
 			case 2 :
 				if(portTypes.size() <= 2) gainChoiceName = portTypes.get(1);
@@ -491,16 +480,16 @@ public class Turn {
 				System.out.println("Invalid choice. Please choose again."); tradeSpecial(player, scanner, game1, resourceType);
 		}
 		ArrayList<ResourceCard> gainChoice = new ArrayList<ResourceCard>();
-		switch (gainChoiceName){
-			case "brick" :
+		switch (gainChoiceName.toUpperCase()){
+			case "H" :
 				gainChoice = game1.getBrick(); break;
-			case "grain" :
+			case "G" :
 				gainChoice = game1.getGrain(); break;
-			case "lumber" :
+			case "F" :
 				gainChoice = game1.getLumber(); break;
-			case "ore" :
+			case "M" :
 				gainChoice = game1.getOre(); break;
-			case "wool" :
+			case "P" :
 				gainChoice = game1.getWool(); break;
 		}
 
@@ -557,13 +546,11 @@ public class Turn {
 		switch (choice) {
 			case "B" :
 				return true;
-				break;
 			case "P" :
 				return false;
-				break;
 			default :
 				System.out.println("Invalid choice. Please choose again");
-				tradeBankOrPlayer(scanner);
+				return tradeBankOrPlayer(scanner);
 		}
 	}
 

@@ -263,4 +263,22 @@ public class Player {
 			developmentCards.get(i).setHidden(false);
 		}
 	}
+
+	public void updatePlayerPorts(Player player, Game game1) {
+		Board board1 = game1.getBoard();
+		ArrayList<Port> standard = new ArrayList<Port>();
+		ArrayList<Port> special = new ArrayList<Port>();
+		
+		for(int i = 0; i < board1.getPorts().size(); i++){
+			if(board1.getPorts().get(i).getOwner() == player){
+				if(board1.getPorts().get(i).getResource().equals("?")){
+					standard.add(board1.getPorts().get(i));
+				}
+				else special.add(board1.getPorts().get(i));
+			}
+		}
+		
+		player.setStandardPorts(standard);
+		player.setSpecialPorts(special);
+	}
 }
