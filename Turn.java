@@ -474,7 +474,7 @@ public class Turn {
 
 	}
 	//method that finds all nearbyPlayers from a specific coordinate 
-	public static ArrayList<Player> findNearbyPlayer(Coordinate c){
+	public static ArrayList<Player> findNearbyPlayers(Coordinate c){
 
 	}
 
