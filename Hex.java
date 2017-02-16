@@ -10,7 +10,7 @@ public class Hex {
 	private String numString;
 	private String isRobberHere = " ";
 	
-//----Constructors----//
+//-----Constructors-----//
 	
 	public Hex() {
 		
@@ -23,7 +23,7 @@ public class Hex {
 		this.number = number;
 	}
 
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public Coordinate getCoordinate() {
 	

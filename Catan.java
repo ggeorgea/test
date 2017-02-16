@@ -1,11 +1,5 @@
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -145,7 +139,7 @@ public class Catan {
 		System.out.println("Goodbye!");
 	}
 
-	// asks the players if they want to play again
+	//asks the players if they want to play again
 	public static boolean playAgain(Scanner scanner) {
 
 		System.out.println("Do you want to play again?");

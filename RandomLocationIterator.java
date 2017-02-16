@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * Class to randomise locations
  */
-public class RandomLocationIterator implements Iterator{
+public class RandomLocationIterator implements Iterator {
 	
 	int Xindex =0;
 	int Yindex = 0;

@@ -6,7 +6,7 @@ public class ResourceCard {
 
 	private String resource;
 
-//----Constructors----//
+//-----Constructors-----//
 	
 	public ResourceCard() {
 		
@@ -17,7 +17,7 @@ public class ResourceCard {
 		this.resource = resource;
 	}
 
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public String getResource() {
 		

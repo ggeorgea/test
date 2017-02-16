@@ -16,8 +16,10 @@ public class Game {
 
 	private ArrayList<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
 	private ArrayList<Player> players = new ArrayList<Player>();
+	
+	private static final boolean END_GAME = true;
 
-//----Constructors----//
+//-----Constructors-----//
 	
 	public Game() {
 
@@ -38,7 +40,7 @@ public class Game {
 		this.players = players;
 	}
 
-//----Getters and Setters----//
+//-----Getters and Setters-----//
 	
 	public String getId() {
 
@@ -128,5 +130,25 @@ public class Game {
 	public void setPlayers(ArrayList<Player> players) {
 
 		this.players = players;
+	}
+	
+//-----Methods to check if the game has ended-----//
+	
+	//checks if the game has ended
+	public static boolean checkEndOfGame(Player player) {
+		
+		if (player.getVictoryPoints() >= 10) {
+			
+			endGame(player);
+			return END_GAME;
+		}
+		
+		return !END_GAME;
+	}
+	
+	//prints a statement ending the game
+	public static void endGame(Player player) {
+		
+		System.out.println("Player " + player.getName() + " Wins!");
 	}
 }
