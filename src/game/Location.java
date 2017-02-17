@@ -1,5 +1,6 @@
 package game;
 
+
 public class Location {
 private Coordinate Coord;
 private String type;

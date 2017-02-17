@@ -589,8 +589,11 @@ public class Setup {
 		int[] normalNumbers = {5,2,3,10,9,12,11,4,10,9,4,5,3,11};
 		int[] redNumbers = {6,8,8,6};
 		Hex hexwDes = board1.getHexes().get(givenDesert);
-		Robber robber1 = new Robber(hexwDes.getCoordinate(),null,false);
-		board1.setTheRobber(robber1);
+		
+		//TODO do we still need this?
+		//Robber robber1 = new Robber(hexwDes.getCoordinate(),null,false);
+		//board1.setTheRobber(robber1);
+		
 		board1.setRobber(hexwDes.getCoordinate());
 		hexwDes.setisRobberHere("R");
 		

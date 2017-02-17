@@ -1,5 +1,6 @@
 package game;
 
+
 /**
  * Class to store data about hexes
  */

@@ -222,10 +222,10 @@ public class DevelopmentCard {
  	}
  	
  	//plays a knight card
-	public static void playKnightCard(Player player, Game game1, Scanner scanner) throws Exception {
+	public static void playKnightCard(Player player, Game game1, Scanner scanner) {
 		
-		Turn.moveRobber(player, game1, scanner);
-		//TODO card steal?
+		//moves the robber
+		Robber.moveRobber(player, game1, scanner);
 		
 		player.setLargestArmy(player.getLargestArmy() + 1);
  				
