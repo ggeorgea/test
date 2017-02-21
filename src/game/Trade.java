@@ -51,7 +51,6 @@ public class Trade {
 		boolean hasStandard = false; if(player.getStandardPorts().size() > 0) hasStandard = true;
 		boolean hasSpecial = false; if(player.getSpecialPorts().size() > 0) hasSpecial = true;
 		
-		//TODO if I want to trade 4:1, it will just keep asking me, and not let me trade?
 		System.out.println("Trading options:\nDirectly with bank (4:1 receiving a resource of your choice) - press 4");
 		if(hasStandard) System.out.println("Through a standard port (3:1 receiving a resource of your choice) - press 3");
 		if(hasSpecial) System.out.println("Through a special port (2:1 receiving a specific resource) - press 2");
@@ -198,10 +197,7 @@ public class Trade {
 		}
 		else {
 			
-			System.out.println("No resources available to trade. Turn over.");
-			//TODO turn doesn't end, should just return nothing
-			//TODO since you can do more on your turn
-			//Turn.newTurn(player, game1, scanner);
+			System.out.println("No resources available to trade. Trade cancelled.");
 			return;
 		}
 	}
@@ -231,9 +227,7 @@ public class Trade {
 		}
 		else {
 			
-			System.out.println("No resources available to trade. Turn over.");
-			//TODO turn doesn't end, should just return nothing
-			//Turn.newTurn(player, game1, scanner);
+			System.out.println("No resources available to trade. Trade cancelled.");
 			return;
 		}
 	}
@@ -346,9 +340,7 @@ public class Trade {
 		}
 		else {
 			
-			System.out.println("No resources available to trade. Turn over.");
-			//TODO turn doesn't end, should just return nothing
-			//Turn.newTurn(player, game1, scanner);
+			System.out.println("No resources available to trade. Trade cancelled.");
 			return;
 		}
 	}
