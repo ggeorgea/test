@@ -58,7 +58,7 @@ public class Trade {
 		int choice = scanner.nextInt();
 		switch (choice) {
 			case 4 :
-				tradeBank(player, scanner, game1);
+				tradeDirect(player, scanner, game1, resourceType);
 				break;
 			case 3 :
 				if(hasStandard) tradeStandard(player, scanner, game1, resourceType);
