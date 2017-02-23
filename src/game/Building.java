@@ -1,3 +1,4 @@
+
 package game;
 
 import java.util.ArrayList;
@@ -109,6 +110,9 @@ public class Building {
 			settlement.setBuilding(new Building("t", 1));
 			player.setNoSettlements(player.getNoSettlements() + 1);
 			player.setVictoryPoints(player.getVictoryPoints() + 1);
+			
+			//TODO check commit to ensure what was lost
+			Trade.checkIfPortSettled(player, settlement, game1);
 			
 			System.out.println("Player " + player.getName() + " placed settlement at: (" + settlement.getCoordinate().getX() 
 					+ "," + settlement.getCoordinate().getY() + ")");

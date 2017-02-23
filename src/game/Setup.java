@@ -255,14 +255,14 @@ public class Setup {
 
 			//each player places road, then settlement
 			Road road = placeRoad(players.get(i), board1, scanner);
-			placeSettlement(players.get(i), road, board1, scanner);
+			placeSettlement(players.get(i), road, board1, scanner, game1);
 		}
 
 		for (int i = players.size()-1; i >= 0; i--) {
 
 			//each player places road, then settlement
 			Road road = placeRoad(players.get(i), board1, scanner);
-			Intersection settlement = placeSettlement(players.get(i), road, board1, scanner);
+			Intersection settlement = placeSettlement(players.get(i), road, board1, scanner, game1);
 			initialResourceAllocation(players.get(i), settlement, game1);
 		}
 
@@ -345,7 +345,7 @@ public class Setup {
 	}
 
 	//lets a player place a settlement free of charge
-	public static Intersection placeSettlement(Player player, Road road, Board board1, Scanner scanner) {
+	public static Intersection placeSettlement(Player player, Road road, Board board1, Scanner scanner, Game game1) {
 
 		System.out.println("Player " + player.getName() + ": Please select where to place your settlement");
 
@@ -361,7 +361,7 @@ public class Setup {
 				|| (!(board1.getLocationFromCoordinate(a).getType().equals("Intersection")))) {
 
 			System.out.println("Invalid coordinates. Please choose again");
-			return placeSettlement(player, road, board1, scanner);
+			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
 		Intersection settlement = (Intersection) board1.getLocationFromCoordinate(a).getContains();
@@ -371,13 +371,13 @@ public class Setup {
 				&& !(road.getCoordinateB().getX() == x && road.getCoordinateB().getY() == y)) {
 
 			System.out.println("Settlement must be placed beside road. Please choose again");
-			return placeSettlement(player, road, board1, scanner);
+			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
 		if (settlement.getOwner().getName() != null) {
 
 			System.out.println("A settlement has already been placed here. Please choose again");
-			return placeSettlement(player, road, board1, scanner);
+			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
 		for (int i = 0; i < illegal.size(); i++) {
@@ -386,7 +386,7 @@ public class Setup {
 			//System.out.println("A"+illegal.get(i).getCoordinate().getX()+","+illegal.get(i).getCoordinate().getY());
 			if (inter.getOwner().getName() != null) {
 				System.out.println("Settlement must be placed more than two roads away. Please choose again");
-				return placeSettlement(player, road, board1, scanner);
+				return placeSettlement(player, road, board1, scanner, game1);
 			}
 		}
 
@@ -396,6 +396,7 @@ public class Setup {
 		settlement.setBuilding(new Building("t",1));
 		player.getFirstSettlements().add(settlement);
 		player.setNoSettlements(player.getNoSettlements() + 1);
+		Trade.checkIfPortSettled(player, settlement, game1);
 		return settlement;
 	}
 

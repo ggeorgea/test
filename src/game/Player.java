@@ -36,6 +36,7 @@ public class Player {
 
 	public Player() {
 
+		this.victoryPoints = 2;
 	}
 
 	public Player(String name, int victoryPoints, int currentRoll, int noRoads,

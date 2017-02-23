@@ -78,7 +78,7 @@ public class ResourceAllocation {
 		for (int i = 0; i < players.size(); i++) {
 			
 			ArrayList<ResourceCard> newResourceCards = new ArrayList<ResourceCard>();
-			players.get(0).setNewResourceCards(newResourceCards);
+			players.get(i).setNewResourceCards(newResourceCards);
 		}
 	}
 	

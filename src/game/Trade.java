@@ -181,10 +181,11 @@ public class Trade {
 		ArrayList<Integer> canTrade = new ArrayList<Integer>();
 		System.out.println("You can trade the following resources:");
 		
-		for (int i = 0; i < resources.size(); i++) {
+		//for (int i = 0; i < resources.size(); i++) {
+		for (int i = 0; i < resourceCount.length; i++) {
 			if (resourceCount[i] >= DIRECT_TRADE_NUMBER) {
 				
-				System.out.println(resourceType.get(i).getResource() + ": " + resourceCount[i] + " available to trade - press " + i+1);
+				System.out.println(resourceType.get(i).getResource() + ": " + resourceCount[i] + " available to trade - press " + (i+1));
 				canTrade.add(i);
 			}
 		}
