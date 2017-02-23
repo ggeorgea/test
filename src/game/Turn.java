@@ -1,4 +1,5 @@
 package game;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -52,7 +53,7 @@ public class Turn {
 				System.out.println("8: End turn?");
 
 				choice = scanner.nextInt();
-
+				
 				switch(choice) {
 				case 1 :
 					build(player, game1, scanner);
@@ -65,7 +66,7 @@ public class Turn {
 					trade(player, scanner, game1);
 					break;
 				case 4 :
-					Player.printResourceCards(player);
+					Player.printHand(player, scanner);
 					break;
 				case 5 :
 					Map.printMap(game1.getBoard());

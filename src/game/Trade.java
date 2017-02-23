@@ -11,6 +11,12 @@ public class Trade {
 	private static final int STANDARD_TRADE_NUMBER = 3;
 	private static final int SPECIAL_TRADE_NUMBER = 2;
 	
+	public static final String WOOL = "wool";
+	public static final String LUMBER = "lumber";
+	public static final String ORE = "ore";
+	public static final String BRICK = "brick";
+	public static final String GRAIN = "grain";
+	
 	private static final String ACCEPT_TRADE = "accept";
 	private static final String REJECT_TRADE = "reject";
 	private static final String COUNTER_TRADE = "counter";
@@ -424,7 +430,7 @@ public class Trade {
 		System.out.println("Who do you want to trade with?");
 
 		for (int i = 0; i < players.size(); i++) {
-			System.out.println((i+1) + ". " + players.get(i).getName());
+			System.out.println((i+1) + ": " + players.get(i).getName());
 		}
 
 		int choice = scanner.nextInt();
@@ -472,7 +478,14 @@ public class Trade {
 	public static String proposeTrade(Player player, Player playerTrade, Scanner scanner) {
 
 		ArrayList<ResourceCard> playerResources = player.getResourceCards();
-		ArrayList<ResourceCard> playerTradeResources = playerTrade.getResourceCards();
+		//ArrayList<ResourceCard> playerTradeResources = playerTrade.getResourceCards();
+		
+		ArrayList<ResourceCard> playerTradeResources = new ArrayList<ResourceCard>();
+		playerTradeResources.add(new ResourceCard(WOOL));
+		playerTradeResources.add(new ResourceCard(LUMBER));
+		playerTradeResources.add(new ResourceCard(ORE));
+		playerTradeResources.add(new ResourceCard(BRICK));
+		playerTradeResources.add(new ResourceCard(GRAIN));	
 
 		ArrayList<ResourceCard> playerToTrade = new ArrayList<ResourceCard>();
 		ArrayList<ResourceCard> playerTradeToTrade = new ArrayList<ResourceCard>();
@@ -496,10 +509,11 @@ public class Trade {
 		//lets the player choose what resources they want from the other player's hand
 		while (choice == 1) {
 
-			System.out.println("What do you want from " + playerTrade.getName() + "'s hand?");
+			System.out.println("What do you want from " + playerTrade.getName() + "'s hand?");	
+			
 			choice = chooseResources(playerTradeResources, scanner);
 			playerTradeToTrade.add(playerTradeResources.get(choice));
-			playerTradeResources.remove(choice);
+			//playerTradeResources.remove(choice);
 
 			choice = chooseMoreResources(scanner);
 		}
@@ -518,7 +532,12 @@ public class Trade {
 
 		//if the offer is accepted, the trade takes place
 		if (offer.equals(ACCEPT_TRADE)) {
-			tradePlayerResources(player, playerTrade, playerToTrade, playerTradeToTrade);
+			if (hasResources(playerTrade, playerTradeToTrade)) {
+				tradePlayerResources(player, playerTrade, playerToTrade, playerTradeToTrade);
+			}
+			else {
+				offer = REJECT_TRADE;
+			}
 		}
 
 		//otherwise the resources have to be added back in to both players' hands
@@ -534,7 +553,7 @@ public class Trade {
 
 		//asks the player to choose a resource to trade
 		for (int i = 0; i < playerResources.size(); i++) {
-			System.out.println(i+1 + ". " + playerResources.get(i).getResource());
+			System.out.println(i+1 + ": " + playerResources.get(i).getResource());
 		}
 
 		int choice = scanner.nextInt();
@@ -552,8 +571,8 @@ public class Trade {
 	public static int chooseMoreResources(Scanner scanner) {
 
 		System.out.println("Do you want to trade more cards?");
-		System.out.println("1. Yes");
-		System.out.println("2. No");
+		System.out.println("1: Yes");
+		System.out.println("2: No");
 
 		int choice = scanner.nextInt();
 
@@ -628,9 +647,9 @@ public class Trade {
 	public static int chooseOffer(Scanner scanner) {
 
 		System.out.println("What do you want to do?");
-		System.out.println("1. Accept Trade");
-		System.out.println("2. Reject Trade");
-		System.out.println("3. Propose a Counter-offer");
+		System.out.println("1: Accept Trade");
+		System.out.println("2: Reject Trade");
+		System.out.println("3: Propose a Counter-offer");
 
 		int choice = scanner.nextInt();
 
@@ -641,6 +660,24 @@ public class Trade {
 		}
 
 		return choice;
+	}
+	
+	//checks whether the player has the resources to be traded
+	public static boolean hasResources(Player player, ArrayList<ResourceCard> resourcesToTrade) {
+		
+		ArrayList<ResourceCard> resources = player.getResourceCards();
+		boolean hasResource = true;
+		
+		for (int i = 0; i < resourcesToTrade.size(); i++) {
+		
+			hasResource = resources.remove(resourcesToTrade.get(i));
+			
+			if(!hasResource) {
+				break;
+			}
+		}
+		
+		return hasResource;
 	}
 
 	//trades the resources between players

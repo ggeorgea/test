@@ -1,6 +1,7 @@
 package game;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 
 /**
  * Class that stores information about players
@@ -238,6 +239,28 @@ public class Player {
 
 //-----Extra methods used in turn-----//
 
+	//lets player see their cards
+	public static void printHand(Player player, Scanner scanner) {
+		
+		System.out.println("What hand do you want to see?");
+		System.out.println("1: Resource Cards");
+		System.out.println("2: Development Cards");
+		
+		int choice = scanner.nextInt();
+		
+		switch (choice) {
+		case 1 :
+			printResourceCards(player);
+			break;
+		case 2 :
+			printDevelopmentCards(player);
+			break;
+		default :
+			System.out.println("Invalid choice. Please choose again");
+			printHand(player, scanner);			
+		}
+	}
+	
 	//prints the player's hand
 	public static void printResourceCards(Player player) {
 
@@ -245,6 +268,7 @@ public class Player {
 		System.out.print("(");
 
 		while (it.hasNext()) {
+			
 			System.out.print(it.next().getResource());
 
 			if (it.hasNext()) {
@@ -252,6 +276,24 @@ public class Player {
 			}
 		}
 
+		System.out.print(")\n");
+	}
+	
+	//prints the player's development cards
+	public static void printDevelopmentCards(Player player) {
+		
+		Iterator<DevelopmentCard> it = player.getDevelopmentCards().iterator();
+		System.out.print("(");
+		
+		while (it.hasNext()) {
+			
+			System.out.print(it.next().getType());
+			
+			if (it.hasNext()) {
+				System.out.print(", ");
+			}
+		}
+		
 		System.out.print(")\n");
 	}
 
