@@ -1,6 +1,14 @@
 package game;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -67,75 +75,141 @@ public class Catan {
 		while (keepPlaying) {
 			
 			System.out.println("----------SETTLERS OF CATAN----------\n\n");
-			Scanner scanner = new Scanner(new File("./src/test.txt"));
-
-			//sets up board
-			board1 = Setup.getMeABoard();
-			Game game1 = new Game();
-			game1.setBoard(board1);
-
-			Map.printMap(game1.getBoard());
-
-			//sets up development cards
-			ArrayList<DevelopmentCard> developmentCards = Setup
-					.getDevCardDeck();
-			game1.setDevelopmentCards(developmentCards);
-
-			//sets up resource cards
-			ArrayList<ResourceCard> ore = Setup.getResourceCardDeck("ore");
-			ArrayList<ResourceCard> grain = Setup.getResourceCardDeck("grain");
-			ArrayList<ResourceCard> lumber = Setup.getResourceCardDeck("lumber");
-			ArrayList<ResourceCard> wool = Setup.getResourceCardDeck("wool");
-			ArrayList<ResourceCard> brick = Setup.getResourceCardDeck("brick");
-
-			game1.setOre(ore);
-			game1.setGrain(grain);
-			game1.setLumber(lumber);
-			game1.setWool(wool);
-			game1.setBrick(brick);
-
-			//sets up players
-			ArrayList<Player> players = Setup.setPlayers(scanner);
-			game1.setPlayers(players);
-
-			//roll dice for each player
-			//changes player order with largest dice roll first
-			Setup.getPlayerOrder(game1, scanner);
-
-			//place roads and settlements
-			Setup.setInitialRoadsAndSettlements(game1, scanner);
-
-
-			//pass from automated set up to actually playing the game
-			System.out.println("-----now in manual mode-------");
-			scanner = new Scanner(System.in);
+			Scanner scanner = new Scanner(System.in);
 			
-			boolean hasEnded = !END_GAME;
-
-			// will keep letting players take turns until someone wins
-			while (!hasEnded) {
-				for (int i = 0; i < game1.getPlayers().size(); i++) {
-
-					//  for a test of longest road:
-					/*
-					if (i>0){
-						System.out.println("-----now in manual mode-------");
-						scanner = new Scanner(System.in);
+			
+//FUNNY NETWORKING CODE
+//------------------------------------------------------
+			System.out.println("activate client mode? (y)");
+			String answer = scanner.nextLine();
+			int defaultPortNumber = 6789;
+			
+			if(answer.equals("y")){	
+				System.out.println("please enter the address where you wish to connect");
+				String hostName = scanner.nextLine();
+				int portNumber = defaultPortNumber;
+		        try (
+		                Socket kkSocket = new Socket(hostName, portNumber);
+		                PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
+		                BufferedReader in = new BufferedReader(
+		                    new InputStreamReader(kkSocket.getInputStream()));
+		            ) {
+		                String fromServer;
+		                String fromUser;
+		                while ((fromServer = in.readLine()) != null) {
+		                    System.out.println(fromServer);
+	                   
+		                    if (fromServer.equals("Goodbye!"))
+		                        break;		                    
+		                    
+		                    if(!(in.ready())){
+			                    fromUser = scanner.nextLine();
+			                    if (fromUser != null) {
+			           //             System.out.println("Client: " + fromUser);
+			                        out.println(fromUser);
+			                    }
+		                    }
+		                }
+		            } catch (UnknownHostException e) {
+		                System.err.println("Don't know about host " + hostName);
+		                System.exit(1);
+		            } catch (IOException e) {
+		                System.err.println("Couldn't get I/O for the connection to " +
+		                    hostName);
+		                System.exit(1);
+		            }
+			}			
+			else{
+				int clientsToFind;
+				
+				clientsToFind = Setup.requestClients(scanner);
+				ArrayList<PlayerSocket> SocketArray = new ArrayList<PlayerSocket>();
+				if(clientsToFind!=0){
+			    	InetAddress iAddress = InetAddress.getLocalHost();
+			    	  String currentIp = iAddress.getHostAddress();
+					System.out.println("your ip address is : "+ currentIp+" The other players should connect now");										
+					int portNumber = defaultPortNumber;
+	                ServerSocket serverSocket = new ServerSocket(portNumber);
+					for(int j = 0; j< clientsToFind;j++){
+						 Socket clientSocket = serverSocket.accept();
+						 PlayerSocket foundConnect = new PlayerSocket(clientSocket);
+						 SocketArray.add(foundConnect);
+						 System.out.println("player Connected!");
 					}
-					*/
-					
-					// lets the player have a turn
-					hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1,
-							scanner);
-
-					// if a player has won then no other player takes their turn
-					if (hasEnded) {
-						break;
+					System.out.println("All Players connectedd!");
+				}
+				
+//---------------------------------------------------------				
+//STANDARD GAME CODE STARTS HERE
+				//scanner = new Scanner(new File("./src/test.txt"));
+				//sets up board
+				board1 = Setup.getMeABoard();
+				Game game1 = new Game();
+				game1.setBoard(board1);
+	
+				Map.printMap(game1.getBoard());
+	
+				//sets up development cards
+				ArrayList<DevelopmentCard> developmentCards = Setup
+						.getDevCardDeck();
+				game1.setDevelopmentCards(developmentCards);
+	
+				//sets up resource cards
+				ArrayList<ResourceCard> ore = Setup.getResourceCardDeck("ore");
+				ArrayList<ResourceCard> grain = Setup.getResourceCardDeck("grain");
+				ArrayList<ResourceCard> lumber = Setup.getResourceCardDeck("lumber");
+				ArrayList<ResourceCard> wool = Setup.getResourceCardDeck("wool");
+				ArrayList<ResourceCard> brick = Setup.getResourceCardDeck("brick");
+	
+				game1.setOre(ore);
+				game1.setGrain(grain);
+				game1.setLumber(lumber);
+				game1.setWool(wool);
+				game1.setBrick(brick);
+	
+				//sets up players
+				ArrayList<Player> players = Setup.setPlayers(scanner,SocketArray);
+				game1.setPlayers(players);
+	
+				//roll dice for each player
+				//changes player order with largest dice roll first
+				Setup.getPlayerOrder(game1, scanner);
+	
+				//place roads and settlements
+				Setup.setInitialRoadsAndSettlements(game1, scanner);
+	
+	
+				//pass from automated set up to actually playing the game
+				System.out.println("-----now in manual mode-------");
+				scanner = new Scanner(System.in);
+				
+				boolean hasEnded = !END_GAME;
+	
+				// will keep letting players take turns until someone wins
+				while (!hasEnded) {
+					for (int i = 0; i < game1.getPlayers().size(); i++) {
+	
+						//  for a test of longest road:
+						/*
+						if (i>0){
+							System.out.println("-----now in manual mode-------");
+							scanner = new Scanner(System.in);
+						}
+						*/
+						
+						// lets the player have a turn
+						hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1,
+								scanner);
+	
+						// if a player has won then no other player takes their turn
+						if (hasEnded) {
+							break;
+						}
 					}
 				}
+	
+				keepPlaying = playAgain(scanner);
 			}
-
-			keepPlaying = playAgain(scanner);
 		}
 
 		System.out.println("Goodbye!");
@@ -166,54 +240,5 @@ public class Catan {
 		return keepPlaying;
 	}
 
-	//TODO delete these methods from this class
-	
-/* code modified/copied in build road method in turn class
-	// ************ Look for the player with the longest road ********
-	public static Player longestRoad(Game game1) {
-		
-		ArrayList<Player> players = game1.getPlayers();
-		// initial longest road to be compared with the players longest road
-		int longestRoad = 0;
 
-		Player hasRoad = players.get(0);
-
-		// iterate the list of player and find the longest road
-		for (Player p : players) {
-			if (p.getLongestRoad() > longestRoad) {
-				longestRoad = p.getLongestRoad();
-				hasRoad = p;
-			}
-		}
-		
-		hasRoad.setHasLongestRoad(true); 
-		hasRoad.setVictoryPoints(hasRoad.getVictoryPoints()+2); 
-		System.out.println("player" + hasRoad.getName() + "has the longest road.");
-		return hasRoad;
-	}*/
-	
-	//Eventually we will need to write a method that keeps track of victory points
-	//we need a method to remove the largest army card when a player exceeds the current holder 
-
-	//been transferred to turn class
-	/*public static Player checkLargestArmy(Game game1){ 
-
-		ArrayList<Player> players = game1.getPlayers();
-		
-		int armySize = 0 ; 
-		Player largestArmy = players.get(0);
-
-		//iterate the list of player and find the longest road 
-		for (Player p : players){ 
-			if(p.getLargestArmy() > armySize){ 
-				armySize = p.getLargestArmy(); 
-				largestArmy = p; 
-			}
-		}
-		
-		largestArmy.setHasLargestArmy(true); 
-		largestArmy.setVictoryPoints(largestArmy.getVictoryPoints()+2);
-		System.out.println("player" + largestArmy.getName() + "has the largest army.");
-		return largestArmy; 
-	}*/
 }

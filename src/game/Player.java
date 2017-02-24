@@ -8,6 +8,7 @@ import java.util.Scanner;
  */
 public class Player {
 
+	private PlayerSocket pSocket;
 	private String name;
 	private int victoryPoints;
 	private int currentRoll;
@@ -325,4 +326,13 @@ public class Player {
 		player.setStandardPorts(standard);
 		player.setSpecialPorts(special);
 	}
+
+	public PlayerSocket getpSocket() {
+		return pSocket;
+	}
+
+	public void setpSocket(PlayerSocket pSocket) {
+		this.pSocket = pSocket;
+	}
+	
 }

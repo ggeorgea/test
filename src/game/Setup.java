@@ -1,4 +1,5 @@
 package game;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,10 +18,10 @@ public class Setup {
 //-----Methods to initialise players and their order for the game-----//
 
 	//gets an array list of players with unique identifiers
-	public static ArrayList<Player> setPlayers(Scanner scanner) {
+	public static ArrayList<Player> setPlayers(Scanner scanner, ArrayList<PlayerSocket> socketArray) throws IOException {
 
 		//gets how many players there are
-		int n = requestPlayers(scanner);
+		int n = requestPlayers(scanner, socketArray.size());
 
 		ArrayList<Player> players = new ArrayList<Player>();
 
@@ -28,33 +29,115 @@ public class Setup {
 		for (int i = 0; i < n; i++) {
 
 			Player player = new Player();
-
-			selectPlayerName(player, players, i, scanner);
 			players.add(player);
+			
+		}
+		
+		for (int i = 0; i < n; i++) {
+
+			Player player = players.get(i);
+			//pairs players with clients
+			if(i<socketArray.size()){
+				player.setpSocket(socketArray.get(i));
+			}
+			selectPlayerName(player, players, i, scanner);
+			
 		}
 
 		return players;
 	}
 
-	//asks the client how many players there are
-	public static int requestPlayers(Scanner scanner) {
+	//asks the client how many players there are TWEAKED FOR NETWORKING
+	public static int requestPlayers(Scanner scanner, int clientLimit) {
 
-		System.out.println("How many players want to play? Enter 3 or 4.");
+		System.out.println("How many players want to play? Enter 3 or 4. You cannot have more clients than players");
 
 		int noPlayers = scanner.nextInt();
 
 		//makes sure the player inputs the correct value
 		if (!(noPlayers == 3 || noPlayers == 4)) {
 			System.out.println("Invalid number of players. Please choose again.");
-			return requestPlayers(scanner);
+			return requestPlayers(scanner,  clientLimit);
+			
+		}
+		else if(noPlayers<clientLimit){
+			System.out.println(noPlayers +">"+clientLimit+", you cannot have more clients than players ");
+			return requestPlayers(scanner,  clientLimit);
+		}
+
+		return noPlayers;
+	}
+	
+	
+	//asks the client how many clients there are, ABOVE METHOD JUST COPIED/TWEAKED FOR NETWORKING
+	public static int requestClients(Scanner scanner) {
+
+		System.out.println("How many Clients should connect 0- 4.");
+
+		int noPlayers = scanner.nextInt();
+
+		//makes sure the player inputs the correct value
+		if (!(noPlayers == 3 || noPlayers == 4|| noPlayers == 1|| noPlayers == 2|| noPlayers == 0)) {
+			System.out.println("Invalid number of clients. Please choose again.");
+			return requestClients(scanner);
 		}
 
 		return noPlayers;
 	}
 
 	//asks each player to choose a unique identifier
-	public static void selectPlayerName(Player player, ArrayList<Player> players, int n, Scanner scanner) {
+	public static void selectPlayerName(Player player, ArrayList<Player> players, int n, Scanner scanner) throws IOException {
 
+		//NETWORKING TEST CODE
+		//---------------------------------------------
+		Player thisPlayer = players.get(n);
+		PlayerSocket pSocket = thisPlayer.getpSocket();
+		if(pSocket!=null){
+			pSocket.sendMessage("Player " + (n+1) + ": Select a character to be your player name.");
+			pSocket.sendMessage("Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow");			
+			String name = pSocket.getMessage().toUpperCase();		
+			char c = name.toCharArray()[0];
+			String check = "";
+			switch(c) {
+			case 'W' :
+				check = "W";
+				break;
+			case 'R' :
+				check = "R";
+				break;
+			case 'G' :
+				check = "G";
+				break;
+			case 'B' :
+				check = "B";
+				break;
+			case 'O' :
+				check = "O";
+				break;
+			case 'Y' :
+				check = "Y";
+				break;
+			default :
+				pSocket.sendMessage("Invalid character. Please choose again.");
+				selectPlayerName(player, players, n, scanner);
+				return;
+			}
+			for (int i = 0; i < n; i++) {
+				if (players.get(i).getName().equals(check)) {
+					
+					pSocket.sendMessage("Another player is already using this character. Please choose again.");
+					selectPlayerName(player, players, n, scanner);
+					return;
+				}
+			}
+
+			player.setName(check);
+			
+		}else{
+		//End of Networking test
+		//----------------------------------------------
+		
+		
 		System.out.println("Player " + (n+1) + ": Select a character to be your player name.");
 		System.out.println("Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow");
 
@@ -88,7 +171,8 @@ public class Setup {
 		}
 
 		//makes sure the player chooses a name not already being used
-		for (int i = 0; i < players.size(); i++) {
+		//pre networking:for (int i = 0; i < players.size(); i++) {
+		for (int i = 0; i < n; i++) {
 			if (players.get(i).getName().equals(check)) {
 				
 				System.out.println("Another player is already using this character. Please choose again.");
@@ -98,6 +182,7 @@ public class Setup {
 		}
 
 		player.setName(check);
+		}
 	}
 
 	//gets each player to roll the dice to determine the player order
