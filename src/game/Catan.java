@@ -167,7 +167,7 @@ public class Catan {
 				game1.setWool(wool);
 				game1.setBrick(brick);
 	
-				//sets up players
+				//sets up players, ALSO USES THE NETWORKING'S SOCKET ARRAY!
 				ArrayList<Player> players = Setup.setPlayers(scanner,SocketArray);
 				game1.setPlayers(players);
 	
@@ -177,7 +177,7 @@ public class Catan {
 	
 				//place roads and settlements
 				Setup.setInitialRoadsAndSettlements(game1, scanner);
-	
+				
 	
 				//pass from automated set up to actually playing the game
 				System.out.println("-----now in manual mode-------");

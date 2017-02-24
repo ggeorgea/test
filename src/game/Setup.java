@@ -33,6 +33,8 @@ public class Setup {
 			
 		}
 		
+		//this used to be combined with the previous loop, but theyre split so that when the player is asked for their socket
+		//there will be a player to ask
 		for (int i = 0; i < n; i++) {
 
 			Player player = players.get(i);
