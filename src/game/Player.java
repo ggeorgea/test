@@ -62,7 +62,17 @@ public class Player {
 	}
 
 //-----Getters and Setters-----//
+	
+	public PlayerSocket getpSocket() {
+		
+		return pSocket;
+	}
 
+	public void setpSocket(PlayerSocket pSocket) {
+		
+		this.pSocket = pSocket;
+	}
+	
 	public String getName() {
 
 		return name;
@@ -325,14 +335,5 @@ public class Player {
 		
 		player.setStandardPorts(standard);
 		player.setSpecialPorts(special);
-	}
-
-	public PlayerSocket getpSocket() {
-		return pSocket;
-	}
-
-	public void setpSocket(PlayerSocket pSocket) {
-		this.pSocket = pSocket;
-	}
-	
+	}	
 }

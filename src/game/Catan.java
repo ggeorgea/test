@@ -84,58 +84,74 @@ public class Catan {
 			String answer = scanner.nextLine();
 			int defaultPortNumber = 6789;
 			
-			if(answer.equals("y")){	
+			if (answer.equals("y")) {
+				
 				System.out.println("please enter the address where you wish to connect");
 				String hostName = scanner.nextLine();
 				int portNumber = defaultPortNumber;
+				
 		        try (
-		                Socket kkSocket = new Socket(hostName, portNumber);
+		        		Socket kkSocket = new Socket(hostName, portNumber);
 		                PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
 		                BufferedReader in = new BufferedReader(
 		                    new InputStreamReader(kkSocket.getInputStream()));
 		            ) {
-		                String fromServer;
-		                String fromUser;
-		                while ((fromServer = in.readLine()) != null) {
-		                    System.out.println(fromServer);
+		        	
+		        	String fromServer;
+		            String fromUser;
+		                
+		            while ((fromServer = in.readLine()) != null) {
+		                   
+		              	System.out.println(fromServer);
 	                   
-		                    if (fromServer.equals("Goodbye!"))
-		                        break;		                    
-		                    
-		                    if(!(in.ready())){
-			                    fromUser = scanner.nextLine();
-			                    if (fromUser != null) {
-			           //             System.out.println("Client: " + fromUser);
-			                        out.println(fromUser);
-			                    }
-		                    }
+		                if (fromServer.equals("Goodbye!")) {
+		                    break;		                    
 		                }
-		            } catch (UnknownHostException e) {
-		                System.err.println("Don't know about host " + hostName);
-		                System.exit(1);
-		            } catch (IOException e) {
-		                System.err.println("Couldn't get I/O for the connection to " +
-		                    hostName);
-		                System.exit(1);
+		                if (!(in.ready())) {
+		                    	
+			                fromUser = scanner.nextLine();
+			                if (fromUser != null) {
+			        //           System.out.println("Client: " + fromUser);
+			                     out.println(fromUser);
+			                }
+		                }
 		            }
+		        } 
+		        catch (UnknownHostException e) {
+		            System.err.println("Don't know about host " + hostName);
+		            System.exit(1);
+		        } 
+		        catch (IOException e) {
+		            System.err.println("Couldn't get I/O for the connection to " +
+		                hostName);
+		            System.exit(1);
+		        }
 			}			
-			else{
+			else {
+				
 				int clientsToFind;
 				
 				clientsToFind = Setup.requestClients(scanner);
 				ArrayList<PlayerSocket> SocketArray = new ArrayList<PlayerSocket>();
-				if(clientsToFind!=0){
+				
+				if (clientsToFind != 0) {
+					
 			    	InetAddress iAddress = InetAddress.getLocalHost();
-			    	  String currentIp = iAddress.getHostAddress();
-					System.out.println("your ip address is : "+ currentIp+" The other players should connect now");										
+			    	String currentIp = iAddress.getHostAddress();
+			    	
+					System.out.println("your ip address is : " + currentIp + " The other players should connect now");										
+					
 					int portNumber = defaultPortNumber;
 	                ServerSocket serverSocket = new ServerSocket(portNumber);
-					for(int j = 0; j< clientsToFind;j++){
+					
+	                for (int j = 0; j < clientsToFind; j++) {
+	                	
 						 Socket clientSocket = serverSocket.accept();
 						 PlayerSocket foundConnect = new PlayerSocket(clientSocket);
 						 SocketArray.add(foundConnect);
 						 System.out.println("player Connected!");
 					}
+	                
 					System.out.println("All Players connectedd!");
 				}
 				
@@ -240,5 +256,34 @@ public class Catan {
 		return keepPlaying;
 	}
 
-
+	//TODO can be used to replace System.out.println statements
+	//allows messages to be sent to the correct player
+	public static void printToClient(String message, Player player) {
+		
+		PlayerSocket socket = player.getpSocket();
+		
+		if (socket != null) {
+			
+			socket.sendMessage(message);
+		}
+		else {
+			System.out.println(message);
+		}
+	}
+	
+	//TODO can be used to replace scanner statements
+	//allows messages to be recieved from the correct player
+	public static String getInputFromClient(Player player, Scanner scanner) throws IOException {
+		
+		PlayerSocket socket = player.getpSocket();
+		
+		if (socket != null) {
+			
+			return socket.getMessage();
+		}
+		else {
+			
+			return scanner.next();
+		}
+	}
 }

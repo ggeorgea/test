@@ -33,15 +33,17 @@ public class Setup {
 			
 		}
 		
-		//this used to be combined with the previous loop, but theyre split so that when the player is asked for their socket
+		//this used to be combined with the previous loop, but they're split so that when the player is asked for their socket
 		//there will be a player to ask
 		for (int i = 0; i < n; i++) {
 
 			Player player = players.get(i);
+			
 			//pairs players with clients
-			if(i<socketArray.size()){
+			if (i < socketArray.size()) {
 				player.setpSocket(socketArray.get(i));
 			}
+			
 			selectPlayerName(player, players, i, scanner);
 			
 		}
@@ -62,8 +64,8 @@ public class Setup {
 			return requestPlayers(scanner,  clientLimit);
 			
 		}
-		else if(noPlayers<clientLimit){
-			System.out.println(noPlayers +">"+clientLimit+", you cannot have more clients than players ");
+		else if (noPlayers < clientLimit) {
+			System.out.println(noPlayers + ">" + clientLimit + ", you cannot have more clients than players ");
 			return requestPlayers(scanner,  clientLimit);
 		}
 
@@ -74,12 +76,12 @@ public class Setup {
 	//asks the client how many clients there are, ABOVE METHOD JUST COPIED/TWEAKED FOR NETWORKING
 	public static int requestClients(Scanner scanner) {
 
-		System.out.println("How many Clients should connect 0- 4.");
+		System.out.println("How many Clients should connect? 0 - 4.");
 
 		int noPlayers = scanner.nextInt();
 
 		//makes sure the player inputs the correct value
-		if (!(noPlayers == 3 || noPlayers == 4|| noPlayers == 1|| noPlayers == 2|| noPlayers == 0)) {
+		if (!(noPlayers == 3 || noPlayers == 4 || noPlayers == 1|| noPlayers == 2 || noPlayers == 0)) {
 			System.out.println("Invalid number of clients. Please choose again.");
 			return requestClients(scanner);
 		}
@@ -94,12 +96,16 @@ public class Setup {
 		//---------------------------------------------
 		Player thisPlayer = players.get(n);
 		PlayerSocket pSocket = thisPlayer.getpSocket();
-		if(pSocket!=null){
+		
+		if (pSocket != null) {
+			
 			pSocket.sendMessage("Player " + (n+1) + ": Select a character to be your player name.");
 			pSocket.sendMessage("Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow");			
+			
 			String name = pSocket.getMessage().toUpperCase();		
 			char c = name.toCharArray()[0];
 			String check = "";
+			
 			switch(c) {
 			case 'W' :
 				check = "W";
@@ -124,6 +130,7 @@ public class Setup {
 				selectPlayerName(player, players, n, scanner);
 				return;
 			}
+			
 			for (int i = 0; i < n; i++) {
 				if (players.get(i).getName().equals(check)) {
 					
@@ -135,7 +142,8 @@ public class Setup {
 
 			player.setName(check);
 			
-		}else{
+		}
+		else {
 		//End of Networking test
 		//----------------------------------------------
 		
