@@ -25,10 +25,8 @@ public class Turn {
 
 		ArrayList<Player> players = game1.getPlayers();
 		
-		for (int i = 0; i < players.size(); i++) {
-			Map.printMap(game1.getBoard(), players.get(i));
-		}
-
+		Map.printMap(game1.getBoard(), players);
+		
 		Dice.rollDice(player, scanner);
 
 		if (player.getCurrentRoll() != ROBBER) {
@@ -73,9 +71,7 @@ public class Turn {
 					Player.printHand(player, scanner);
 					break;
 				case 5 :
-					for (int i = 0; i < players.size(); i++) {
-						Map.printMap(game1.getBoard(), players.get(i));
-					}
+					Map.printMap(game1.getBoard(), players);
 					break;
 				case 6 :
 					System.out.println("Your Longest Road Length is: " + player.getLongestRoad());

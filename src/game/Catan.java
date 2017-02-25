@@ -163,7 +163,7 @@ public class Catan {
 				Game game1 = new Game();
 				game1.setBoard(board1);
 	
-				Map.printMap(game1.getBoard(), new Player());
+				Map.printMap(game1.getBoard(), new ArrayList<Player>());
 	
 				//sets up development cards
 				ArrayList<DevelopmentCard> developmentCards = Setup

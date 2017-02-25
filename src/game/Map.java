@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 
 /**
  * Class that contains the print statement for the Settlers Of Catan Board
@@ -7,7 +9,7 @@ package game;
 public class Map {
 	
 	//the big thing that prints the map, if this doesn't work, its probably because you were using the set methods that take coordinates
-	public static void printMap(Board board1, Player player) {
+	public static void printMap(Board board1, ArrayList<Player> players) {
 
 		//this big print out is gonna get very complicated, it does look quite
 		//nice as ascii
@@ -28,11 +30,15 @@ public class Map {
 
 		//String getPort = "P";
 		
-		PlayerSocket socket = player.getpSocket();
+		boolean hasPrintedToConsole = false;
 		
-		if (socket != null) {
+		for (int i = 0; i < players.size(); i++) {
 			
-			socket.sendMessage(
+			PlayerSocket socket = players.get(i).getpSocket();
+		
+			if (socket != null) {
+			
+				socket.sendMessage(
 
 					"                                         "+board1.getPorts().get(getPort++).getResource()+"                           \n"                                                                                    
 							+"                    "+ 
@@ -222,12 +228,12 @@ public class Map {
 
 
 					);
-			socket.sendMessage("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
-		}
-		else {
-		//Below is a printout of the board 
-		System.out
-		.println(
+				socket.sendMessage("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
+			}
+			else if (!hasPrintedToConsole) {
+				
+				//Below is a printout of the board 
+				System.out.println(
 
 				"                                         "+board1.getPorts().get(getPort++).getResource()+"                           \n"                                                                                    
 						+"                    "+ 
@@ -417,7 +423,9 @@ public class Map {
 
 
 				);
-		System.out.println("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
-	}
+				System.out.println("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
+				hasPrintedToConsole = true;
+			}
+		}
 	}
 }
