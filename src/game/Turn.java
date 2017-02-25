@@ -23,7 +23,11 @@ public class Turn {
 	//allows the player to have their turn
 	public static boolean newTurn(Player player, Game game1, Scanner scanner){
 
-		Map.printMap(game1.getBoard());
+		ArrayList<Player> players = game1.getPlayers();
+		
+		for (int i = 0; i < players.size(); i++) {
+			Map.printMap(game1.getBoard(), players.get(i));
+		}
 
 		Dice.rollDice(player, scanner);
 
@@ -69,7 +73,9 @@ public class Turn {
 					Player.printHand(player, scanner);
 					break;
 				case 5 :
-					Map.printMap(game1.getBoard());
+					for (int i = 0; i < players.size(); i++) {
+						Map.printMap(game1.getBoard(), players.get(i));
+					}
 					break;
 				case 6 :
 					System.out.println("Your Longest Road Length is: " + player.getLongestRoad());
@@ -94,7 +100,6 @@ public class Turn {
 		Player.updateDevelopmentCards(player);
 		return hasEnded;
 	}
-
 
 //-----Method to build and buy things for the turn-----//
 
