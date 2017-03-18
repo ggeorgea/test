@@ -240,116 +240,85 @@ public class Trade {
 	}
 
 	public static void tradeSpecial(Player player, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType){
-		
 		ArrayList<Port> ownedPorts = player.getSpecialPorts();
+		ArrayList<Port> tradePorts = new ArrayList<Port>();
 		ArrayList<String> portTypes = new ArrayList<String>();
-		
-		for (int i = 0; i < ownedPorts.size(); i++) {
-			if (!(portTypes.contains(ownedPorts.get(i).getResource()))) {
-				portTypes.add(ownedPorts.get(i).getResource());
-			}
-		}
-
-		System.out.println("You own the following 'special' port type(s). Please select which one you would like to trade with:");
-		
-		for (int i = 0; i < portTypes.size(); i++) {
-			System.out.println(portTypes.get(i) + " port - press " + i+1);
-		}
-		
-		String gainChoiceName = null;
-		int choice = scanner.nextInt();
-		
-		switch (choice) {
-		case 1 :
-			if (portTypes.size() == 1) {
-				gainChoiceName = portTypes.get(0);
-			}
-			else {
-				System.out.println("Invalid choice. Please choose again."); 
-				tradeSpecial(player, scanner, game1, resourceType);
-			}
-		case 2 :
-			if (portTypes.size() <= 2) {
-				gainChoiceName = portTypes.get(1);
-			}
-			else {
-				System.out.println("Invalid choice. Please choose again."); 
-				tradeSpecial(player, scanner, game1, resourceType);
-			}
-		case 3 :
-			if (portTypes.size() <= 3) {
-				gainChoiceName = portTypes.get(2);
-			}
-			else {
-				System.out.println("Invalid choice. Please choose again."); 
-				tradeSpecial(player, scanner, game1, resourceType);
-			}
-		case 4 :
-			if (portTypes.size() <= 4) {
-				gainChoiceName = portTypes.get(3);
-			}
-			else {
-				System.out.println("Invalid choice. Please choose again."); 
-				tradeSpecial(player, scanner, game1, resourceType);
-			}
-		case 5 :
-			if (portTypes.size() <= 5) {
-				gainChoiceName = portTypes.get(4);
-			}
-			else {
-				System.out.println("Invalid choice. Please choose again."); 
-				tradeSpecial(player, scanner, game1, resourceType);
-			}
-		default :
-			System.out.println("Invalid choice. Please choose again."); 
-			tradeSpecial(player, scanner, game1, resourceType);
-		}
-		
-		ArrayList<ResourceCard> gainChoice = new ArrayList<ResourceCard>();
-		
-		switch (gainChoiceName.toUpperCase()) {
-		case "H" :
-			gainChoice = game1.getBrick(); 
-			break;
-		case "G" :
-			gainChoice = game1.getGrain(); 
-			break;
-		case "F" :
-			gainChoice = game1.getLumber(); 
-			break;
-		case "M" :
-			gainChoice = game1.getOre(); 
-			break;
-		case "P" :
-			gainChoice = game1.getWool(); 
-			break;
-		}
-
 		ArrayList<ResourceCard> resources = player.getResourceCards();
-		int[] resourceCount = {0, 0, 0, 0, 0}; //array positions indicate brick, grain, lumber, ore, wool respectively
-		resourceCount = countPlayerResources(resourceCount, resources);
-		ArrayList<Integer> canTrade = new ArrayList<Integer>();
 		
-		System.out.println("You can trade the following resources:");
-		
-		for (int i = 0; i < resources.size(); i++) {
-			if (resourceCount[i] >= SPECIAL_TRADE_NUMBER) {
-				
-				System.out.println(resourceType.get(i).getResource() + ": " + resourceCount[i] + " available to trade - press " + i+1);
-				canTrade.add(i);
+		for(int i = 0; i < ownedPorts.size(); i++){
+			for(int j = 0; j < resources.size(); j++){
+				if(ownedPorts.get(i).getResource().equals(resources.get(j).getResource())){
+					String current = resources.get(j).getResource();
+					int count = 0;
+					for(int k = 0; i < player.getResourceCards().size(); i++){
+						if(player.getResourceCards().get(k).equals(current)) count++;
+					}
+					if(count >= 2 && !(portTypes.contains(ownedPorts.get(i).getResource()))){
+						portTypes.add(ownedPorts.get(i).getResource());
+					}
+				}
 			}
 		}
+		for(int i = 0; i < ownedPorts.size(); i++){
+			for(int j = 0; j < portTypes.size(); j++){
+				if(ownedPorts.get(i).getResource().equals(portTypes.get(j))){
+					tradePorts.add(ownedPorts.get(i));
+				}
+			}
+		}
+		System.out.println("You can trade with the following 'special' port type(s). Please select which one you would like to trade with:");
+		for(int i = 0; i < tradePorts.size(); i++){
+			System.out.println((i+1) + ": " + tradePorts.get(i).getResource());
+		}
+		int tradeChoice = scanner.nextInt();
 		
-		if (canTrade.size() != 0) {
-			
-			ResourceCard tradeChoice = selectTradeResource(player, scanner, game1, canTrade, resourceType);
-			carryOutTrade(player, tradeChoice, gainChoice, "special");
+		ResourceCard portChoice = selectTradeResource(player, scanner, game1, null, resources);
+		ResourceCard tradePort = null;
+		switch(portChoice.getResource().toLowerCase()){
+			case "brick" :
+				portChoice = game1.getBrick().get(0);
+				break;
+			case "grain" :
+				portChoice = game1.getGrain().get(0);
+				break;
+			case "lumber" :
+				portChoice = game1.getLumber().get(0);
+				break;
+			case "ore" :
+				portChoice = game1.getOre().get(0);
+				break;
+			case "wool" :
+				portChoice = game1.getWool().get(0);
+				break;
 		}
-		else {
-			
-			System.out.println("No resources available to trade. Trade cancelled.");
-			return;
+		
+		String[] resourceTypes = {"brick", "grain", "lumber", "ore", "wool"};
+		System.out.println("please select which resource you would like to gain from the bank:");
+		for(int i = 0; i < resourceTypes.length; i++){
+			System.out.println((i+1) + ": " + resourceTypes[i]);
 		}
+		int gainChoice = scanner.nextInt();
+		
+		ArrayList<ResourceCard> gainResource = null;
+		switch(gainChoice){
+			case 1 :
+				gainResource = game1.getBrick();
+				break;
+			case 2 :
+				gainResource = game1.getGrain();
+				break;
+			case 3 :
+				gainResource = game1.getLumber();
+				break;
+			case 4 :
+				gainResource = game1.getOre();
+				break;
+			case 5 :
+				gainResource = game1.getWool();
+				break;
+		}
+		
+		carryOutTrade(player, tradePort, gainResource, "special");
 	}
 
 	public static int[] countPlayerResources(int[] resourceCount, ArrayList<ResourceCard> resources){
