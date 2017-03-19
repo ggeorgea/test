@@ -115,10 +115,8 @@ public class Building {
 			for(int i = 0; i < players.size(); i++){
 				if(players.get(i) != player){
 					PlayerSocket socket = players.get(i).getpSocket();
-					if (socket != null) {
-						socket.sendMessage("Player " + player.getName() + " placed settlement at: (" + settlement.getCoordinate().getX() 
+					if(socket != null) socket.sendMessage("Player " + player.getName() + " placed settlement at: (" + settlement.getCoordinate().getX() 
 								+ "," + settlement.getCoordinate().getY() + ")");
-					}
 				}
 			}
 		}
@@ -330,10 +328,8 @@ public class Building {
 			for(int i = 0; i < players.size(); i++){
 				if(players.get(i) != player){
 					PlayerSocket socket = players.get(i).getpSocket();
-					if(socket != null){
-						socket.sendMessage("Player " + player.getName() + " placed city at: (" + city.getCoordinate().getX() 
-				+ "," + city.getCoordinate().getY() + ")");
-					}
+					if(socket != null) socket.sendMessage("Player " + player.getName() + " placed city at: (" + city.getCoordinate().getX() 
+							+ "," + city.getCoordinate().getY() + ")");
 				}
 			}
 		}

@@ -58,13 +58,12 @@ public class DevelopmentCard {
 		
 		//checks if a development card can be bought
 		if (resources.size() != 3) {
-				
-			System.out.println("You do not have enough resources to buy a development card");
+			
+			Catan.printToClient("You do not have enough resources to buy a development card", player);
 			return;
 		}
 		else if (developmentCards.size() <= 0) {
-			
-			System.out.println("There are no development cards left in the deck");
+			Catan.printToClient("There are no development cards left in the deck", player);
 			return;			
 		}
 		
@@ -86,7 +85,14 @@ public class DevelopmentCard {
 			
 			playerDevCards.add(developmentCard);
 			
-			System.out.println("Player " + player.getName() + " bought a development card");
+			Catan.printToClient("You bought a development card", player);
+			ArrayList<Player> players = game1.getPlayers();
+			for(int i = 0; i < players.size(); i++){
+				if(players.get(i) != player){
+					PlayerSocket socket = player.getpSocket();
+					if(socket != null) socket.sendMessage("Player " + player.getName() + " bought a development card");
+				}
+			}
 			
 			String type = developmentCard.getType();
 			
@@ -170,19 +176,17 @@ public class DevelopmentCard {
  		}
 	 		
  		if (hasPlayedDevCard) {
- 			System.out.println("You can only play one development card on your turn");
+ 			Catan.printToClient("You can only play one development card on your turn", player);
  			return;
  		}
  		if (playCards.size() <= 0) {
- 			System.out.println("You do not have any development cards in your hand to play");
+ 			Catan.printToClient("You do not have any development cards in your hand to play", player);
  			return;
  		}
-	 		
- 		System.out.println("What development card do you want to play?");
- 		
+	 	
+ 		Catan.printToClient("What development card do you want to play?", player);
  		for (int i = 0; i < playCards.size(); i++) {
- 			
- 			System.out.println((i+1) + ": " + playCards.get(i).getType());
+ 			Catan.printToClient((i+1) + ": " + playCards.get(i).getType(), player);
  		}
  		
  		int choice = scanner.nextInt();
@@ -268,7 +272,13 @@ public class DevelopmentCard {
 				
 				player.setHasLargestArmy(true); 
 				player.setVictoryPoints(player.getVictoryPoints()+2); 
-				System.out.println("player " + player.getName() + " now has the largest army!");
+				Catan.printToClient("You now have the largest army!", player);
+				for(int i = 0; i < players.size(); i++){
+					if(players.get(i) != player){
+						PlayerSocket socket = players.get(i).getpSocket();
+						if(socket != null) socket.sendMessage("Player " + player.getName() + " now has the largest army!");
+					}
+				}
 			}
 		}		
 	}
@@ -294,7 +304,7 @@ public class DevelopmentCard {
 		//lets the player choose two resources from the bank
 		for (int i = 0; i < 2; i++) {
 			
-			hasResource = chooseResourceYOP(cards, game1, scanner);
+			hasResource = chooseResourceYOP(cards, game1, scanner, player);
 		}
 		
 		player.setResourceCards(cards);
@@ -304,7 +314,7 @@ public class DevelopmentCard {
 	}
 	
 	//lets the player choose the resource for YOP
-	public static boolean chooseResourceYOP(ArrayList<ResourceCard> cards, Game game1, Scanner scanner) {
+	public static boolean chooseResourceYOP(ArrayList<ResourceCard> cards, Game game1, Scanner scanner, Player player) {
 		
 		ArrayList<ResourceCard> brick = game1.getBrick();
 		ArrayList<ResourceCard> lumber = game1.getLumber();
@@ -316,16 +326,16 @@ public class DevelopmentCard {
 		//if not the card is not played
 		if (brick.size() <= 0 && lumber.size() <= 0 && wool.size() <= 0 && ore.size() <= 0 && grain.size() <= 0) {
 			
-			System.out.println("There are no resources left in the bank. You cannot play this development card.");
+			Catan.printToClient("There are no resources left in the bank. You cannot play this development card.", player);
 			return false;
 		}
 		
-		System.out.println("Pick a resource");
-		System.out.println("1. Brick");
-		System.out.println("2. Lumber");
-		System.out.println("3. Wool");
-		System.out.println("4. Ore");
-		System.out.println("5. Grain");
+		Catan.printToClient("Pick a resource", player);
+		Catan.printToClient("1. Brick", player);
+		Catan.printToClient("2. Lumber", player);
+		Catan.printToClient("3. Wool", player);
+		Catan.printToClient("4. Ore", player);
+		Catan.printToClient("5. Grain", player);
 		
 		int choice = scanner.nextInt();
 		
@@ -333,8 +343,8 @@ public class DevelopmentCard {
 		switch (choice) {
 		case 1 :
 			if (brick.size() <= 0) {
-				System.out.println("There are no brick resource cards left. Please choose again.");
-				chooseResourceYOP(cards, game1, scanner);
+				Catan.printToClient("There are no brick resource cards left. Please choose again.", player);
+				chooseResourceYOP(cards, game1, scanner, player);
 			}
 			
 			cards.add(brick.get(0));
@@ -342,8 +352,8 @@ public class DevelopmentCard {
 			break;
 		case 2 :
 			if (lumber.size() <= 0) {
-				System.out.println("There are no lumber resource cards left. Please choose again.");
-				chooseResourceYOP(cards, game1, scanner);
+				Catan.printToClient("There are no lumber resource cards left. Please choose again.", player);
+				chooseResourceYOP(cards, game1, scanner, player);
 			}
 			
 			cards.add(lumber.get(0));
@@ -351,8 +361,8 @@ public class DevelopmentCard {
 			break;
 		case 3 :
 			if (wool.size() <= 0) {
-				System.out.println("There are no wool resource cards left. Please choose again.");
-				chooseResourceYOP(cards, game1, scanner);
+				Catan.printToClient("There are no wool resource cards left. Please choose again.", player);
+				chooseResourceYOP(cards, game1, scanner, player);
 			}
 			
 			cards.add(wool.get(0));
@@ -360,8 +370,8 @@ public class DevelopmentCard {
 			break;
 		case 4 :			
 			if (ore.size() <= 0) {
-				System.out.println("There are no ore resource cards left. Please choose again.");
-				chooseResourceYOP(cards, game1, scanner);
+				Catan.printToClient("There are no ore resource cards left. Please choose again.", player);
+				chooseResourceYOP(cards, game1, scanner, player);
 			}
 			
 			cards.add(ore.get(0));
@@ -369,16 +379,16 @@ public class DevelopmentCard {
 			break;
 		case 5 :
 			if (grain.size() <= 0) {
-				System.out.println("There are no grain resource cards left. Please choose again.");
-				chooseResourceYOP(cards, game1, scanner);
+				Catan.printToClient("There are no grain resource cards left. Please choose again.", player);
+				chooseResourceYOP(cards, game1, scanner, player);
 			}
 			
 			cards.add(grain.get(0));
 			game1.getGrain().remove(grain);
 			break;
 		default :
-			System.out.println("Invalid choice. Please choose again");
-			chooseResourceYOP(cards, game1, scanner);
+			Catan.printToClient("Invalid choice. Please choose again", player);
+			chooseResourceYOP(cards, game1, scanner, player);
 		}
 		
 		return true;
@@ -387,7 +397,7 @@ public class DevelopmentCard {
 	//plays a monopoly card
 	public static void playMonopolyCard(Player player, Game game1, Scanner scanner) {
 		
-		String resource = chooseResourceMonopoly(scanner);
+		String resource = chooseResourceMonopoly(scanner, player);
 		ArrayList<ResourceCard> cards = player.getResourceCards();
 		
 		ArrayList<Player> players = game1.getPlayers();
@@ -418,14 +428,14 @@ public class DevelopmentCard {
 	}
 	
 	//lets the player choose the resource for monopoly
-	public static String chooseResourceMonopoly(Scanner scanner) {
+	public static String chooseResourceMonopoly(Scanner scanner, Player player) {
 		
-		System.out.println("Pick a resource");
-		System.out.println("1. Brick");
-		System.out.println("2. Lumber");
-		System.out.println("3. Wool");
-		System.out.println("4. Ore");
-		System.out.println("5. Grain");
+		Catan.printToClient("Pick a resource", player);
+		Catan.printToClient("1. Brick", player);
+		Catan.printToClient("2. Lumber", player);
+		Catan.printToClient("3. Wool", player);
+		Catan.printToClient("4. Ore", player);
+		Catan.printToClient("5. Grain", player);
 		
 		int choice = scanner.nextInt();
 		String resource = "";
@@ -447,8 +457,8 @@ public class DevelopmentCard {
 			resource = "grain";
 			break;
 		default :
-			System.out.println("Invalid choice. Please choose again");
-			chooseResourceMonopoly(scanner);
+			Catan.printToClient("Invalid choice. Please choose again", player);
+			chooseResourceMonopoly(scanner, player);
 		}
 		
 		return resource;
