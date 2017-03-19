@@ -65,31 +65,26 @@ public class Building {
 			
 		//checks that the player can buy and place a settlement at the specified coordinates
 		if (resources.size() != 4) {
-				
-			System.out.println("You do not have enough resources to build a settlement");
+			Catan.printToClient("You do not have enough resources to build a settlement", player);	
 			return;
 		}
 		else if (settlementsLeft <= 0) {
-				
-			System.out.println("You do not have enough settlements left to place");
+			Catan.printToClient("You do not have enough settlements left to place", player);
 			return;
 		}		
 		if (!checkIllegalCoordinates(settlement)) {
-				
-			System.out.println("Settlement must be placed more than two roads away. " +
-			 		"Please choose again");
+				Catan.printToClient("Settlement must be placed more than two roads away. Please choose again", player);
 			buildSettlement(player, game1, scanner);
 			return;
 		}		
 		if (!checkSuitableCoordinates(player, game1, settlement)) {
-			 	System.out.println("Settlement must be placed beside one of your roads. " +
-		 		"Please choose again");
+			Catan.printToClient("Settlement must be placed beside one of your roads. Please choose again", player);
 		 	buildSettlement(player, game1, scanner);
 		 	return;
 		}
 		else if (settlement.getOwner().getName() != null) {
 			
-			System.out.println("A settlement has already been placed here. Please choose again");
+			Catan.printToClient("A settlement has already been placed here. Please choose again", player);
 			buildSettlement(player, game1, scanner);
 			return;
 		}
@@ -114,8 +109,18 @@ public class Building {
 			//TODO check commit to ensure what was lost
 			Trade.checkIfPortSettled(player, settlement, game1);
 			
-			System.out.println("Player " + player.getName() + " placed settlement at: (" + settlement.getCoordinate().getX() 
-					+ "," + settlement.getCoordinate().getY() + ")");
+			Catan.printToClient("You placed a settlement at: (" + settlement.getCoordinate().getX() 
+					+ "," + settlement.getCoordinate().getY() + ")", player);
+			ArrayList<Player> players = game1.getPlayers();
+			for(int i = 0; i < players.size(); i++){
+				if(players.get(i) != player){
+					PlayerSocket socket = players.get(i).getpSocket();
+					if (socket != null) {
+						socket.sendMessage("Player " + player.getName() + " placed settlement at: (" + settlement.getCoordinate().getX() 
+								+ "," + settlement.getCoordinate().getY() + ")");
+					}
+				}
+			}
 		}
 	}
 		
@@ -176,12 +181,12 @@ public class Building {
 	//asks the player for the coordinates for the settlement they want to build
 	public static Intersection getSettlementCoordinates(Player player, Game game1, Scanner scanner) {
 			
-		System.out.println("Please select where to place your settlement");
-		
-		System.out.println("Select X coordinate");
+		Catan.printToClient("Please select where to place your settlement", player);
+
+		Catan.printToClient("Select X coordinate", player);
 		int x = scanner.nextInt();
 		
-		System.out.println("Select Y coordinate");
+		Catan.printToClient("Select Y coordinate", player);
 		int y = scanner.nextInt();
 		Coordinate a = new Coordinate(x, y);
 		
@@ -189,8 +194,8 @@ public class Building {
 		if (!((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8))
 				||(!game1.getBoard().getLocationFromCoordinate(a).getType().equals("Intersection"))) {
 			
-			System.out.println("Invalid coordinates. Please choose again");
-				buildSettlement(player, game1, scanner);
+			Catan.printToClient("Invalid coordinates. Please choose again", player);
+			buildSettlement(player, game1, scanner);
 			return null;
 		}
 			
@@ -282,22 +287,22 @@ public class Building {
 		//checks the player has enough resources and the coordinates are valid
 		if (resources.size() != 5) {
 			
-			System.out.println("You do not have enough resources to build a city");
+			Catan.printToClient("You do not have enough resources to build a city", player);
 			return;
 		}
 		else if (citiesLeft <= 0) {
 			
-			System.out.println("You do not have enough cities left to place");
+			Catan.printToClient("You do not have enough cities left to place", player);
 			return;
 		}
 		else if (player.getNoSettlements() <= 0) {
 			
-			System.out.println("You do not have any settlements to upgrade to a city");
+			Catan.printToClient("You do not have any settlements to upgrade to a city", player);
 			return;
 		}
 		else if (!(city.getOwner().getName().equals(player))) {
 			
-			System.out.println("You can only upgrade a settlement that you own");
+			Catan.printToClient("You can only upgrade a settlement that you own", player);
 			buildCity(player, game1, scanner);
 			return;
 		}
@@ -319,8 +324,18 @@ public class Building {
 			player.setNoSettlements(player.getNoSettlements() - 1);
 			player.setVictoryPoints(player.getVictoryPoints() + 1);
 		
-			System.out.println("Player " + player.getName() + " placed city at: (" + city.getCoordinate().getX() 
-					+ "," + city.getCoordinate().getY() + ")");
+			Catan.printToClient("You placed a city at: (" + city.getCoordinate().getX() 
+					+ "," + city.getCoordinate().getY() + ")", player);
+			ArrayList<Player> players = game1.getPlayers();
+			for(int i = 0; i < players.size(); i++){
+				if(players.get(i) != player){
+					PlayerSocket socket = players.get(i).getpSocket();
+					if(socket != null){
+						socket.sendMessage("Player " + player.getName() + " placed city at: (" + city.getCoordinate().getX() 
+				+ "," + city.getCoordinate().getY() + ")");
+					}
+				}
+			}
 		}
 	}
 	
@@ -365,12 +380,12 @@ public class Building {
 	
 	//asks the player for the coordinates for the settlement they want to build
 	public static Intersection getCityCoordinates(Player player, Game game1, Scanner scanner) {
-			System.out.println("Please select the settlement you want to upgrade to a city");
-		
-		System.out.println("Select X coordinate");
+		Catan.printToClient("Please select the settlement you want to upgrade to a city", player);
+
+		Catan.printToClient("Select X coordinate", player);
 		int x = scanner.nextInt();
 		
-		System.out.println("Select Y coordinate");
+		Catan.printToClient("Select Y coordinate", player);
 		int y = scanner.nextInt();
 		Coordinate a = new Coordinate(x, y);
 		
@@ -378,7 +393,7 @@ public class Building {
 		if (!((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8))
  				||(!game1.getBoard().getLocationFromCoordinate(a).getType().equals("Intersection"))) {
 			
-			System.out.println("Invalid coordinates. Please choose again");
+			Catan.printToClient("Invalid coordinates. Please choose again", player);
 			buildCity(player, game1, scanner);
 			return null;
 		}
