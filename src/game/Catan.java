@@ -196,6 +196,7 @@ public class Catan {
 
 
 				//pass from automated set up to actually playing the game
+				
 				System.out.println("-----now in manual mode-------");
 				scanner = new Scanner(System.in);
 
@@ -224,7 +225,7 @@ public class Catan {
 					}
 				}
 
-				keepPlaying = playAgain(scanner);
+				keepPlaying = playAgain(scanner, game1);
 			}
 		}
 
@@ -232,10 +233,9 @@ public class Catan {
 	}
 
 	//asks the players if they want to play again
-	public static boolean playAgain(Scanner scanner) {
+	public static boolean playAgain(Scanner scanner, Game game1) {
 
-		System.out.println("Do you want to play again?");
-		System.out.println("Y or N");
+		Catan.printToClient("Do you want to play again? Y/N", game1.getPlayers().get(0));
 
 		boolean keepPlaying = false;
 		String choice = scanner.next().toUpperCase();
@@ -249,8 +249,8 @@ public class Catan {
 			keepPlaying = false;
 			break;
 		default:
-			System.out.println("Invalid choice. Please choose again");
-			keepPlaying = playAgain(scanner);
+			Catan.printToClient("Invalid choice. Please choose again", game1.getPlayers().get(0));
+			keepPlaying = playAgain(scanner, game1);
 		}
 
 		return keepPlaying;
