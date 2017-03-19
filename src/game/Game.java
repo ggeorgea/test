@@ -137,11 +137,11 @@ public class Game {
 //-----Methods to check if the game has ended-----//
 	
 	//checks if the game has ended
-	public static boolean checkEndOfGame(Player player) {
+	public static boolean checkEndOfGame(Player player, Game game1) {
 		
 		if (player.getVictoryPoints() >= 10) {
 			
-			endGame(player);
+			endGame(player, game1);
 			return END_GAME;
 		}
 		
@@ -149,8 +149,14 @@ public class Game {
 	}
 	
 	//prints a statement ending the game
-	public static void endGame(Player player) {
-		
-		System.out.println("Player " + player.getName() + " Wins!");
+	public static void endGame(Player player, Game game1) {
+		Catan.printToClient("You won!", player);
+		ArrayList<Player> players = game1.getPlayers();
+		for(int i = 0; i < players.size(); i++){
+			if(players.get(i) != null){
+				PlayerSocket socket = players.get(i).getpSocket();
+				if(socket != null) socket.sendMessage("Player " + player.getName() + " won!");
+			}
+		}
 	}
 }
