@@ -253,9 +253,9 @@ public class Player {
 	//lets player see their cards
 	public static void printHand(Player player, Scanner scanner) {
 		
-		System.out.println("What hand do you want to see?");
-		System.out.println("1: Resource Cards");
-		System.out.println("2: Development Cards");
+		Catan.printToClient("What hand do you want to see?", player);
+		Catan.printToClient("1: Resource Cards", player);
+		Catan.printToClient("2: Development Cards", player);
 		
 		int choice = scanner.nextInt();
 		
@@ -267,7 +267,7 @@ public class Player {
 			printDevelopmentCards(player);
 			break;
 		default :
-			System.out.println("Invalid choice. Please choose again");
+			Catan.printToClient("Invalid choice. Please choose again", player);
 			printHand(player, scanner);			
 		}
 	}
@@ -276,36 +276,30 @@ public class Player {
 	public static void printResourceCards(Player player) {
 
 		Iterator<ResourceCard> it = player.getResourceCards().iterator();
-		System.out.print("(");
-
+		String message = "(";
 		while (it.hasNext()) {
-			
-			System.out.print(it.next().getResource());
-
+			message = message + it.next().getResource();
 			if (it.hasNext()) {
-				System.out.print(", ");
+				message = message + ", ";
 			}
 		}
-
-		System.out.print(")\n");
+		message = message + ")";
+		Catan.printToClient(message, player);
 	}
 	
 	//prints the player's development cards
 	public static void printDevelopmentCards(Player player) {
 		
 		Iterator<DevelopmentCard> it = player.getDevelopmentCards().iterator();
-		System.out.print("(");
-		
+		String message = "(";
 		while (it.hasNext()) {
-			
-			System.out.print(it.next().getType());
-			
+			message = message + it.next().getType();
 			if (it.hasNext()) {
-				System.out.print(", ");
+				message = message + ", ";
 			}
 		}
-		
-		System.out.print(")\n");
+		message = message + ")";
+		Catan.printToClient(message, player);
 	}
 
 	//updates development cards so ones bought this turn can be played next turn
