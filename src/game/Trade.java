@@ -160,24 +160,29 @@ public class Trade {
 		
 		ArrayList<ResourceCard> resources = player.getResourceCards();
 		int[] resourceCount = {0, 0, 0, 0, 0}; //array positions indicate brick, grain, lumber, ore, wool respectively
-		
+		int bankAmount = 0;
 		for (int i = 0; i < resources.size(); i++) {
 			
 			switch (resources.get(i).getResource()) {
 			case "brick" : 
-				resourceCount[0]++; 
+				resourceCount[0]++;
+				bankAmount = game1.getBrick().size();
 				break;
 			case "grain" : 
 				resourceCount[1]++; 
+				bankAmount = game1.getGrain().size();
 				break;
 			case "lumber" : 
 				resourceCount[2]++; 
+				bankAmount = game1.getLumber().size();
 				break;
 			case "ore" : 
 				resourceCount[3]++; 
+				bankAmount = game1.getOre().size();
 				break;
 			case "wool" : 
 				resourceCount[4]++; 
+				bankAmount = game1.getWool().size();
 				break;
 			default : 
 				break;
@@ -187,7 +192,6 @@ public class Trade {
 		ArrayList<Integer> canTrade = new ArrayList<Integer>();
 		System.out.println("You can trade the following resources:");
 		
-		//for (int i = 0; i < resources.size(); i++) {
 		for (int i = 0; i < resourceCount.length; i++) {
 			if (resourceCount[i] >= DIRECT_TRADE_NUMBER) {
 				
@@ -200,7 +204,8 @@ public class Trade {
 			
 			ResourceCard tradeChoice = selectTradeResource(player, scanner, game1, canTrade, resourceType);
 			ArrayList<ResourceCard> gainChoice = selectGainResource(player, scanner, game1);
-			carryOutTrade(player, tradeChoice, gainChoice, "direct");
+			if(bankAmount >= DIRECT_TRADE_NUMBER) carryOutTrade(player, tradeChoice, gainChoice, "direct");
+			else System.out.println("Not enough resources available in bank to trade. Trade cancelled.");
 		}
 		else {
 			
@@ -230,7 +235,28 @@ public class Trade {
 			
 			ResourceCard tradeChoice = selectTradeResource(player, scanner, game1, canTrade, resourceType);
 			ArrayList<ResourceCard> gainChoice = selectGainResource(player, scanner, game1);
-			carryOutTrade(player, tradeChoice, gainChoice, "standard");
+			int bankAmount = 0;
+			switch(gainChoice.get(0).getResource()) {
+			case "brick" : 
+				bankAmount = game1.getBrick().size();
+				break;
+			case "grain" : 
+				bankAmount = game1.getGrain().size();
+				break;
+			case "lumber" : 
+				bankAmount = game1.getLumber().size();
+				break;
+			case "ore" : 
+				bankAmount = game1.getOre().size();
+				break;
+			case "wool" : 
+				bankAmount = game1.getWool().size();
+				break;
+			default : 
+				break;
+			}
+			if(bankAmount >= STANDARD_TRADE_NUMBER) carryOutTrade(player, tradeChoice, gainChoice, "standard");
+			else System.out.println("Not enough resources available in bank to trade. Trade cancelled.");
 		}
 		else {
 			
@@ -300,25 +326,31 @@ public class Trade {
 		int gainChoice = scanner.nextInt();
 		
 		ArrayList<ResourceCard> gainResource = null;
+		int bankAmount = 0;
 		switch(gainChoice){
 			case 1 :
 				gainResource = game1.getBrick();
+				bankAmount = gainResource.size();
 				break;
 			case 2 :
 				gainResource = game1.getGrain();
+				bankAmount = gainResource.size();
 				break;
 			case 3 :
 				gainResource = game1.getLumber();
+				bankAmount = gainResource.size();
 				break;
 			case 4 :
 				gainResource = game1.getOre();
+				bankAmount = gainResource.size();
 				break;
 			case 5 :
 				gainResource = game1.getWool();
+				bankAmount = gainResource.size();
 				break;
 		}
-		
-		carryOutTrade(player, tradePort, gainResource, "special");
+		if(bankAmount >= SPECIAL_TRADE_NUMBER) carryOutTrade(player, tradePort, gainResource, "special");
+		else System.out.println("Not enough resources available in bank to trade. Trade cancelled.");
 	}
 
 	public static int[] countPlayerResources(int[] resourceCount, ArrayList<ResourceCard> resources){
