@@ -44,15 +44,15 @@ public class Turn {
 
 		while (choice != END_TURN && !hasEnded) {
 			try{
-				System.out.println("Player " + player.getName() + ": What do you want to do?");
-				System.out.println("1: Build a road, settlement, city or development card?");
-				System.out.println("2: Play a development card?");
-				System.out.println("3: Trade with the bank, ports or other players?");
-				System.out.println("4: Show your hand?");
-				System.out.println("5: Print map?");
-				System.out.println("6: Length of your Longest Road?");
-				System.out.println("7: Count your victory pionts");
-				System.out.println("8: End turn?");
+				Catan.printToClient("What do you want to do?", player);
+				Catan.printToClient("1: Build a road, settlement, city or development card?", player);
+				Catan.printToClient("2: Play a development card?", player);
+				Catan.printToClient("3: Trade with the bank, ports or other players?", player);
+				Catan.printToClient("4: See your hand?", player);
+				Catan.printToClient("5: Print map?", player);
+				Catan.printToClient("6: Length of your Longest Road?", player);
+				Catan.printToClient("7: Count your victory pionts", player);
+				Catan.printToClient("8: End turn?", player);
 
 				choice = scanner.nextInt();
 				
@@ -74,21 +74,21 @@ public class Turn {
 					Map.printMap(game1.getBoard(), players);
 					break;
 				case 6 :
-					System.out.println("Your Longest Road Length is: " + player.getLongestRoad());
+					Catan.printToClient("Your Longest Road Length is: " + player.getLongestRoad(), player);
 					break;
 				case 7:
-					System.out.println("You have " + player.getVictoryPoints() + " victory points");
+					Catan.printToClient("You have " + player.getVictoryPoints() + " victory points", player);
 					break;
 				case 8:
 					break;
 				default :
-					System.out.println("Invalid choice. Please choose again");
+					Catan.printToClient("Invalid choice. Please choose again", player);
 				}
 
 				hasEnded = Game.checkEndOfGame(player, game1);
 			}
 			catch(InputMismatchException e) {
-				System.out.println("Invalid choice. Please choose again");
+				Catan.printToClient("Invalid choice. Please choose again", player);
 				scanner.nextLine();
 			}
 		}
@@ -102,11 +102,11 @@ public class Turn {
 	//asks the player if they want to build something
 	public static void build(Player player, Game game1, Scanner scanner) {
 
-		System.out.println("What do you want to build?");
-		System.out.println("1. Road");
-		System.out.println("2. Settlement");
-		System.out.println("3. City");
-		System.out.println("4. Development Card");
+		Catan.printToClient("What do you want to build?", player);
+		Catan.printToClient("1. Road", player);
+		Catan.printToClient("2. Settlement", player);
+		Catan.printToClient("3. City", player);
+		Catan.printToClient("4. Development Card", player);
 
 		int choice = scanner.nextInt();
 
@@ -124,7 +124,7 @@ public class Turn {
 			DevelopmentCard.buyDevelopmentCard(player, game1, scanner);
 			break;
 		default :
-			System.out.println("Invalid choice, Please choose again");
+			Catan.printToClient("Invalid choice, Please choose again", player);
 			build(player, game1, scanner);
 		}
 	}
