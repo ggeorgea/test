@@ -43,16 +43,13 @@ public class Robber{
 		//calculates how many cards to be removed
 		int noCardsToRemove = cards.size()/2;
 
-		System.out.println("Player " + player.getName() + ": Please select " + noCardsToRemove + " cards to remove");
-
+		Catan.printToClient("Please select " + noCardsToRemove + " cards to remove", player);
 		for (int i = 0; i < noCardsToRemove; i++) {
-
-			System.out.println("Card " + i);
 
 			//asks the player to choose a card to remove
 			for (int j = 0; j < cards.size(); j++) {
 
-				System.out.println(j + ": " + cards.get(j).getResource());
+				Catan.printToClient(j + ": " + cards.get(j).getResource(), player);
 			}
 
 			//removes the card they choose
@@ -60,7 +57,7 @@ public class Robber{
 				int choice = scanner.nextInt();
 
 				if (choice < 0 || choice >= cards.size()) {
-					System.out.println("Invalid choice. Please choose again");
+					Catan.printToClient("Invalid choice. Please choose again", player);
 					cardRemoval(player, cards, game1, scanner);
 				}
 
@@ -92,7 +89,7 @@ public class Robber{
 				cards.remove(choice);
 			}
 			catch(InputMismatchException e) {
-				System.out.println("Invalid choice. Please choose again");
+				Catan.printToClient("Invalid choice. Please choose again", player);
 				scanner.nextLine();
 				cardRemoval(player,cards,game1,scanner);
 			}
@@ -103,12 +100,12 @@ public class Robber{
 	public static void moveRobber(Player player, Game game1, Scanner scanner){
 
 		try {
-			System.out.println("Player " + player.getName() + ": Please select where to place the robber");
+			Catan.printToClient("Please select where to place the robber", player);
 
-			System.out.println("Select X coordinate");
+			Catan.printToClient("Select X coordinate", player);
 			int x = scanner.nextInt();
 
-			System.out.println("Select Y coordinate");
+			Catan.printToClient("Select Y coordinate", player);
 			int y = scanner.nextInt();
 			Coordinate a = new Coordinate(x, y);
 
@@ -116,7 +113,7 @@ public class Robber{
 			if((!((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8)))
 					|| (!game1.getBoard().getLocationFromCoordinate(a).getType().equals("hex"))) {
 
-				System.out.println("Invalid coordinates. Please choose again");
+				Catan.printToClient("Invalid coordinates. Please choose again", player);
 				moveRobber(player, game1, scanner);
 				return;
 			}
@@ -141,7 +138,7 @@ public class Robber{
 		while (true) {
 
 			target = null;
-			System.out.println("Please select player to steal from ");
+			Catan.printToClient("Please select player to steal from:", player);
 
 			String  name = scanner.nextLine();
 			ArrayList<Player> allPlayers = game1.getPlayers();
@@ -154,7 +151,7 @@ public class Robber{
 				}
 			}
 			if (target == null) { 
-				System.out.println("invalid player choice");
+				Catan.printToClient("Invalid player choice. Please chooe again.", player);
 				continue;
 			} 
 			else {
@@ -217,7 +214,8 @@ public class Robber{
 	    fromCards.remove(card);
 	    toCards.add(card);
 	    
-	    System.out.println("You have stolen: 1x " + card.getResource());
+	    Catan.printToClient("Stolen from you: 1x " + card.getResource(), from);
+	    Catan.printToClient("You have stolen: 1x " + card.getResource(), to);
 	}
 
 	
