@@ -95,14 +95,14 @@ public class Setup {
 		//NETWORKING TEST CODE
 		//---------------------------------------------
 		Player thisPlayer = players.get(n);
-		PlayerSocket pSocket = thisPlayer.getpSocket();
+		PlayerSocket socket = thisPlayer.getpSocket();
 		
-		if (pSocket != null) {
+		if (socket != null) {
 			
-			pSocket.sendMessage("Player " + (n+1) + ": Select a character to be your player name.");
-			pSocket.sendMessage("Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow");			
+			socket.sendMessage("Player " + (n+1) + ": Select a character to be your player name.");
+			socket.sendMessage("Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow");			
 			
-			String name = pSocket.getMessage().toUpperCase();		
+			String name = socket.getMessage().toUpperCase();		
 			char c = name.toCharArray()[0];
 			String check = "";
 			
@@ -126,7 +126,7 @@ public class Setup {
 				check = "Y";
 				break;
 			default :
-				pSocket.sendMessage("Invalid character. Please choose again.");
+				socket.sendMessage("Invalid character. Please choose again.");
 				selectPlayerName(player, players, n, scanner);
 				return;
 			}
@@ -134,7 +134,7 @@ public class Setup {
 			for (int i = 0; i < n; i++) {
 				if (players.get(i).getName().equals(check)) {
 					
-					pSocket.sendMessage("Another player is already using this character. Please choose again.");
+					socket.sendMessage("Another player is already using this character. Please choose again.");
 					selectPlayerName(player, players, n, scanner);
 					return;
 				}
@@ -148,8 +148,8 @@ public class Setup {
 		//----------------------------------------------
 		
 		
-		System.out.println("Player " + (n+1) + ": Select a character to be your player name.");
-		System.out.println("Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow");
+		Catan.printToClient("Select a character to be your player name.", thisPlayer);
+		Catan.printToClient("Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow", thisPlayer);
 
 		String name = scanner.next().toUpperCase();
 		char c = name.toCharArray()[0];
@@ -175,7 +175,7 @@ public class Setup {
 			check = "Y";
 			break;
 		default :
-			System.out.println("Invalid character. Please choose again.");
+			Catan.printToClient("Invalid character. Please choose again.", thisPlayer);
 			selectPlayerName(player, players, n, scanner);
 			return;
 		}
@@ -185,7 +185,7 @@ public class Setup {
 		for (int i = 0; i < n; i++) {
 			if (players.get(i).getName().equals(check)) {
 				
-				System.out.println("Another player is already using this character. Please choose again.");
+				Catan.printToClient("Another player is already using this character. Please choose again.", thisPlayer);
 				selectPlayerName(player, players, n, scanner);
 				return;
 			}
@@ -227,12 +227,15 @@ public class Setup {
 		}
 
 		//prints player order
-		System.out.println("Player order: ");
-
-		for (int i = 0; i < players.size(); i++) {
-
-			System.out.println((i+1)+ ": " + players.get(i).getName());
+		for(int i = 0; i < players.size(); i++){
+			PlayerSocket socket = players.get(i).getpSocket();
+			if(socket != null) socket.sendMessage("Player order: ");
+			for (int j = 0; j < players.size(); j++) {
+				Catan.printToClient((j+1)+ ": " + players.get(j).getName(), players.get(i));
+			}
 		}
+
+		
 
 		return players;
 	}
@@ -349,14 +352,14 @@ public class Setup {
 		for (int i = 0; i < players.size(); i++) {
 
 			//each player places road, then settlement
-			Road road = placeRoad(players.get(i), board1, scanner);
+			Road road = placeRoad(players.get(i), board1, scanner, game1);
 			placeSettlement(players.get(i), road, board1, scanner, game1);
 		}
 
 		for (int i = players.size()-1; i >= 0; i--) {
 
 			//each player places road, then settlement
-			Road road = placeRoad(players.get(i), board1, scanner);
+			Road road = placeRoad(players.get(i), board1, scanner, game1);
 			Intersection settlement = placeSettlement(players.get(i), road, board1, scanner, game1);
 			initialResourceAllocation(players.get(i), settlement, game1);
 		}
@@ -381,33 +384,33 @@ public class Setup {
 
 	//lets the player place a road free of charge
 	//also does not depend on nearby roads
-	public static Road placeRoad(Player player, Board board1, Scanner scanner) {
+	public static Road placeRoad(Player player, Board board1, Scanner scanner, Game game1) {
 
-		System.out.println("Player " + player.getName() + ": Please select where to place your road");
+		Catan.printToClient("Please select where to place your road:", player);
 
-		System.out.println("Coordinate 1: ");
-		System.out.println("Select X coordinate");
+		Catan.printToClient("Coordinate 1: ", player);
+		Catan.printToClient("Select X coordinate", player);
 		int x1 = scanner.nextInt();
 
-		System.out.println("Select Y coordinate");
+		Catan.printToClient("Select Y coordinate", player);
 		int y1 = scanner.nextInt();
 
-		System.out.println("Coordinate 2: ");
-		System.out.println("Select X coordinate");
+		Catan.printToClient("Coordinate 2: ", player);
+		Catan.printToClient("Select X coordinate", player);
 		int x2 = scanner.nextInt();
 
-		System.out.println("Select Y coordinate");
+		Catan.printToClient("Select Y coordinate", player);
 		int y2 = scanner.nextInt();
 
 		//checks the coordinates are in the correct range
 		if ((!((2*y1 <= x1+8) || (2*y1 >= x1-8) && (y1 <= 2*x1+8) && (y1 >= 2*x1-8) && (y1 >= -x1-8) 
 				&& (y1 <= -x1+8))) && (!((2*y2 <= x2+8) || (2*y2 >= x2-8) && (y2 <= 2*x2+8) && (y2 >= 2*x2-8) && (y2 >= -x2-8)))) {
-			System.out.println("Invalid coordinates. Please choose again");
-			return placeRoad(player, board1, scanner);
+			Catan.printToClient("Invalid coordinates. Please choose again", player);
+			return placeRoad(player, board1, scanner, game1);
 		}
 		else if (!checkNear(board1, x1,y1,x2,y2)) {
-			System.out.println("Invalid coordinates. Please choose again");
-			return placeRoad(player, board1, scanner);
+			Catan.printToClient("Invalid coordinates. Please choose again", player);
+			return placeRoad(player, board1, scanner, game1);
 		}
 		else {
 
@@ -418,17 +421,24 @@ public class Setup {
 
 			if (road == null) {
 
-				System.out.println("Invalid coordinates. Please choose again");
-				return placeRoad(player, board1, scanner);
+				Catan.printToClient("Invalid coordinates. Please choose again", player);
+				return placeRoad(player, board1, scanner, game1);
 			}
 			else if (road.getOwner().getName() != null) {
 
-				System.out.println("A road has already been placed here. Please choose again");
-				return placeRoad(player, board1, scanner);
+				Catan.printToClient("A road has already been placed here. Please choose again", player);
+				return placeRoad(player, board1, scanner, game1);
 			}
 			else {
 
-				System.out.println("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
+				Catan.printToClient("You placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")", player);
+				ArrayList<Player> players = game1.getPlayers();
+				for(int i = 0; i < players.size(); i++){
+					if(players.get(i) != player){
+						PlayerSocket socket = players.get(i).getpSocket();
+						if(socket != null) socket.sendMessage("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
+					}
+				}
 				road.setOwner(player);
 
 				player.setNoRoads(player.getNoRoads() + 1);
@@ -442,12 +452,12 @@ public class Setup {
 	//lets a player place a settlement free of charge
 	public static Intersection placeSettlement(Player player, Road road, Board board1, Scanner scanner, Game game1) {
 
-		System.out.println("Player " + player.getName() + ": Please select where to place your settlement");
-
-		System.out.println("Select X coordinate");
+		Catan.printToClient("Please select where to place your settlement", player);
+		
+		Catan.printToClient("Select X coordinate", player);
 		int x = scanner.nextInt();
 
-		System.out.println("Select Y coordinate");
+		Catan.printToClient("Select Y coordinate", player);
 		int y = scanner.nextInt();
 		Coordinate a = new Coordinate(x, y);
 
@@ -455,7 +465,7 @@ public class Setup {
 		if ((!((2*y <= x+8) || (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8)))
 				|| (!(board1.getLocationFromCoordinate(a).getType().equals("Intersection")))) {
 
-			System.out.println("Invalid coordinates. Please choose again");
+			Catan.printToClient("Invalid coordinates. Please choose again", player);
 			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
@@ -465,13 +475,13 @@ public class Setup {
 		if (!(road.getCoordinateA().getX() == x && road.getCoordinateA().getY() == y)
 				&& !(road.getCoordinateB().getX() == x && road.getCoordinateB().getY() == y)) {
 
-			System.out.println("Settlement must be placed beside road. Please choose again");
+			Catan.printToClient("Settlement must be placed beside road. Please choose again", player);
 			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
 		if (settlement.getOwner().getName() != null) {
 
-			System.out.println("A settlement has already been placed here. Please choose again");
+			Catan.printToClient("A settlement has already been placed here. Please choose again", player);
 			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
@@ -480,13 +490,20 @@ public class Setup {
 			Intersection inter = illegal.get(i);
 			//System.out.println("A"+illegal.get(i).getCoordinate().getX()+","+illegal.get(i).getCoordinate().getY());
 			if (inter.getOwner().getName() != null) {
-				System.out.println("Settlement must be placed more than two roads away. Please choose again");
+				Catan.printToClient("Settlement must be placed more than two roads away. Please choose again", player);
 				return placeSettlement(player, road, board1, scanner, game1);
 			}
 		}
 
-		System.out.println("Player " + player.getName() + ""
+		Catan.printToClient("You placed settlement at: (" + x + "," + y + ")", player);
+		ArrayList<Player> players = game1.getPlayers();
+		for(int i = 0; i < players.size(); i++){
+			if(players.get(i) != player){
+				PlayerSocket socket = players.get(i).getpSocket();
+				if(socket != null) socket.sendMessage("Player " + player.getName() + ""
 				+ " placed settlement at: (" + x + "," + y + ")");
+			}
+		}
 		settlement.setOwner(player);
 		settlement.setBuilding(new Building("t",1));
 		player.getFirstSettlements().add(settlement);
@@ -524,12 +541,18 @@ public class Setup {
 		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
 
 		//prints what each player gets
-		System.out.println("Player " + player.getName() + " gets: ");
-
-		for (int i = 0; i < resourceCards.size(); i++) {
-
-			System.out.print("1x " + resourceCards.get(i).getResource() + " ");
+		Catan.printToClient("You get:", player);
+		ArrayList<Player> players = game1.getPlayers();
+		for(int i = 0; i < players.size(); i++){
+			PlayerSocket socket = players.get(i).getpSocket();
+			if(players.get(i) != player){
+				if(socket != null) socket.sendMessage("Player " + player.getName() + " gets:");
+				for (int j = 0; j < resourceCards.size(); j++) {
+					if(socket != null) socket.sendMessage("1x " + resourceCards.get(j).getResource());
+				}
+			}
 		}
+		
 
  		player.setResourceCards(resourceCards);
 	}
@@ -765,7 +788,7 @@ public class Setup {
 		while(robL!=null){
 			Hex robLoc = (Hex)(robL.getContains());
 			if(robLoc.getNumber()==-1&&robLoc.getisRobberHere().equals("R")){
-				System.out.println("the robber was left out "+robLoc.getisRobberHere()+robLoc.getNumber());
+				System.out.println("The robber was left out "+robLoc.getisRobberHere()+robLoc.getNumber());
 				robLoc.setNumber(7);
 
 				break;
