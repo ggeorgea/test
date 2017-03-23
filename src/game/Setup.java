@@ -203,7 +203,7 @@ public class Setup {
 		//asks each player to roll the dice
 		for (int i = 0; i < players.size(); i++) {
 
-			Dice.rollDice(players.get(i), scanner);
+			Dice.rollDice(players.get(i), scanner, game1);
 		}
 
 		//bubble sort to decide player order based on

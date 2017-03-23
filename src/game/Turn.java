@@ -27,7 +27,7 @@ public class Turn {
 		
 		Map.printMap(game1.getBoard(), players);
 		
-		Dice.rollDice(player, scanner);
+		Dice.rollDice(player, scanner, game1);
 
 		if (player.getCurrentRoll() != ROBBER) {
 			ResourceAllocation.resourceAllocation(player.getCurrentRoll(), game1, scanner);
@@ -85,7 +85,7 @@ public class Turn {
 					System.out.println("Invalid choice. Please choose again");
 				}
 
-				hasEnded = Game.checkEndOfGame(player);
+				hasEnded = Game.checkEndOfGame(player, game1);
 			}
 			catch(InputMismatchException e) {
 				System.out.println("Invalid choice. Please choose again");

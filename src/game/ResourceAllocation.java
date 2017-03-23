@@ -98,7 +98,11 @@ public class ResourceAllocation {
 			String bankHasResources = getResources(owner, terrain, game1, SETTLEMENT_RESOURCES);
 			
 			if (bankHasResources != null) {
-				System.out.println("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
+				ArrayList<Player> players = game1.getPlayers();
+				for(int i = 0; i < players.size(); i++){
+					PlayerSocket socket = players.get(i).getpSocket();
+					if(socket != null) socket.sendMessage("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
+				}
 				return bankHasResources;
 			}
 		}
@@ -107,7 +111,11 @@ public class ResourceAllocation {
 			String bankHasResources = getResources(owner, terrain, game1, CITY_RESOURCES);
 			
 			if (bankHasResources != null) {
-				System.out.println("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
+				ArrayList<Player> players = game1.getPlayers();
+				for(int i = 0; i < players.size(); i++){
+					PlayerSocket socket = players.get(i).getpSocket();
+					if(socket != null) socket.sendMessage("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
+				}
 				return bankHasResources;
 			}
 		}
@@ -224,21 +232,21 @@ public class ResourceAllocation {
 		for (int i = 0; i < players.size(); i++) {
 						
 			Player player = players.get(i);
+			PlayerSocket socket = player.getpSocket();
 			ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
 			ArrayList<ResourceCard> cards = player.getResourceCards();
 					
 			//if the player gets resources, they are added to their hand and
 			//the allocation printed
 			if (newResourceCards.size() > 0) {
-				System.out.println("Player " + player.getName() + " gets: ");
+				if(socket != null) socket.sendMessage("You get:");
 			
 				for (int j = 0; j < newResourceCards.size(); j++) {
 							
 					cards.add(newResourceCards.get(j));
-					System.out.print("1x " + newResourceCards.get(j).getResource());
+					if(socket != null) socket.sendMessage("1x " + newResourceCards.get(j).getResource());
 				}
 					
-				System.out.println();
 				player.setResourceCards(cards);
 			}
 		}

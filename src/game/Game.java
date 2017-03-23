@@ -153,7 +153,7 @@ public class Game {
 		Catan.printToClient("You won!", player);
 		ArrayList<Player> players = game1.getPlayers();
 		for(int i = 0; i < players.size(); i++){
-			if(players.get(i) != null){
+			if(players.get(i) != player){
 				PlayerSocket socket = players.get(i).getpSocket();
 				if(socket != null) socket.sendMessage("Player " + player.getName() + " won!");
 			}
