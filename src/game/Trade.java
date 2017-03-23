@@ -23,9 +23,9 @@ public class Trade {
 
 //-----Method asking player who they want to trade with-----//
 	
-	public static boolean tradeBankOrPlayer(Scanner scanner) {
+	public static boolean tradeBankOrPlayer(Player player, Scanner scanner) {
 		
-		System.out.println("Press 'B' to trade with the bank, and 'P' to trade with other players:");
+		Catan.printToClient("Press 'B' to trade with the bank, and 'P' to trade with other players:", player);
 		
 		String choice = scanner.next().toUpperCase();
 		
@@ -35,8 +35,8 @@ public class Trade {
 		case "P" :
 			return false;
 		default :
-			System.out.println("Invalid choice. Please choose again");
-			return tradeBankOrPlayer(scanner);
+			Catan.printToClient("Invalid choice. Please choose again.", player);
+			return tradeBankOrPlayer(player, scanner);
 		}
 	}
 	
@@ -57,9 +57,10 @@ public class Trade {
 		boolean hasStandard = false; if(player.getStandardPorts().size() > 0) hasStandard = true;
 		boolean hasSpecial = false; if(player.getSpecialPorts().size() > 0) hasSpecial = true;
 		
-		System.out.println("Trading options:\nDirectly with bank (4:1 receiving a resource of your choice) - press 4");
-		if(hasStandard) System.out.println("Through a standard port (3:1 receiving a resource of your choice) - press 3");
-		if(hasSpecial) System.out.println("Through a special port (2:1 receiving a specific resource) - press 2");
+		Catan.printToClient("Trading options:", player);
+		Catan.printToClient("4: Directly with bank (4:1 receiving a resource of your choice)", player);
+		if(hasStandard) Catan.printToClient("3: Through a standard port (3:1 receiving a resource of your choice)", player);
+		if(hasSpecial) Catan.printToClient("2: Through a special port (2:1 receiving a specific resource)", player);
 		int choice = scanner.nextInt();
 		switch (choice) {
 			case 4 :
@@ -67,27 +68,34 @@ public class Trade {
 				break;
 			case 3 :
 				if(hasStandard) tradeStandard(player, scanner, game1, resourceType);
-				else System.out.println("Invalid choice. Please choose again"); tradeBank(player, scanner, game1);
+				else{
+					Catan.printToClient("Invalid choice. Please choose again", player);
+					tradeBank(player, scanner, game1);
+				}
 				break;
 			case 2 :
 				if(hasSpecial) tradeSpecial(player, scanner, game1, resourceType);
-				else System.out.println("Invalid choice. Please choose again"); tradeBank(player, scanner, game1);
+				else{
+					Catan.printToClient("Invalid choice. Please choose again", player);
+					tradeBank(player, scanner, game1);
+				}
 				break;
 			default:
-				System.out.println("Invalid choice. Please choose again."); tradeBank(player, scanner, game1);
+				Catan.printToClient("Invalid choice. Please choose again", player);
+				tradeBank(player, scanner, game1);
 				break;
 		}
 	}
 
 	public static ResourceCard selectTradeResource(Player player, Scanner scanner, Game game1, ArrayList<Integer> canTrade, ArrayList<ResourceCard> resourceType){
 			
-		System.out.println("Please select resource to trade with the bank:");
+		Catan.printToClient("Please select resource to trade with the bank:", player);
 		
 		int selection = scanner.nextInt();
 		
 		if(selection > canTrade.size()) {
 			
-			System.out.println("Invlaid selection. Please choose again.");
+			Catan.printToClient("Invalid choice. Please choose again", player);
 			return selectTradeResource(player, scanner, game1, canTrade, resourceType);
 		}
 		else {
@@ -108,8 +116,12 @@ public class Trade {
 		gameResources.addAll(game1.getOre());
 		gameResources.addAll(game1.getWool());
 		
-		System.out.println("Please select a resource to gain from trading with the bank:");
-		System.out.println("Brick - press 1\nGrain - press 2\nLumber - press 3\nOre - press 4\nWool - press 5");
+		Catan.printToClient("Please select a resource to gain from trading with the bank:", player);
+		Catan.printToClient("1: brick", player);
+		Catan.printToClient("2: grain", player);
+		Catan.printToClient("3: lumber", player);
+		Catan.printToClient("4: ore", player);
+		Catan.printToClient("5: wool", player);
 		
 		int choice = scanner.nextInt();
 		
@@ -125,7 +137,7 @@ public class Trade {
 		case 5 :
 			return game1.getWool();
 		default :
-			System.out.println("Invalid choice. Please choose again.");
+			Catan.printToClient("Invalid choice. Please choose again.", player);
 			return selectGainResource(player, scanner, game1);
 		}
 	}
@@ -190,12 +202,12 @@ public class Trade {
 		}
 		
 		ArrayList<Integer> canTrade = new ArrayList<Integer>();
-		System.out.println("You can trade the following resources:");
+		Catan.printToClient("You can trade the following resources:", player);
 		
 		for (int i = 0; i < resourceCount.length; i++) {
 			if (resourceCount[i] >= DIRECT_TRADE_NUMBER) {
 				
-				System.out.println(resourceType.get(i).getResource() + ": " + resourceCount[i] + " available to trade - press " + (i+1));
+				Catan.printToClient((i+1) + ": " + resourceType.get(i).getResource() + " (" + resourceCount[i] + " available)", player);
 				canTrade.add(i);
 			}
 		}
@@ -205,11 +217,11 @@ public class Trade {
 			ResourceCard tradeChoice = selectTradeResource(player, scanner, game1, canTrade, resourceType);
 			ArrayList<ResourceCard> gainChoice = selectGainResource(player, scanner, game1);
 			if(bankAmount >= DIRECT_TRADE_NUMBER) carryOutTrade(player, tradeChoice, gainChoice, "direct");
-			else System.out.println("Not enough resources available in bank to trade. Trade cancelled.");
+			else Catan.printToClient("Not enough resources available in bank to trade. Trade cancelled.", player);
 		}
 		else {
 			
-			System.out.println("No resources available to trade. Trade cancelled.");
+			Catan.printToClient("No resources available to trade. Trade cancelled.", player);
 			return;
 		}
 	}
@@ -221,12 +233,12 @@ public class Trade {
 		resourceCount = countPlayerResources(resourceCount, resources);
 		ArrayList<Integer> canTrade = new ArrayList<Integer>();
 		
-		System.out.println("You can trade the following resources:");
+		Catan.printToClient("You can trade the following resources:", player);
 		
 		for (int i = 0; i < resources.size(); i++) {
 			if (resourceCount[i] >= STANDARD_TRADE_NUMBER) {
 				
-				System.out.println(resourceType.get(i).getResource() + ": " + resourceCount[i] + " available to trade - press " + i+1);
+				Catan.printToClient((i+1) + ": " + resourceType.get(i).getResource() + " (" + resourceCount[i] + " available)", player);
 				canTrade.add(i);
 			}
 		}
@@ -256,11 +268,11 @@ public class Trade {
 				break;
 			}
 			if(bankAmount >= STANDARD_TRADE_NUMBER) carryOutTrade(player, tradeChoice, gainChoice, "standard");
-			else System.out.println("Not enough resources available in bank to trade. Trade cancelled.");
+			else Catan.printToClient("Not enough resources available in bank to trade. Trade cancelled.", player);
 		}
 		else {
 			
-			System.out.println("No resources available to trade. Trade cancelled.");
+			Catan.printToClient("No resources available to trade. Trade cancelled.", player);
 			return;
 		}
 	}
@@ -292,9 +304,9 @@ public class Trade {
 				}
 			}
 		}
-		System.out.println("You can trade with the following 'special' port type(s). Please select which one you would like to trade with:");
+		Catan.printToClient("Please select which 'special' port type you would like to trade with:", player);
 		for(int i = 0; i < tradePorts.size(); i++){
-			System.out.println((i+1) + ": " + tradePorts.get(i).getResource());
+			Catan.printToClient((i+1) + ": " + tradePorts.get(i).getResource(), player);
 		}
 		int tradeChoice = scanner.nextInt();
 		
@@ -319,9 +331,9 @@ public class Trade {
 		}
 		
 		String[] resourceTypes = {"brick", "grain", "lumber", "ore", "wool"};
-		System.out.println("please select which resource you would like to gain from the bank:");
+		Catan.printToClient("Please select which resource you would like to gain from the bank:", player);
 		for(int i = 0; i < resourceTypes.length; i++){
-			System.out.println((i+1) + ": " + resourceTypes[i]);
+			Catan.printToClient((i+1) + ": " + resourceTypes[i], player);
 		}
 		int gainChoice = scanner.nextInt();
 		
@@ -350,7 +362,7 @@ public class Trade {
 				break;
 		}
 		if(bankAmount >= SPECIAL_TRADE_NUMBER) carryOutTrade(player, tradePort, gainResource, "special");
-		else System.out.println("Not enough resources available in bank to trade. Trade cancelled.");
+		else Catan.printToClient("Not enough resources available in bank to trade. Trade cancelled.", player);
 	}
 
 	public static int[] countPlayerResources(int[] resourceCount, ArrayList<ResourceCard> resources){
@@ -428,17 +440,17 @@ public class Trade {
 		players.remove(player);
 
 		//asks the player to choose a player to trade with
-		System.out.println("Who do you want to trade with?");
-
+		Catan.printToClient("Who do you want to trade with?", player);
+		
 		for (int i = 0; i < players.size(); i++) {
-			System.out.println((i+1) + ": " + players.get(i).getName());
+			Catan.printToClient((i+1) + ": " + players.get(i).getName(), player);
 		}
 
 		int choice = scanner.nextInt();
 
 		//checks for correct input
 		if (choice > players.size()+1 || choice <= 0) {
-			System.out.println("Invalid choice. Please choose again.");
+			Catan.printToClient("Invalid choice. Please choose again.", player);
 			tradePlayer(player, scanner, game1);
 			return;
 		}
@@ -465,10 +477,12 @@ public class Trade {
 		}
 
 		if (trade.equals(REJECT_TRADE)) {
-			System.out.println("Offer rejected. Trading stopped.");
+			Catan.printToClient("Offer rejected. Trading stopped.", playerTrade);
+			Catan.printToClient("Offer rejected. Trading stopped.", player);
 		}
 		else if (trade.equals(ACCEPT_TRADE)) {
-			System.out.println("Offer accepted. Trading stopped.");
+			Catan.printToClient("Offer accepted. Trading stopped.", playerTrade);
+			Catan.printToClient("Offer accepted. Trading stopped.", player);
 		}
 
 		players.add(player);
@@ -496,13 +510,13 @@ public class Trade {
 		//lets the player choose what to trade from their own hand
 		while (choice == 1) {
 
-			System.out.println("What do you want to trade from your hand?");
+			Catan.printToClient("What do you want to trade from your hand?", playerTrade);
 
-			choice = chooseResources(playerResources, scanner);
+			choice = chooseResources(playerResources, scanner, player);
 			playerToTrade.add(playerResources.get(choice));
 			playerResources.remove(choice);
 
-			choice = chooseMoreResources(scanner);
+			choice = chooseMoreResources(scanner, player);
 		}
 
 		choice = 1;
@@ -510,20 +524,20 @@ public class Trade {
 		//lets the player choose what resources they want from the other player's hand
 		while (choice == 1) {
 
-			System.out.println("What do you want from " + playerTrade.getName() + "'s hand?");	
+			Catan.printToClient("What do you want from " + playerTrade.getName() + "'s hand?", playerTrade);
 			
-			choice = chooseResources(playerTradeResources, scanner);
+			choice = chooseResources(playerTradeResources, scanner, player);
 			playerTradeToTrade.add(playerTradeResources.get(choice));
 			//playerTradeResources.remove(choice);
 
-			choice = chooseMoreResources(scanner);
+			choice = chooseMoreResources(scanner, player);
 		}
 
 		boolean validTrade = checkOffer(playerToTrade, playerTradeToTrade);
 
 		//checks if the trade is valid
 		if (!validTrade) {
-			System.out.println("You cannot trade the same resources i.e 1 wool for 2 wool. Please choose again.");
+			Catan.printToClient("You cannot trade the same resources i.e 1 wool for 2 wool. Please choose again.", playerTrade);
 			restoreResources(player, playerTrade, playerToTrade, playerTradeToTrade);
 			return proposeTrade(player, playerTrade, scanner);
 		}
@@ -550,36 +564,36 @@ public class Trade {
 	}
 
 	//lets the player decide what resources to trade
-	public static int chooseResources(ArrayList<ResourceCard> playerResources, Scanner scanner) {
+	public static int chooseResources(ArrayList<ResourceCard> playerResources, Scanner scanner, Player player) {
 
 		//asks the player to choose a resource to trade
 		for (int i = 0; i < playerResources.size(); i++) {
-			System.out.println(i+1 + ": " + playerResources.get(i).getResource());
+			Catan.printToClient((i+1) + ": " + playerResources.get(i).getResource(), player);
 		}
 
 		int choice = scanner.nextInt();
 
 		//checks for correct input
 		if (choice > playerResources.size()+1 || choice <= 0) {
-			System.out.println("Invalid input. Please choose again");
-			return chooseResources(playerResources, scanner);
+			Catan.printToClient("Invalid input. Please choose again", player);
+			return chooseResources(playerResources, scanner, player);
 		}
 
 		return choice-1;
 	}
 
 	//asks the user if they want to trade more than one resource
-	public static int chooseMoreResources(Scanner scanner) {
+	public static int chooseMoreResources(Scanner scanner, Player player) {
 
-		System.out.println("Do you want to trade more cards?");
-		System.out.println("1: Yes");
-		System.out.println("2: No");
+		Catan.printToClient("Do you want to trade more cards?", player);
+		Catan.printToClient("1: Yes", player);
+		Catan.printToClient("2: No", player);
 
 		int choice = scanner.nextInt();
 
 		if (choice != 1 && choice != 2) {
-			System.out.println("Invalid choice. Please choose again.");
-			return chooseMoreResources(scanner);
+			Catan.printToClient("Invalid choice. Please choose again.", player);
+			return chooseMoreResources(scanner, player);
 		}
 
 		return choice;
@@ -614,22 +628,22 @@ public class Trade {
 			ArrayList<ResourceCard> playerTradeToTrade, Scanner scanner) {
 		
 		//prints out the trade that has been proposed
-		System.out.println("Player " + playerTrade.getName() + ": Player " + player.getName() + " has proposed a trade: ");
+		Catan.printToClient("Player " + player.getName() + " has proposed a trade: ", playerTrade);
 
 		for (int i = 0; i < playerToTrade.size(); i++) {
-			System.out.print("1x " + playerToTrade.get(i).getResource() + " ");
+			Catan.printToClient("1x " + playerToTrade.get(i).getResource(), playerTrade);
 		}
 
-		System.out.print("from their hand for ");
+		Catan.printToClient("from their hand for:", playerTrade);
 
 		for (int i = 0; i < playerTradeToTrade.size(); i++) {
-			System.out.print("1x " + playerTradeToTrade.get(i).getResource() + " ");
+			Catan.printToClient("1x " + playerTradeToTrade.get(i).getResource(), playerTrade);
 		}
 
-		System.out.println("from your hand");
+		Catan.printToClient("from your hand.", playerTrade);
 
 		//asks the player if they want to accept the offer
-		int choice = chooseOffer(scanner);
+		int choice = chooseOffer(scanner, playerTrade);
 
 		//returns the correct string based on the player's choice
 		switch (choice) {
@@ -645,19 +659,19 @@ public class Trade {
 	}
 
 	//lets the other player during trade accept or reject the offer
-	public static int chooseOffer(Scanner scanner) {
+	public static int chooseOffer(Scanner scanner, Player playerTrade) {
 
-		System.out.println("What do you want to do?");
-		System.out.println("1: Accept Trade");
-		System.out.println("2: Reject Trade");
-		System.out.println("3: Propose a Counter-offer");
+		Catan.printToClient("What do you want to do?", playerTrade);
+		Catan.printToClient("1: Accept Trade", playerTrade);
+		Catan.printToClient("2: Reject Trade", playerTrade);
+		Catan.printToClient("3: Propose a Counter-offer", playerTrade);
 
 		int choice = scanner.nextInt();
 
 		//checks for correct input
 		if (choice != 1 && choice != 2 && choice != 3) {
-			System.out.println("Invalid input. Please choose again.");
-			return chooseOffer(scanner);
+			Catan.printToClient("Invalid input. Please choose again.", playerTrade);
+			return chooseOffer(scanner, playerTrade);
 		}
 
 		return choice;

@@ -132,7 +132,7 @@ public class Turn {
 //-----Method to allow the player to trade-----//
 
 	public static void trade(Player player, Scanner scanner, Game game1){
-		boolean bank = Trade.tradeBankOrPlayer(scanner);
+		boolean bank = Trade.tradeBankOrPlayer(player, scanner);
 		if(bank) Trade.tradeBank(player, scanner, game1);
 		else Trade.tradePlayer(player, scanner, game1);
 	}
