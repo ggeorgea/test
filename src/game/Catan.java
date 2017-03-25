@@ -12,6 +12,9 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import intergroup.Events.Event;
+import intergroup.Messages.Message;
+
 /**
  * Class that contains the main method for the game
  */
@@ -21,6 +24,31 @@ public class Catan {
 
 	public static void main(String[] args) throws Exception {
 
+		
+		//protobuff demonstration
+		Message m = Message.newBuilder().setEvent(Event.newBuilder().setChatMessage("aaa").build()).build();
+		byte[] m2 = m.toByteArray();
+		Message m3 = Message.parseFrom(m2);
+		System.out.println(m3.getEvent().getChatMessage());
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		Board board1 = new Board();
 
 		/*
