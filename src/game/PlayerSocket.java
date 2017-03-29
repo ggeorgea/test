@@ -36,7 +36,7 @@ public class PlayerSocket {
     }
     
     public void requestMessage() throws IOException{
-    	Catan.requestPBMsg(clientSocket);
+    	Catan.requestGenericPBMsg(clientSocket);
     }
     public String getMessage() throws IOException{
     	Message m1 = Catan.getPBMsg(clientSocket);

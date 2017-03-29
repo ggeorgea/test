@@ -26,28 +26,7 @@ public class Catan {
 
 	public static void main(String[] args) throws Exception {
 
-		
-		//protobuff demonstration
-//		Message m = Message.newBuilder().setEvent(Event.newBuilder().setChatMessage("aaa").build()).build();
-//		byte[] m2 = m.toByteArray();
-//		Message m3 = Message.parseFrom(m2);
-//		System.out.println(m3.getEvent().getChatMessage());
-//		
-//		String astr = "ABC";
-//		byte[] b1 = astr.getBytes();
-//		System.out.println(new String(b1));
-//		
-//		
-		
-
-
-
-		
-		
-		
-		
-		
-		
+	
 		
 		Board board1 = new Board();
 
@@ -106,61 +85,39 @@ public class Catan {
 			Scanner scanner = new Scanner(System.in);
 
 
-//FUNNY NETWORKING CODE
+//NETWORKING CODE
 //------------------------------------------------------
 			System.out.println("activate client mode? (y)");
 			String answer = scanner.nextLine();
 			int defaultPortNumber = 6789;
 
 			if (answer.equals("y")) {
-
+				//CLIENT SIDE
 				System.out.println("please enter the address where you wish to connect");
 				String hostName = scanner.nextLine();
 				int portNumber = defaultPortNumber;
 
-		        try (
-		        		Socket kkSocket = new Socket(hostName, portNumber);
-//		                PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
-		                BufferedReader in = new BufferedReader(
-		                    new InputStreamReader(kkSocket.getInputStream()));
-		        		
-		            ) {
-
+		        try {
+	        		Socket kkSocket = new Socket(hostName, portNumber);	        		
 		        	String fromServer;
 		            String fromUser;
-
-		          //  while ((fromServer = in.readLine()) != null) {
 		            while(true){
-
-			            Message m1 = getPBMsg(kkSocket);
-//			            if (m1.getRequest().isInitialized() ){
-//			            	System.out.print("$");}
-//			            if(m1.getEvent().isInitialized()){
-//					          System.out.print("£");}
-//			            System.out.println(m1.getTypeCase().ordinal()+m1.getTypeCase().name());
-			           
-			            
+			            Message m1 = getPBMsg(kkSocket);		           
 			            if(m1.getTypeCase().name().equals("EVENT")){
-				            	fromServer = m1.getEvent().getChatMessage();
-				            	
-				              	System.out.println(fromServer);
-		
-				                if (fromServer.equals("Goodbye!")) {
-				                    break;
-				                }
-				                
-				              //  if (!(in.ready())) {
-			                
-			            }
+				            //DEALING WITH EVENTS
+			            	//TODO move to a seperate class/method so all kinds of events/requests can be dealt with correctly
+			            	fromServer = m1.getEvent().getChatMessage();				            	
+			              	System.out.println(fromServer);		
+			                if (fromServer.equals("Goodbye!")) {
+			                    break;
+			                }				                				             		                
+			            }			            
 			            else if(m1.getTypeCase().name().equals("REQUEST")){
-			            //	(kkSocket.getInputStream().available())==0)
-				                fromUser = scanner.nextLine();
-				                //if (fromUser != null) {
-				                   System.out.println("Client: " + fromUser);
-				                   //  out.println(fromUser);
-				                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(fromUser).build()).build(),kkSocket);
-					            	System.out.println("!");
-				               // }
+			            	//DEALING WITH REQUESTS
+			            	//TODO move to a seperate class/method so all kinds of events/requests can be dealt with correctly
+			            	fromUser = scanner.nextLine();
+			                System.out.println("Client: " + fromUser);
+		                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(fromUser).build()).build(),kkSocket);
 			                }
 			            else{
 			            	System.out.println(":(");
@@ -178,7 +135,7 @@ public class Catan {
 		        }
 			}
 			else {
-
+				//SERVER SIDE
 				int clientsToFind;
 
 				clientsToFind = Setup.requestClients(scanner);
@@ -306,39 +263,34 @@ public class Catan {
 		return keepPlaying;
 	}
 	
+	
+	
+	//sends a protobuf message through a socket, this could be an event, a request etc...
 	public static void sendPBMsg(Message mssg, Socket sock) throws IOException{
-		//Socket sock = player.getpSocket().getClientSocket();
-	   
-		
-		byte[] toOutBy = mssg.toByteArray();
-		
+		byte[] toOutBy = mssg.toByteArray();		
 	    int toLen = toOutBy.length;
 	    byte[] bytesStr = new byte[4];
 	 	bytesStr = ByteBuffer.allocate(4).putInt(toLen).array();
 	 	int test = ((bytesStr[0] & 0xff) << 24) | ((bytesStr[1] & 0xff) << 16) |
 		          ((bytesStr[2] & 0xff) << 8)  | (bytesStr[3] & 0xff);	 	
-	 	//System.out.println(toLen+", "+test);
 	 	sock.getOutputStream().write(bytesStr);
 	 	sock.getOutputStream().write(toOutBy);
 	}
 	
-	public static void requestPBMsg(Socket sock) throws IOException{
+	//this sends a simple request message for when we have sections using our old text based input
+	public static void requestGenericPBMsg(Socket sock) throws IOException{
 		sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setChatMessage("").build()).build(),sock);
-
 	}
 	
-	public static Message getPBMsg( Socket sock) throws IOException{
-		//Socket sock = player.getpSocket().getClientSocket();
-		
+	//this receives a protobuff method, the opposite of the send PBMsg method
+	public static Message getPBMsg( Socket sock) throws IOException{		
 		byte[] fromLen = new byte[4];
 	 	sock.getInputStream().read(fromLen);
     	int fromLenInt = ((fromLen[0] & 0xff) << 24) | ((fromLen[1] & 0xff) << 16) |
     	          ((fromLen[2] & 0xff) << 8)  | (fromLen[3] & 0xff);   
-    	//System.out.println(fromLenInt);
     	byte[] fromServerby = new byte[fromLenInt];
     	sock.getInputStream().read(fromServerby);
     	Message m1 = Message.parseFrom(fromServerby);  	
- //   	System.out.println(fromLenInt+", "+m1.toString());
     	return m1;
 	}
 
@@ -346,9 +298,7 @@ public class Catan {
 	
 	public static void printToClient(String message, Player player)  {
 		Message m = Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(message).build()).build();
-
 		PlayerSocket socket = player.getpSocket();
-
 		if (socket != null) {
 
 			try {
@@ -363,8 +313,7 @@ public class Catan {
 		}
 	}
 
-	//TODO can be used to replace scanner statements
-	//allows messages to be recieved from the correct player
+
 	public static String getInputFromClient(Player player, Scanner scanner)  {
 
 		PlayerSocket socket = player.getpSocket();
@@ -372,7 +321,7 @@ public class Catan {
 		if (socket != null) {
 			Message m3 = null;
 			try {
-				requestPBMsg(socket.getClientSocket());
+				requestGenericPBMsg(socket.getClientSocket());
 				m3 = getPBMsg(socket.getClientSocket());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -388,37 +337,5 @@ public class Catan {
 	}
 	
 	
-	
-	
-		
-	//TODO can be used to replace System.out.println statements
-	//allows messages to be sent to the correct player
-//	public static void printToClient(String message, Player player) {
-//
-//		PlayerSocket socket = player.getpSocket();
-//
-//		if (socket != null) {
-//
-//			socket.sendMessage(message);
-//		}
-//		else {
-//			System.out.println(message);
-//		}
-//	}
-//
-//	//TODO can be used to replace scanner statements
-//	//allows messages to be recieved from the correct player
-//	public static String getInputFromClient(Player player, Scanner scanner) throws IOException {
-//
-//		PlayerSocket socket = player.getpSocket();
-//
-//		if (socket != null) {
-//
-//			return socket.getMessage();
-//		}
-//		else {
-//
-//			return scanner.next();
-//		}
-//	}
+
 }
