@@ -1,5 +1,8 @@
 package game;
 
+import intergroup.Events.Event;
+import intergroup.Messages.Message;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,18 +23,26 @@ public class PlayerSocket {
     	this.in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
     }
     
-    public void sendMessage(String Message){
-    
-    	String  outputLine = Message;
-    	out.println(outputLine);
+    public void sendMessage(String msg){
+    	try {
+			Catan.sendPBMsg( Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(msg).build()).build(), clientSocket);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+//    	String  outputLine = Message;
+//    	out.println(outputLine);
     }
     
     public String getMessage() throws IOException{
-    
-    	String inputLine;
-    	inputLine = in.readLine();
+    	Message m1 = Catan.getPBMsg(clientSocket);
+    	return m1.getEvent().getChatMessage();
     	
-    	return inputLine;
+//    	String inputLine;
+//    	inputLine = in.readLine();
+//    	
+//   	return inputLine;
     }
       
     public String Communicate(String Message) throws IOException{
@@ -43,4 +54,13 @@ public class PlayerSocket {
     	   
     	return inputLine;
     }
+
+	public Socket getClientSocket() {
+		return clientSocket;
+	}
+
+	public void setClientSocket(Socket clientSocket) {
+		this.clientSocket = clientSocket;
+	}
+    
 }

@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,22 +27,20 @@ public class Catan {
 
 		
 		//protobuff demonstration
-		Message m = Message.newBuilder().setEvent(Event.newBuilder().setChatMessage("aaa").build()).build();
-		byte[] m2 = m.toByteArray();
-		Message m3 = Message.parseFrom(m2);
-		System.out.println(m3.getEvent().getChatMessage());
+//		Message m = Message.newBuilder().setEvent(Event.newBuilder().setChatMessage("aaa").build()).build();
+//		byte[] m2 = m.toByteArray();
+//		Message m3 = Message.parseFrom(m2);
+//		System.out.println(m3.getEvent().getChatMessage());
+//		
+//		String astr = "ABC";
+//		byte[] b1 = astr.getBytes();
+//		System.out.println(new String(b1));
+//		
+//		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+
+
 		
 		
 		
@@ -120,27 +119,34 @@ public class Catan {
 
 		        try (
 		        		Socket kkSocket = new Socket(hostName, portNumber);
-		                PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
-		                BufferedReader in = new BufferedReader(
-		                    new InputStreamReader(kkSocket.getInputStream()));
+//		                PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
+//		                BufferedReader in = new BufferedReader(
+//		                    new InputStreamReader(kkSocket.getInputStream()));
 		            ) {
 
 		        	String fromServer;
 		            String fromUser;
 
-		            while ((fromServer = in.readLine()) != null) {
+		          //  while ((fromServer = in.readLine()) != null) {
+		            while(true){
 
+		            	Message m1 = getPBMsg(kkSocket);
+		            	fromServer = m1.getEvent().getChatMessage();
+		            	
 		              	System.out.println(fromServer);
 
 		                if (fromServer.equals("Goodbye!")) {
 		                    break;
 		                }
-		                if (!(in.ready())) {
+		                
+		              //  if (!(in.ready())) {
+		               if ((kkSocket.getInputStream().available())==0) {
 
 			                fromUser = scanner.nextLine();
 			                if (fromUser != null) {
 			        //           System.out.println("Client: " + fromUser);
-			                     out.println(fromUser);
+			                   //  out.println(fromUser);
+			                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(fromUser).build()).build(),kkSocket);
 			                }
 		                }
 		            }
@@ -283,16 +289,52 @@ public class Catan {
 
 		return keepPlaying;
 	}
+	
+	public static void sendPBMsg(Message mssg, Socket sock) throws IOException{
+		//Socket sock = player.getpSocket().getClientSocket();
+	   
+		
+		byte[] toOutBy = mssg.toByteArray();
+		
+	    int toLen = toOutBy.length;
+	    byte[] bytesStr = new byte[4];
+	 	bytesStr = ByteBuffer.allocate(4).putInt(toLen).array();
+	 	int test = ((bytesStr[0] & 0xff) << 24) | ((bytesStr[1] & 0xff) << 16) |
+		          ((bytesStr[2] & 0xff) << 8)  | (bytesStr[3] & 0xff);	 	
+	 	//System.out.println(toLen+", "+test);
+	 	sock.getOutputStream().write(bytesStr);
+	 	sock.getOutputStream().write(toOutBy);
+	}
+	
+	public static Message getPBMsg( Socket sock) throws IOException{
+		//Socket sock = player.getpSocket().getClientSocket();
 
-	//TODO can be used to replace System.out.println statements
-	//allows messages to be sent to the correct player
-	public static void printToClient(String message, Player player) {
+		byte[] fromLen = new byte[4];
+	 	sock.getInputStream().read(fromLen);
+    	int fromLenInt = ((fromLen[0] & 0xff) << 24) | ((fromLen[1] & 0xff) << 16) |
+    	          ((fromLen[2] & 0xff) << 8)  | (fromLen[3] & 0xff);   
+    	//System.out.println(fromLenInt);
+    	byte[] fromServerby = new byte[fromLenInt];
+    	sock.getInputStream().read(fromServerby);
+    	Message m1 = Message.parseFrom(fromServerby);  	
+    	return m1;
+	}
+
+	
+	
+	public static void printToClient(String message, Player player)  {
+		Message m = Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(message).build()).build();
 
 		PlayerSocket socket = player.getpSocket();
 
 		if (socket != null) {
 
-			socket.sendMessage(message);
+			try {
+				sendPBMsg(m,socket.getClientSocket());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else {
 			System.out.println(message);
@@ -301,17 +343,59 @@ public class Catan {
 
 	//TODO can be used to replace scanner statements
 	//allows messages to be recieved from the correct player
-	public static String getInputFromClient(Player player, Scanner scanner) throws IOException {
+	public static String getInputFromClient(Player player, Scanner scanner)  {
 
 		PlayerSocket socket = player.getpSocket();
 
 		if (socket != null) {
-
-			return socket.getMessage();
+			Message m3 = null;
+			try {
+				m3 = getPBMsg(socket.getClientSocket());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return m3.getEvent().getChatMessage();
+		
 		}
 		else {
 
 			return scanner.next();
 		}
 	}
+	
+	
+	
+	
+		
+	//TODO can be used to replace System.out.println statements
+	//allows messages to be sent to the correct player
+//	public static void printToClient(String message, Player player) {
+//
+//		PlayerSocket socket = player.getpSocket();
+//
+//		if (socket != null) {
+//
+//			socket.sendMessage(message);
+//		}
+//		else {
+//			System.out.println(message);
+//		}
+//	}
+//
+//	//TODO can be used to replace scanner statements
+//	//allows messages to be recieved from the correct player
+//	public static String getInputFromClient(Player player, Scanner scanner) throws IOException {
+//
+//		PlayerSocket socket = player.getpSocket();
+//
+//		if (socket != null) {
+//
+//			return socket.getMessage();
+//		}
+//		else {
+//
+//			return scanner.next();
+//		}
+//	}
 }
