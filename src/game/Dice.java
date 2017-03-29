@@ -1,5 +1,6 @@
 package game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -18,8 +19,8 @@ public class Dice {
 		
 		//prompts player to roll the dice and scans input
 		Catan.printToClient("It is your turn. Press 'R' to roll", player);
-		String enter = scanner.next().toUpperCase();
-			
+		//String enter = scanner.next().toUpperCase();	
+		String enter = Catan.getInputFromClient(player, scanner).toUpperCase();
 		//makes sure the user enters the correct input
 		if (!(enter.equals("R"))) {
 			Catan.printToClient("Invalid input. Please roll again.", player);

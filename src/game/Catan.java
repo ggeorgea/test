@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 import intergroup.Events.Event;
 import intergroup.Messages.Message;
+import intergroup.Requests.Request;
 
 /**
  * Class that contains the main method for the game
@@ -120,8 +121,9 @@ public class Catan {
 		        try (
 		        		Socket kkSocket = new Socket(hostName, portNumber);
 //		                PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
-//		                BufferedReader in = new BufferedReader(
-//		                    new InputStreamReader(kkSocket.getInputStream()));
+		                BufferedReader in = new BufferedReader(
+		                    new InputStreamReader(kkSocket.getInputStream()));
+		        		
 		            ) {
 
 		        	String fromServer;
@@ -130,25 +132,39 @@ public class Catan {
 		          //  while ((fromServer = in.readLine()) != null) {
 		            while(true){
 
-		            	Message m1 = getPBMsg(kkSocket);
-		            	fromServer = m1.getEvent().getChatMessage();
-		            	
-		              	System.out.println(fromServer);
-
-		                if (fromServer.equals("Goodbye!")) {
-		                    break;
-		                }
-		                
-		              //  if (!(in.ready())) {
-		               if ((kkSocket.getInputStream().available())==0) {
-
-			                fromUser = scanner.nextLine();
-			                if (fromUser != null) {
-			        //           System.out.println("Client: " + fromUser);
-			                   //  out.println(fromUser);
-			                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(fromUser).build()).build(),kkSocket);
+			            Message m1 = getPBMsg(kkSocket);
+//			            if (m1.getRequest().isInitialized() ){
+//			            	System.out.print("$");}
+//			            if(m1.getEvent().isInitialized()){
+//					          System.out.print("£");}
+//			            System.out.println(m1.getTypeCase().ordinal()+m1.getTypeCase().name());
+			           
+			            
+			            if(m1.getTypeCase().name().equals("EVENT")){
+				            	fromServer = m1.getEvent().getChatMessage();
+				            	
+				              	System.out.println(fromServer);
+		
+				                if (fromServer.equals("Goodbye!")) {
+				                    break;
+				                }
+				                
+				              //  if (!(in.ready())) {
+			                
+			            }
+			            else if(m1.getTypeCase().name().equals("REQUEST")){
+			            //	(kkSocket.getInputStream().available())==0)
+				                fromUser = scanner.nextLine();
+				                //if (fromUser != null) {
+				                   System.out.println("Client: " + fromUser);
+				                   //  out.println(fromUser);
+				                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(fromUser).build()).build(),kkSocket);
+					            	System.out.println("!");
+				               // }
 			                }
-		                }
+			            else{
+			            	System.out.println(":(");
+			            }
 		            }
 		        }
 		        catch (UnknownHostException e) {
@@ -306,9 +322,14 @@ public class Catan {
 	 	sock.getOutputStream().write(toOutBy);
 	}
 	
+	public static void requestPBMsg(Socket sock) throws IOException{
+		sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setChatMessage("").build()).build(),sock);
+
+	}
+	
 	public static Message getPBMsg( Socket sock) throws IOException{
 		//Socket sock = player.getpSocket().getClientSocket();
-
+		
 		byte[] fromLen = new byte[4];
 	 	sock.getInputStream().read(fromLen);
     	int fromLenInt = ((fromLen[0] & 0xff) << 24) | ((fromLen[1] & 0xff) << 16) |
@@ -317,6 +338,7 @@ public class Catan {
     	byte[] fromServerby = new byte[fromLenInt];
     	sock.getInputStream().read(fromServerby);
     	Message m1 = Message.parseFrom(fromServerby);  	
+ //   	System.out.println(fromLenInt+", "+m1.toString());
     	return m1;
 	}
 
@@ -350,6 +372,7 @@ public class Catan {
 		if (socket != null) {
 			Message m3 = null;
 			try {
+				requestPBMsg(socket.getClientSocket());
 				m3 = getPBMsg(socket.getClientSocket());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
