@@ -17,6 +17,16 @@ public class Building {
 	private static final int NO_SETTLEMENTS = 5;
 	private static final int NO_CITIES = 4;
 	
+	private static final String GRAIN = "grain";
+	private static final String LUMBER = "lumber";
+	private static final String ORE = "ore";
+	private static final String WOOL = "wool";
+	private static final String BRICK = "brick";
+	
+	private static final String INTERSECTION = "intersection";
+	private static final String TOWN = "t";
+	private static final String CITY = "c";
+	
 //-----Constructors-----//
 	
 	public Building() {
@@ -65,19 +75,23 @@ public class Building {
 			
 		//checks that the player can buy and place a settlement at the specified coordinates
 		if (resources.size() != 4) {
+			
 			Catan.printToClient("You do not have enough resources to build a settlement", player);	
 			return;
 		}
 		else if (settlementsLeft <= 0) {
+			
 			Catan.printToClient("You do not have enough settlements left to place", player);
 			return;
 		}		
 		if (!checkIllegalCoordinates(settlement)) {
-				Catan.printToClient("Settlement must be placed more than two roads away. Please choose again", player);
+			
+			Catan.printToClient("Settlement must be placed more than two roads away. Please choose again", player);
 			buildSettlement(player, game1, scanner);
 			return;
 		}		
 		if (!checkSuitableCoordinates(player, game1, settlement)) {
+			
 			Catan.printToClient("Settlement must be placed beside one of your roads. Please choose again", player);
 		 	buildSettlement(player, game1, scanner);
 		 	return;
@@ -102,7 +116,7 @@ public class Building {
 			player.setResourceCards(cards);
 				
 			settlement.setOwner(player);
-			settlement.setBuilding(new Building("t", 1));
+			settlement.setBuilding(new Building(TOWN, 1));
 			player.setNoSettlements(player.getNoSettlements() + 1);
 			player.setVictoryPoints(player.getVictoryPoints() + 1);
 			
@@ -111,12 +125,18 @@ public class Building {
 			
 			Catan.printToClient("You placed a settlement at: (" + settlement.getCoordinate().getX() 
 					+ "," + settlement.getCoordinate().getY() + ")", player);
+			
 			ArrayList<Player> players = game1.getPlayers();
-			for(int i = 0; i < players.size(); i++){
-				if(players.get(i) != player){
+			
+			for (int i = 0; i < players.size(); i++) {
+				if (players.get(i) != player) {
+					
 					PlayerSocket socket = players.get(i).getpSocket();
-					if(socket != null) socket.sendMessage("Player " + player.getName() + " placed settlement at: (" + settlement.getCoordinate().getX() 
-								+ "," + settlement.getCoordinate().getY() + ")");
+					
+					if (socket != null) {
+						socket.sendMessage("Player " + player.getName() + " placed settlement at: (" + settlement.getCoordinate().getX() 
+							+ "," + settlement.getCoordinate().getY() + ")");
+					}
 				}
 			}
 		}
@@ -140,19 +160,19 @@ public class Building {
 			
 				ResourceCard card = cards.get(i);
 				
-				if (brick == null && card.getResource().equals("brick")) {
+				if (brick == null && card.getResource().equals(BRICK)) {
 					
 					brick = card;
 				}
-				if (lumber == null && card.getResource().equals("lumber")) {
+				if (lumber == null && card.getResource().equals(LUMBER)) {
 					
 					lumber = card;
 				}
-				if (wool == null && card.getResource().equals("wool")) {
+				if (wool == null && card.getResource().equals(WOOL)) {
 				
 					wool = card;
 				}
-				if (grain == null && card.getResource().equals("grain")) {
+				if (grain == null && card.getResource().equals(GRAIN)) {
 				
 					grain = card;
 				}
@@ -182,15 +202,15 @@ public class Building {
 		Catan.printToClient("Please select where to place your settlement", player);
 
 		Catan.printToClient("Select X coordinate", player);
-		int x = scanner.nextInt();
+		int x = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		
 		Catan.printToClient("Select Y coordinate", player);
-		int y = scanner.nextInt();
+		int y = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		Coordinate a = new Coordinate(x, y);
 		
 		//checks the coordinates are in the correct range
 		if (!((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8))
-				||(!game1.getBoard().getLocationFromCoordinate(a).getType().equals("Intersection"))) {
+				||(!game1.getBoard().getLocationFromCoordinate(a).getType().equals(INTERSECTION))) {
 			
 			Catan.printToClient("Invalid coordinates. Please choose again", player);
 			buildSettlement(player, game1, scanner);
@@ -210,7 +230,7 @@ public class Building {
 		
 		for (int i = 0; i < illegal.size(); i++) {
 			
-		Intersection inter = illegal.get(i);
+			Intersection inter = illegal.get(i);
 			
 			if (inter.getOwner().getName() != null) {
 				return false;
@@ -231,41 +251,41 @@ public class Building {
 			int g = settlement.getCoordinate().getY();
 			
 			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j,g+1));
-			if (tryRoad!=null && tryRoad.getOwner().equals(player)) {
+			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 				foundSuitable = true;
 				return foundSuitable;
 			}
 			
 			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j,g-1));
-			if (tryRoad!=null && tryRoad.getOwner().equals(player)) {
+			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 				foundSuitable = true;
 				return foundSuitable;
 			}
 			
 			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1,g));
-			if (tryRoad!=null && tryRoad.getOwner().equals(player)) {
+			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 			foundSuitable = true;
 			return foundSuitable;
 			}
 			
 			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1,g));
-			if (tryRoad!=null && tryRoad.getOwner().equals(player)) {
+			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 				foundSuitable = true;
 				return foundSuitable;
 			}
 			
 			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1,g+1));
-			if (tryRoad!=null && tryRoad.getOwner().equals(player)) {
+			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 				foundSuitable = true;
 				return foundSuitable;
 			}
 			
 			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1,g-1));
-			if (tryRoad!=null && tryRoad.getOwner().equals(player)) {
+			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 				foundSuitable = true;
 				return foundSuitable;
 			}
-		}while(false);
+		} while (false);
 		
 		return foundSuitable;		
 	}
@@ -317,19 +337,25 @@ public class Building {
 			
 			player.setResourceCards(cards);
 			
-			city.setBuilding(new Building("c", 2));
+			city.setBuilding(new Building(CITY, 2));
 			player.setNoCities(player.getNoCities() + 1);
 			player.setNoSettlements(player.getNoSettlements() - 1);
 			player.setVictoryPoints(player.getVictoryPoints() + 1);
 		
 			Catan.printToClient("You placed a city at: (" + city.getCoordinate().getX() 
 					+ "," + city.getCoordinate().getY() + ")", player);
+			
 			ArrayList<Player> players = game1.getPlayers();
-			for(int i = 0; i < players.size(); i++){
-				if(players.get(i) != player){
+			
+			for (int i = 0; i < players.size(); i++) {
+				if (players.get(i) != player) {
+					
 					PlayerSocket socket = players.get(i).getpSocket();
-					if(socket != null) socket.sendMessage("Player " + player.getName() + " placed city at: (" + city.getCoordinate().getX() 
+					
+					if (socket != null) {
+						socket.sendMessage("Player " + player.getName() + " placed city at: (" + city.getCoordinate().getX() 
 							+ "," + city.getCoordinate().getY() + ")");
+					}
 				}
 			}
 		}
@@ -349,12 +375,12 @@ public class Building {
 			
 			ResourceCard card = cards.get(i);
 			
-			if (card.getResource().equals("ore")) {
+			if (card.getResource().equals(ORE)) {
 					
 				ore.add(card);
 			}
 			
-			if (card.getResource().equals("grain")) {
+			if (card.getResource().equals(GRAIN)) {
 				
 				grain.add(card);
 			}
@@ -379,15 +405,15 @@ public class Building {
 		Catan.printToClient("Please select the settlement you want to upgrade to a city", player);
 
 		Catan.printToClient("Select X coordinate", player);
-		int x = scanner.nextInt();
+		int x = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		
 		Catan.printToClient("Select Y coordinate", player);
-		int y = scanner.nextInt();
+		int y = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		Coordinate a = new Coordinate(x, y);
 		
 		//checks the coordinates are in the correct range
 		if (!((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8))
- 				||(!game1.getBoard().getLocationFromCoordinate(a).getType().equals("Intersection"))) {
+ 				||(!game1.getBoard().getLocationFromCoordinate(a).getType().equals(INTERSECTION))) {
 			
 			Catan.printToClient("Invalid coordinates. Please choose again", player);
 			buildCity(player, game1, scanner);
