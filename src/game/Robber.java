@@ -5,12 +5,20 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-
 /**
  * Class to store information and methods concerning 
  * the robber
  */
-public class Robber{
+public class Robber {
+	
+	private static final String GRAIN = "grain";
+	private static final String WOOL = "wool";
+	private static final String BRICK = "brick";
+	private static final String LUMBER = "lumber";
+	private static final String ORE = "ore";
+	
+	private static final String HEX = "hex";
+	private static final String ROBBER = "R";
 
 //-----Methods to play the robber for the turn-----//
 
@@ -54,7 +62,7 @@ public class Robber{
 
 			//removes the card they choose
 			try {
-				int choice = scanner.nextInt();
+				int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 
 				if (choice < 0 || choice >= cards.size()) {
 					Catan.printToClient("Invalid choice. Please choose again", player);
@@ -64,23 +72,23 @@ public class Robber{
 				ResourceCard card = cards.get(choice);
 
 				switch (card.getResource()) {
-				case "ore" :
+				case ORE :
 					ArrayList<ResourceCard> ore = game1.getOre();
 					ore.add(card);
 					break;
-				case "lumber" :
+				case LUMBER :
 					ArrayList<ResourceCard> lumber = game1.getLumber();
 					lumber.add(card);
 					break;
-				case "brick" :
+				case BRICK :
 					ArrayList<ResourceCard> brick = game1.getBrick();
 					brick.add(card);
 					break;
-				case "wool" :
+				case WOOL :
 					ArrayList<ResourceCard> wool = game1.getWool();
 					wool.add(card);
 					break;
-				case "grain" :
+				case GRAIN :
 					ArrayList<ResourceCard> grain = game1.getGrain();
 					grain.add(card);
 					break;
@@ -89,6 +97,7 @@ public class Robber{
 				cards.remove(choice);
 			}
 			catch(InputMismatchException e) {
+				
 				Catan.printToClient("Invalid choice. Please choose again", player);
 				scanner.nextLine();
 				cardRemoval(player,cards,game1,scanner);
@@ -103,15 +112,15 @@ public class Robber{
 			Catan.printToClient("Please select where to place the robber", player);
 
 			Catan.printToClient("Select X coordinate", player);
-			int x = scanner.nextInt();
+			int x = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 
 			Catan.printToClient("Select Y coordinate", player);
-			int y = scanner.nextInt();
+			int y = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 			Coordinate a = new Coordinate(x, y);
 
 			//checks the coordinates are in the correct range
 			if((!((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8)))
-					|| (!game1.getBoard().getLocationFromCoordinate(a).getType().equals("hex"))) {
+					|| (!game1.getBoard().getLocationFromCoordinate(a).getType().equals(HEX))) {
 
 				Catan.printToClient("Invalid coordinates. Please choose again", player);
 				moveRobber(player, game1, scanner);
@@ -119,12 +128,13 @@ public class Robber{
 			}
 
 			Hex hex1 = (Hex) game1.getBoard().getLocationFromCoordinate(a).getContains();
-			hex1.setisRobberHere("R");
+			hex1.setisRobberHere(ROBBER);
 			game1.getBoard().setRobber(a);
 				
 			robberStealCard(player,  game1, scanner);
 		}
-		catch(InputMismatchException e){
+		catch(InputMismatchException e) {
+			
 			scanner.nextLine();
 			moveRobber(player,game1,scanner);
 		}
@@ -140,7 +150,7 @@ public class Robber{
 			target = null;
 			Catan.printToClient("Please select player to steal from:", player);
 
-			String  name = scanner.nextLine();
+			String  name = Catan.getInputFromClient(player, scanner).toUpperCase();
 			ArrayList<Player> allPlayers = game1.getPlayers();
 				
 			//check that the player chose is valid
@@ -151,7 +161,7 @@ public class Robber{
 				}
 			}
 			if (target == null) { 
-				Catan.printToClient("Invalid player choice. Please chooe again.", player);
+				Catan.printToClient("Invalid player choice. Please choose again.", player);
 				continue;
 			} 
 			else {
@@ -168,20 +178,20 @@ public class Robber{
 			//if the hex value is the same as the dice roll and the robber
 			//is not there, resources can be given out
 				
-			if ((hex.getisRobberHere().equals("R"))) {
+			if ((hex.getisRobberHere().equals(ROBBER))) {
 				for (Coordinate c : getNearbyCoordinates(hex.getCoordinate())) { 
 					
 					Player ownerOfLocation = ((Intersection) game1.getBoard().getLocationFromCoordinate(c).getContains()).getOwner();	
 					
 					if (ownerOfLocation == target) { 
-							allowedToSteal = true; 
+						allowedToSteal = true; 
 					}
 				}
 					
 			}
 		}
 		if (allowedToSteal) { 
-				transferRandomCard(target, player);
+			transferRandomCard(target, player);
 		}
 	}
 	
