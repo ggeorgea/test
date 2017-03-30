@@ -56,7 +56,7 @@ public class Turn {
 
 				choice = scanner.nextInt();
 				
-				switch(choice) {
+				switch (choice) {
 				case 1 :
 					build(player, game1, scanner);
 					break;
@@ -108,7 +108,7 @@ public class Turn {
 		Catan.printToClient("3. City", player);
 		Catan.printToClient("4. Development Card", player);
 
-		int choice = scanner.nextInt();
+		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 
 		switch(choice) {
 		case 1 :
@@ -133,7 +133,11 @@ public class Turn {
 
 	public static void trade(Player player, Scanner scanner, Game game1){
 		boolean bank = Trade.tradeBankOrPlayer(player, scanner);
-		if(bank) Trade.tradeBank(player, scanner, game1);
-		else Trade.tradePlayer(player, scanner, game1);
+		if (bank) {
+			Trade.tradeBank(player, scanner, game1);
+		}
+		else {
+			Trade.tradePlayer(player, scanner, game1);
+		}
 	}
 }
