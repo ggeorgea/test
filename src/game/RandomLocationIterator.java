@@ -14,6 +14,12 @@ public class RandomLocationIterator implements Iterator {
 	int YLen = 0;
 	ArrayList<ArrayList<Location>> shuffledAL= new ArrayList<ArrayList<Location>>();
 
+//-----Constructors-----//	
+	
+	public RandomLocationIterator() {
+		
+	}
+	
 	public RandomLocationIterator(Board board1) {
 		
 		ArrayList<ArrayList<Location>> shuffledAL= new ArrayList<ArrayList<Location>>();
@@ -37,6 +43,8 @@ public class RandomLocationIterator implements Iterator {
 		this.XLen = shuffledAL.size();
 		this.YLen = shuffledAL.get(0).size();
 	}
+	
+//-----Iterator methods-----//
 	
 	public Location next() {
 		

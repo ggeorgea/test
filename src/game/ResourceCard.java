@@ -1,4 +1,5 @@
 package game;
+
 /**
  * Class to store information about resource cards
  */

@@ -10,6 +10,16 @@ public class ResourceAllocation {
 	private static final int SETTLEMENT_RESOURCES = 1;
 	private static final int CITY_RESOURCES = 2;
 	
+	public static final String ROBBER = "R";
+	public static final String TOWN = "t";
+	public static final String CITY = "c";
+	
+	public static final String PASTURE = "P";
+	public static final String FOREST = "F";
+	public static final String MOUNTAIN = "M";
+	public static final String GRASS = "G";
+	public static final String HILL = "H";
+	
 	public static final String WOOL = "wool";
 	public static final String LUMBER = "lumber";
 	public static final String ORE = "ore";
@@ -35,7 +45,7 @@ public class ResourceAllocation {
 			//if the hex value is the same as the dice roll and the robber
 			//is not there, resources can be given out
 			if (hex.getNumber() == hexValue) {
-				if (!(hex.getisRobberHere().equals("R"))) {
+				if (!(hex.getisRobberHere().equals(ROBBER))) {
 						
 					//checks each intersection around the hex for 
 					//settlements and cities and gives the owners 
@@ -93,29 +103,43 @@ public class ResourceAllocation {
 		
 		//if any player owns an intersection around the hex they get resources
 		//1 resource for a settlement and 1 for a settlement
-		if (type.equals("t")) {
+		if (type.equals(TOWN)) {
 			
 			String bankHasResources = getResources(owner, terrain, game1, SETTLEMENT_RESOURCES);
 			
 			if (bankHasResources != null) {
+				
 				ArrayList<Player> players = game1.getPlayers();
-				for(int i = 0; i < players.size(); i++){
+				
+				for (int i = 0; i < players.size(); i++) {
+					
 					PlayerSocket socket = players.get(i).getpSocket();
-					if(socket != null) socket.sendMessage("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
+					
+					if (socket != null) {
+						socket.sendMessage("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
+					}
 				}
+				
 				return bankHasResources;
 			}
 		}
-		else if (type.equals("c")) {
+		else if (type.equals(CITY)) {
 			
 			String bankHasResources = getResources(owner, terrain, game1, CITY_RESOURCES);
 			
 			if (bankHasResources != null) {
+				
 				ArrayList<Player> players = game1.getPlayers();
-				for(int i = 0; i < players.size(); i++){
+				
+				for (int i = 0; i < players.size(); i++) {
+					
 					PlayerSocket socket = players.get(i).getpSocket();
-					if(socket != null) socket.sendMessage("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
+					
+					if (socket != null) {
+						socket.sendMessage("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
+					}
 				}
+				
 				return bankHasResources;
 			}
 		}
@@ -134,7 +158,7 @@ public class ResourceAllocation {
 		
 			ResourceCard card = null;
 			switch(terrain) {
-			case "P" : 
+			case PASTURE : 
 				ArrayList<ResourceCard> wool = game1.getWool();
 				
 				if (wool.size() <= 0) {
@@ -145,7 +169,7 @@ public class ResourceAllocation {
 				wool.remove(0);
 				game1.setWool(wool);
 				break;
-			case "F" :
+			case FOREST :
 				ArrayList<ResourceCard> lumber = game1.getLumber();
 				
 				if (lumber.size() <= 0) {
@@ -156,7 +180,7 @@ public class ResourceAllocation {
 				lumber.remove(0);
 				game1.setLumber(lumber);
 				break;
-			case "M" :
+			case MOUNTAIN :
 				ArrayList<ResourceCard> ore = game1.getOre();
 				
 				if (ore.size() <= 0) {
@@ -167,7 +191,7 @@ public class ResourceAllocation {
 				ore.remove(0);
 				game1.setOre(ore);
 				break;
-			case "H" :
+			case HILL :
 				ArrayList<ResourceCard> brick = game1.getBrick();
 				
 				if (brick.size() <= 0) {
@@ -178,7 +202,7 @@ public class ResourceAllocation {
 				brick.remove(0);
 				game1.setBrick(brick);
 				break;
-			case "G" :
+			case GRASS :
 				ArrayList<ResourceCard> grain = game1.getGrain();
 				
 				if (grain.size() <= 0) {
@@ -219,7 +243,7 @@ public class ResourceAllocation {
 					
 					if (card.equals(illegalResource)) {
 						
-					newResourceCards.remove(j);
+						newResourceCards.remove(j);
 					}
 				}
 			}	
@@ -239,12 +263,17 @@ public class ResourceAllocation {
 			//if the player gets resources, they are added to their hand and
 			//the allocation printed
 			if (newResourceCards.size() > 0) {
-				if(socket != null) socket.sendMessage("You get:");
+				if (socket != null) {
+					socket.sendMessage("You get:");
+				}
 			
 				for (int j = 0; j < newResourceCards.size(); j++) {
 							
 					cards.add(newResourceCards.get(j));
-					if(socket != null) socket.sendMessage("1x " + newResourceCards.get(j).getResource());
+					
+					if (socket != null) {
+						socket.sendMessage("1x " + newResourceCards.get(j).getResource());
+					}
 				}
 					
 				player.setResourceCards(cards);

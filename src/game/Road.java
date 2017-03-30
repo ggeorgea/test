@@ -14,6 +14,9 @@ public class Road {
 	
 	private static final int NO_ROADS = 15;
 	
+	private static final String BRICK = "brick";
+	private static final String LUMBER = "lumber";
+	
 //-----Constructors-----//
 	
 	public Road() {
@@ -115,14 +118,20 @@ public class Road {
 			
 			Catan.printToClient("You placed road at: (" + road.getCoordinateA().getX() 
 					+ "," + road.getCoordinateA().getY() + "),(" + road.getCoordinateB().getX() + "," + road.getCoordinateB().getY() + ")", player);
+			
 			ArrayList<Player> players = game1.getPlayers();
-			for(int i = 0; i < players.size(); i++){
-				if(players.get(i) != player){
+			
+			for (int i = 0; i < players.size(); i++) {
+				if (players.get(i) != player) {
+					
 					PlayerSocket socket = players.get(i).getpSocket();
-					if(socket != null) socket.sendMessage("Player " + player.getName() + " placed road at: (" + road.getCoordinateA().getX() 
-					+ "," + road.getCoordinateA().getY() + "),(" + road.getCoordinateB().getX() + "," + road.getCoordinateB().getY() + ")");
+					if (socket != null) {
+						socket.sendMessage("Player " + player.getName() + " placed road at: (" + road.getCoordinateA().getX() 
+								+ "," + road.getCoordinateA().getY() + "),(" + road.getCoordinateB().getX() + "," + road.getCoordinateB().getY() + ")");
+					}	
 				}
 			}
+			
 			//checks if the player has the longest road
 			checkLongestRoad(player, game1, road);
 		}
@@ -144,11 +153,11 @@ public class Road {
 			
 				ResourceCard card = cards.get(i);
 			
-				if (brick == null && card.getResource().equals("brick")) {
+				if (brick == null && card.getResource().equals(BRICK)) {
 				
 					brick = card;
 				}
-				if (lumber == null && card.getResource().equals("lumber")) {
+				if (lumber == null && card.getResource().equals(LUMBER)) {
 					
 					lumber = card;
 				}
@@ -175,17 +184,19 @@ public class Road {
 		
 		Catan.printToClient("Please select where to place your road.", player);
 		
-		Catan.printToClient("Coordinate 1:Select X coordinate:", player);
+		Catan.printToClient("Coordinate 1: ", player);
 		Catan.printToClient("Select X coordinate:", player);
-		int x1 = scanner.nextInt();
+		int x1 = Integer.parseInt(Catan.getInputFromClient(player, scanner));
+		
 		Catan.printToClient("Select Y coordinate:", player);
-		int y1 = scanner.nextInt();
+		int y1 = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		
 		Catan.printToClient("Coordinate 2: ", player);
 		Catan.printToClient("Select X coordinate", player);
-		int x2 = scanner.nextInt();
+		int x2 = Integer.parseInt(Catan.getInputFromClient(player, scanner));
+		
 		Catan.printToClient("Select Y coordinate", player);
-		int y2 = scanner.nextInt();
+		int y2 = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		
 		//checks the coordinates are in the correct range
 		if (!((2*y1 <= x1+8) && (2*y1 >= x1-8) && (y1 <= 2*x1+8) && (y1 >= 2*x1-8) && (y1 >= -x1-8) && (y1 <= -x1+8))) {
@@ -228,7 +239,7 @@ public class Road {
 			 road2 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1+1,y1+1));
 			 road3 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2+1,y2));
 			 road4 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2-1,y2-1));
-			}
+		}
 		//negslope
 		else if (road.getCoordinateA().getY() == road.getCoordinateB().getY()) {
 			 road1 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1,y1+1));
@@ -286,11 +297,16 @@ public class Road {
 				
 				player.setHasLongestRoad(true); 
 				player.setVictoryPoints(player.getVictoryPoints()+2); 
+				
 				Catan.printToClient("You now have the longest road!", player);
-				for(int i = 0; i < players.size(); i++){
-					if(players.get(i) != player){
+				
+				for (int i = 0; i < players.size(); i++) {
+					if (players.get(i) != player) {
+						
 						PlayerSocket socket = players.get(i).getpSocket();
-						if(socket != null) socket.sendMessage("Player " + player.getName() + " now has the longest road!");
+						if (socket != null) {
+							socket.sendMessage("Player " + player.getName() + " now has the longest road!");
+						}
 					}
 				}
 			}
