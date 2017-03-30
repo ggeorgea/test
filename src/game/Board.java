@@ -199,6 +199,19 @@ public class Board {
 		return boardLocations[coA.getX()+5][coA.getY()+5];
 	}
 	
+	public static boolean CoordInRange(Coordinate coA){
+		
+		int x = coA.getX() ;
+		int y = coA.getY() ;
+		
+		if(((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8))) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	//puts a location into the array at the given coordinates
 	public void setLocationFromCoordinate(Coordinate coA, Location location1) {
 		

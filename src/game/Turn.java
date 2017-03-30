@@ -54,8 +54,8 @@ public class Turn {
 				Catan.printToClient("7: Count your victory pionts", player);
 				Catan.printToClient("8: End turn?", player);
 
-				choice = scanner.nextInt();
-				
+				choice  = Integer.parseInt(Catan.getInputFromClient(player, scanner));
+
 				switch (choice) {
 				case 1 :
 					build(player, game1, scanner);

@@ -561,22 +561,28 @@ public class Setup {
 		Coordinate nearbyHex;
 
 		nearbyHex = new Coordinate(x, y-1);
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		if(Board.CoordInRange(nearbyHex)){
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
 
 		nearbyHex = new Coordinate(x, y+1);
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		if(Board.CoordInRange(nearbyHex)){
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
 
 		nearbyHex = new Coordinate(x-1, y);
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		if(Board.CoordInRange(nearbyHex)){
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
 
 		nearbyHex = new Coordinate(x+1, y);
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		if(Board.CoordInRange(nearbyHex)){
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);};
 
 		nearbyHex = new Coordinate(x-1, y-1);
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		if(Board.CoordInRange(nearbyHex)){
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
 
 		nearbyHex = new Coordinate(x+1, y+1);
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		if(Board.CoordInRange(nearbyHex)){
+		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
 
 		//prints what each player gets
 		Catan.printToClient("You get:", player);

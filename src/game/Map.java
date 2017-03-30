@@ -33,11 +33,17 @@ public class Map {
 		boolean hasPrintedToConsole = false;
 		
 		for (int i = 0; i < players.size(); i++) {
-			
+			 rn = 0;
+			 tn = 0;
+			 nn = 0;
+			 ton = 0;
+			 btn = 0;		
+			 roadOwn = 0;
+			 getPort = 0;
 			PlayerSocket socket = players.get(i).getpSocket();
 		
 			if (socket != null) {
-			
+
 				socket.sendMessage(
 
 					"                                         "+board1.getPorts().get(getPort++).getResource()+"                           \n"                                                                                    
