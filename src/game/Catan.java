@@ -242,10 +242,10 @@ public class Catan {
 	//asks the players if they want to play again
 	public static boolean playAgain(Scanner scanner, Game game1) {
 
-		Catan.printToClient("Do you want to play again? Y/N", game1.getPlayers().get(0));
+		printToClient("Do you want to play again? Y/N", game1.getPlayers().get(0));
 
 		boolean keepPlaying = false;
-		String choice = scanner.next().toUpperCase();
+		String choice = getInputFromClient(game1.getPlayers().get(0), scanner).toUpperCase();
 		char c = choice.toCharArray()[0];
 
 		switch (c) {
@@ -263,47 +263,52 @@ public class Catan {
 		return keepPlaying;
 	}
 	
-	
-	
 	//sends a protobuf message through a socket, this could be an event, a request etc...
-	public static void sendPBMsg(Message mssg, Socket sock) throws IOException{
+	public static void sendPBMsg(Message mssg, Socket sock) throws IOException {
+		
 		byte[] toOutBy = mssg.toByteArray();		
 	    int toLen = toOutBy.length;
 	    byte[] bytesStr = new byte[4];
 	 	bytesStr = ByteBuffer.allocate(4).putInt(toLen).array();
 	 	int test = ((bytesStr[0] & 0xff) << 24) | ((bytesStr[1] & 0xff) << 16) |
-		          ((bytesStr[2] & 0xff) << 8)  | (bytesStr[3] & 0xff);	 	
+		          ((bytesStr[2] & 0xff) << 8)  | (bytesStr[3] & 0xff);	
+	 	
 	 	sock.getOutputStream().write(bytesStr);
 	 	sock.getOutputStream().write(toOutBy);
 	}
 	
 	//this sends a simple request message for when we have sections using our old text based input
-	public static void requestGenericPBMsg(Socket sock) throws IOException{
+	public static void requestGenericPBMsg(Socket sock) throws IOException {
+		
 		sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setChatMessage("").build()).build(),sock);
 	}
 	
 	//this receives a protobuff method, the opposite of the send PBMsg method
-	public static Message getPBMsg( Socket sock) throws IOException{		
+	public static Message getPBMsg( Socket sock) throws IOException {
+		
 		byte[] fromLen = new byte[4];
 	 	sock.getInputStream().read(fromLen);
-    	int fromLenInt = ((fromLen[0] & 0xff) << 24) | ((fromLen[1] & 0xff) << 16) |
-    	          ((fromLen[2] & 0xff) << 8)  | (fromLen[3] & 0xff);   
+	 	int fromLenInt = ((fromLen[0] & 0xff) << 24) | ((fromLen[1] & 0xff) << 16) |
+    	          ((fromLen[2] & 0xff) << 8)  | (fromLen[3] & 0xff); 
     	byte[] fromServerby = new byte[fromLenInt];
+    	
     	sock.getInputStream().read(fromServerby);
-    	Message m1 = Message.parseFrom(fromServerby);  	
+    	Message m1 = Message.parseFrom(fromServerby);
+    	
     	return m1;
 	}
 
-	
-	
+	//prints a message to the specified player
 	public static void printToClient(String message, Player player)  {
+		
 		Message m = Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(message).build()).build();
 		PlayerSocket socket = player.getpSocket();
+		
 		if (socket != null) {
-
 			try {
 				sendPBMsg(m,socket.getClientSocket());
-			} catch (IOException e) {
+			} 
+			catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -313,29 +318,29 @@ public class Catan {
 		}
 	}
 
-
+	//gets input from a specified player in the form of a string
 	public static String getInputFromClient(Player player, Scanner scanner)  {
 
 		PlayerSocket socket = player.getpSocket();
 
 		if (socket != null) {
+			
 			Message m3 = null;
+			
 			try {
 				requestGenericPBMsg(socket.getClientSocket());
 				m3 = getPBMsg(socket.getClientSocket());
-			} catch (IOException e) {
+			} 
+			catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return m3.getEvent().getChatMessage();
-		
+			
+			return m3.getEvent().getChatMessage();		
 		}
 		else {
 
 			return scanner.next();
 		}
 	}
-	
-	
-
 }
