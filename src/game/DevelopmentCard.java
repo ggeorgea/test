@@ -12,6 +12,18 @@ public class DevelopmentCard {
 	private String type;
 	private boolean hidden;
 	
+	private static final String KNIGHT = "knight";
+	private static final String ROAD_BUILDING = "road_building";
+	private static final String YEAR_OF_PLENTY = "year of plenty";
+	private static final String MONOPOLY = "monopoly";
+	private static final String VICTORY_POINT = "victory point";
+	
+	private static final String ORE = "ore";
+	private static final String WOOL = "wool";
+	private static final String GRAIN = "grain";
+	private static final String LUMBER = "lumber";
+	private static final String BRICK = "brick";
+	
 //-----Constructors-----//
 	
 	public DevelopmentCard() {
@@ -58,7 +70,6 @@ public class DevelopmentCard {
 		
 		//checks if a development card can be bought
 		if (resources.size() != 3) {
-			
 			Catan.printToClient("You do not have enough resources to buy a development card", player);
 			return;
 		}
@@ -86,11 +97,16 @@ public class DevelopmentCard {
 			playerDevCards.add(developmentCard);
 			
 			Catan.printToClient("You bought a development card", player);
+			
 			ArrayList<Player> players = game1.getPlayers();
-			for(int i = 0; i < players.size(); i++){
-				if(players.get(i) != player){
+			
+			for (int i = 0; i < players.size(); i++) {
+				if (players.get(i) != player) {
+					
 					PlayerSocket socket = player.getpSocket();
-					if(socket != null) socket.sendMessage("Player " + player.getName() + " bought a development card");
+					if (socket != null) {
+						socket.sendMessage("Player " + player.getName() + " bought a development card");
+					}
 				}
 			}
 			
@@ -98,7 +114,7 @@ public class DevelopmentCard {
 			
 			//if the development card is a victory point card, it is 
 			//played immediately
-			if (type.equals("victory point")) {
+			if (type.equals(VICTORY_POINT)) {
 				
 				playVictoryPointCard(player);
 				playerDevCards.remove(developmentCard);
@@ -125,15 +141,15 @@ public class DevelopmentCard {
 				
 				ResourceCard card = cards.get(i);
 			
-				if (ore == null && card.getResource().equals("ore")) {
+				if (ore == null && card.getResource().equals(ORE)) {
 				
 					ore = card;
 				}
-				if (wool == null && card.getResource().equals("wool")) {
+				if (wool == null && card.getResource().equals(WOOL)) {
 				
 					wool = card;
 				}
-				if (grain == null && card.getResource().equals("grain")) {
+				if (grain == null && card.getResource().equals(GRAIN)) {
 				
 					grain = card;
 				}
@@ -185,34 +201,35 @@ public class DevelopmentCard {
  		}
 	 	
  		Catan.printToClient("What development card do you want to play?", player);
+ 		
  		for (int i = 0; i < playCards.size(); i++) {
  			Catan.printToClient((i+1) + ": " + playCards.get(i).getType(), player);
  		}
  		
- 		int choice = scanner.nextInt();
+ 		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
  		DevelopmentCard play = playCards.get(choice);		
  		String type = play.getType();
  		
  		//selects the correct method depending on the type of card being played
- 		if (type.equals("knight")) {
+ 		if (type.equals(KNIGHT)) {
  			
 			playKnightCard(player, game1, scanner);
  		}
- 		if (type.equals("road building")) {
+ 		if (type.equals(ROAD_BUILDING)) {
  			
 			playRoadBuildingCard(player, game1, scanner);
  		}
- 		if (type.equals("year of plenty")) {
+ 		if (type.equals(YEAR_OF_PLENTY)) {
  			
  			cardPlayed = playYearOfPlentyCard(player, game1, scanner);
  		}
- 		if (type.equals("monopoly")) {
+ 		if (type.equals(MONOPOLY)) {
  			
  			playMonopolyCard(player, game1, scanner);
  		}
  		//should not ever be needed since victory point cards are played immediately
  		//here in case
- 		if (type.equals("victory point")) {
+ 		if (type.equals(VICTORY_POINT)) {
  			
 			playVictoryPointCard(player);
  		}
@@ -272,11 +289,16 @@ public class DevelopmentCard {
 				
 				player.setHasLargestArmy(true); 
 				player.setVictoryPoints(player.getVictoryPoints()+2); 
+				
 				Catan.printToClient("You now have the largest army!", player);
-				for(int i = 0; i < players.size(); i++){
-					if(players.get(i) != player){
+				
+				for (int i = 0; i < players.size(); i++) {
+					if (players.get(i) != player) {
+						
 						PlayerSocket socket = players.get(i).getpSocket();
-						if(socket != null) socket.sendMessage("Player " + player.getName() + " now has the largest army!");
+						if (socket != null) {
+							socket.sendMessage("Player " + player.getName() + " now has the largest army!");
+						}
 					}
 				}
 			}
@@ -337,7 +359,7 @@ public class DevelopmentCard {
 		Catan.printToClient("4. Ore", player);
 		Catan.printToClient("5. Grain", player);
 		
-		int choice = scanner.nextInt();
+		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		
 		//lets the player take a card from the bank
 		switch (choice) {
@@ -437,24 +459,24 @@ public class DevelopmentCard {
 		Catan.printToClient("4. Ore", player);
 		Catan.printToClient("5. Grain", player);
 		
-		int choice = scanner.nextInt();
+		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		String resource = "";
 		
 		switch (choice) {
 		case 1 :
-			resource = "brick";
+			resource = BRICK;
 			break;
 		case 2 : 
-			resource = "lumber";
+			resource = LUMBER;
 			break;
 		case 3 :
-			resource = "wool";
+			resource = WOOL;
 			break;
 		case 4 :
-			resource = "ore";
+			resource = ORE;
 			break;
 		case 5 :
-			resource = "grain";
+			resource = GRAIN;
 			break;
 		default :
 			Catan.printToClient("Invalid choice. Please choose again", player);
