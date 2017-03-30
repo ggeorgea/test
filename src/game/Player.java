@@ -257,7 +257,7 @@ public class Player {
 		Catan.printToClient("1: Resource Cards", player);
 		Catan.printToClient("2: Development Cards", player);
 		
-		int choice = scanner.nextInt();
+		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		
 		switch (choice) {
 		case 1 :
@@ -277,8 +277,11 @@ public class Player {
 
 		Iterator<ResourceCard> it = player.getResourceCards().iterator();
 		String message = "(";
+		
 		while (it.hasNext()) {
+			
 			message = message + it.next().getResource();
+			
 			if (it.hasNext()) {
 				message = message + ", ";
 			}
@@ -292,8 +295,11 @@ public class Player {
 		
 		Iterator<DevelopmentCard> it = player.getDevelopmentCards().iterator();
 		String message = "(";
+		
 		while (it.hasNext()) {
+			
 			message = message + it.next().getType();
+			
 			if (it.hasNext()) {
 				message = message + ", ";
 			}
@@ -314,16 +320,21 @@ public class Player {
 	}
 
 	public void updatePlayerPorts(Player player, Game game1) {
+		
 		Board board1 = game1.getBoard();
 		ArrayList<Port> standard = new ArrayList<Port>();
 		ArrayList<Port> special = new ArrayList<Port>();
 		
-		for(int i = 0; i < board1.getPorts().size(); i++){
-			if(board1.getPorts().get(i).getOwner() == player){
-				if(board1.getPorts().get(i).getResource().equals("?")){
+		for (int i = 0; i < board1.getPorts().size(); i++) {
+			if (board1.getPorts().get(i).getOwner() == player) {
+				if (board1.getPorts().get(i).getResource().equals("?")) {
+					
 					standard.add(board1.getPorts().get(i));
 				}
-				else special.add(board1.getPorts().get(i));
+				else {
+					
+					special.add(board1.getPorts().get(i));
+				}
 			}
 		}
 		

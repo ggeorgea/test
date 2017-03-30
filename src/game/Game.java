@@ -150,12 +150,18 @@ public class Game {
 	
 	//prints a statement ending the game
 	public static void endGame(Player player, Game game1) {
+		
 		Catan.printToClient("You won!", player);
+		
 		ArrayList<Player> players = game1.getPlayers();
-		for(int i = 0; i < players.size(); i++){
-			if(players.get(i) != player){
+		
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i) != player) {
+				
 				PlayerSocket socket = players.get(i).getpSocket();
-				if(socket != null) socket.sendMessage("Player " + player.getName() + " won!");
+				if (socket != null) {
+					socket.sendMessage("Player " + player.getName() + " won!");
+				}
 			}
 		}
 	}

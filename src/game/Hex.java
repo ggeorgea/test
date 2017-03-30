@@ -98,13 +98,13 @@ public class Hex {
 		return numString;
 	}
 	
-	public String getisRobberHere(){
+	public String getisRobberHere() {
 		
 		return isRobberHere;
 	}
 	
-	public void setisRobberHere(String isRobberHere){
+	public void setisRobberHere(String isRobberHere) {
 	
-		this.isRobberHere=isRobberHere;
+		this.isRobberHere = isRobberHere;
 	}
 }
