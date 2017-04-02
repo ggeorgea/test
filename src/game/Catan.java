@@ -96,29 +96,40 @@ public class Catan {
 				System.out.println("please enter the address where you wish to connect");
 				String hostName = scanner.nextLine();
 				int portNumber = defaultPortNumber;
-
+				
 		        try {
 	        		Socket kkSocket = new Socket(hostName, portNumber);	        		
 		        	String fromServer;
 		            String fromUser;
 		            while(true){
-			            Message m1 = getPBMsg(kkSocket);		           
+			            Message m1 = getPBMsg(kkSocket);		
+			         //  System.out.println(Event.getDescriptor().getFullName()+", "+m1.hasField( m1.getDescriptorForType().findFieldByName("ChatMessage")));
 			            if(m1.getTypeCase().name().equals("EVENT")){
-				            //DEALING WITH EVENTS
-			            	//TODO move to a seperate class/method so all kinds of events/requests can be dealt with correctly
-			            	fromServer = m1.getEvent().getChatMessage();				            	
-			              	System.out.println(fromServer);		
-			                if (fromServer.equals("Goodbye!")) {
-			                    break;
-			                }				                				             		                
+				          if(m1.getEvent().getTypeCase().name().equals("CHATMESSAGE")){
+				            	//DEALING WITH EVENTS
+				            	//TODO move to a seperate class/method so all kinds of events/requests can be dealt with correctly
+				            	fromServer = m1.getEvent().getChatMessage();				            	
+				              	System.out.println(fromServer);		
+				                if (fromServer.equals("Goodbye!")) {
+				                    break;
+				                }		
+			            	}
+				          else{
+				        	  Client.resolveEvent(m1.getEvent());
+				          }
 			            }			            
 			            else if(m1.getTypeCase().name().equals("REQUEST")){
 			            	//DEALING WITH REQUESTS
 			            	//TODO move to a seperate class/method so all kinds of events/requests can be dealt with correctly
-			            	fromUser = scanner.nextLine();
-			                System.out.println("Client: " + fromUser);
-		                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(fromUser).build()).build(),kkSocket);
-			                }
+			            	if(m1.getRequest().getBodyCase().name().equals("CHATMESSAGE")){
+				            	fromUser = scanner.nextLine();
+				                System.out.println("Client: " + fromUser);
+			                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(fromUser).build()).build(),kkSocket);
+			            	}
+			            	else{
+			            		Client.resolveRequest(m1.getRequest());
+			            	}
+			            	}
 			            else{
 			            	System.out.println(":(");
 			            }
