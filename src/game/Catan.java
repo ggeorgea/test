@@ -115,7 +115,7 @@ public class Catan {
 				                }		
 			            	}
 				          else{
-				        	  Client.resolveEvent(m1.getEvent());
+				        	  Client.resolveEvent(m1.getEvent(),kkSocket);
 				          }
 			            }			            
 			            else if(m1.getTypeCase().name().equals("REQUEST")){
@@ -127,7 +127,7 @@ public class Catan {
 			                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(fromUser).build()).build(),kkSocket);
 			            	}
 			            	else{
-			            		Client.resolveRequest(m1.getRequest());
+			            		Client.resolveRequest(m1.getRequest(),kkSocket);
 			            	}
 			            	}
 			            else{
