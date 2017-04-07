@@ -116,7 +116,7 @@ public class Setup {
 		
 		if (socket != null) {
 			
-			socket.sendMessage("Player " + (n+1) + ": Select a character to be your player name.");
+			socket.sendMessage("Welcome player " + (n+1) + "\n Select a character to represent your colour.");
 			socket.sendMessage("Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow");			
 			socket.requestMessage();
 			String name = socket.getMessage().toUpperCase();		

@@ -93,7 +93,7 @@ public class Catan {
 
 			if (answer.equals("y")) {
 				//CLIENT SIDE
-				System.out.println("please enter the address where you wish to connect");
+				System.out.println("please enter the address where you wish to connect\nPlease note that to enter a command, enter \"c\"");
 				String hostName = scanner.nextLine();
 				int portNumber = defaultPortNumber;
 				
@@ -102,37 +102,97 @@ public class Catan {
 		        	String fromServer;
 		            String fromUser;
 		            while(true){
+		            	if(kkSocket.getInputStream().available()!=0){
 			            Message m1 = getPBMsg(kkSocket);		
 			         //  System.out.println(Event.getDescriptor().getFullName()+", "+m1.hasField( m1.getDescriptorForType().findFieldByName("ChatMessage")));
-			            if(m1.getTypeCase().name().equals("EVENT")){
-				          if(m1.getEvent().getTypeCase().name().equals("CHATMESSAGE")){
-				            	//DEALING WITH EVENTS
-				            	//TODO move to a seperate class/method so all kinds of events/requests can be dealt with correctly
-				            	fromServer = m1.getEvent().getChatMessage();				            	
-				              	System.out.println(fromServer);		
-				                if (fromServer.equals("Goodbye!")) {
-				                    break;
-				                }		
-			            	}
-				          else{
-				        	  Client.resolveEvent(m1.getEvent(),kkSocket);
-				          }
-			            }			            
-			            else if(m1.getTypeCase().name().equals("REQUEST")){
-			            	//DEALING WITH REQUESTS
-			            	//TODO move to a seperate class/method so all kinds of events/requests can be dealt with correctly
-			            	if(m1.getRequest().getBodyCase().name().equals("CHATMESSAGE")){
-				            	fromUser = scanner.nextLine();
-				                System.out.println("Client: " + fromUser);
-			                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(fromUser).build()).build(),kkSocket);
-			            	}
-			            	else{
-			            		Client.resolveRequest(m1.getRequest(),kkSocket);
-			            	}
-			            	}
-			            else{
-			            	System.out.println(":(");
-			            }
+
+			            
+				            if(m1.getTypeCase().name().equals("EVENT")){
+					          if(m1.getEvent().getTypeCase().name().equals("CHATMESSAGE")){
+					            	//DEALING WITH EVENTS
+					            	//TODO move to a seperate class/method so all kinds of events/requests can be dealt with correctly
+					            	fromServer = m1.getEvent().getChatMessage();				            	
+					              	System.out.println(fromServer);		
+					                if (fromServer.equals("Goodbye!")) {
+					                    break;
+					                }		
+				            	}
+					          else{
+					        	  Client.resolveEvent(m1.getEvent(),kkSocket);
+					          }
+				            }			    
+			            // CLIENTS DONT RECEIVE REQUESTS :(
+//				            else if(m1.getTypeCase().name().equals("REQUEST")){
+//			            	//DEALING WITH REQUESTS
+//			            	//TODO move to a seperate class/method so all kinds of events/requests can be dealt with correctly
+//			            	if(m1.getRequest().getBodyCase().name().equals("CHATMESSAGE")){
+//				            	fromUser = scanner.nextLine();
+//				                System.out.println("Client: " + fromUser);
+//			                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(fromUser).build()).build(),kkSocket);
+//			            	}
+//			            	else{
+//			            		Client.resolveRequest(m1.getRequest(),kkSocket);
+//			            	}
+//			            	
+//			            	
+//			            	
+//			            	}
+				            else{
+				            	System.out.println(":(");
+				            }
+		            }
+		            	else if (System.in.available()!=0){
+		            		String instruction = scanner.nextLine();
+		            		if(instruction.equals("c")){
+		            			System.out.println("creating a message: to see options type \"p\"");
+		            			String instruction2 = scanner.nextLine();
+		            			if(instruction2.equals("p")){
+		            				System.out.println( "ROLLDICE, BUYDEVCARD, BUILDROAD, BUILDSETTLEMENT, BUILDCITY, MOVEROBBER, PLAYDEVCARD, INITIATETRADE, \n"
+		            					+ "SUBMITTRADERESPONSE, DISCARDRESOURCES, SUBMITTARGETPLAYER, CHOOSERESOURCE, ENDTURN\nanything else will be sent as a chat message!");
+		            					instruction2 = scanner.nextLine();
+		            			}
+		            			switch (instruction2) {
+
+		            			case "ROLLDICE":
+		            				break;
+		            			case "BUYDEVCARD":
+		            				break;
+		            			case "BUILDROAD":
+		            				break;
+		            			case "BUILDSETTLEMENT":
+		            				break;
+		            			case "BUILDCITY":
+		            				break;
+		            			case "MOVEROBBER":
+		            				break;
+		            			case "PLAYDEVCARD":
+		            				break;
+		            			case "INITIATETRADE":
+		            				break;
+		            			case "SUBMITTRADERESPONSE":
+		            				break;
+		            			case "DISCARDRESOURCES":
+		            				break;
+		            			case "SUBMITTARGETPLAYER":
+		            				break;
+		            			case "CHOOSERESOURCE":
+		            				break;
+		            			case "ENDTURN":
+		            				break;
+		            			case "JOINLOBBY":
+		            				break;
+		            			case "CHATMESSAGE":
+		            				break;
+		            			case "BODY_NOT_SET":
+		            				break;
+
+		            			default:
+					                System.out.println("Client: " + instruction2);
+				                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(instruction2).build()).build(),kkSocket);
+		            			}
+		            		}
+		            	}			          
+			           
 		            }
 		        }
 		        catch (UnknownHostException e) {
@@ -181,7 +241,7 @@ public class Catan {
 				Game game1 = new Game();
 				game1.setBoard(board1);
 
-				Map.printMap(game1.getBoard(), new ArrayList<Player>());
+			//	Map.printMap(game1.getBoard(), new ArrayList<Player>());
 
 				//sets up development cards
 				ArrayList<DevelopmentCard> developmentCards = Setup
@@ -209,6 +269,9 @@ public class Catan {
 				//changes player order with largest dice roll first
 				Setup.getPlayerOrder(game1, scanner);
 
+				Map.printMap(game1.getBoard(), game1.getPlayers());
+
+				
 				//place roads and settlements
 				Setup.setInitialRoadsAndSettlements(game1, scanner);
 
@@ -328,6 +391,28 @@ public class Catan {
 			System.out.println(message);
 		}
 	}
+	
+	//sends a protobuf to the specified player
+	public static void printToClient(Message message, Player player)  {
+		
+		
+		PlayerSocket socket = player.getpSocket();
+		
+		if (socket != null) {
+			try {
+				sendPBMsg(message,socket.getClientSocket());
+			} 
+			catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			System.out.println(message.toString());
+		}
+	}
+	
+	
 
 	//gets input from a specified player in the form of a string
 	public static String getInputFromClient(Player player, Scanner scanner)  {

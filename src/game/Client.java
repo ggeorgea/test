@@ -15,6 +15,7 @@ public class Client {
 		case "ERROR":
 			break;
 		case "ROLLED":
+			System.out.println( "player "+event.getInstigator().getIdValue()+" rolled a "+(event.getRolled().getA() + event.getRolled().getB())+"!");
 			break;
 		case "ROADBUILT":
 			break;

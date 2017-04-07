@@ -1,5 +1,8 @@
 package game;
 
+import intergroup.Events.Event;
+import intergroup.Messages.Message;
+import intergroup .board.Board;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -39,16 +42,26 @@ public class Dice {
 		
 		valueDice = diceRoll;
 		
-		Catan.printToClient("You rolled: " + diceRoll, player);
+		int playerNum = 0;
+		for (int i = 0; i < game1.getPlayers().size(); i++) {
+			if (game1.getPlayers().get(i).equals(player)) {
+				playerNum=i;
+			}
+		}
+		Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setRolled(Board.Roll.newBuilder().setA(dice1).setB(dice2).build()).build()).build();
+		Catan.printToClient(m, player);
+		//Catan.printToClient("You rolled: " + diceRoll, player);
 		
 		ArrayList<Player> players = game1.getPlayers();
 		
 		for (int i = 0; i < players.size(); i++) {
+			
 			if (players.get(i) != player) {
 				
 				PlayerSocket socket = players.get(i).getpSocket();
 				if (socket != null) {
-					socket.sendMessage("Player " + player.getName() + " rolled: " + diceRoll);
+					Catan.printToClient(m, players.get(i));
+					//socket.sendMessage("Player " + player.getName() + " rolled: " + diceRoll);
 				}
 			}
 		}

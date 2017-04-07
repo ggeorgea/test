@@ -41,10 +41,10 @@ public class Map {
 			 roadOwn = 0;
 			 getPort = 0;
 			PlayerSocket socket = players.get(i).getpSocket();
-		
+			
 			if (socket != null) {
-
-				socket.sendMessage(
+				Catan.printToClient(
+//				socket.sendMessage(
 
 					"                                         "+board1.getPorts().get(getPort++).getResource()+"                           \n"                                                                                    
 							+"                    "+ 
@@ -233,8 +233,10 @@ public class Map {
 	((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"                   \n"
 
 
-					);
-				socket.sendMessage("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
+	            ,players.get(i));
+		//				);
+				Catan.printToClient("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY()+"\n", players.get(i));
+		//		socket.sendMessage("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
 			}
 			else if (!hasPrintedToConsole) {
 				
