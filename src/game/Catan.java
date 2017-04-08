@@ -13,9 +13,15 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import intergroup.EmptyOuterClass.Empty;
 import intergroup.Events.Event;
 import intergroup.Messages.Message;
 import intergroup.Requests.Request;
+import intergroup.board.Board.Edge;
+import intergroup.board.Board.PlayableDevCard;
+import intergroup.board.Board.Point;
+import intergroup.resource.Resource.Kind;
+import intergroup.trade.Trade.Response;
 
 /**
  * Class that contains the main method for the game
@@ -150,52 +156,137 @@ public class Catan {
 		            	else if (System.in.available()!=0){
 		            		String instruction = scanner.nextLine();
 		            		if(instruction.equals("c")){
-		            			System.out.println("creating a message: to see options type \"p\"");
+		            			System.out.println("creating a message: to see options type \"P\", to cancel, type \"E\"");
 		            			String instruction2 = scanner.nextLine();
 		            			if(instruction2.equals("p")){
 		            				System.out.println( "ROLLDICE, BUYDEVCARD, BUILDROAD, BUILDSETTLEMENT, BUILDCITY, MOVEROBBER, PLAYDEVCARD, INITIATETRADE, \n"
 		            					+ "SUBMITTRADERESPONSE, DISCARDRESOURCES, SUBMITTARGETPLAYER, CHOOSERESOURCE, ENDTURN\nanything else will be sent as a chat message!");
 		            					instruction2 = scanner.nextLine();
 		            			}
-		            			switch (instruction2) {
-
-		            			//TODO emptys
+		            			switch (instruction2) {		            			
+		            			case "E":
+		            				break;
 		            			case "ROLLDICE":
+		            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setRollDice(Empty.newBuilder().build()).build()).build(),kkSocket);
 		            				break;
 		            			case "BUYDEVCARD":
+		            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setBuyDevCard(Empty.newBuilder().build()).build()).build(),kkSocket);
 		            				break;
 		            			case "ENDTURN":
-		            				break;
-		            			//TODO edge
+		            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setEndTurn(Empty.newBuilder().build()).build()).build(),kkSocket);          				
+		            				break;		            						            			
 		            			case "BUILDROAD":
-		            				break;
-		            			//TODO point
+		            				System.out.println("Please select where to build a road");
+		            				System.out.println("road start: Select X coordinate");
+		            				int x1 = scanner.nextInt();
+		            				System.out.println("road start: Select Y coordinate");
+		            				int y1 = scanner.nextInt();
+		            				System.out.println("road end: Select X coordinate");
+		            				int x2 = scanner.nextInt();
+		            				System.out.println("road end: Select Y coordinate");
+		            				int y2 = scanner.nextInt();
+		            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setBuildRoad(Edge.newBuilder().setA(Point.newBuilder().setX(x1).setY(y1).build()).setB(Point.newBuilder().setX(x2).setY(y2).build()).build()).build()).build(),kkSocket);          						            				
+		            				break;		            		
 		            			case "BUILDSETTLEMENT":
+		            				System.out.println("Please select where to build a settlement");
+		            				System.out.println("Select X coordinate");
+		            				int x = scanner.nextInt();
+		            				System.out.println("Select Y coordinate");
+		            				int y = scanner.nextInt();
+		            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setBuildSettlement(Point.newBuilder().setX(x).setY(y).build()).build()).build(),kkSocket);          						            				
 		            				break;
 		            			case "BUILDCITY":
+		             				System.out.println("Please select where to build a city");
+		            				System.out.println("Select X coordinate");
+		            				 x = scanner.nextInt();
+		            				System.out.println("Select Y coordinate");
+		            				 y = scanner.nextInt();
+		            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setBuildCity(Point.newBuilder().setX(x).setY(y).build()).build()).build(),kkSocket);          						            				
 		            				break;
 		            			case "MOVEROBBER":
-		            				break;
-		            			//TODO playable devcard
+		             				System.out.println("Please select where to build a city");
+		            				System.out.println("Select X coordinate");
+		            				 x = scanner.nextInt();
+		            				System.out.println("Select Y coordinate");
+		            				 y = scanner.nextInt();
+		            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setMoveRobber(Point.newBuilder().setX(x).setY(y).build()).build()).build(),kkSocket);  
+		            				break;		            		
 		            			case "PLAYDEVCARD":
+		            				System.out.println("which type of dev card do you wish to try and play: ");
+		            				boolean correct = false;
+		            				while(!correct){
+			            				String response = scanner.nextLine();
+			            				switch(response){
+			            					case "KNIGHT":
+			            						correct = true;
+					            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setPlayDevCard(PlayableDevCard.KNIGHT).build()).build(),kkSocket);
+			            						break;
+			            					case "ROAD_BUILDING" :
+			            						correct = true;
+					            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setPlayDevCard(PlayableDevCard.ROAD_BUILDING).build()).build(),kkSocket);
+			            						break;
+			            					case "MONOPOLY" :
+			            						correct = true;
+					            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setPlayDevCard(PlayableDevCard.MONOPOLY).build()).build(),kkSocket);
+			            						break;
+			            					case "YEAR_OF_PLENTY":
+			            						correct = true;
+					            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setPlayDevCard(PlayableDevCard.YEAR_OF_PLENTY).build()).build(),kkSocket);
+			            						break;
+			            					default:
+			            						System.out.println("not a type of dev card, try again");
+			            				}
+		            				}		
 		            				break;
 		            			//TODO initiate trade
 		            			case "INITIATETRADE":
 		            				break;
-		            			//TODO trade response
 		            			case "SUBMITTRADERESPONSE":
+		            				System.out.println("do you ACCEPT?");
+		            				String respo = scanner.nextLine();
+		            				if(respo.equals("ACCEPT")){
+		            					sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setSubmitTradeResponse(Response.ACCEPT).build()).build(),kkSocket);
+		            				}
+		            				else{
+		            					sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setSubmitTradeResponse(Response.REJECT).build()).build(),kkSocket);
+		            				}
 		            				break;
 		            			//TODO resource.counts
 		            			case "DISCARDRESOURCES":
 		            				break;
-		            			//TODO player
 		            			case "SUBMITTARGETPLAYER":
+		            				System.out.println("please submit the int for the player you wish to select, e.g. player 2 > 2");
+		            				int pNu = scanner.nextInt();
+	            					sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setSubmitTargetPlayer(intergroup.board.Board.Player.newBuilder().setIdValue(pNu)).build()).build(),kkSocket);
 		            				break;
-		            			//TODO resource.Kind
-		            			case "CHOOSERESOURCE":
-		            				break;
+		            			
+		            			case "CHOOSERESOURCE":		          
+		            				System.out.println("please enter your chosen resource Kind: BRICK, LUMBER, WOOL, GRAIN, ORE, antthing else will count as 'generic");
+		            				String chosen = scanner .nextLine();
+		            				 switch(chosen){
+			            				 case "GENERIC" :
+					            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setChooseResource(Kind.GENERIC).build()).build(),kkSocket);
+			            					 break;
+			            				 case "BRICK" :
+					            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setChooseResource(Kind.BRICK).build()).build(),kkSocket);
+			            					 break;
+			            				 case "LUMBER" :		 
+					            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setChooseResource(Kind.LUMBER).build()).build(),kkSocket);
+			            					 break;
+			            				 case "WOOL" :
+					            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setChooseResource(Kind.WOOL).build()).build(),kkSocket);
+			            					 break;
+		            				 	 case "GRAIN" :
+					            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setChooseResource(Kind.GRAIN).build()).build(),kkSocket);
+		            				 		break;
+		            					 case "ORE":
+					            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setChooseResource(Kind.ORE).build()).build(),kkSocket);
 
-		            	
+		            						 break;
+		            					default:
+				            				sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setChooseResource(Kind.GENERIC).build()).build(),kkSocket);
+		            				 }
+		            				break;		           
 		            			default:
 					                System.out.println("Client: " + instruction2);
 				                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(instruction2).build()).build(),kkSocket);
