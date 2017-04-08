@@ -98,9 +98,15 @@ public class Catan {
 				int portNumber = defaultPortNumber;
 				
 		        try {
-	        		Socket kkSocket = new Socket(hostName, portNumber);	        		
-		        	String fromServer;
+	        		Socket kkSocket = new Socket(hostName, portNumber);	  
+	        		//TODO implement lobby join request
+//        			//join
+//        			case "JOINLOBBY":
+//        				break;
+	        		
+	        		String fromServer;
 		            String fromUser;
+	     
 		            while(true){
 		            	if(kkSocket.getInputStream().available()!=0){
 			            Message m1 = getPBMsg(kkSocket);		
@@ -153,39 +159,43 @@ public class Catan {
 		            			}
 		            			switch (instruction2) {
 
+		            			//TODO emptys
 		            			case "ROLLDICE":
 		            				break;
 		            			case "BUYDEVCARD":
 		            				break;
+		            			case "ENDTURN":
+		            				break;
+		            			//TODO edge
 		            			case "BUILDROAD":
 		            				break;
+		            			//TODO point
 		            			case "BUILDSETTLEMENT":
 		            				break;
 		            			case "BUILDCITY":
 		            				break;
 		            			case "MOVEROBBER":
 		            				break;
+		            			//TODO playable devcard
 		            			case "PLAYDEVCARD":
 		            				break;
+		            			//TODO initiate trade
 		            			case "INITIATETRADE":
 		            				break;
+		            			//TODO trade response
 		            			case "SUBMITTRADERESPONSE":
 		            				break;
+		            			//TODO resource.counts
 		            			case "DISCARDRESOURCES":
 		            				break;
+		            			//TODO player
 		            			case "SUBMITTARGETPLAYER":
 		            				break;
+		            			//TODO resource.Kind
 		            			case "CHOOSERESOURCE":
 		            				break;
-		            			case "ENDTURN":
-		            				break;
-		            			case "JOINLOBBY":
-		            				break;
-		            			case "CHATMESSAGE":
-		            				break;
-		            			case "BODY_NOT_SET":
-		            				break;
 
+		            	
 		            			default:
 					                System.out.println("Client: " + instruction2);
 				                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(instruction2).build()).build(),kkSocket);

@@ -55,7 +55,7 @@ public class Client {
 		}
 
 	}
-
+/*
 	public static void resolveRequest(Request request, Socket mySocket) {
 		switch (request.getBodyCase().name()) {
 
@@ -95,6 +95,6 @@ public class Client {
 		default:
 		}
 
-	}
+	}*/
 
 }
