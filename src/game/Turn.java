@@ -1,4 +1,5 @@
 package game;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -90,6 +91,8 @@ public class Turn {
 			catch(InputMismatchException e) {
 				Catan.printToClient("Invalid choice. Please choose again", player);
 				scanner.nextLine();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 
@@ -100,7 +103,7 @@ public class Turn {
 //-----Method to build and buy things for the turn-----//
 
 	//asks the player if they want to build something
-	public static void build(Player player, Game game1, Scanner scanner) {
+	public static void build(Player player, Game game1, Scanner scanner) throws IOException {
 
 		Catan.printToClient("What do you want to build?", player);
 		Catan.printToClient("1. Road", player);
