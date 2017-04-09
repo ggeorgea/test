@@ -1,8 +1,10 @@
 package game;
 
 import intergroup.Events.Event;
+import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
 import intergroup .board.Board;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,17 +23,31 @@ public class Dice {
 		Random random = new Random();
 		
 		//prompts player to roll the dice and scans input
-		Catan.printToClient("It is your turn. Press 'R' to roll", player);
+		Catan.printToClient("It is your turn. please send the serve a roll dice request", player);
 		
-		String enter = Catan.getInputFromClient(player, scanner).toUpperCase();
+		Message enter;
+		boolean success = false;
+		while(!success){
+		try {
+			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+			if(enter.getRequest().getBodyCase().getNumber()==1){
+				success=true;
+			}
+			else{
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a roll dice request").build()).build()).build(), player.getpSocket().getClientSocket());
+			}
+		} catch (IOException e) {
+		}
+		}
+				//.getInputFromClient(player, scanner).toUpperCase();
 		
 		//makes sure the user enters the correct input
-		if (!(enter.equals("R"))) {
-			
-			Catan.printToClient("Invalid input. Please roll again.", player);
-			rollDice(player, scanner, game1);
-			return;
-		}
+//		if (!(enter.equals("R"))) {
+//			
+//			Catan.printToClient("Invalid input. Please roll again.", player);
+//			rollDice(player, scanner, game1);
+//			return;
+//		}
 			
 		//rolls the two dice and adds the sum
 		//this preserves the probability of rolling values from
