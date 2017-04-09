@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 import intergroup.EmptyOuterClass.Empty;
 import intergroup.Events.Event;
+import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
 import intergroup.Requests.Request;
 import intergroup.board.Board.Edge;
@@ -747,4 +748,24 @@ public class Catan {
 			return scanner.next();
 		}
 	}
+	
+	public static Message getSpecificRequestMssg(int protoCaseNum,game.Player player){
+		Message enter= Message.getDefaultInstance();
+		boolean success = false;
+		while(!success){
+		try {
+			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+			if(enter.getRequest().getBodyCase().getNumber()==protoCaseNum){
+				success=true;
+			}
+			else{
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not the correct request for this time").build()).build()).build(), player.getpSocket().getClientSocket());
+			}
+		} catch (IOException e) {
+		}
+		}
+		return enter;
+	}
+	
+	
 }
