@@ -1,7 +1,13 @@
 package game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import intergroup.Events.Event;
+import intergroup.Events.Event.Error;
+import intergroup.Messages.Message;
+import intergroup.board.Board;
 
 /**
  * Class to store information about development cards
@@ -61,8 +67,24 @@ public class DevelopmentCard {
 //-----Methods to buy a development card-----//
 	
 	//lets the player buy a development card
-	public static void buyDevelopmentCard(Player player, Game game1, Scanner scanner) {
+	public static void buyDevelopmentCard(Player player, Game game1, Scanner scanner) throws IOException {
 			
+		Catan.printToClient("Please send the server a buy development card request", player);
+		
+		Message enter = null;
+		boolean success = false;
+		
+		while (!success) {
+			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+				
+			if (enter.getRequest().getBodyCase().getNumber() == 1) {
+				success = true;
+			}
+			else {
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a buy dev card request").build()).build()).build(), player.getpSocket().getClientSocket());
+			}
+		}
+		
 		//checks the player has the correct resources to buy a development card
 		ArrayList<ResourceCard> resources = hasDevelopmentCardResources(player);
 		ArrayList<DevelopmentCard> developmentCards = game1.getDevelopmentCards();
@@ -70,11 +92,15 @@ public class DevelopmentCard {
 		
 		//checks if a development card can be bought
 		if (resources.size() != 3) {
-			Catan.printToClient("You do not have enough resources to buy a development card", player);
+			
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("You do not have enough resources").build()).build()).build(), player.getpSocket().getClientSocket());
+			//Catan.printToClient("You do not have enough resources to buy a development card", player);
 			return;
 		}
 		else if (developmentCards.size() <= 0) {
-			Catan.printToClient("There are no development cards left in the deck", player);
+			
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("There are no development cards left").build()).build()).build(), player.getpSocket().getClientSocket());
+			//Catan.printToClient("There are no development cards left in the deck", player);
 			return;			
 		}
 		
@@ -96,7 +122,39 @@ public class DevelopmentCard {
 			
 			playerDevCards.add(developmentCard);
 			
-			Catan.printToClient("You bought a development card", player);
+			int card = -1;
+			
+			if (developmentCard.getType().equals(KNIGHT)) {
+				card = 0;
+			}
+			if (developmentCard.getType().equals(ROAD_BUILDING)) {
+				card = 1;
+			}
+			if (developmentCard.getType().equals(MONOPOLY)) {
+				card = 2;
+			}
+			if (developmentCard.getType().equals(YEAR_OF_PLENTY)) {
+				card = 3;
+			}
+			
+			int playerNum = 0;
+			for (int i = 0; i < game1.getPlayers().size(); i++) {
+				if (game1.getPlayers().get(i).equals(player)) {
+					playerNum=i;
+				}
+			}
+		
+			Message m = null;
+			
+			if (card != -1) {
+				m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setDevCardBought(Board.DevCard.newBuilder().setPlayableDevCardValue(card).build()).build()).build();
+			}
+			else {
+				m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setDevCardBought(Board.DevCard.newBuilder().setVictoryPointValue(1).build()).build()).build();
+			}
+			
+			//Catan.printToClient("You bought a development card", player);
+			Catan.printToClient(m, player);
 			
 			ArrayList<Player> players = game1.getPlayers();
 			
@@ -105,7 +163,9 @@ public class DevelopmentCard {
 					
 					PlayerSocket socket = player.getpSocket();
 					if (socket != null) {
-						socket.sendMessage("Player " + player.getName() + " bought a development card");
+						
+						Catan.printToClient(m, players.get(i));
+						//socket.sendMessage("Player " + player.getName() + " bought a development card");
 					}
 				}
 			}
@@ -176,7 +236,7 @@ public class DevelopmentCard {
 //-----Methods to play a development card-----//
 		
 	//lets the player select a development card to play
- 	public static void playDevelopmentCard(Player player, Game game1, Scanner scanner, boolean hasPlayedDevCard) {
+ 	public static void playDevelopmentCard(Player player, Game game1, Scanner scanner, boolean hasPlayedDevCard) throws IOException {
 	 		
  		ArrayList<DevelopmentCard> cards = player.getDevelopmentCards();
  		ArrayList<DevelopmentCard> playCards = new ArrayList<DevelopmentCard>();
@@ -192,22 +252,70 @@ public class DevelopmentCard {
  		}
 	 		
  		if (hasPlayedDevCard) {
- 			Catan.printToClient("You can only play one development card on your turn", player);
+ 			
+ 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("You can only play one development card on your turn.").build()).build()).build(), player.getpSocket().getClientSocket());
+ 			//Catan.printToClient("You can only play one development card on your turn", player);
  			return;
  		}
  		if (playCards.size() <= 0) {
- 			Catan.printToClient("You do not have any development cards in your hand to play", player);
+ 			
+ 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("You don't have any development cards to play.").build()).build()).build(), player.getpSocket().getClientSocket());
+ 			//Catan.printToClient("You do not have any development cards in your hand to play", player);
  			return;
  		}
 	 	
- 		Catan.printToClient("What development card do you want to play?", player);
+ 		Catan.printToClient("Please send the server a play development card request", player);
+ 		//Catan.printToClient("What development card do you want to play?", player);
  		
+		Message enter = null;
+		boolean success = false;
+		
+		while (!success) {
+			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+				
+			if (enter.getRequest().getBodyCase().getNumber() == 1) {
+				success = true;
+			}
+			else {
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a buy dev card request").build()).build()).build(), player.getpSocket().getClientSocket());
+			}
+		}
+		
+		int card = enter.getRequest().getPlayDevCardValue();
+		DevelopmentCard play = null;
+		
+		for (int i = 0; i < playCards.size(); i++) {
+			if (playCards.get(i).getType().equals(KNIGHT) && card == 0) {
+				play = playCards.get(i);
+				break;
+			}
+			if (playCards.get(i).getType().equals(ROAD_BUILDING) && card == 1) {
+				play = playCards.get(i);
+				break;
+			}
+			if (playCards.get(i).getType().equals(MONOPOLY) && card == 2) {
+				play = playCards.get(i);
+				break;
+			}
+			if (playCards.get(i).getType().equals(YEAR_OF_PLENTY) && card == 3) {
+				play = playCards.get(i);
+				break;
+			}
+		}
+		
+		if (play == null) {
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("you do not have this dev card").build()).build()).build(), player.getpSocket().getClientSocket());
+			return;
+		}
+		
+ 		/*
  		for (int i = 0; i < playCards.size(); i++) {
  			Catan.printToClient((i+1) + ": " + playCards.get(i).getType(), player);
  		}
  		
  		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
- 		DevelopmentCard play = playCards.get(choice);		
+ 		DevelopmentCard play = playCards.get(choice);	*/	
+ 		
  		String type = play.getType();
  		
  		//selects the correct method depending on the type of card being played
@@ -306,7 +414,7 @@ public class DevelopmentCard {
 	}
  	
 	//plays a road building card
-	public static void playRoadBuildingCard(Player player, Game game1, Scanner scanner) {
+	public static void playRoadBuildingCard(Player player, Game game1, Scanner scanner) throws IOException {
  		
  		boolean roadBuilding = true;
  		
