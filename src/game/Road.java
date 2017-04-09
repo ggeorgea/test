@@ -1,6 +1,12 @@
 package game;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import intergroup.Events.Event;
+import intergroup.Events.Event.Error;
+import intergroup.Messages.Message;
+import intergroup.board.Board;
 
 /**
  * Stores information about roads
@@ -65,7 +71,7 @@ public class Road {
 //-----Methods to build a road-----//
 	
 	//lets the player build a road
-	public static void buildRoad(Player player, Game game1, Scanner scanner, boolean roadBuilding) {
+	public static void buildRoad(Player player, Game game1, Scanner scanner, boolean roadBuilding) throws IOException {
 
 		//gets the resources needed to build a road
 		ArrayList<ResourceCard> resources = hasRoadResources(player, roadBuilding);		
@@ -76,26 +82,36 @@ public class Road {
 		
 		//checks that the player can buy and place the road at the specified coordinates
 		if (resources.size() != 2) {
-			Catan.printToClient("You do not have enough resources to build a road", player);
+			
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("You do not have enough resources to build a road").build()).build()).build(), player.getpSocket().getClientSocket());
+			//Catan.printToClient("You do not have enough resources to build a road", player);
 			return;
 		}
 		else if (roadsLeft <= 0) {
-			Catan.printToClient("You do not have any roads left to place", player);
+			
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("You do not have any roads left to place").build()).build()).build(), player.getpSocket().getClientSocket());
+			//Catan.printToClient("You do not have any roads left to place", player);
 			return;
 		}
 		else if (road == null) {
-			Catan.printToClient("Invalid coordinates. Please choose again", player);
+			
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
+			//Catan.printToClient("Invalid coordinates. Please choose again", player);
 			buildRoad(player, game1, scanner, roadBuilding);
 			return;
 		}
 		else if (road.getOwner().getName() != null) {
-			Catan.printToClient("A road has already been placed here. Please choose again", player);
+			
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("A road has already been placed here. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
+			//Catan.printToClient("A road has already been placed here. Please choose again", player);
 			buildRoad(player, game1, scanner, roadBuilding);
 			return;
 		}
  		else if (!checkConnected(road,player,game1)) {
-	 		Catan.printToClient("Road must be placed beside your other roads " +
- 				"and settlements. Please choose again", player);
+	 		
+ 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Road must be placed beside other roads or settlements. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
+ 			//Catan.printToClient("Road must be placed beside your other roads " +
+ 			//	"and settlements. Please choose again", player);
 			buildRoad(player, game1, scanner, roadBuilding);
  			return;
  		 }
@@ -116,8 +132,16 @@ public class Road {
 			road.setOwner(player);
 			player.setNoRoads(player.getNoRoads() - 1);
 			
-			Catan.printToClient("You placed road at: (" + road.getCoordinateA().getX() 
-					+ "," + road.getCoordinateA().getY() + "),(" + road.getCoordinateB().getX() + "," + road.getCoordinateB().getY() + ")", player);
+			int playerNum = 0;
+			for (int i = 0; i < game1.getPlayers().size(); i++) {
+				if (game1.getPlayers().get(i).equals(player)) {
+					playerNum=i;
+				}
+			}
+
+			Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setRoadBuilt(Board.Edge.newBuilder().setA(Board.Point.newBuilder().setX(road.getCoordinateA().getX()).setY(road.getCoordinateA().getY()).build()).setB(Board.Point.newBuilder().setX(road.getCoordinateB().getX()).setY(road.getCoordinateB().getY()).build()).build()).build()).build();
+			//Catan.printToClient("You placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")", player);
+			Catan.printToClient(m, player);
 			
 			ArrayList<Player> players = game1.getPlayers();
 			
@@ -125,10 +149,11 @@ public class Road {
 				if (players.get(i) != player) {
 					
 					PlayerSocket socket = players.get(i).getpSocket();
+					
 					if (socket != null) {
-						socket.sendMessage("Player " + player.getName() + " placed road at: (" + road.getCoordinateA().getX() 
-								+ "," + road.getCoordinateA().getY() + "),(" + road.getCoordinateB().getX() + "," + road.getCoordinateB().getY() + ")");
-					}	
+						Catan.printToClient(m, players.get(i));
+						//socket.sendMessage("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
+					}
 				}
 			}
 			
@@ -180,8 +205,30 @@ public class Road {
 	}
 		
 	//asks the player for the coordinates for the road they want to build
-	public static Road getRoadCoordinates(Player player, Game game1, Scanner scanner, boolean roadBuilding) {
+	public static Road getRoadCoordinates(Player player, Game game1, Scanner scanner, boolean roadBuilding) throws IOException {
 		
+		Catan.printToClient("Please send the server a build road request", player);
+		
+		Message enter = null;
+		boolean success = false;
+		
+		while (!success) {
+			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+				
+			if (enter.getRequest().getBodyCase().getNumber() == 1) {
+				success = true;
+			}
+			else {
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a road build request").build()).build()).build(), player.getpSocket().getClientSocket());
+			}
+		}
+		
+		int x1 = enter.getRequest().getBuildRoad().getA().getX();
+		int y1 = enter.getRequest().getBuildRoad().getA().getY();
+		int x2 = enter.getRequest().getBuildRoad().getB().getX();
+		int y2 = enter.getRequest().getBuildRoad().getB().getY();
+		
+		/*
 		Catan.printToClient("Please select where to place your road.", player);
 		
 		Catan.printToClient("Coordinate 1: ", player);
@@ -197,11 +244,13 @@ public class Road {
 		
 		Catan.printToClient("Select Y coordinate", player);
 		int y2 = Integer.parseInt(Catan.getInputFromClient(player, scanner));
+		*/
 		
 		//checks the coordinates are in the correct range
 		if (!((2*y1 <= x1+8) && (2*y1 >= x1-8) && (y1 <= 2*x1+8) && (y1 >= 2*x1-8) && (y1 >= -x1-8) && (y1 <= -x1+8))) {
 			
-			Catan.printToClient("Invalid coordinates. Please choose again", player);
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
+			//Catan.printToClient("Invalid coordinates. Please choose again", player);
 			getRoadCoordinates(player, game1, scanner, roadBuilding);
 			return null;
 		}
@@ -220,7 +269,7 @@ public class Road {
 	public static boolean checkConnected(Road road, Player player, Game game1){
 	
 		//game1.getBoard().getLocationFromCoordinate(road.getCoordinateA());
-		Board board1 = game1.getBoard();
+		game.Board board1 = game1.getBoard();
 		
 		//note: coordinateA is always the higher up coordinate on the printed representation
 		int x1 = road.getCoordinateA().getX();
