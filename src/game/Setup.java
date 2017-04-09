@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import intergroup.Events.Event;
+import intergroup.Events.Event.Error;
+import intergroup.Messages.Message;
+import intergroup.board.Board;
+
 /**
  * Class contains all the methods to set up the game and board
  */
@@ -364,10 +369,10 @@ public class Setup {
 //-----Methods to get the initial placement of roads and settlements for the game-----//
 
 	//gets the players to set the initial roads and settlements before turn 1
-	public static void setInitialRoadsAndSettlements(Game game1, Scanner scanner) {
+	public static void setInitialRoadsAndSettlements(Game game1, Scanner scanner) throws IOException {
 
 		ArrayList<Player> players = game1.getPlayers();
-		Board board1 = game1.getBoard();
+		game.Board board1 = game1.getBoard();
 
 		for (int i = 0; i < players.size(); i++) {
 
@@ -389,7 +394,7 @@ public class Setup {
 	}
 
 	//checks a road can be placed at the coordinate specified
-	public static boolean checkNear(Board board1, int x1, int y1, int x2, int y2) {
+	public static boolean checkNear(game.Board board1, int x1, int y1, int x2, int y2) {
 		
 		Location loca1 = board1.getLocationFromCoordinate(new Coordinate(x1,y1));
 		Location loca2 = board1.getLocationFromCoordinate(new Coordinate(x2,y2));
@@ -406,9 +411,30 @@ public class Setup {
 
 	//lets the player place a road free of charge
 	//also does not depend on nearby roads
-	public static Road placeRoad(Player player, Board board1, Scanner scanner, Game game1) {
+	public static Road placeRoad(Player player, game.Board board1, Scanner scanner, Game game1) throws IOException {
 
-		Catan.printToClient("Please select where to place your road:", player);
+		Catan.printToClient("Please send the server a build road request", player);
+		
+		Message enter = null;
+		boolean success = false;
+		
+		while (!success) {
+			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+				
+			if (enter.getRequest().getBodyCase().getNumber() == 1) {
+				success = true;
+			}
+			else {
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a road build request").build()).build()).build(), player.getpSocket().getClientSocket());
+			}
+		}
+		
+		int x1 = enter.getRequest().getBuildRoad().getA().getX();
+		int y1 = enter.getRequest().getBuildRoad().getA().getY();
+		int x2 = enter.getRequest().getBuildRoad().getB().getX();
+		int y2 = enter.getRequest().getBuildRoad().getB().getY();
+		
+		/*Catan.printToClient("Please select where to place your road:", player);
 
 		Catan.printToClient("Coordinate 1: ", player);
 		Catan.printToClient("Select X coordinate", player);
@@ -423,17 +449,19 @@ public class Setup {
 
 		Catan.printToClient("Select Y coordinate", player);
 		int y2 = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-
+		 */
 		//checks the coordinates are in the correct range
 		if ((!((2*y1 <= x1+8) || (2*y1 >= x1-8) && (y1 <= 2*x1+8) && (y1 >= 2*x1-8) && (y1 >= -x1-8) 
 				&& (y1 <= -x1+8))) && (!((2*y2 <= x2+8) || (2*y2 >= x2-8) && (y2 <= 2*x2+8) && (y2 >= 2*x2-8) && (y2 >= -x2-8)))) {
 			
-			Catan.printToClient("Invalid coordinates. Please choose again", player);
+			//Catan.printToClient("Invalid coordinates. Please choose again", player);
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
 			return placeRoad(player, board1, scanner, game1);
 		}
 		else if (!checkNear(board1, x1,y1,x2,y2)) {
 			
-			Catan.printToClient("Invalid coordinates. Please choose again", player);
+			//Catan.printToClient("Invalid coordinates. Please choose again", player);
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
 			return placeRoad(player, board1, scanner, game1);
 		}
 		else {
@@ -445,17 +473,28 @@ public class Setup {
 
 			if (road == null) {
 
-				Catan.printToClient("Invalid coordinates. Please choose again", player);
+				//Catan.printToClient("Invalid coordinates. Please choose again", player);
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
 				return placeRoad(player, board1, scanner, game1);
 			}
 			else if (road.getOwner().getName() != null) {
 
-				Catan.printToClient("A road has already been placed here. Please choose again", player);
+				//Catan.printToClient("A road has already been placed here. Please choose again", player);
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("A road has already been placed here. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
 				return placeRoad(player, board1, scanner, game1);
 			}
 			else {
 
-				Catan.printToClient("You placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")", player);
+				int playerNum = 0;
+				for (int i = 0; i < game1.getPlayers().size(); i++) {
+					if (game1.getPlayers().get(i).equals(player)) {
+						playerNum=i;
+					}
+				}
+
+				Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setRoadBuilt(Board.Edge.newBuilder().setA(Board.Point.newBuilder().setX(x1).setY(y1).build()).setB(Board.Point.newBuilder().setX(x2).setY(y2).build()).build()).build()).build();
+				//Catan.printToClient("You placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")", player);
+				Catan.printToClient(m, player);
 				
 				ArrayList<Player> players = game1.getPlayers();
 				
@@ -465,7 +504,8 @@ public class Setup {
 						PlayerSocket socket = players.get(i).getpSocket();
 						
 						if (socket != null) {
-							socket.sendMessage("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
+							Catan.printToClient(m, players.get(i));
+							//socket.sendMessage("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
 						}
 					}
 				}
@@ -479,23 +519,43 @@ public class Setup {
 	}
 
 	//lets a player place a settlement free of charge
-	public static Intersection placeSettlement(Player player, Road road, Board board1, Scanner scanner, Game game1) {
+	public static Intersection placeSettlement(Player player, Road road, game.Board board1, Scanner scanner, Game game1) throws IOException {
 
-		Catan.printToClient("Please select where to place your settlement", player);
+		Catan.printToClient("Please send the server a build settlement request", player);
+		
+		Message enter = null;
+		boolean success = false;
+		
+		while (!success) {
+			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+				
+			if (enter.getRequest().getBodyCase().getNumber() == 1) {
+				success = true;
+			}
+			else {
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a build settlement request").build()).build()).build(), player.getpSocket().getClientSocket());
+			}
+		}
+		
+		int x = enter.getRequest().getBuildSettlement().getX();
+		int y = enter.getRequest().getBuildSettlement().getY();
+		
+		/*Catan.printToClient("Please select where to place your settlement", player);
 		
 		Catan.printToClient("Select X coordinate", player);
 		int x = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 
 		Catan.printToClient("Select Y coordinate", player);
 		int y = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-		
+		*/
 		Coordinate a = new Coordinate(x, y);
 
 		//checks the coordinates are in the correct range
 		if ((!((2*y <= x+8) || (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8)))
 				|| (!(board1.getLocationFromCoordinate(a).getType().equals(INTERSECTION)))) {
 
-			Catan.printToClient("Invalid coordinates. Please choose again", player);
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
+			//Catan.printToClient("Invalid coordinates. Please choose again", player);
 			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
@@ -505,13 +565,15 @@ public class Setup {
 		if (!(road.getCoordinateA().getX() == x && road.getCoordinateA().getY() == y)
 				&& !(road.getCoordinateB().getX() == x && road.getCoordinateB().getY() == y)) {
 
-			Catan.printToClient("Settlement must be placed beside road. Please choose again", player);
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Settlement must be placed beside road. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
+			//Catan.printToClient("Settlement must be placed beside road. Please choose again", player);
 			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
 		if (settlement.getOwner().getName() != null) {
 
-			Catan.printToClient("A settlement has already been placed here. Please choose again", player);
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("A settlement has already been placed here. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
+			//Catan.printToClient("A settlement has already been placed here. Please choose again", player);
 			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
@@ -520,12 +582,23 @@ public class Setup {
 			Intersection inter = illegal.get(i);
 			//System.out.println("A"+illegal.get(i).getCoordinate().getX()+","+illegal.get(i).getCoordinate().getY());
 			if (inter.getOwner().getName() != null) {
-				Catan.printToClient("Settlement must be placed more than two roads away. Please choose again", player);
+				
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Settlement must be placed more than two roads away. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
+				//Catan.printToClient("Settlement must be placed more than two roads away. Please choose again", player);
 				return placeSettlement(player, road, board1, scanner, game1);
 			}
 		}
 
-		Catan.printToClient("You placed settlement at: (" + x + "," + y + ")", player);
+		int playerNum = 0;
+		for (int i = 0; i < game1.getPlayers().size(); i++) {
+			if (game1.getPlayers().get(i).equals(player)) {
+				playerNum=i;
+			}
+		}
+		
+		Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setSettlementBuilt(Board.Point.newBuilder().setX(x).setY(y).build()).build()).build();
+		//Catan.printToClient("You placed settlement at: (" + x + "," + y + ")", player);
+		Catan.printToClient(m, player);
 		
 		ArrayList<Player> players = game1.getPlayers();
 		
@@ -535,8 +608,9 @@ public class Setup {
 				PlayerSocket socket = players.get(i).getpSocket();
 				
 				if (socket != null) {
-					socket.sendMessage("Player " + player.getName() + ""
-							+ " placed settlement at: (" + x + "," + y + ")");
+					Catan.printToClient(m, players.get(i));
+					//socket.sendMessage("Player " + player.getName() + ""
+					//		+ " placed settlement at: (" + x + "," + y + ")");
 				}
 			}
 		}
@@ -561,27 +635,27 @@ public class Setup {
 		Coordinate nearbyHex;
 
 		nearbyHex = new Coordinate(x, y-1);
-		if(Board.CoordInRange(nearbyHex)){
+		if(game.Board.CoordInRange(nearbyHex)){
 		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
 
 		nearbyHex = new Coordinate(x, y+1);
-		if(Board.CoordInRange(nearbyHex)){
+		if(game.Board.CoordInRange(nearbyHex)){
 		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
 
 		nearbyHex = new Coordinate(x-1, y);
-		if(Board.CoordInRange(nearbyHex)){
+		if(game.Board.CoordInRange(nearbyHex)){
 		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
 
 		nearbyHex = new Coordinate(x+1, y);
-		if(Board.CoordInRange(nearbyHex)){
+		if(game.Board.CoordInRange(nearbyHex)){
 		resourceCards = getResources(player, resourceCards, nearbyHex, game1);};
 
 		nearbyHex = new Coordinate(x-1, y-1);
-		if(Board.CoordInRange(nearbyHex)){
+		if(game.Board.CoordInRange(nearbyHex)){
 		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
 
 		nearbyHex = new Coordinate(x+1, y+1);
-		if(Board.CoordInRange(nearbyHex)){
+		if(game.Board.CoordInRange(nearbyHex)){
 		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
 
 		//prints what each player gets
@@ -611,7 +685,7 @@ public class Setup {
 	//gets the resources for a player from a hex
 	public static ArrayList<ResourceCard> getResources(Player player, ArrayList<ResourceCard> resourceCards, Coordinate nearbyHex, Game game1) {
 
-		Board board1 = game1.getBoard();
+		game.Board board1 = game1.getBoard();
 		Location location = board1.getLocationFromCoordinate(nearbyHex);
 
 		if (location.getType().equals(HEX)) {
@@ -668,10 +742,10 @@ public class Setup {
 //-----Methods to get the initialise the board and hexes for the game-----//
 
 	//this is the method that adds random terrain from the catan box to each hex, it also calls all the other methods involved in making a board
-	public static Board getMeABoard() {
+	public static game.Board getMeABoard() {
 		
 		int Edgesize = 3;
-		Board board1 = getHexBoard(Edgesize);
+		game.Board board1 = getHexBoard(Edgesize);
 
 		// this generates a random arrangement of terrain
 		int givenDesert = 0;
@@ -705,9 +779,9 @@ public class Setup {
 	}
 
 	//this method adds the hexes,with just coordinates set, to the arraylist in such a way to get them to print out prettily by just iterating through them
-	public static Board getHexBoard(int Edgesize) {
+	public static game.Board getHexBoard(int Edgesize) {
 		
-		Board board1 = new Board();
+		game.Board board1 = new game.Board();
 		ArrayList<Hex> hexes1 = new ArrayList<Hex>();
 		boolean past = false;
 		int startx = -(Edgesize - 1);
@@ -769,7 +843,7 @@ public class Setup {
 	}
 
 	// this method adds a random number from the array of numbers needed on a catan board to each hex, since this happens after terrain allocation, it is also where the desert and the number 7 are matched up, and when the robber is allocated
-	public static Board setRandHexNumbersAndRob(Board board1, int givenDesert) {
+	public static game.Board setRandHexNumbersAndRob(game.Board board1, int givenDesert) {
 
 		int[] normalNumbers = {5,2,3,10,9,12,11,4,10,9,4,5,3,11};
 		int[] redNumbers = {6,8,8,6};
@@ -891,7 +965,7 @@ public class Setup {
 		return board1;
 	}
 	
-	public static void setHexNumberTest(Location thisLoc, Board board1, Iterator normIt, int xc, int yc) {
+	public static void setHexNumberTest(Location thisLoc, game.Board board1, Iterator normIt, int xc, int yc) {
 		
 		int x = thisLoc.getCoord().getX() + xc;
 		int y = thisLoc.getCoord().getY() + yc;
@@ -910,7 +984,7 @@ public class Setup {
 	}
 	
 	//this method makes a 2d array which is then used for accessing the hexes and intersections by coordinate, it also adds the hexes and the intersections(by calling another method) around the hexes
-	public static void setUpLocations(Board board1) {
+	public static void setUpLocations(game.Board board1) {
 		
 		Location[][] boardLocations = new Location[11][11];
 		board1.setBoardLocations(boardLocations);
@@ -958,7 +1032,7 @@ public class Setup {
 	}
 
 	//this method takes up an informal coordinate, and 2d array and adds a new intersection in the specified place
-	public static void setUpInter(int x, int y,  Location[][] boardLocations, Board board1) {
+	public static void setUpInter(int x, int y,  Location[][] boardLocations, game.Board board1) {
 		
 		if (boardLocations[x][y].getType().equals("empty")) {
 			
@@ -975,7 +1049,7 @@ public class Setup {
 	}
 
 	//this method adds the intersections from the 2d array into our intersections arraylist for printing etc.. the tricky looking bits here are just part of an insertion sort to get the ordering right in a moderately fast, yet simple way
-	public static void makeIntersectionOrdering(Board board1) {
+	public static void makeIntersectionOrdering(game.Board board1) {
 		
 		ArrayList<Intersection> interestionsal  = new ArrayList<Intersection>();
 		
@@ -1008,7 +1082,7 @@ public class Setup {
 	}
 
 	//this method adds the roads from the hashmap to the arraylist of roads, so they can be printed prettily, it works by go through the arraylist of intersection, and only adding already unadded roads
-	public static void setRoadArrayAndMap(Board board1) {
+	public static void setRoadArrayAndMap(game.Board board1) {
 		
 		ArrayList<Road> roads = new ArrayList<Road>();
 		HashMap roadmap = makeRoadHashMap(board1);
@@ -1046,7 +1120,7 @@ public class Setup {
 	}
 
 	//this creates a hashmap that maps from coordinate pairs to roads, it does this basically by just making six for each hex (checking if each road has already been made)
-	public static HashMap makeRoadHashMap(Board board1) {
+	public static HashMap makeRoadHashMap(game.Board board1) {
 		
 		HashMap roadmap = new HashMap();
 		for (int hin = 0; hin < board1.getHexes().size(); hin++) {
@@ -1086,7 +1160,7 @@ public class Setup {
 	}
 
 	//this method adds the ports to an arrraylist in a way in which they can be printed nicely
-	public static void addPorts(Board board1) {
+	public static void addPorts(game.Board board1) {
 		
 		Iterator<String> resIt = getPortArrangement();
 		ArrayList<Port> ports = new ArrayList<Port>();
@@ -1118,7 +1192,7 @@ public class Setup {
 		return PortSt;
 	}
 
-	public static void setIllegals(Board board1) {
+	public static void setIllegals(game.Board board1) {
 		
 		for (int j = 0; j < board1.getBoardLocations().length; j++) {
 			for (int g = 0; g < board1.getBoardLocations()[j].length; g++) {
@@ -1170,7 +1244,7 @@ public class Setup {
 		}
 	}
 
-	public static Intersection isOwned(Board board1, int j, int g) {
+	public static Intersection isOwned(game.Board board1, int j, int g) {
 		
 		try{
 			Intersection orb = (Intersection) board1.getBoardLocations()[j][g].getContains();
