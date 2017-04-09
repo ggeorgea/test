@@ -19,9 +19,13 @@ import intergroup.Messages.Message;
 import intergroup.Requests.Request;
 import intergroup.board.Board.Edge;
 import intergroup.board.Board.PlayableDevCard;
+import intergroup.board.Board.Player;
 import intergroup.board.Board.Point;
+import intergroup.resource.Resource.Counts;
 import intergroup.resource.Resource.Kind;
 import intergroup.trade.Trade.Response;
+import intergroup.trade.Trade.WithBank;
+import intergroup.trade.Trade.WithPlayer;
 
 /**
  * Class that contains the main method for the game
@@ -238,8 +242,174 @@ public class Catan {
 			            				}
 		            				}		
 		            				break;
-		            			//TODO initiate trade
 		            			case "INITIATETRADE":
+		            				System.out.println("do you wish to trade with a PLAYER or with a BANK");
+		            				String ans = scanner.nextLine();
+		            				switch(ans){
+		            				case ("PLAYER"):
+		            					boolean finished1 = false;
+		            					int brick1 = 0;
+		            					int lumber1 = 0;
+		            					int wool1 = 0;
+		            					int grain1 = 0;
+		            					int ore1 = 0;
+ 		            				  while(!finished1){
+		            					  System.out.println("pick a number of a specific resource to ask for, if you have finished choosing, enter -1");
+		            					  int numChos = scanner.nextInt();
+		            					  if(numChos==-1){
+		            						  finished1 = true;
+		            						  break;		         
+		            					  }
+		            					  System.out.println("please enter the specific resource, from: brick, lumber, wool, grain, ore");
+		            					  String recChos = scanner.nextLine();
+		            					  switch(recChos){
+		            					  case "brick":
+		            						  brick1 += numChos;
+		            						  break;
+		            					  case "lumber":
+		            						  lumber1 += numChos;
+		            						  break;
+		            					  case "wool":
+		            						  wool1 += numChos;
+		            						  break;
+		            					  case "grain":
+		            						  grain1+=numChos;
+		            						  break;
+		            					  case "ore":
+		            						  ore1+=numChos;
+		            						  break;
+		            					  default :
+		            						  System.out.println("not a resource, try again");
+		            						  break;
+		            					  }
+ 		            				  }
+		            					 finished1 = false;
+		            					int brick2 = 0;
+		            					int lumber2 = 0;
+		            					int wool2 = 0;
+		            					int grain2 = 0;
+		            					int ore2 = 0;
+		            					finished1 = false;
+ 		            				  while(!finished1){
+		            					  System.out.println("pick a number of a specific resource to request, if you have finished choosing, enter -1");
+		            					  int numChos = scanner.nextInt();
+		            					  if(numChos==-1){
+		            						  finished1 = true;
+		            						  break;		         
+		            					  }
+		            					  System.out.println("please enter the specific resource, from: brick, lumber, wool, grain, ore");
+		            					  String recChos = scanner.nextLine();
+		            					  switch(recChos){
+		            					  case "brick":
+		            						  brick2 += numChos;
+		            						  break;
+		            					  case "lumber":
+		            						  lumber2  += numChos;
+		            						  break;
+		            					  case "wool":
+		            						  wool2 += numChos;
+		            						  break;
+		            					  case "grain":
+		            						  grain2 +=numChos;
+		            						  break;
+		            					  case "ore":
+		            						  ore2 +=numChos;
+		            						  break;
+		            					  default :
+		            						  System.out.println("not a resource, try again");
+		            						  break;
+		            					  }
+ 		            				  }
+ 		            				  System.out.println("finally, enter the number of the player you want to trade with:");
+ 		            				  int pNum = scanner.nextInt();
+		            					
+		            					sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setInitiateTrade(intergroup.trade.Trade.Kind.newBuilder().setPlayer(WithPlayer.newBuilder().setOther(Player.newBuilder().setIdValue(pNum).build()).setWanting(Counts.newBuilder().setBrick(brick1).setGrain(grain1).setLumber(lumber1).setOre(ore1).setWool(wool1).build()).setOffering(Counts.newBuilder().setBrick(brick2).setGrain(grain2).setLumber(lumber2).setOre(ore2).setWool(wool2).build()).build()).build()).build()).build(),kkSocket);
+
+		            					
+		            					break;
+		            				case("BANK"):
+		            					
+		            					 finished1 = false;
+		            					 brick1 = 0;
+		            					 lumber1 = 0;
+		            					 wool1 = 0;
+		            					 grain1 = 0;
+		            					 ore1 = 0;
+ 		            				  while(!finished1){
+		            					  System.out.println("pick a number of a specific resource to ask for, if you have finished choosing, enter -1");
+		            					  int numChos = scanner.nextInt();
+		            					  if(numChos==-1){
+		            						  finished1 = true;
+		            						  break;		         
+		            					  }
+		            					  System.out.println("please enter the specific resource, from: brick, lumber, wool, grain, ore");
+		            					  String recChos = scanner.nextLine();
+		            					  switch(recChos){
+		            					  case "brick":
+		            						  brick1 += numChos;
+		            						  break;
+		            					  case "lumber":
+		            						  lumber1 += numChos;
+		            						  break;
+		            					  case "wool":
+		            						  wool1 += numChos;
+		            						  break;
+		            					  case "grain":
+		            						  grain1+=numChos;
+		            						  break;
+		            					  case "ore":
+		            						  ore1+=numChos;
+		            						  break;
+		            					  default :
+		            						  System.out.println("not a resource, try again");
+		            						  break;
+		            					  }
+ 		            				  }
+		            					 finished1 = false;
+		            					 brick2 = 0;
+		            					 lumber2 = 0;
+		            					 wool2 = 0;
+		            					 grain2 = 0;
+		            					 ore2 = 0;
+		            					finished1 = false;
+ 		            				  while(!finished1){
+		            					  System.out.println("pick a number of a specific resource to request, if you have finished choosing, enter -1");
+		            					  int numChos = scanner.nextInt();
+		            					  if(numChos==-1){
+		            						  finished1 = true;
+		            						  break;		         
+		            					  }
+		            					  System.out.println("please enter the specific resource, from: brick, lumber, wool, grain, ore");
+		            					  String recChos = scanner.nextLine();
+		            					  switch(recChos){
+		            					  case "brick":
+		            						  brick2 += numChos;
+		            						  break;
+		            					  case "lumber":
+		            						  lumber2  += numChos;
+		            						  break;
+		            					  case "wool":
+		            						  wool2 += numChos;
+		            						  break;
+		            					  case "grain":
+		            						  grain2 +=numChos;
+		            						  break;
+		            					  case "ore":
+		            						  ore2 +=numChos;
+		            						  break;
+		            					  default :
+		            						  System.out.println("not a resource, try again");
+		            						  break;
+		            					  }
+ 		            				  }
+		            					sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setInitiateTrade(intergroup.trade.Trade.Kind.newBuilder().setBank(WithBank.newBuilder().setWanting(Counts.newBuilder().setBrick(brick1).setGrain(grain1).setLumber(lumber1).setOre(ore1).setWool(wool1).build()).setOffering(Counts.newBuilder().setBrick(brick2).setGrain(grain2).setLumber(lumber2).setOre(ore2).setWool(wool2).build()).build()).build()).build()).build(),kkSocket);
+		            					break;
+		            				default:
+		            					System.out.println("sorry that is not an option");
+
+		            					break;
+		            				}
+		            				
 		            				break;
 		            			case "SUBMITTRADERESPONSE":
 		            				System.out.println("do you ACCEPT?");
@@ -251,8 +421,45 @@ public class Catan {
 		            					sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setSubmitTradeResponse(Response.REJECT).build()).build(),kkSocket);
 		            				}
 		            				break;
-		            			//TODO resource.counts
 		            			case "DISCARDRESOURCES":
+		            				  int brick = 0;
+		            				  int lumber = 0;
+		            				  int wool = 0;
+		            				  int grain = 0;
+		            				  int ore = 0;
+		            				  boolean finished = false;
+		            				  
+		            				  while(!finished){
+		            					  System.out.println("pick a number of a specific resource to discard, if you have finished discarding, enter -1");
+		            					  int numChos = scanner.nextInt();
+		            					  if(numChos==-1){
+		            						  finished = true;
+		            						  break;		         
+		            					  }
+		            					  System.out.println("please enter the specific resource, from: brick, lumber, wool, grain, ore");
+		            					  String recChos = scanner.nextLine();
+		            					  switch(recChos){
+		            					  case "brick":
+		            						  brick += numChos;
+		            						  break;
+		            					  case "lumber":
+		            						  lumber += numChos;
+		            						  break;
+		            					  case "wool":
+		            						  wool += numChos;
+		            						  break;
+		            					  case "grain":
+		            						  grain+=numChos;
+		            						  break;
+		            					  case "ore":
+		            						  ore+=numChos;
+		            						  break;
+		            					  default :
+		            						  System.out.println("not a resource, try again");
+		            						  break;
+		            					  }
+		            				  }
+		            					sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setDiscardResources(Counts.newBuilder().setBrick(brick).setGrain(grain).setLumber(lumber).setOre(ore).setWool(wool).build()).build()).build(),kkSocket);
 		            				break;
 		            			case "SUBMITTARGETPLAYER":
 		            				System.out.println("please submit the int for the player you wish to select, e.g. player 2 > 2");
@@ -363,7 +570,7 @@ public class Catan {
 				game1.setBrick(brick);
 
 				//sets up players, ALSO USES THE NETWORKING'S SOCKET ARRAY!
-				ArrayList<Player> players = Setup.setPlayers(scanner,SocketArray);
+				ArrayList<game.Player> players = Setup.setPlayers(scanner,SocketArray);
 				game1.setPlayers(players);
 
 				//roll dice for each player
@@ -474,7 +681,7 @@ public class Catan {
 	}
 
 	//prints a message to the specified player
-	public static void printToClient(String message, Player player)  {
+	public static void printToClient(String message, game.Player player)  {
 		
 		Message m = Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(message).build()).build();
 		PlayerSocket socket = player.getpSocket();
@@ -494,7 +701,7 @@ public class Catan {
 	}
 	
 	//sends a protobuf to the specified player
-	public static void printToClient(Message message, Player player)  {
+	public static void printToClient(Message message, game.Player player)  {
 		
 		
 		PlayerSocket socket = player.getpSocket();
@@ -516,7 +723,7 @@ public class Catan {
 	
 
 	//gets input from a specified player in the form of a string
-	public static String getInputFromClient(Player player, Scanner scanner)  {
+	public static String getInputFromClient(game.Player player, Scanner scanner)  {
 
 		PlayerSocket socket = player.getpSocket();
 
