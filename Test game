@@ -1,0 +1,1788 @@
+----------SETTLERS OF CATAN----------
+
+
+                                         ?
+                                       /
+             ?      /\            /\            /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |    |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  /    /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |    |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /      \      /      \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\    \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |        |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |    |    P   |    |    H   |
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /      \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                   \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M                      P
+
+robber is at: 2, 1
+How many players want to play? Enter 3 or 4.
+3
+Player 1: Select a character to be your player name.
+Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow
+W
+Player 2: Select a character to be your player name.
+Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow
+R
+Player 3: Select a character to be your player name.
+Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow
+B
+Player W: press 'R' to roll.
+r
+Player W rolls: 8
+Player R: press 'R' to roll.
+r
+Player R rolls: 8
+Player B: press 'R' to roll.
+r
+Player B rolls: 9
+Player order:
+1: B
+2: W
+3: R
+Player B: Please select where to place your road
+Coordinate 1:
+Select X coordinate
+0
+Select Y coordinate
+1
+Coordinate 2:
+Select X coordinate
+0
+Select Y coordinate
+2
+Player B placed road at: (0,1),(0,2)
+Player B: Please select where to place your settlement
+Select X coordinate
+0
+Select Y coordinate
+1
+Player B placed settlement at: (0,1)
+Player W: Please select where to place your road
+Coordinate 1:
+Select X coordinate
+0
+Select Y coordinate
+-1
+Coordinate 2:
+Select X coordinate
+0
+Select Y coordinate
+-2
+Player W placed road at: (0,-1),(0,-2)
+Player W: Please select where to place your settlement
+Select X coordinate
+0
+Select Y coordinate
+-2
+Player W placed settlement at: (0,-2)
+Player R: Please select where to place your road
+Coordinate 1:
+Select X coordinate
+-2
+Select Y coordinate
+-5
+Coordinate 2:
+Select X coordinate
+-3
+Select Y coordinate
+-5
+Player R placed road at: (-2,-5),(-3,-5)
+Player R: Please select where to place your settlement
+Select X coordinate
+-2
+Select Y coordinate
+-5
+Player R placed settlement at: (-2,-5)
+Player R: Please select where to place your road
+Coordinate 1:
+Select X coordinate
+-1
+Select Y coordinate
+0
+Coordinate 2:
+Select X coordinate
+-2
+Select Y coordinate
+0
+Player R placed road at: (-1,0),(-2,0)
+Player R: Please select where to place your settlement
+Select X coordinate
+-2
+Select Y coordinate
+0
+Player R placed settlement at: (-2,0)
+Player R gets:
+1x ore 1x wool 1x lumber Player W: Please select where to place your road
+Coordinate 1:
+Select X coordinate
+4
+Select Y coordinate
+1
+Coordinate 2:
+Select X coordinate
+4
+Select Y coordinate
+0
+Player W placed road at: (4,1),(4,0)
+Player W: Please select where to place your settlement
+Select X coordinate
+4
+Select Y coordinate
+1
+Player W placed settlement at: (4,1)
+Player W gets:
+1x ore 1x brick Player B: Please select where to place your road
+Coordinate 1:
+Select X coordinate
+1
+Select Y coordinate
+3
+Coordinate 2:
+Select X coordinate
+1
+Select Y coordinate
+4
+Player B placed road at: (1,3),(1,4)
+Player B: Please select where to place your settlement
+Select X coordinate
+1
+Select Y coordinate
+3
+Player B placed settlement at: (1,3)
+Player B gets:
+1x brick 1x lumber 1x ore                                          ?
+                                       /
+             ?      /\            /\            /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  /    /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |        |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 2, 1
+Player B: press 'R' to roll.
+r
+Player B rolls: 7
+Player B: Please select where to place the robber
+Select X coordinate
+-2
+Select Y coordinate
+-4
+Please select player to steal from
+invalid player choice
+Please select player to steal from
+R
+You have stolen: 1x ore
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+1
+What do you want to build?
+1. Road
+2. Settlement
+3. City
+4. Development Card
+1
+Please select where to place your road
+Coordinate 1:
+Select X coordinate
+0
+Select Y coordinate
+2
+Coordinate 2:
+Select X coordinate
+1
+Select Y coordinate
+3
+Player B placed road at: (1,3),(0,2)
+branching to 1,3 from 0,2
+   branching to 1,4 from 1,3
+branching to 0,2 from 1,3
+   branching to 0,1 from 0,2
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+6
+Your Longest Road Length is: 3
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+5
+                                         ?
+                                       /
+             ?      /\            /\            /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |        |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: -2, -4
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+4
+(ore, ore)
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+3
+Press 'B' to trade with the bank, and 'P' to trade with other players:
+p
+Who do you want to trade with?
+1. W
+2. R
+W
+Invalid choice. Please choose again
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+3
+Press 'B' to trade with the bank, and 'P' to trade with other players:
+p
+Who do you want to trade with?
+1. W
+2. R
+1
+What do you want to trade from your hand?
+1. ore
+2. ore
+1
+Do you want to trade more cards?
+1. Yes
+2. No
+2
+What do you want from W's hand?
+1. ore
+2. brick
+2
+Do you want to trade more cards?
+1. Yes
+2. No
+2
+Player W: Player B has proposed a trade:
+1x ore from their hand for 1x brick from your hand
+What do you want to do?
+1. Accept Trade
+2. Reject Trade
+3. Propose a Counter-offer
+1
+Offer accepted. Trading stopped.
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+3
+Press 'B' to trade with the bank, and 'P' to trade with other players:
+p
+Who do you want to trade with?
+1. W
+2. R
+2
+What do you want to trade from your hand?
+1. ore
+2. brick
+1
+Do you want to trade more cards?
+1. Yes
+2. No
+2
+What do you want from R's hand?
+1. wool
+2. lumber
+2
+Do you want to trade more cards?
+1. Yes
+2. No
+2
+Player R: Player B has proposed a trade:
+1x ore from their hand for 1x lumber from your hand
+What do you want to do?
+1. Accept Trade
+2. Reject Trade
+3. Propose a Counter-offer
+1
+Offer accepted. Trading stopped.
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+4
+(brick, lumber)
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+1
+What do you want to build?
+1. Road
+2. Settlement
+3. City
+4. Development Card
+1
+Please select where to place your road
+Coordinate 1:
+Select X coordinate
+0
+Select Y coordinate
+1
+Coordinate 2:
+Select X coordinate
+1
+Select Y coordinate
+0
+Invalid coordinates. Please choose again
+Please select where to place your road
+Coordinate 1:
+Select X coordinate
+1
+Select Y coordinate
+4
+Coordinate 2:
+Select X coordinate
+2
+Select Y coordinate
+5
+Player B placed road at: (2,5),(1,4)
+A
+   branching to 1,3 from 1,4
+      branching to 0,2 from 1,3
+         branching to 0,1 from 0,2
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+6
+Your Longest Road Length is: 4
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+5
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |        |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: -2, -4
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |        |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: -2, -4
+Player R: press 'R' to roll.
+r
+Player R rolls: 6
+Player B gets:
+1x brick
+Player R: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |        |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: -2, -4
+Player B: press 'R' to roll.
+r
+Player B rolls: 8
+Player B gets:
+1x ore
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |        |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: -2, -4
+Player W: press 'R' to roll.
+r
+Player W rolls: 7
+Player W: Please select where to place the robber
+Select X coordinate
+0
+Select Y coordinate
+0
+Please select player to steal from
+invalid player choice
+Please select player to steal from
+R
+You have stolen: 1x ore
+Player W: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |    R   |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 0, 0
+Player R: press 'R' to roll.
+r
+Player R rolls: 3
+Player W gets:
+1x grain
+Player R gets:
+1x ore
+Player R: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |    R   |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 0, 0
+Player B: press 'R' to roll.
+r
+Player B rolls: 11
+Player W gets:
+1x grain
+Player R gets:
+1x lumber
+Player B gets:
+1x lumber
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |    R   |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 0, 0
+Player W: press 'R' to roll.
+r
+Player W rolls: 9
+Player W: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |    R   |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 0, 0
+Player R: press 'R' to roll.
+r
+Player R rolls: 6
+Player R: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |    R   |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 0, 0
+Player B: press 'R' to roll.
+r
+Player B rolls: 6
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |    R   |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 0, 0
+Player W: press 'R' to roll.
+r
+Player W rolls: 7
+Player W: Please select where to place the robber
+Select X coordinate
+0
+Select Y coordinate
+0
+Please select player to steal from
+invalid player choice
+Please select player to steal from
+R
+You have stolen: 1x wool
+Player W: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |    R   |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 0, 0
+Player R: press 'R' to roll.
+r
+Player R rolls: 8
+Player B gets:
+1x ore
+Player R: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |    R   |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 0, 0
+Player B: press 'R' to roll.
+r
+Player B rolls: 12
+Player W gets:
+1x brick
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |    R   |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 0, 0
+Player W: press 'R' to roll.
+r
+Player W rolls: 6
+Player W: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |    R   |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 0, 0
+Player R: press 'R' to roll.
+r
+Player R rolls: 7
+Player R: Please select where to place the robber
+Select X coordinate
+8
+Select Y coordinate
+0
+Invalid coordinates. Please choose again
+Player R: Please select where to place the robber
+Select X coordinate
+0
+Select Y coordinate
+0
+Please select player to steal from
+invalid player choice
+Please select player to steal from
+R
+You have stolen: 1x lumber
+Player R: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+8
+                                         ?
+                                       /
+             ?      /\            /\         B  /\
+               \   /  \          /  \          /  \
+                  /    \        /    \        /    \
+                 / -2,2 \      /  0,3 \      /  2,4 \
+                |        |    |        |    |        |
+                |        |    |        |    |        |
+                |    F   |    |    F   |  B |    M   |
+                |        |    |        |    |        |
+                |     4  |    |    10  |    |     8  |
+                 \      /      \      /  Bt  \      /
+                  \    /        \    /        \    /
+             /\    \  /    /\    \  / B  /\    \  /    /\       G
+            /  \    \/    /  \    \/    /  \    \/    /  \    /
+           /    \        /    \        /    \        /    \
+          / -3,0 \      / -1,1 \      /  1,2 \      /  3,3 \
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   F -   |    P   |    |    F   |  B |    H   |    |    G   |
+         |        |    |        |    |        |    |        |
+         |     5  |    |    11  |    |     4  |    |    10  |
+          \      /  Rt  \      /   Bt \      /      \      /
+           \    /        \    /        \    /        \    /
+      /\    \  /    /\  R \  /    /\    \  /    /\    \  /    /\
+     /  \    \/    /  \    \/    /  \    \/    /  \    \/    /  \
+    /    \        /    \        /    \        /    \        /    \
+   /-4,-2 \      /-2,-1 \      /  0,0 \      /  2,1 \      /  4,2 \
+  |        |    |        |    |    R   |    |    R   |    |        |
+  |        |    |        |    |        |    |        |    |        |
+  |    P   |    |    M   |    |    H   |    |    D   |    |    M   |    - H
+  |        |    |        |    |        |    |        |    |        |
+  |     9  |    |     3  |    |     6  |    |     7  |    |     2  |
+   \      /      \      /      \      /      \      /      \      /
+    \    /        \    /        \    /        \    /        \    /
+     \  /    /\    \  /    /\    \  /    /\    \  /    /\    \  /
+      \/    /  \    \/    /  \    \/    /  \    \/    /  \    \/
+           /    \        /    \        /    \        /    \
+          /-3,-3 \      /-1,-2 \      / 1,-1 \      /  3,0 \  Wt
+         |        |    |        |    |        |    |        |
+         |        |    |        |    |        |    |        |
+   ? -   |    F   |    |    G   |  W |    P   |    |    H   |  W
+         |        |    |        |    |        |    |        |
+         |     8  |    |    11  |    |     5  |    |    12  |
+          \      /      \      /  Wt  \      /      \      /
+           \    /        \    /        \    /        \    /
+            \  /    /\    \  /    /\    \  /    /\    \  /
+             \/    /  \    \/    /  \    \/    /  \    \/  \
+                  /    \        /    \        /    \         ?
+                 /-2,-4 \      / 0,-3 \      / 2,-2 \
+                |    R   |    |        |    |        |
+                |        |    |        |    |        |
+                |    P   |    |    G   |    |    G   |
+                |        |    |        |    |        |
+                |     9  |    |     3  |    |     6  |
+                 \      /      \      /      \      /
+                  \    /        \    /        \    /
+                R  \  /          \  /          \  /
+                 /  \/            \/ \          \/
+                M   Rt                 P
+
+robber is at: 0, 0
+Player B: press 'R' to roll.
+r
+Player B rolls: 9
+Player B: What do you want to do?
+1: Build a road, settlement, city or development card?
+2: Play a development card?
+3: Trade with the bank, ports or other players?
+4: Show your hand?
+5: Print map?
+6: Length of your Longest Road?
+7: Count your victory pionts
+8: End turn?
+1
+What do you want to build?
+1. Road
+2. Settlement
+3. City
+4. Development Card
+1
+Please select where to place your road
+Coordinate 1:
+Select X coordinate
+2
+Select Y coordinate
+5
+Coordinate 2:
+Select X coordinate
+3
+Select Y coordinate
+4
+Invalid coordinates. Please choose again
+Please select where to place your road
+Coordinate 1:
+Select X coordinate
+2
+Select Y coordinate
+5
+Coordinate 2:
+Select X coordinate
+3
+Select Y coordinate
+5
+Player B placed road at: (2,5),(3,5)
+   branching to 1,4 from 2,5
+      branching to 1,3 from 1,4
+         branching to 0,2 from 1,3
+            branching to 0,1 from 0,2
+player B now has the longest road!
+Player B Wins!
+Do you want to play again?
+Y or N
