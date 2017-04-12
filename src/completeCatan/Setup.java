@@ -38,7 +38,7 @@ public class Setup {
  	public static ArrayList<Player> setPlayers(Scanner scanner, ArrayList<PlayerSocket> socketArray) throws IOException {
  
  		//gets how many players there are
- 		int n = requestPlayers(scanner, socketArray.size());
+ 		int n = socketArray.size() + 1;
  
  		ArrayList<Player> players = new ArrayList<Player>();
  
@@ -68,37 +68,15 @@ public class Setup {
  		return players;
  	}
  
- 	//asks the client how many players there are TWEAKED FOR NETWORKING
- 	public static int requestPlayers(Scanner scanner, int clientLimit) {
- 
- 		System.out.println("How many players want to play? Enter 3 or 4. You cannot have more clients than players");
- 
- 		int noPlayers = scanner.nextInt();
- 
- 		//makes sure the player inputs the correct value
- 		if (!(noPlayers == 3 || noPlayers == 4)) {
- 			System.out.println("Invalid number of players. Please choose again.");
- 			return requestPlayers(scanner,  clientLimit);
- 			
- 		}
- 		else if (noPlayers < clientLimit) {
- 			System.out.println(noPlayers + ">" + clientLimit + ", you cannot have more clients than players ");
- 			return requestPlayers(scanner,  clientLimit);
- 		}
- 
- 		return noPlayers;
- 	}
- 	
- 	
  	//asks the client how many clients there are, ABOVE METHOD JUST COPIED/TWEAKED FOR NETWORKING
  	public static int requestClients(Scanner scanner) {
  
- 		System.out.println("How many Clients should connect? 0 - 4.");
+ 		System.out.println("How many Clients should connect? 2 or 3?");
  
  		int noPlayers = scanner.nextInt();
  
  		//makes sure the player inputs the correct value
- 		if (!(noPlayers == 3 || noPlayers == 4 || noPlayers == 1|| noPlayers == 2 || noPlayers == 0)) {
+ 		if (!(noPlayers == 2 || noPlayers == 3)) {
  			System.out.println("Invalid number of clients. Please choose again.");
  			return requestClients(scanner);
  		}
@@ -112,7 +90,7 @@ public class Setup {
 		Catan.printToClient("Select a character to be your player name.", player);
  		Catan.printToClient("Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow", player);
  
- 		String name = Catan.getInputFromClient(player, scanner);
+ 		String name = Catan.getInputFromClient(player, scanner).toUpperCase();
  		char c = name.toCharArray()[0];
  		String check = "";
  
