@@ -413,7 +413,7 @@ public class Setup {
 	//also does not depend on nearby roads
 	public static Road placeRoad(Player player, game.Board board1, Scanner scanner, Game game1) throws IOException {
 
-		Catan.printToClient("Please send the server a build road request", player);
+		Catan.printToClient("Please send the server a build road request", player); //TODO asking for request
 		
 		Message enter = null;
 		boolean success = false;
@@ -521,7 +521,7 @@ public class Setup {
 	//lets a player place a settlement free of charge
 	public static Intersection placeSettlement(Player player, Road road, game.Board board1, Scanner scanner, Game game1) throws IOException {
 
-		Catan.printToClient("Please send the server a build settlement request", player);
+		Catan.printToClient("Please send the server a build settlement request", player); //TODO asking for request
 		
 		Message enter = null;
 		boolean success = false;

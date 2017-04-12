@@ -77,6 +77,22 @@ public class ResourceAllocation {
 			}
 		}
 			
+		for (int i = 0; i < bankHasResources.size(); i++) {
+		
+			int playersWithResources = 0;
+		
+			for (int j = 0; j < players.size(); j++) {
+			
+				if (players.get(j).getNewResourceCards().contains(bankHasResources.get(i))) {
+					playersWithResources++;
+				}				
+			}
+			
+			if (playersWithResources <= 1) {
+				bankHasResources.remove(i);
+			}
+		}
+		
 		removeIllegalResources(players, bankHasResources);
 		setResources(players);
 		game1.setPlayers(players);

@@ -219,7 +219,7 @@ public class Building {
 	//asks the player for the coordinates for the settlement they want to build
 	public static Intersection getSettlementCoordinates(Player player, Game game1, Scanner scanner) throws IOException {
 			
-		Catan.printToClient("Please send the server a build settlement request", player);
+		Catan.printToClient("Please send the server a build settlement request", player); //TODO asking for request
 		//Catan.printToClient("Please select where to place your settlement", player);
 
 		Message enter = null;
@@ -457,7 +457,7 @@ public class Building {
 	//asks the player for the coordinates for the settlement they want to build
 	public static Intersection getCityCoordinates(Player player, Game game1, Scanner scanner) throws IOException {
 		
-		Catan.printToClient("Please send the server a build city request", player);
+		Catan.printToClient("Please send the server a build city request", player); //TODO asking for request
 		//Catan.printToClient("Please select the settlement you want to upgrade to a city", player);
 
 		Message enter = null;

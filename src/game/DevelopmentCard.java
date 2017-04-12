@@ -69,7 +69,7 @@ public class DevelopmentCard {
 	//lets the player buy a development card
 	public static void buyDevelopmentCard(Player player, Game game1, Scanner scanner) throws IOException {
 			
-		Catan.printToClient("Please send the server a buy development card request", player);
+		Catan.printToClient("Please send the server a buy development card request", player); //TODO asking for request
 		
 		Message enter = null;
 		boolean success = false;

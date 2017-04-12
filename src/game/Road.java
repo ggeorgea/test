@@ -207,7 +207,7 @@ public class Road {
 	//asks the player for the coordinates for the road they want to build
 	public static Road getRoadCoordinates(Player player, Game game1, Scanner scanner, boolean roadBuilding) throws IOException {
 		
-		Catan.printToClient("Please send the server a build road request", player);
+		Catan.printToClient("Please send the server a build road request", player); //TODO asking for request
 		
 		Message enter = null;
 		boolean success = false;
