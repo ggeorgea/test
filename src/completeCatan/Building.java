@@ -42,22 +42,18 @@ public class Building {
 //-----Getters and Setters-----//
 	
 	public String getType() {
-		
 		return type;
 	}
 	
 	public void setType(String type) {
-		
 		this.type = type;
 	}
 	
 	public int getVictoryPoints() {
-	
 		return victoryPoints;
 	}
 	
 	public void setVictoryPoints(int victoryPoints) {
-	
 		this.victoryPoints = victoryPoints;
 	}
 	
@@ -125,10 +121,12 @@ public class Building {
 			int x = settlement.getCoordinate().getX();
 			int y = settlement.getCoordinate().getY();
 			
+			//tells the player their placement was successful
 			Catan.printToClient("You placed settlement at: (" + x + "," + y + ")", player);
 			
 			ArrayList<Player> players = game1.getPlayers();
 			
+			//notifies each player of the action
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i) != player) {
 					
@@ -162,19 +160,15 @@ public class Building {
 				ResourceCard card = cards.get(i);
 				
 				if (brick == null && card.getResource().equals(BRICK)) {
-					
 					brick = card;
 				}
 				if (lumber == null && card.getResource().equals(LUMBER)) {
-					
 					lumber = card;
 				}
 				if (wool == null && card.getResource().equals(WOOL)) {
-				
 					wool = card;
 				}
 				if (grain == null && card.getResource().equals(GRAIN)) {
-				
 					grain = card;
 				}
 				
@@ -252,38 +246,44 @@ public class Building {
 			int j = settlement.getCoordinate().getX();
 			int g = settlement.getCoordinate().getY();
 			
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j,g+1));
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j, g+1));
 			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
+				
 				foundSuitable = true;
 				return foundSuitable;
 			}
 			
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j,g-1));
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j, g-1));
 			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
+				
 				foundSuitable = true;
 				return foundSuitable;
 			}
 			
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1,g));
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1, g));
 			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
-			foundSuitable = true;
-			return foundSuitable;
-			}
-			
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1,g));
-			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
+				
 				foundSuitable = true;
 				return foundSuitable;
 			}
 			
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1,g+1));
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1, g));
 			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
+				
 				foundSuitable = true;
 				return foundSuitable;
 			}
 			
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1,g-1));
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1, g+1));
 			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
+				
+				foundSuitable = true;
+				return foundSuitable;
+			}
+			
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1, g-1));
+			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
+				
 				foundSuitable = true;
 				return foundSuitable;
 			}
@@ -347,10 +347,12 @@ public class Building {
 			int x = city.getCoordinate().getX();
 			int y = city.getCoordinate().getY();
 			
+			//tells the player their upgrade was successful
 			Catan.printToClient("You placed city at: (" + x + "," + y + ")", player);
 			
 			ArrayList<Player> players = game1.getPlayers();
 			
+			//notifies other players of the action
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i) != player) {
 					
@@ -380,12 +382,10 @@ public class Building {
 			ResourceCard card = cards.get(i);
 			
 			if (card.getResource().equals(ORE)) {
-					
-				ore.add(card);
+					ore.add(card);
 			}
 			
 			if (card.getResource().equals(GRAIN)) {
-				
 				grain.add(card);
 			}
 		}

@@ -12,6 +12,9 @@ public class Dice {
 
 	public static int valueDice = 0; 
 	
+	public static final String ROBBER = "R";
+	public static final int DICE_SIDES = 6;
+	
 	//rolls the two dice
 	public static void rollDice(Player player, Scanner scanner, Game game1) throws IOException {
 
@@ -23,7 +26,7 @@ public class Dice {
 		String enter = Catan.getInputFromClient(player, scanner).toUpperCase();
 		
 		//makes sure the user enters the correct input
-		if (!(enter.equals("R"))) {
+		if (!(enter.equals(ROBBER))) {
 			
 			Catan.printToClient("Invalid input. Please roll again.", player);
 			rollDice(player, scanner, game1);
@@ -33,23 +36,24 @@ public class Dice {
 		//rolls the two dice and adds the sum
 		//this preserves the probability of rolling values from
 		//the actual game
-		int dice1 = random.nextInt(6) + 1;
-		int dice2 = random.nextInt(6) + 1;
+		int dice1 = random.nextInt(DICE_SIDES) + 1;
+		int dice2 = random.nextInt(DICE_SIDES) + 1;
 		int diceRoll = dice1 + dice2;
 		
 		valueDice = diceRoll;
 		
+		//tells the player what they rolled
 		Catan.printToClient("You rolled: " + diceRoll, player);
 		
 		ArrayList<Player> players = game1.getPlayers();
 		
+		//notifies other players of the dice roll
 		for (int i = 0; i < players.size(); i++) {
-			
 			if (players.get(i) != player) {
 				
 				PlayerSocket socket = players.get(i).getpSocket();
+				
 				if (socket != null) {
-					
 					socket.sendMessage("Player " + player.getName() + " rolled: " + diceRoll);
 				}
 			}
@@ -60,7 +64,6 @@ public class Dice {
 
 	//method to return the value of the dice 
 	public int getCurrentValueOfDice(){
-
 		return valueDice;
 	}
 }

@@ -41,22 +41,18 @@ public class DevelopmentCard {
 //-----Getters and Setters-----//
 	
 	public String getType() {
-	
 		return type;
 	}
 	
 	public void setType(String type) {
-	
 		this.type = type;
 	}
 	
 	public boolean isHidden() {
-	
 		return hidden;
 	}
 	
 	public void setHidden(boolean hidden) {
-	
 		this.hidden = hidden;
 	}
 	
@@ -100,38 +96,18 @@ public class DevelopmentCard {
 			
 			playerDevCards.add(developmentCard);
 			
-			int card = -1;
-			
-			if (developmentCard.getType().equals(KNIGHT)) {
-				card = 0;
-			}
-			if (developmentCard.getType().equals(ROAD_BUILDING)) {
-				card = 1;
-			}
-			if (developmentCard.getType().equals(MONOPOLY)) {
-				card = 2;
-			}
-			if (developmentCard.getType().equals(YEAR_OF_PLENTY)) {
-				card = 3;
-			}
-			
-			int playerNum = 0;
-			for (int i = 0; i < game1.getPlayers().size(); i++) {
-				if (game1.getPlayers().get(i).equals(player)) {
-					playerNum=i;
-				}
-			}
-		
+			//tells the player their purchase was successful
 			Catan.printToClient("You bought a development card", player);
 			
 			ArrayList<Player> players = game1.getPlayers();
 			
+			//notifies other players of the action
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i) != player) {
 					
 					PlayerSocket socket = player.getpSocket();
+					
 					if (socket != null) {
-						
 						socket.sendMessage("Player " + player.getName() + " bought a development card");
 					}
 				}
@@ -140,7 +116,7 @@ public class DevelopmentCard {
 			String type = developmentCard.getType();
 			
 			//if the development card is a victory point card, it is 
-			//played immediately
+			//played immediately and the player is told
 			if (type.equals(VICTORY_POINT)) {
 				
 				Catan.printToClient("It was a victory point card! You get an extra victory point!", player);
@@ -170,15 +146,12 @@ public class DevelopmentCard {
 				ResourceCard card = cards.get(i);
 			
 				if (ore == null && card.getResource().equals(ORE)) {
-				
 					ore = card;
 				}
 				if (wool == null && card.getResource().equals(WOOL)) {
-				
 					wool = card;
 				}
 				if (grain == null && card.getResource().equals(GRAIN)) {
-				
 					grain = card;
 				}
 			
@@ -210,6 +183,8 @@ public class DevelopmentCard {
  		ArrayList<DevelopmentCard> playCards = new ArrayList<DevelopmentCard>();
  		boolean cardPlayed = true;
 	 		 		
+ 		//will check if the player has any cards to play
+ 		//these are non hidden cards
  		for (int i = 0; i < cards.size(); i++) {
  			
  			DevelopmentCard card = cards.get(i);
@@ -219,6 +194,7 @@ public class DevelopmentCard {
  			}
  		}
 	 		
+ 		//prints appropriate error statements if required
  		if (hasPlayedDevCard) {
  			
  			Catan.printToClient("You can only play one development card on your turn", player);
@@ -243,29 +219,27 @@ public class DevelopmentCard {
  		
  		//selects the correct method depending on the type of card being played
  		if (type.equals(KNIGHT)) {
- 			
-			playKnightCard(player, game1, scanner);
+ 			playKnightCard(player, game1, scanner);
  		}
  		if (type.equals(ROAD_BUILDING)) {
- 			
-			playRoadBuildingCard(player, game1, scanner);
+ 			playRoadBuildingCard(player, game1, scanner);
  		}
  		if (type.equals(YEAR_OF_PLENTY)) {
- 			
  			cardPlayed = playYearOfPlentyCard(player, game1, scanner);
  		}
  		if (type.equals(MONOPOLY)) {
- 			
  			playMonopolyCard(player, game1, scanner);
  		}
+ 		
  		//should not ever be needed since victory point cards are played immediately
  		//here in case
  		if (type.equals(VICTORY_POINT)) {
- 			
-			playVictoryPointCard(player);
+ 			playVictoryPointCard(player);
  		}
  		
  		//if the card has been played, it is removed from the player's hand
+ 		//this is because Year of Plenty may not be able to be played
+ 		//if the bank does not have enough resources
  		if (cardPlayed) {
  			
  			cards.remove(play);
@@ -302,9 +276,9 @@ public class DevelopmentCard {
 			for (Player p : players) {
 				
 				if (p.getLargestArmy() >= noKnights && !p.equals(player)) {
-					
 					larger = true;
 				}
+			
 				//if there is a player that has less knights than the player
 				//that has the largest army card, the points are taken away from them
 				else if (!p.equals(player) && p.hasLargestArmy()) {
@@ -321,12 +295,15 @@ public class DevelopmentCard {
 				player.setHasLargestArmy(true); 
 				player.setVictoryPoints(player.getVictoryPoints()+2); 
 				
+				//tells the player they are now in possession of the card
 				Catan.printToClient("You now have the largest army!", player);
 				
+				//notifies all other players that the card has been passed on
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i) != player) {
 						
 						PlayerSocket socket = players.get(i).getpSocket();
+						
 						if (socket != null) {
 							socket.sendMessage("Player " + player.getName() + " now has the largest army!");
 						}
@@ -343,7 +320,6 @@ public class DevelopmentCard {
  		
  		//lets the player build two roads
  		for (int i = 0; i < 2; i++) {
- 			
  			Road.buildRoad(player, game1, scanner, roadBuilding);
  		}
  	}
@@ -356,7 +332,6 @@ public class DevelopmentCard {
 		
 		//lets the player choose two resources from the bank
 		for (int i = 0; i < 2; i++) {
-			
 			hasResource = chooseResourceYOP(cards, game1, scanner, player);
 		}
 		
@@ -519,7 +494,6 @@ public class DevelopmentCard {
 	
 	//plays a victory point card
 	public static void playVictoryPointCard(Player player) {
-				
 		player.setVictoryPoints(player.getVictoryPoints() + 1);
 	}
 }

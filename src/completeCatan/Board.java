@@ -10,7 +10,6 @@ public class Board {
 
 	private int size;
 	private Coordinate robber;
-	private Robber theRobber;
 	private ArrayList<Hex> hexes = new ArrayList<Hex>();
 	private ArrayList<Port> ports = new ArrayList<Port>();
 	private ArrayList<Road> roads = new ArrayList<Road>();
@@ -44,92 +43,66 @@ public class Board {
 //-----Getters and Setters-----//
 	
 	public int getSize() {
-		
 		return size;
 	}
 	
 	public void setSize(int size) {
-		
 		this.size = size;
 	}
 	
 	public Coordinate getRobber() {
-		
 		return robber;
 	}
 	
 	public void setRobber(Coordinate robber) {
-		
 		this.robber = robber;
 	}
 	
-	public Robber getTheRobber() {
-		
-		return theRobber;
-	}
-
-	public void setTheRobber(Robber theRobber) {
-		
-		this.theRobber = theRobber;
-	}
-	
 	public ArrayList<Hex> getHexes() {
-		
 		return hexes;
 	}
 	
 	public void setHexes(ArrayList<Hex> hexes) {
-		
 		this.hexes = hexes;
 	}
 	
 	public ArrayList<Port> getPorts() {
-		
 		return ports;
 	}
 	
 	public void setPorts(ArrayList<Port> ports) {
-		
 		this.ports = ports;
 	}
 	
 	public ArrayList<Road> getRoads() {
-		
 		return roads;
 	}
 	
 	public void setRoads(ArrayList<Road> roads) {
-		
 		this.roads = roads;
 	}
 	
 	public ArrayList<Intersection> getBuildings() {
-		
 		return buildings;
 	}
 	
 	public void setBuildings(ArrayList<Intersection> buildings) {
-		
 		this.buildings = buildings;
 	}
 	
 	public Location[][] getBoardLocations() {
-		
 		return boardLocations;
 	}
 
 	public void setBoardLocations(Location[][] boardLocations) {
-		
 		this.boardLocations = boardLocations;
 	}
 	
 	public HashMap getRoadmap() {
-		
 		return roadmap;
 	}
 
 	public void setRoadmap(HashMap roadmap) {
-		
 		this.roadmap = roadmap;
 	}
 	
@@ -143,19 +116,23 @@ public class Board {
 		
 		if (coA.getY() == coB.getY()) {
 			if (coA.getX() < coB.getX()) {
+				
 				cFirst = coA;
 				cSecond = coB;
 			}
 			else {
+				
 				cFirst = coB;
 				cSecond = coA;
 			}
 		}
 		else if (coA.getY() > coB.getY()) {
+			
 			cFirst = coA;
 			cSecond = coB;
 		}
 		else {
+			
 			cFirst = coB;
 			cSecond = coA;
 		}
@@ -172,19 +149,23 @@ public class Board {
 		
 		if (coA.getY() == coB.getY()) {
 			if (coA.getX() < coB.getX()) {
+				
 				cFirst = coA;
 				cSecond = coB;
 			}
 			else {
+				
 				cFirst = coB;
 				cSecond = coA;
 			}
 		}
 		else if (coA.getY() > coB.getY()) {
+			
 			cFirst = coA;
 			cSecond = coB;
 		}
 		else {
+			
 			cFirst = coB;
 			cSecond = coA;
 		}
@@ -195,11 +176,16 @@ public class Board {
 	
 	//gets a location from the array based of coordinates
 	public Location getLocationFromCoordinate(Coordinate coA) {
-		
 		return boardLocations[coA.getX()+5][coA.getY()+5];
 	}
 	
-	public static boolean CoordInRange(Coordinate coA){
+	//puts a location into the array at the given coordinates
+	public void setLocationFromCoordinate(Coordinate coA, Location location1) {
+		boardLocations[coA.getX()+5][coA.getY()+5] = location1;
+	}
+	
+	//checks if a coordinate is in the correct range
+	public static boolean coordInRange(Coordinate coA) {
 		
 		int x = coA.getX() ;
 		int y = coA.getY() ;
@@ -210,11 +196,5 @@ public class Board {
 		else{
 			return false;
 		}
-	}
-	
-	//puts a location into the array at the given coordinates
-	public void setLocationFromCoordinate(Coordinate coA, Location location1) {
-		
-		 boardLocations[coA.getX()+5][coA.getY()+5] = location1;
 	}
 }

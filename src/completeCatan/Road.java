@@ -282,7 +282,7 @@ public class Road {
 	public static void checkLongestRoad(Player player, Game game1, Road road) {
 		
 		int oldlong = player.getLongestRoad();
-		LongestRoad.CheckPlayerLongestRoad(player, game1, road);
+		LongestRoad.checkPlayerLongestRoad(player, game1, road);
 		int newLong = player.getLongestRoad();
 		
 		//has to have improved and be longer than 4 to matter
