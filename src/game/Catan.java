@@ -648,7 +648,7 @@ public class Catan {
 	
 	//sends a protobuf message through a socket, this could be an event, a request etc...
 	public static void sendPBMsg(Message mssg, Socket sock) throws IOException {
-		
+		/*
 		byte[] toOutBy = mssg.toByteArray();		
 	    int toLen = toOutBy.length;
 	    byte[] bytesStr = new byte[4];
@@ -657,7 +657,9 @@ public class Catan {
 		          ((bytesStr[2] & 0xff) << 8)  | (bytesStr[3] & 0xff);	
 	 	
 	 	sock.getOutputStream().write(bytesStr);
-	 	sock.getOutputStream().write(toOutBy);
+	 	sock.getOutputStream().write(toOutBy);*/
+	 	mssg.writeDelimitedTo(sock.getOutputStream());
+	 	
 	}
 	
 	//this sends a simple request message for when we have sections using our old text based input
@@ -668,7 +670,7 @@ public class Catan {
 	
 	//this receives a protobuff method, the opposite of the send PBMsg method
 	public static Message getPBMsg( Socket sock) throws IOException {
-		
+		/*
 		byte[] fromLen = new byte[4];
 	 	sock.getInputStream().read(fromLen);
 	 	int fromLenInt = ((fromLen[0] & 0xff) << 24) | ((fromLen[1] & 0xff) << 16) |
@@ -676,7 +678,8 @@ public class Catan {
     	byte[] fromServerby = new byte[fromLenInt];
     	
     	sock.getInputStream().read(fromServerby);
-    	Message m1 = Message.parseFrom(fromServerby);
+    	Message m1 = Message.parseFrom(fromServerby);*/
+    	 Message m1 = Message.parseDelimitedFrom(sock.getInputStream());
     	
     	return m1;
 	}

@@ -501,4 +501,10 @@ public class Building {
 		
 		return city;
 	}
+	//--------------------------------TURN CONSISTENT PROTOBUFF VERSIONS-----------------------------
+
+	public static void buildSettlement(Player player, Game game1, Message enter) {
+		// TODO Auto-generated method stub
+		
+	}
 }

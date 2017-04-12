@@ -1,4 +1,8 @@
 package game;
+import intergroup.Events.Event;
+import intergroup.Events.Event.Error;
+import intergroup.Messages.Message;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -54,37 +58,90 @@ public class Turn {
 				Catan.printToClient("6: Length of your Longest Road?", player);
 				Catan.printToClient("7: Count your victory pionts", player);
 				Catan.printToClient("8: End turn?", player);
-
-				choice  = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-
-				switch (choice) {
-				case 1 :
-					build(player, game1, scanner);
+				Catan.printToClient("PLEASE USE PROTOBUFF MESSAGES", player);
+				int num =-1;
+				Message enter = Message.newBuilder().build();
+				boolean success = false;
+				while(!success){
+				try {
+					enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+					if(!enter.getEvent().equals(Event.getDefaultInstance())) {
+						Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not an appropriate message for this time").build()).build()).build(), player.getpSocket().getClientSocket());
+						continue;}
+					num = enter.getRequest().getBodyCase().getNumber();
+					if(!(num==1||num==6||num==9||num==10||num==11||num==12||num==14)){
+						success=true;
+					}
+					else{
+						Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not an appropriate message for this time").build()).build()).build(), player.getpSocket().getClientSocket());
+					}
+				} catch (IOException e) {
+				}
+				}
+				switch(num){
+				case 2:
+					//buydevcard
+					DevelopmentCard.buyDevelopmentCard(player, game1, enter);
 					break;
-				case 2 :
-					DevelopmentCard.playDevelopmentCard(player, game1, scanner, hasPlayedDevCard);
-					hasPlayedDevCard = true;
+				case 3:
+					//buildroad
+					Road.buildRoad(player, game1, enter, false);
 					break;
-				case 3 :
-					trade(player, scanner, game1);
+				case 4:
+					//buildsettlement
+					Building.buildSettlement(player, game1, enter);
 					break;
-				case 4 :
-					Player.printHand(player, scanner);
-					break;
-				case 5 :
-					Map.printMap(game1.getBoard(), players);
-					break;
-				case 6 :
-					Catan.printToClient("Your Longest Road Length is: " + player.getLongestRoad(), player);
+				case 5:
+					//buildcity
+					Building.buildCity(player, game1, scanner);
 					break;
 				case 7:
-					Catan.printToClient("You have " + player.getVictoryPoints() + " victory points", player);
+					//play dev card
+					DevelopmentCard.playDevelopmentCard(player, game1, enter, hasPlayedDevCard);
+					hasPlayedDevCard = true;
 					break;
 				case 8:
+					trade(player, enter, game1);
 					break;
-				default :
-					Catan.printToClient("Invalid choice. Please choose again", player);
+				case 13:
+					choice = END_TURN;
+					break;
+				case 15:
+					//TODO chatmessage, treating it as a normal choice for now!
+					String chatMsg = enter.getRequest().getChatMessage();
+					switch (Integer.parseInt(chatMsg)) {
+					case 1 :
+						build(player, game1, scanner);
+						break;
+					case 2 :
+						DevelopmentCard.playDevelopmentCard(player, game1, scanner, hasPlayedDevCard);
+						hasPlayedDevCard = true;
+						break;
+					case 3 :
+						trade(player, scanner, game1);
+						break;
+					case 4 :
+						Player.printHand(player, scanner);
+						break;
+					case 5 :
+						Map.printMap(game1.getBoard(), players);
+						break;
+					case 6 :
+						Catan.printToClient("Your Longest Road Length is: " + player.getLongestRoad(), player);
+						break;
+					case 7:
+						Catan.printToClient("You have " + player.getVictoryPoints() + " victory points", player);
+						break;
+					case 8:
+						break;
+					default :
+						Catan.printToClient("Invalid choice. Please choose again", player);
+					}
+					
+					break;
 				}
+				
+				//choice  = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 
 				hasEnded = Game.checkEndOfGame(player, game1);
 			}
@@ -101,6 +158,11 @@ public class Turn {
 	}
 
 //-----Method to build and buy things for the turn-----//
+
+	private static void trade(Player player, Message enter, Game game1) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	//asks the player if they want to build something
 	public static void build(Player player, Game game1, Scanner scanner) throws IOException {

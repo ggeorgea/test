@@ -361,4 +361,11 @@ public class Road {
 			}
 		}
 	}
+	//--------------------------------TURN CONSISTENT PROTOBUFF VERSIONS-----------------------------
+
+	public static void buildRoad(Player player, Game game1, Message enter,
+			boolean roadBuilding) {
+		// TODO Auto-generated method stub
+		
+	}
 }
