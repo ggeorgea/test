@@ -778,19 +778,19 @@ public class DevelopmentCard {
 	 		//selects the correct method depending on the type of card being played
 	 		if (type.equals(KNIGHT)) {
 	 			
-				playKnightCard(player, game1, scanner);
+				playKnightCard(player, game1);
 	 		}
 	 		if (type.equals(ROAD_BUILDING)) {
 	 			
-				playRoadBuildingCard(player, game1, scanner);
+				playRoadBuildingCard(player, game1);
 	 		}
 	 		if (type.equals(YEAR_OF_PLENTY)) {
 	 			
-	 			cardPlayed = playYearOfPlentyCard(player, game1, scanner);
+	 			cardPlayed = playYearOfPlentyCard(player, game1);
 	 		}
 	 		if (type.equals(MONOPOLY)) {
 	 			
-	 			playMonopolyCard(player, game1, scanner);
+	 			playMonopolyCard(player, game1);
 	 		}
 	 		//should not ever be needed since victory point cards are played immediately
 	 		//here in case
@@ -806,4 +806,24 @@ public class DevelopmentCard {
 	 			player.setDevelopmentCards(cards);
 	 		}
 	 	}
+
+	private static void playMonopolyCard(Player player, Game game1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static boolean playYearOfPlentyCard(Player player, Game game1) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private static void playRoadBuildingCard(Player player, Game game1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void playKnightCard(Player player, Game game1) {
+		// TODO Auto-generated method stub
+		
+	}
 }
