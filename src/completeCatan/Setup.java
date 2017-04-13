@@ -1,11 +1,12 @@
 package completeCatan;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
+
+import java.io.IOException;
  
 /**
  * Class contains all the methods to set up the game and board
@@ -495,9 +496,7 @@ public class Setup {
 		
 		for (int i = 0; i < players.size(); i++) {
 			
- 			PlayerSocket socket = players.get(i).getpSocket();
-			
-			if (players.get(i) != player) {
+ 			if (players.get(i) != player) {
 				Catan.printToClient("Player " + player.getName() + " gets:", players.get(i));
 				
  				for (int j = 0; j < resourceCards.size(); j++) {

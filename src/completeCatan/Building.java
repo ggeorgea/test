@@ -1,8 +1,9 @@
 package completeCatan;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import java.io.IOException;
 
 /**
  * Class to store information about types of building

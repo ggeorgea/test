@@ -266,19 +266,18 @@ public class ResourceAllocation {
 		for (int i = 0; i < players.size(); i++) {
 						
 			Player player = players.get(i);
-			PlayerSocket socket = player.getpSocket();
 			ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
 			ArrayList<ResourceCard> cards = player.getResourceCards();
 					
 			//if the player gets resources, they are added to their hand and
 			//the allocation printed
 			if (newResourceCards.size() > 0) {
-				Catan.printToClient("You get:", players.get(i));
+				Catan.printToClient("You get:", player);
 			
 				for (int j = 0; j < newResourceCards.size(); j++) {
 							
 					cards.add(newResourceCards.get(j));
-					Catan.printToClient("1x " + newResourceCards.get(j).getResource(), players.get(i));
+					Catan.printToClient("1x " + newResourceCards.get(j).getResource(), player);
 				}
 					
 				player.setResourceCards(cards);

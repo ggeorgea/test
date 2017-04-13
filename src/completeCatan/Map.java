@@ -27,9 +27,8 @@ public class Map {
 		int roadOwn = 0;
 		int getPort = 0;
 		
-		boolean hasPrintedToConsole = false;
-		
 		for (int i = 0; i < players.size(); i++) {
+			
 			 rn = 0;
 			 tn = 0;
 			 nn = 0;

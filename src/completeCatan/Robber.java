@@ -1,10 +1,11 @@
 package completeCatan;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
+
+import java.io.IOException;
 
 /**
  * Class to store information and methods concerning 

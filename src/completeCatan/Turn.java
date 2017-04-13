@@ -1,9 +1,10 @@
 package completeCatan;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import java.io.IOException;
  
 /**
  * Class contains all the methods to allow players to do things on their turn
