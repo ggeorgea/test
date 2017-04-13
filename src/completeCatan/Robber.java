@@ -20,6 +20,8 @@ public class Robber {
 	
 	private static final String HEX = "hex";
 	private static final String ROBBER = "R";
+	
+	private static final int CARD_REMOVAL = 7;
 
 //-----Methods to play the robber for the turn-----//
 
@@ -36,7 +38,7 @@ public class Robber {
 
 			//if the player has more than seven cards, they must
 			//remove cards from their hand
-			if (cards.size() > 7) {
+			if (cards.size() > CARD_REMOVAL) {
 
 				cardRemoval(player, cards, game1, scanner);
 				player.setResourceCards(cards);
@@ -66,6 +68,7 @@ public class Robber {
 				int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 
 				if (choice < 0 || choice >= cards.size()) {
+					
 					Catan.printToClient("Invalid choice. Please choose again", player);
 					cardRemoval(player, cards, game1, scanner);
 				}
@@ -107,7 +110,7 @@ public class Robber {
 	}
 
 	//allows the player to move the robber and steal a card from a player
-	public static void moveRobber(Player player, Game game1, Scanner scanner) throws IOException{
+	public static void moveRobber(Player player, Game game1, Scanner scanner) throws IOException {
 
 		try {
 			Catan.printToClient("Please select where to place the robber", player);
@@ -141,6 +144,7 @@ public class Robber {
 		}
 	}
 
+	//lets the player steal a card from another player
 	public static void robberStealCard(Player player, Game game1, Scanner scanner) throws IOException {
 
 		//choose a player to steal a card from
@@ -153,7 +157,7 @@ public class Robber {
 
 			String  name = Catan.getInputFromClient(player, scanner).toUpperCase();
 			ArrayList<Player> allPlayers = game1.getPlayers();
-				
+							
 			//check that the player chose is valid
 			//check if player exists 
 			for (Player current: allPlayers) { 
@@ -210,64 +214,24 @@ public class Robber {
 		nearbyCoordinates.add(new Coordinate(x-1, y-1));
 		nearbyCoordinates.add(new Coordinate(x+1, y+1));
 			
-		return nearbyCoordinates; 
-			
+		return nearbyCoordinates; 			
 	}
 		
-	
+	//randomly picks a card from the other player's hand to gives
+	//it to the current player
 	public static void transferRandomCard(Player from, Player to ){ 
 	
 		Random r = new Random(); 
 		ArrayList<ResourceCard> fromCards = from.getResourceCards();
 		ArrayList<ResourceCard> toCards = to.getResourceCards();
+		
 		int index = r.nextInt(fromCards.size());
 		ResourceCard card = fromCards.get(index);
+		
 	    fromCards.remove(card);
 	    toCards.add(card);
 	    
 	    Catan.printToClient("Stolen from you: 1x " + card.getResource(), from);
 	    Catan.printToClient("You have stolen: 1x " + card.getResource(), to);
 	}
-
-	
-	
-	//TODO do we still need this?
-	
-	/*
-	//robber will be put on different coordinates based on where the player has placed it 
-	private Coordinate  c = new Coordinate(); 
-	// p will represent the current player that moved the robber
-	//if the player is null then no one is responsible for moving the robber at the moment 
-	private Player  p = new Player(); 
-
-
-
-	//new logic
-	//player will roll dice and if they land on 7 robber will be activated or if someone plays knight card
-	//robber will only perform actions if he is activated otherwise it cannot move 
-
-	boolean activated = false; 
-
-	public Robber(Coordinate c , Player p, Boolean activate){ 
-
-		this.c = c ; 
-		this.p = p; 
-		this.activated = activate;
-	}
-
-	public Player getCurrentPlayer(){
-		return p;
-	}
-
-	public Coordinate getCurrentCoordinate(){ 
-		return c; 
-	}
-
-	public boolean getActivationStatus(){
-		return activated;
-	}
-
-	public void setToActivated(){
-		activated = true;
-	}*/
 }

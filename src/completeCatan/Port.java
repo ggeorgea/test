@@ -28,42 +28,34 @@ public class Port {
 //-----Getters and Setters-----//
 	
 	public Coordinate getCoordinateA() {
-
 		return coordinateA;
 	}
 
 	public void setCoordinateA(Coordinate coordinateA) {
-
 		this.coordinateA = coordinateA;
 	}
 
 	public Coordinate getCoordinateB() {
-
 		return coordinateB;
 	}
 
 	public void setCoordinateB(Coordinate coordinateB) {
-
 		this.coordinateB = coordinateB;
 	}
 
 	public String getResource() {
-
 		return resource;
 	}
 
 	public void setResource(String resource) {
-
 		this.resource = resource;
 	}
 
 	public Player getOwner() {
-
 		return owner;
 	}
 
 	public void setOwner(Player owner) {
-
 		this.owner = owner;
 	}
 }

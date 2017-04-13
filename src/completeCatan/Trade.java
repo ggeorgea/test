@@ -1,4 +1,5 @@
 package completeCatan;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,16 +23,18 @@ public class Trade {
 	private static final String REJECT_TRADE = "reject";
 	private static final String COUNTER_TRADE = "counter";
 	
-	private static final String BANK = "B";
-	private static final String PLAYER = "P";
+	private static final int BANK = 1;
+	private static final int PLAYER = 2;
 
 //-----Method asking player who they want to trade with-----//
 	
 	public static boolean tradeBankOrPlayer(Player player, Scanner scanner) throws IOException {
 		
-		Catan.printToClient("Press 'B' to trade with the bank, and 'P' to trade with other players:", player);
+		Catan.printToClient("Who do you want to trade with?", player);
+		Catan.printToClient("1: Bank", player);
+		Catan.printToClient("2: Another Player", player);
 		
-		String choice = Catan.getInputFromClient(player, scanner).toUpperCase();
+		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		
 		switch (choice) {
 		case BANK :
@@ -46,8 +49,8 @@ public class Trade {
 	
 //-----Methods allowing the player to trade with the bank-----//
 
+	//allows the player to trade with the bank
 	public static void tradeBank(Player player, Scanner scanner, Game game1) throws IOException{
-		//Board board1 = game1.getBoard();
 
 		player.updatePlayerPorts(player, game1);
 		
@@ -102,6 +105,7 @@ public class Trade {
 		}
 	}
 
+	//prompts the user to select what resource they want to trade
 	public static ResourceCard selectTradeResource(Player player, Scanner scanner, Game game1, ArrayList<Integer> canTrade, ArrayList<ResourceCard> resourceType) throws IOException{
 			
 		Catan.printToClient("Please select resource to trade with the bank:", player);
@@ -122,6 +126,7 @@ public class Trade {
 		}
 	}
 
+	//asks the user to select which resource they wish to gain
 	public static ArrayList<ResourceCard> selectGainResource(Player player, Scanner scanner, Game game1) throws IOException{
 		
 		ArrayList<ResourceCard> gameResources = new ArrayList<ResourceCard>();
@@ -157,6 +162,7 @@ public class Trade {
 		}
 	}
 
+	//carries out the trade if it is legal
 	public static void carryOutTrade(Player player, ResourceCard tradeChoice, ArrayList<ResourceCard> gainChoice, String tradeType){
 		
 		ArrayList<ResourceCard> playerResources = player.getResourceCards();
@@ -186,6 +192,7 @@ public class Trade {
 		player.setResourceCards(playerResources);
 	}
 
+	//if the player is trading directly with the bank
 	public static void tradeDirect(Player player, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType) throws IOException{
 		
 		ArrayList<ResourceCard> resources = player.getResourceCards();
@@ -248,6 +255,7 @@ public class Trade {
 		}
 	}
 
+	//if the user has a standard port they can trade 3:1
 	public static void tradeStandard(Player player, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType) throws IOException{
 		
 		ArrayList<ResourceCard> resources = player.getResourceCards();
@@ -305,6 +313,7 @@ public class Trade {
 		}
 	}
 
+	//if the user has a special port they can trade 2:1
 	public static void tradeSpecial(Player player, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType) throws IOException{
 		
 		ArrayList<Port> ownedPorts = player.getSpecialPorts();
@@ -412,6 +421,7 @@ public class Trade {
 		}
 	}
 
+	//checks how many of a resource the player has
 	public static int[] countPlayerResources(int[] resourceCount, ArrayList<ResourceCard> resources){
 		
 		for (int i = 0; i < resources.size(); i++) {
@@ -440,6 +450,7 @@ public class Trade {
 		return resourceCount;
 	}
 
+	//checks if they player has a standard port
 	public static boolean hasStandardPort(Player player, Game game1) {
 		
 		ArrayList<Port> ports = player.getStandardPorts();
@@ -452,6 +463,7 @@ public class Trade {
 		}
 	}
 
+	//checks if the player has a special port
 	public static boolean hasSpecialPort(Player player, Game game1) {
 		
 		ArrayList<Port> ports = player.getSpecialPorts();
@@ -464,6 +476,7 @@ public class Trade {
 		}
 	}
 	
+	//checks if a player owns a port
 	public static void checkIfPortSettled(Player player, Intersection settlement, Game game1) {
 		
 		Board board1 = game1.getBoard();
@@ -597,6 +610,7 @@ public class Trade {
 
 		//if the offer is accepted, the trade takes place
 		if (offer.equals(ACCEPT_TRADE)) {
+			
 			if (hasResources(playerTrade, playerTradeToTrade)) {
 				tradePlayerResources(player, playerTrade, playerToTrade, playerTradeToTrade);
 			}
@@ -643,6 +657,7 @@ public class Trade {
 		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 
 		if (choice != 1 && choice != 2) {
+			
 			Catan.printToClient("Invalid choice. Please choose again.", player);
 			return chooseMoreResources(scanner, player);
 		}
@@ -721,6 +736,7 @@ public class Trade {
 
 		//checks for correct input
 		if (choice != 1 && choice != 2 && choice != 3) {
+			
 			Catan.printToClient("Invalid input. Please choose again.", playerTrade);
 			return chooseOffer(scanner, playerTrade);
 		}

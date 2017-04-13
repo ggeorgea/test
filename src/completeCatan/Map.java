@@ -2,7 +2,6 @@ package completeCatan;
 
 import java.util.ArrayList;
 
-
 /**
  * Class that contains the print statement for the Settlers Of Catan Board
  */
@@ -27,8 +26,6 @@ public class Map {
 		//these must be replaced to iterate through roads and cities
 		int roadOwn = 0;
 		int getPort = 0;
-
-		//String getPort = "P";
 		
 		boolean hasPrintedToConsole = false;
 		
@@ -44,7 +41,6 @@ public class Map {
 			
 			if (socket != null) {
 				Catan.printToClient(
-//				socket.sendMessage(
 
 					"                                         "+board1.getPorts().get(getPort++).getResource()+"                           \n"                                                                                    
 							+"                    "+ 
@@ -234,9 +230,8 @@ public class Map {
 
 
 	            ,players.get(i));
-		//				);
-				Catan.printToClient("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY()+"\n", players.get(i));
-		//		socket.sendMessage("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
+
+				Catan.printToClient("robber is at: "+ board1.getRobber().getX() + ", " + board1.getRobber().getY() + "\n", players.get(i));
 			}
 			else if (!hasPrintedToConsole) {
 				
@@ -431,7 +426,7 @@ public class Map {
 
 
 				);
-				System.out.println("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
+				System.out.println("robber is at: " + board1.getRobber().getX() + ", " + board1.getRobber().getY());
 				hasPrintedToConsole = true;
 			}
 		}

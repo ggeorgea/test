@@ -29,12 +29,10 @@ public class PlayerSocket {
 //-----Getters and Setters-----//	
         
     public Socket getClientSocket() {
-    		
     	return clientSocket;
     }
     
     public void setClientSocket(Socket clientSocket) {
-    		
     	this.clientSocket = clientSocket;
     } 
         

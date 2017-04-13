@@ -1,4 +1,5 @@
 package completeCatan;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -14,29 +15,22 @@ public class Turn {
  
  	private static final int ROBBER = 7;
  
- 	//TODO do we need this?
- 	//create an instance of robber and a coordinate where it begins
- 	//Coordinate c = new Coordinate();
- 	//Robber robber = new Robber(c, null, null);
- 
 //-----Methods to actually let the player have their turn-----//
  
  	//allows the player to have their turn
  	public static boolean newTurn(Player player, Game game1, Scanner scanner) throws IOException{
  
  		ArrayList<Player> players = game1.getPlayers();
- 		
  		Map.printMap(game1.getBoard(), players);
- 		
  		Dice.rollDice(player, scanner, game1);
  
  		if (player.getCurrentRoll() != ROBBER) {
  			ResourceAllocation.resourceAllocation(player.getCurrentRoll(), game1, scanner);
  		}
  		else {
+ 			
  			Robber.checkCardRemoval(game1, scanner);
  			Robber.moveRobber(player, game1, scanner);
- 			//TODO card steal?
  		}
  
  		int choice = 0;
@@ -133,6 +127,7 @@ public class Turn {
  //-----Method to allow the player to trade-----//
  
  	public static void trade(Player player, Scanner scanner, Game game1) throws IOException{
+ 		
  		boolean bank = Trade.tradeBankOrPlayer(player, scanner);
 		if (bank) {
 			Trade.tradeBank(player, scanner, game1);
@@ -141,4 +136,4 @@ public class Turn {
 			Trade.tradePlayer(player, scanner, game1);
 		}
  	}
- }
+}

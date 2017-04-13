@@ -1,4 +1,5 @@
 package completeCatan;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -14,6 +15,8 @@ public class RandomLocationIterator implements Iterator {
 	int YLen = 0;
 	ArrayList<ArrayList<Location>> shuffledAL= new ArrayList<ArrayList<Location>>();
 
+	private static final String HEX = "hex";
+	
 //-----Constructors-----//	
 	
 	public RandomLocationIterator() {
@@ -32,13 +35,17 @@ public class RandomLocationIterator implements Iterator {
 		
 		Collections.shuffle(boardCloneX);
 		for (int u = 0;u<boardCloneX.size();u++) {
+			
 			ArrayList<Location> CloneY = new ArrayList<Location>();
+			
 			for (int j = 0; j< boardCloneX.get(u).length;j++) {
 				CloneY.add(boardCloneX.get(u)[j]);
 			}
+			
 			Collections.shuffle(CloneY);
 			shuffledAL.add(CloneY);
 		}
+		
 		this.shuffledAL=shuffledAL;
 		this.XLen = shuffledAL.size();
 		this.YLen = shuffledAL.get(0).size();
@@ -49,34 +56,43 @@ public class RandomLocationIterator implements Iterator {
 	public Location next() {
 		
 		Location nextLoc = shuffledAL.get(Xindex).get(Yindex);
-		//finish makinng here
 		
+		//finish making here
 		Yindex++;
+		
 		if (Yindex == YLen) {
+			
 			Yindex = 0;
 			Xindex++;
 		}
+		
 		return nextLoc;
 	}
 	
 	public Location getNextHex() {
-		if(!hasNext()){
+		
+		if (!hasNext()) {
 			return null;
 		}
+		
 		Location nextLoc = shuffledAL.get(Xindex).get(Yindex);
 		boolean found = false;
-		if (nextLoc.getType().equals("hex")) {
+		
+		if (nextLoc.getType().equals(HEX)) {
 			found = true;
 		}
 		
 		//finish making here
 		Yindex++;
+		
 		if (Yindex == YLen) {
+			
 			Yindex = 0;
 			Xindex++;
 		}
+		
 		if (found) {
-		return nextLoc;
+			return nextLoc;
 		}
 		else if (!hasNext()) {
 			return null;
@@ -88,7 +104,7 @@ public class RandomLocationIterator implements Iterator {
 	
 	public boolean hasNext() {
 		
-		if ( !  ((Xindex == XLen-1 && Yindex >= YLen)|| (Xindex>=XLen) ) ) {
+		if (!((Xindex == XLen-1 && Yindex >= YLen) || (Xindex>=XLen))) {
 			return true;
 		}
 		else {

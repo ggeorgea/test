@@ -1,4 +1,5 @@
 package completeCatan;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -77,6 +78,9 @@ public class ResourceAllocation {
 			}
 		}
 			
+		//if only one player requires a resource that the bank does not have enough
+		//of, that player gets all the resource that is left. Otherwise, no player
+		//gets the resource
 		for (int i = 0; i < bankHasResources.size(); i++) {
 		
 			int playersWithResources = 0;

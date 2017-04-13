@@ -1,4 +1,5 @@
 package completeCatan;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,7 +72,7 @@ public class Setup {
  	//asks the client how many clients there are, ABOVE METHOD JUST COPIED/TWEAKED FOR NETWORKING
  	public static int requestClients(Scanner scanner) {
  
- 		System.out.println("How many Clients should connect? 2 or 3?");
+ 		System.out.println("How many Clients should connect? 2 or 3");
  
  		int noPlayers = scanner.nextInt();
  
@@ -119,8 +120,7 @@ public class Setup {
  			return;
  		}
  
- 		//makes sure the player chooses a name not already being used
- 		//pre networking:for (int i = 0; i < players.size(); i++) {
+ 		//ensures the player selects a character that has not already been chosen
  		for (int i = 0; i < n; i++) {
  			if (players.get(i).getName().equals(check)) {
  				
@@ -140,7 +140,6 @@ public class Setup {
  
  		//asks each player to roll the dice
  		for (int i = 0; i < players.size(); i++) {
- 
  			Dice.rollDice(players.get(i), scanner, game1);
  		}
  
@@ -234,7 +233,7 @@ public class Setup {
  		//creates the correct number of YOP cards and adds them to the deck
  		for (int i = 2; i < noProgress; i++) {
  
-		DevelopmentCard yearOfPlenty = new DevelopmentCard(YEAR_OF_PLENTY, true);
+ 			DevelopmentCard yearOfPlenty = new DevelopmentCard(YEAR_OF_PLENTY, true);
  			progress.add(yearOfPlenty);
  		}
  
@@ -374,6 +373,8 @@ public class Setup {
  				Catan.printToClient("A road has already been placed here. Please choose again", player);
  				return placeRoad(player, board1, scanner, game1);
  			}
+ 			
+ 			//if the road can be placed then success messages are printed to all clients
  			else {
  
  				Catan.printToClient("You placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")", player);
@@ -439,17 +440,20 @@ public class Setup {
  		for (int i = 0; i < illegal.size(); i++) {
  
  			Intersection inter = illegal.get(i);
- 			//System.out.println("A"+illegal.get(i).getCoordinate().getX()+","+illegal.get(i).getCoordinate().getY());
+ 
  			if (inter.getOwner().getName() != null) {
+ 				
  				Catan.printToClient("Settlement must be placed more than two roads away. Please choose again", player);
  				return placeSettlement(player, road, board1, scanner, game1);
  			}
  		}
  
+ 		//prints success message to the player
  		Catan.printToClient("You placed settlement at: (" + x + "," + y + ")", player);
 		
  		ArrayList<Player> players = game1.getPlayers();
 		
+ 		//prints message notifying other players of the action
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i) != player) {
 				
@@ -593,18 +597,18 @@ public class Setup {
  		Iterator<String> terrainSt = getTerrainArrangement();
 		
  		// this fills the arraylist with hexes, with random terrain
- 		for (int r = 0; r < board1.getHexes().size(); r++) {
+ 		for (int i = 0; i < board1.getHexes().size(); i++) {
 			
  			ArrayList<Hex> Hexes = board1.getHexes();
  			String terr = terrainSt.next();
- 			Hex current = Hexes.get(r);
+ 			Hex current = Hexes.get(i);
+ 			
  			current.setTerrain(terr);
- 			//current.setNumber(11);
- 			Hexes.set(r, current);
+ 			Hexes.set(i, current);
  			board1.setHexes(Hexes);
 			
  			if (terr.equals("D")) {
- 				givenDesert = r;
+ 				givenDesert = i;
  			}
  		}
  
@@ -620,26 +624,25 @@ public class Setup {
  	}
  
  	//this method adds the hexes,with just coordinates set, to the arraylist in such a way to get them to print out prettily by just iterating through them
- 	public static Board getHexBoard(int Edgesize) {
+ 	public static Board getHexBoard(int edgesize) {
  		
  		Board board1 = new Board();
  		ArrayList<Hex> hexes1 = new ArrayList<Hex>();
  		boolean past = false;
- 		int startx = -(Edgesize - 1);
- 		int starty = Edgesize - 1;
- 		int len = Edgesize;
+ 		int startx = -(edgesize - 1);
+ 		int starty = edgesize - 1;
+ 		int len = edgesize;
  		
- 		for (int b = 0; b < (2 * Edgesize) - 1; b++) {
+ 		for (int i = 0; i < (2*edgesize) - 1; i++) {
 			
  			int xof = 0;
  			int yof = 0;
 			
- 			for (int h = 0; h < len; h++) {
+ 			for (int j = 0; j < len; j++) {
 				
  				Hex hexa = new Hex();
  				hexa.setCoordinate(new Coordinate(startx + xof, starty + yof));
- 				//System.out.println((startx+xof)+", "+(starty+yof));
-				
+ 		
  				if (((startx + xof) == 0) && ((starty + yof) == 0)) {
  					past = true;
  				}
@@ -673,8 +676,8 @@ public class Setup {
  				"G", "P", "P", "P", "P", "H", "H", "H", "D", };
  		ArrayList<String> s1 = new ArrayList<String>();
  		
- 		for (int f = 0; f < terrains.length; f++) {
- 			s1.add(terrains[f]);
+ 		for (int i = 0; i < terrains.length; i++) {
+ 			s1.add(terrains[i]);
  		}
 		
  		Collections.shuffle(s1);
@@ -690,12 +693,8 @@ public class Setup {
  		int[] redNumbers = {6,8,8,6};
  		Hex hexwDes = board1.getHexes().get(givenDesert);
  		
- 		//TODO do we still need this?
- 		//Robber robber1 = new Robber(hexwDes.getCoordinate(),null,false);
- 		//board1.setTheRobber(robber1);
- 		
  		board1.setRobber(hexwDes.getCoordinate());
- 		hexwDes.setisRobberHere("R");
+ 		hexwDes.setisRobberHere(ROBBER);
  		
  		ArrayList<Integer> normalAL = new ArrayList<Integer>();
  		for (int i = 0; i < normalNumbers.length; i++) {
@@ -717,12 +716,12 @@ public class Setup {
  		ArrayList<Location[]> boardCloneX = new ArrayList<Location[]>();
  		Collections.shuffle(boardCloneX);
 		
- 		for (int u = 0;u<boardCloneX.size();u++) {
+ 		for (int i = 0; i < boardCloneX.size(); i++) {
 			
  			ArrayList<Location> CloneY = new ArrayList<Location>();
 			
- 			for (int j = 0; j< boardCloneX.get(u).length;j++) {
- 				CloneY.add(boardCloneX.get(u)[j]);
+ 			for (int j = 0; j< boardCloneX.get(i).length;j++) {
+ 				CloneY.add(boardCloneX.get(i)[j]);
  			}
 			
  			Collections.shuffle(CloneY);
@@ -753,12 +752,12 @@ public class Setup {
  					found = true;				
  					thisHex.setNumber(no);
 					
- 					setHexNumberTest( thisLoc,  board1,  normIt, -1, +1);
- 					setHexNumberTest( thisLoc,  board1,  normIt, +1, +2);
- 					setHexNumberTest( thisLoc,  board1,  normIt, +2, +1);
- 					setHexNumberTest( thisLoc,  board1,  normIt, +1, -1);
- 					setHexNumberTest( thisLoc,  board1,  normIt, -1, -2);
- 					setHexNumberTest( thisLoc,  board1,  normIt, -2, -1);	
+ 					setHexNumberTest(thisLoc, board1, normIt, -1, +1);
+ 					setHexNumberTest(thisLoc, board1, normIt, +1, +2);
+ 					setHexNumberTest(thisLoc, board1, normIt, +2, +1);
+ 					setHexNumberTest(thisLoc, board1, normIt, +1, -1);
+ 					setHexNumberTest(thisLoc, board1, normIt, -1, -2);
+ 					setHexNumberTest(thisLoc, board1, normIt, -2, -1);	
  				}
  			}
  		}
@@ -794,7 +793,7 @@ public class Setup {
 			
 			if (robLoc.getNumber() == -1 && robLoc.getisRobberHere().equals(ROBBER)) {
 				
- 				System.out.println("The robber was left out "+robLoc.getisRobberHere()+robLoc.getNumber());
+ 				System.out.println("The robber was left out "+ robLoc.getisRobberHere()+robLoc.getNumber());
  				robLoc.setNumber(7);
  
  				break;
@@ -813,7 +812,7 @@ public class Setup {
  		
  		if(((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8))) {
  
- 			Location l1 = board1.getLocationFromCoordinate(new Coordinate(x,y));
+ 			Location l1 = board1.getLocationFromCoordinate(new Coordinate(x, y));
 			
 			if(l1.getType().equals(HEX)
 					&&((Hex)l1.getContains()).getNumber() == -1
@@ -830,16 +829,16 @@ public class Setup {
  		Location[][] boardLocations = new Location[11][11];
  		board1.setBoardLocations(boardLocations);
 		
-		for (int xv = 0; xv < 11; xv++) {
- 			for (int yv = 0; yv<11; yv++) {
+		for (int i = 0; i < 11; i++) {
+ 			for (int j = 0; j < 11; j++) {
 				
- 				boardLocations[xv][yv]=new Location(new Coordinate(xv-5,yv-5),"empty", null);
+ 				boardLocations[i][j]=new Location(new Coordinate(i-5, j-5),"empty", null);
  			}
  		}
 		
-		for (int ci = 0; ci < board1.getHexes().size(); ci++) {
+		for (int i = 0; i < board1.getHexes().size(); i++) {
 			
- 			Hex thisHex = board1.getHexes().get(ci);
+ 			Hex thisHex = board1.getHexes().get(i);
 			
  			int newX = thisHex.getCoordinate().getX()+5;
  			int newY = thisHex.getCoordinate().getY()+5;
@@ -847,25 +846,26 @@ public class Setup {
  			boardLocations[newX][newY].setContains(thisHex);
 			boardLocations[newX][newY].setType(HEX);
 			
- 			for (int rl = 0; rl < 6; rl++) {
- 				switch(rl){
+ 			for (int j = 0; j < 6; j++) {
+ 				
+ 				switch(j){
 				case 0: 
-					setUpInter(newX+1,newY, boardLocations, board1);
+					setUpInter(newX+1, newY, boardLocations, board1);
 					break;
 				case 1: 
-					setUpInter(newX,newY+1, boardLocations, board1);
+					setUpInter(newX, newY+1, boardLocations, board1);
 					break;
 				case 2: 
-					setUpInter(newX+1,newY+1, boardLocations, board1);
+					setUpInter(newX+1, newY+1, boardLocations, board1);
 					break;
 				case 3: 
-					setUpInter(newX-1,newY-1, boardLocations, board1);
+					setUpInter(newX-1, newY-1, boardLocations, board1);
 					break;
 				case 4: 
-					setUpInter(newX-1,newY, boardLocations, board1);
+					setUpInter(newX-1, newY, boardLocations, board1);
 					break;
 				case 5:
-					setUpInter(newX,newY-1, boardLocations, board1);
+					setUpInter(newX, newY-1, boardLocations, board1);
 					break;
  				}
  			}
@@ -882,7 +882,7 @@ public class Setup {
 			
  			noBuild.setType(" ");
  			noPlayer.setName(null);
- 			Intersection newIn = new Intersection(new Coordinate(x-5,y-5),noPlayer,noBuild);
+ 			Intersection newIn = new Intersection(new Coordinate(x-5, y-5),noPlayer,noBuild);
 			
  			boardLocations[x][y].setContains(newIn);
 			boardLocations[x][y].setType(INTERSECTION);
@@ -897,17 +897,17 @@ public class Setup {
  		for (int xval = 0; xval < board1.getBoardLocations().length; xval++) {
  			for (int yval = 0; yval < board1.getBoardLocations().length; yval++) {
 				if (board1.getBoardLocations()[xval][yval].getType().equals(INTERSECTION)) {
+					
 					if (interestionsal.size() == 0) {
-						
- 						interestionsal.add((Intersection) board1.getBoardLocations()[xval][yval].getContains());
+						interestionsal.add((Intersection) board1.getBoardLocations()[xval][yval].getContains());
  					}
 					
  					for (int i = 0; i < interestionsal.size(); i++) {
 						
  						Coordinate Cvalue = interestionsal.get(i).getCoordinate();
 						
- 						int cVal = 2*(Cvalue.getY()+5)-(Cvalue.getX()+5);
- 						int opVal = 2*yval-xval;
+ 						int cVal = 2 * (Cvalue.getY()+5) - (Cvalue.getX()+5);
+ 						int opVal = 2 * yval - xval;
 						
  						if ((opVal > cVal) || ((opVal == cVal) && (xval < Cvalue.getX())) || (i+1 == interestionsal.size())) {
 							
@@ -930,28 +930,27 @@ public class Setup {
  		ArrayList<Intersection> intersections = board1.getBuildings();
  		
  		//check the 8 coords nearby to see if they have road in the hashmap
- 		for (int thit = 0; thit < intersections.size(); thit++) {
+ 		for (int i = 0; i < intersections.size(); i++) {
  			
- 			int x = intersections.get(thit).getCoordinate().getX();
- 			int y = intersections.get(thit).getCoordinate().getY();
+ 			int x = intersections.get(i).getCoordinate().getX();
+ 			int y = intersections.get(i).getCoordinate().getY();
 			
  			Coordinate[] nearby = new Coordinate[6];
 			
- 			nearby[0]=new Coordinate(x,y+1);
- 			nearby[1]=new Coordinate(x-1,y);
- 			nearby[2]=new Coordinate(x+1,y+1);
- 			nearby[3]=new Coordinate(x-1,y-1);
- 			nearby[4]=new Coordinate(x,y-1);
- 			nearby[5]=new Coordinate(x+1,y);
+ 			nearby[0] = new Coordinate(x,y+1);
+ 			nearby[1] = new Coordinate(x-1,y);
+ 			nearby[2] = new Coordinate(x+1,y+1);
+ 			nearby[3] = new Coordinate(x-1,y-1);
+ 			nearby[4] = new Coordinate(x,y-1);
+ 			nearby[5] = new Coordinate(x+1,y);
  			
- 			for (int nean = 0; nean<6; nean++) {
+ 			for (int j = 0; j < 6; j++) {
  
- 				String keys = new StringBuilder().append(x).append(y).append(nearby[nean].getX()).append(nearby[nean].getY()).toString();
+ 				String keys = new StringBuilder().append(x).append(y).append(nearby[j].getX()).append(nearby[j].getY()).toString();
 				
  				if (roadmap.containsKey(keys)) {
  					if (!roads.contains(roadmap.get(keys))) {
-						
- 						roads.add((Road)roadmap.get(keys));
+						roads.add((Road)roadmap.get(keys));
  					}
  				}
  			}
@@ -964,23 +963,18 @@ public class Setup {
  	public static HashMap makeRoadHashMap(Board board1) {
  		
  		HashMap roadmap = new HashMap();
- 		for (int hin = 0; hin < board1.getHexes().size(); hin++) {
+ 		for (int i = 0; i < board1.getHexes().size(); i++) {
  			
- 			Hex currHex = board1.getHexes().get(hin);
+ 			Hex currHex = board1.getHexes().get(i);
  			int x = currHex.getCoordinate().getX();
  			int y = currHex.getCoordinate().getY();
 			
- 			putNewRoad(x,y,1,1,1,0,roadmap);
- 			putNewRoad(x,y,1,0,0,-1,roadmap);
- 			putNewRoad(x,y,0,1,1,1,roadmap);
- 			putNewRoad(x,y,0,1,-1,0,roadmap);
- 			putNewRoad(x,y,-1,0,0-1,-1,roadmap);
- 			putNewRoad(x,y,-1,-1,0,-1,roadmap);
-		
- 			for(int sid = 0; sid<6; sid++){
- 
- 				//TODO this loop does nothing?
- 			}
+ 			putNewRoad(x, y, 1, 1, 1, 0, roadmap);
+ 			putNewRoad(x, y, 1, 0, 0, -1, roadmap);
+ 			putNewRoad(x, y, 0, 1, 1, 1, roadmap);
+ 			putNewRoad(x, y, 0, 1, -1, 0, roadmap);
+ 			putNewRoad(x, y,-1, 0, -1, -1, roadmap);
+ 			putNewRoad(x, y, -1, -1, 0, -1, roadmap);
  		}
 		
  		board1.setRoadmap(roadmap);
@@ -1024,8 +1018,7 @@ public class Setup {
  		ArrayList<String> s1 = new ArrayList<String>();
  		
  		for (int f = 0; f < Ports.length; f++) {
-			
- 			s1.add(Ports[f]);
+			s1.add(Ports[f]);
  		}
  		
  		Collections.shuffle(s1);
@@ -1035,46 +1028,41 @@ public class Setup {
  
  	public static void setIllegals(Board board1) {
  		
- 		for (int j = 0; j < board1.getBoardLocations().length; j++) {
- 			for (int g = 0; g < board1.getBoardLocations()[j].length; g++) {
+ 		for (int i = 0; i < board1.getBoardLocations().length; i++) {
+ 			for (int j = 0; j < board1.getBoardLocations()[i].length; j++) {
  				
- 				Location thisLoc = board1.getBoardLocations()[j][g];
+ 				Location thisLoc = board1.getBoardLocations()[i][j];
  				
 				if (thisLoc.getType().equals(INTERSECTION)) {
  					Intersection thisint = (Intersection) thisLoc.getContains();
  					ArrayList<Intersection> illegals = new ArrayList<Intersection>();
  
- 					Intersection returnedLoc  = isOwned(board1,j,g+1);
+ 					Intersection returnedLoc  = isOwned(board1, i, j+1);
  					if (returnedLoc != null) {
  						illegals.add(returnedLoc);
  					}
  
-					returnedLoc = isOwned(board1,j,g-1);
+					returnedLoc = isOwned(board1, i, j-1);
  					if (returnedLoc != null) {
  						illegals.add(returnedLoc);
  					}
  
-					returnedLoc = isOwned(board1,j+1,g);
+					returnedLoc = isOwned(board1, i+1, j);
  					if (returnedLoc != null) {
  						illegals.add(returnedLoc);
  					}
  
-					returnedLoc = isOwned(board1,j-1,g);
+					returnedLoc = isOwned(board1, i-1, j);
  					if (returnedLoc != null) {
  						illegals.add(returnedLoc);
  					}
  
-//					returnedLoc = isOwned(board1,j+1,g-1);
- //					if(returnedLoc!=null){
- //						illegals.add(returnedLoc);
- //					}
- 
-					returnedLoc = isOwned(board1,j+1,g+1);
+					returnedLoc = isOwned(board1, i+1, j+1);
  					if (returnedLoc != null) {
  						illegals.add(returnedLoc);
  					}
  
-					returnedLoc = isOwned(board1,j-1,g-1);
+					returnedLoc = isOwned(board1, i-1, j-1);
  					if (returnedLoc != null) {
  						illegals.add(returnedLoc);
  					}
@@ -1085,10 +1073,11 @@ public class Setup {
  		}
  	}
  
- 	public static Intersection isOwned(Board board1, int j, int g) {
+ 	//checks if the intersection is owned
+ 	public static Intersection isOwned(Board board1, int i, int j) {
  		
  		try{
- 			Intersection orb = (Intersection) board1.getBoardLocations()[j][g].getContains();
+ 			Intersection orb = (Intersection) board1.getBoardLocations()[i][j].getContains();
 			return orb;
  		}
  		catch(Exception e) {

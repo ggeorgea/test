@@ -1,4 +1,5 @@
 package completeCatan;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -34,32 +35,26 @@ public class Road {
 //-----Getters and Setters-----//
 	
 	public Coordinate getCoordinateA() {
-	
 		return coordinateA;
 	}
 	
 	public void setCoordinateA(Coordinate coordinateA) {
-	
 		this.coordinateA = coordinateA;
 	}
 	
 	public Coordinate getCoordinateB() {
-	
 		return coordinateB;
 	}
 	
 	public void setCoordinateB(Coordinate coordinateB) {
-	
 		this.coordinateB = coordinateB;
 	}
 	
 	public Player getOwner() {
-	
 		return owner;
 	}
 	
 	public void setOwner(Player owner) {
-	
 		this.owner = owner;
 	}
 	
@@ -127,10 +122,12 @@ public class Road {
 			int x2 = road.getCoordinateB().getX();
 			int y2 = road.getCoordinateB().getY();
 			
+			//prints a message to the user telling them their placement was successful
 			Catan.printToClient("You placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")", player);
 			
 			ArrayList<Player> players = game1.getPlayers();
 			
+			//notifies other players of the action
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i) != player) {
 					
@@ -246,6 +243,7 @@ public class Road {
 		
 		//vertical
 		if (road.getCoordinateA().getX() == road.getCoordinateB().getX()) {
+			
 			 road1 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1-1,y1));
 			 road2 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1+1,y1+1));
 			 road3 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2+1,y2));
@@ -253,6 +251,7 @@ public class Road {
 		}
 		//negslope
 		else if (road.getCoordinateA().getY() == road.getCoordinateB().getY()) {
+			
 			 road1 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1,y1+1));
 			 road2 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1-1,y1-1));
 			 road3 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2+1,y2+1));
@@ -260,6 +259,7 @@ public class Road {
 		}
 		//poslope
 		else {
+			
 			 road1 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1,y1+1));
 			 road2 = board1.getRoadFromCo(road.getCoordinateA(), new Coordinate(x1+1,y1));
 			 road3 = board1.getRoadFromCo(road.getCoordinateB(), new Coordinate(x2-1,y2));
@@ -309,8 +309,10 @@ public class Road {
 				player.setHasLongestRoad(true); 
 				player.setVictoryPoints(player.getVictoryPoints()+2); 
 				
+				//informs the player that they received the card
 				Catan.printToClient("You now have the longest road!", player);
 				
+				//notifies other players of the card allocation
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i) != player) {
 						
