@@ -50,12 +50,7 @@ public class Dice {
 		//notifies other players of the dice roll
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i) != player) {
-				
-				PlayerSocket socket = players.get(i).getpSocket();
-				
-				if (socket != null) {
-					socket.sendMessage("Player " + player.getName() + " rolled: " + diceRoll);
-				}
+				Catan.printToClient("Player " + player.getName() + " rolled: " + diceRoll, players.get(i));
 			}
 		}
 			

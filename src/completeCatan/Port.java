@@ -1,6 +1,5 @@
 package completeCatan;
 
-
 /**
  * Class that stores information about ports
  */

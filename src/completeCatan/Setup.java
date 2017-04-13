@@ -165,12 +165,7 @@ public class Setup {
  
  		//prints player order
 		for (int i = 0; i < players.size(); i++) {
-			
- 			PlayerSocket socket = players.get(i).getpSocket();
-			
-			if (socket != null) {
-				socket.sendMessage("Player order: ");
-			}
+			Catan.printToClient("Player order: ", players.get(i));
 			
  			for (int j = 0; j < players.size(); j++) {
  				Catan.printToClient((j+1)+ ": " + players.get(j).getName(), players.get(i));
@@ -383,12 +378,7 @@ public class Setup {
 				
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i) != player) {
-						
- 						PlayerSocket socket = players.get(i).getpSocket();
-						
-						if (socket != null) {
-							socket.sendMessage("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
-						}
+						Catan.printToClient("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")", players.get(i));
  					}
  				}
 				
@@ -456,13 +446,8 @@ public class Setup {
  		//prints message notifying other players of the action
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i) != player) {
-				
- 				PlayerSocket socket = players.get(i).getpSocket();
-				
-				if (socket != null) {
-					socket.sendMessage("Player " + player.getName() + ""
-							+ " placed settlement at: (" + x + "," + y + ")");
-				}
+				Catan.printToClient("Player " + player.getName() + ""
+							+ " placed settlement at: (" + x + "," + y + ")", players.get(i));
  			}
  		}
 		
@@ -513,13 +498,10 @@ public class Setup {
  			PlayerSocket socket = players.get(i).getpSocket();
 			
 			if (players.get(i) != player) {
-				if (socket != null) {
-					socket.sendMessage("Player " + player.getName() + " gets:");
-				}
+				Catan.printToClient("Player " + player.getName() + " gets:", players.get(i));
+				
  				for (int j = 0; j < resourceCards.size(); j++) {
-					if (socket != null) {
-						socket.sendMessage("1x " + resourceCards.get(j).getResource());
-					}
+					Catan.printToClient("1x " + resourceCards.get(j).getResource(), players.get(i));
  				}
  			}
  		}
@@ -576,7 +558,6 @@ public class Setup {
  
  			//if the card is not null, it adds the card to the player's hand
  			if (card != null) {
- 
  				resourceCards.add(card);
  			}
  		}

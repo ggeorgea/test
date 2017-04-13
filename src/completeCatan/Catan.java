@@ -1,4 +1,4 @@
- package completeCatan;
+package completeCatan;
  
  import java.io.BufferedReader;
  import java.io.File;
@@ -160,17 +160,8 @@
  				while (!hasEnded) {
  					for (int i = 0; i < game1.getPlayers().size(); i++) {
  
- 						//  for a test of longest road:
- 						/*
- 						if (i>0){
- 							System.out.println("-----now in manual mode-------");
- 							scanner = new Scanner(System.in);
- 						}
- 						*/
- 
  						// lets the player have a turn
- 						hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1,
- 								scanner);
+ 						hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1, scanner);
  
  						// if a player has won then no other player takes their turn
  						if (hasEnded) {
@@ -187,12 +178,12 @@
  	}
  
  	//asks the players if they want to play again
-	public static boolean playAgain(Scanner scanner, Game game1) {
+	public static boolean playAgain(Scanner scanner, Game game1) throws IOException {
  
 		Catan.printToClient("Do you want to play again? Y/N", game1.getPlayers().get(0));
  
  		boolean keepPlaying = false;
- 		String choice = scanner.next().toUpperCase();
+ 		String choice = getInputFromClient(game1.getPlayers().get(0), scanner).toUpperCase();
  		char c = choice.toCharArray()[0];
  
  		switch (c) {
@@ -216,7 +207,6 @@
  		PlayerSocket socket = player.getpSocket();
  
  		if (socket != null) {
- 
  			socket.sendMessage(message);
  		}
  		else {
@@ -224,17 +214,15 @@
  		}
  	}
  
- 	//allows messages to be recieved from the correct player
+ 	//allows messages to be received from the correct player
  	public static String getInputFromClient(Player player, Scanner scanner) throws IOException {
  
  		PlayerSocket socket = player.getpSocket();
  
  		if (socket != null) {
- 
  			return socket.getMessage();
  		}
  		else {
- 
  			return scanner.next();
  		}
  	}

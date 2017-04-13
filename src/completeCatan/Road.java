@@ -130,13 +130,7 @@ public class Road {
 			//notifies other players of the action
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i) != player) {
-					
-					PlayerSocket socket = players.get(i).getpSocket();
-					
-					if (socket != null) {
-
-						socket.sendMessage("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
-					}
+					Catan.printToClient("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")", players.get(i));
 				}
 			}
 			
@@ -315,11 +309,7 @@ public class Road {
 				//notifies other players of the card allocation
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i) != player) {
-						
-						PlayerSocket socket = players.get(i).getpSocket();
-						if (socket != null) {
-							socket.sendMessage("Player " + player.getName() + " now has the longest road!");
-						}
+						Catan.printToClient("Player " + player.getName() + " now has the longest road!", players.get(i));
 					}
 				}
 			}

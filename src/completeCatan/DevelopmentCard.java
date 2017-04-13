@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 /**
  * Class to store information about development cards
  * and methods to allow players to buy and play development cards
@@ -104,12 +103,7 @@ public class DevelopmentCard {
 			//notifies other players of the action
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i) != player) {
-					
-					PlayerSocket socket = player.getpSocket();
-					
-					if (socket != null) {
-						socket.sendMessage("Player " + player.getName() + " bought a development card");
-					}
+					Catan.printToClient("Player " + player.getName() + " bought a development card", players.get(i));
 				}
 			}
 			
@@ -301,12 +295,7 @@ public class DevelopmentCard {
 				//notifies all other players that the card has been passed on
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i) != player) {
-						
-						PlayerSocket socket = players.get(i).getpSocket();
-						
-						if (socket != null) {
-							socket.sendMessage("Player " + player.getName() + " now has the largest army!");
-						}
+						Catan.printToClient("Player " + player.getName() + " now has the largest army!", players.get(i));
 					}
 				}
 			}

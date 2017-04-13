@@ -183,7 +183,6 @@ public class Trade {
 		}
 		
 		for (int i = 0; i < tradeNumber; i++) {
-			
 			playerResources.remove(removeResource);
 		}
 		
@@ -246,7 +245,9 @@ public class Trade {
 			if (bankAmount >= DIRECT_TRADE_NUMBER) {
 				carryOutTrade(player, tradeChoice, gainChoice, "direct");
 			}
-			else Catan.printToClient("Not enough resources available in bank to trade. Trade cancelled.", player);
+			else {
+				Catan.printToClient("Not enough resources available in bank to trade. Trade cancelled.", player);
+			}
 		}
 		else {
 			
@@ -589,7 +590,6 @@ public class Trade {
 			
 			choice = chooseResources(playerTradeResources, scanner, player);
 			playerTradeToTrade.add(playerTradeResources.get(choice));
-			//playerTradeResources.remove(choice);
 
 			choice = chooseMoreResources(scanner, player);
 		}

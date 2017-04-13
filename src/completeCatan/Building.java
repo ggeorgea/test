@@ -129,13 +129,8 @@ public class Building {
 			//notifies each player of the action
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i) != player) {
-					
-					PlayerSocket socket = players.get(i).getpSocket();
-					
-					if (socket != null) {
-						socket.sendMessage("Player " + player.getName() + ""
-								+ " placed settlement at: (" + x + "," + y + ")");
-					}
+					Catan.printToClient("Player " + player.getName() + ""
+							+ " placed settlement at: (" + x + "," + y + ")", players.get(i));
 				}
 			}
 		}
@@ -355,13 +350,8 @@ public class Building {
 			//notifies other players of the action
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i) != player) {
-					
-					PlayerSocket socket = players.get(i).getpSocket();
-					
-					if (socket != null) {
-						socket.sendMessage("Player " + player.getName() + ""
-								+ " placed city at: (" + x + "," + y + ")");
-					}
+					Catan.printToClient("Player " + player.getName() + ""
+							+ " placed city at: (" + x + "," + y + ")", players.get(i));
 				}
 			}
 		}

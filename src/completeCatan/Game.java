@@ -142,12 +142,7 @@ public class Game {
 		//notifies the other players of the victory
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i) != player) {
-				
-				PlayerSocket socket = players.get(i).getpSocket();
-				
-				if (socket != null) {
-					socket.sendMessage("Player " + player.getName() + " won!");
-				}
+				Catan.printToClient("Player " + player.getName() + " won!", players.get(i));
 			}
 		}
 	}
