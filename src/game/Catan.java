@@ -103,12 +103,15 @@ public class Catan {
 			int defaultPortNumber = 6789;
 
 			if (answer.equals("y")) {
+				
 				//CLIENT SIDE
 				System.out.println("please enter the address where you wish to connect\nPlease note that to enter a command, enter \"c\"");
 				String hostName = scanner.nextLine();
 				int portNumber = defaultPortNumber;
 				
 		        try {
+		        	
+		        	Client client = new Client();
 	        		Socket kkSocket = new Socket(hostName, portNumber);	  
 	        		//TODO implement lobby join request
 //        			//join
@@ -118,6 +121,8 @@ public class Catan {
 	        		String fromServer;
 		            String fromUser;
 	     
+		            
+		            
 		            while(true){
 		            	if(kkSocket.getInputStream().available()!=0){
 			            Message m1 = getPBMsg(kkSocket);		
@@ -135,7 +140,7 @@ public class Catan {
 					                }		
 				            	}
 					          else{
-					        	  Client.resolveEvent(m1.getEvent(),kkSocket);
+					        	  client.resolveEvent(m1.getEvent(),kkSocket);
 					          }
 				            }			    
 			            // CLIENTS DONT RECEIVE REQUESTS :(

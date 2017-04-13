@@ -7,7 +7,13 @@ import java.util.Scanner;
  * Class that stores information about players
  */
 public class Player {
-
+	//protocol based requirements
+	private String userName;
+	private int colour;
+	private int ID;
+	
+	
+	
 	private PlayerSocket pSocket;
 	private String name;
 	private int victoryPoints;
@@ -340,5 +346,32 @@ public class Player {
 		
 		player.setStandardPorts(standard);
 		player.setSpecialPorts(special);
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public int getColour() {
+		return colour;
+	}
+
+	public void setColour(int colour) {
+		this.colour = colour;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}	
+	
+	
+	
 }
