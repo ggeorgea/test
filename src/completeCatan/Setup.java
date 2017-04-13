@@ -774,7 +774,7 @@ public class Setup {
 			
 			if (robLoc.getNumber() == -1 && robLoc.getisRobberHere().equals(ROBBER)) {
 				
- 				System.out.println("The robber was left out "+ robLoc.getisRobberHere()+robLoc.getNumber());
+ 				//System.out.println("The robber was left out "+ robLoc.getisRobberHere()+robLoc.getNumber());
  				robLoc.setNumber(7);
  
  				break;
