@@ -235,6 +235,20 @@ public class Trade {
 			ResourceCard tradeChoice = selectTradeResource(player, scanner, game1, canTrade, resourceType);
 			ArrayList<ResourceCard> gainChoice = selectGainResource(player, scanner, game1);
 			
+			//makes sure the trade comprises of two different resources
+			if (tradeChoice.getResource().equals(gainChoice.get(0).getResource())) {
+				
+				Catan.printToClient("You cannot trade 4 of one resource for 1 of the same resource. Trade cancelled", player);
+				return;
+			}
+			
+			//makes sure the trade comprises of two different resources
+			if (tradeChoice.getResource().equals(gainChoice.get(0).getResource())) {
+				
+				Catan.printToClient("You cannot trade 4 of one resource for 1 of the same resource. Trade cancelled", player);
+				return;
+			}
+			
 			if (bankAmount >= DIRECT_TRADE_NUMBER) {
 				carryOutTrade(player, tradeChoice, gainChoice, "direct");
 			}
@@ -290,6 +304,12 @@ public class Trade {
 				break;
 			}
 			
+			//makes sure the trade comprises of two different resources
+			if (tradeChoice.getResource().equals(gainChoice.get(0).getResource())) {
+				
+				Catan.printToClient("You cannot trade 3 of one resource for 1 of the same resource. Trade cancelled", player);
+				return;
+			}
 			if (bankAmount >= STANDARD_TRADE_NUMBER) {
 				carryOutTrade(player, tradeChoice, gainChoice, "standard");
 			}
@@ -401,6 +421,13 @@ public class Trade {
 			gainResource = game1.getWool();
 			bankAmount = gainResource.size();
 			break;
+		}
+		
+		//makes sure the trade comprises of two different resources
+		if (portChoice.getResource().equals(gainResource.get(0).getResource())) {
+			
+			Catan.printToClient("You cannot trade 2 of one resource for 1 of the same resource. Trade cancelled", player);
+			return;
 		}
 		
 		if (bankAmount >= SPECIAL_TRADE_NUMBER) {
