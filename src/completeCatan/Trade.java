@@ -50,7 +50,7 @@ public class Trade {
 //-----Methods allowing the player to trade with the bank-----//
 
 	//allows the player to trade with the bank
-	public static void tradeBank(Player player, Scanner scanner, Game game1) throws IOException{
+	public static void tradeBank(Player player, Scanner scanner, Game game1) throws IOException {
 
 		player.updatePlayerPorts(player, game1);
 		
@@ -61,8 +61,15 @@ public class Trade {
 		resourceType.addAll(game1.getOre());
 		resourceType.addAll(game1.getWool());
 
-		boolean hasStandard = false; if(player.getStandardPorts().size() > 0) hasStandard = true;
-		boolean hasSpecial = false; if(player.getSpecialPorts().size() > 0) hasSpecial = true;
+		boolean hasStandard = false; 
+		if (player.getStandardPorts().size() > 0) {
+			hasStandard = true;
+		}
+		
+		boolean hasSpecial = false; 
+		if (player.getSpecialPorts().size() > 0) {
+			hasSpecial = true;
+		}
 		
 		Catan.printToClient("Trading options:", player);
 		Catan.printToClient("4: Directly with bank (4:1 receiving a resource of your choice)", player);
@@ -106,7 +113,8 @@ public class Trade {
 	}
 
 	//prompts the user to select what resource they want to trade
-	public static ResourceCard selectTradeResource(Player player, Scanner scanner, Game game1, ArrayList<Integer> canTrade, ArrayList<ResourceCard> resourceType) throws IOException{
+	public static ResourceCard selectTradeResource(Player player, Scanner scanner, Game game1, ArrayList<Integer> canTrade, 
+			ArrayList<ResourceCard> resourceType) throws IOException {
 			
 		Catan.printToClient("Please select resource to trade with the bank:", player);
 		
@@ -127,7 +135,7 @@ public class Trade {
 	}
 
 	//asks the user to select which resource they wish to gain
-	public static ArrayList<ResourceCard> selectGainResource(Player player, Scanner scanner, Game game1) throws IOException{
+	public static ArrayList<ResourceCard> selectGainResource(Player player, Scanner scanner, Game game1) throws IOException {
 		
 		ArrayList<ResourceCard> gameResources = new ArrayList<ResourceCard>();
 		gameResources.addAll(game1.getBrick());
@@ -163,7 +171,7 @@ public class Trade {
 	}
 
 	//carries out the trade if it is legal
-	public static void carryOutTrade(Player player, ResourceCard tradeChoice, ArrayList<ResourceCard> gainChoice, String tradeType){
+	public static void carryOutTrade(Player player, Game game1, ResourceCard tradeChoice, ArrayList<ResourceCard> gainChoice, String tradeType) {
 		
 		ArrayList<ResourceCard> playerResources = player.getResourceCards();
 		ResourceCard removeResource = tradeChoice;
@@ -189,10 +197,20 @@ public class Trade {
 		ResourceCard addResource = gainChoice.get(0);
 		playerResources.add(addResource);
 		player.setResourceCards(playerResources);
+		
+		Catan.printToClient("Trade completed!", player);
+		
+		ArrayList<Player> players = game1.getPlayers();
+		
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i) != player) {
+				Catan.printToClient("Player " + player.getName() + "traded with the bank", players.get(i));
+			}
+		}
 	}
 
 	//if the player is trading directly with the bank
-	public static void tradeDirect(Player player, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType) throws IOException{
+	public static void tradeDirect(Player player, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType) throws IOException {
 		
 		ArrayList<ResourceCard> resources = player.getResourceCards();
 		int[] resourceCount = {0, 0, 0, 0, 0}; //array positions indicate brick, grain, lumber, ore, wool respectively
@@ -201,23 +219,23 @@ public class Trade {
 		for (int i = 0; i < resources.size(); i++) {
 			
 			switch (resources.get(i).getResource()) {
-			case "brick" : 
+			case BRICK : 
 				resourceCount[0]++;
 				bankAmount = game1.getBrick().size();
 				break;
-			case "grain" : 
+			case GRAIN : 
 				resourceCount[1]++; 
 				bankAmount = game1.getGrain().size();
 				break;
-			case "lumber" : 
+			case LUMBER : 
 				resourceCount[2]++; 
 				bankAmount = game1.getLumber().size();
 				break;
-			case "ore" : 
+			case ORE : 
 				resourceCount[3]++; 
 				bankAmount = game1.getOre().size();
 				break;
-			case "wool" : 
+			case WOOL : 
 				resourceCount[4]++; 
 				bankAmount = game1.getWool().size();
 				break;
@@ -243,7 +261,7 @@ public class Trade {
 			ArrayList<ResourceCard> gainChoice = selectGainResource(player, scanner, game1);
 			
 			if (bankAmount >= DIRECT_TRADE_NUMBER) {
-				carryOutTrade(player, tradeChoice, gainChoice, "direct");
+				carryOutTrade(player, game1, tradeChoice, gainChoice, "direct");
 			}
 			else {
 				Catan.printToClient("Not enough resources available in bank to trade. Trade cancelled.", player);
@@ -257,7 +275,7 @@ public class Trade {
 	}
 
 	//if the user has a standard port they can trade 3:1
-	public static void tradeStandard(Player player, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType) throws IOException{
+	public static void tradeStandard(Player player, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType) throws IOException {
 		
 		ArrayList<ResourceCard> resources = player.getResourceCards();
 		int[] resourceCount = {0, 0, 0, 0, 0}; //array positions indicate brick, grain, lumber, ore, wool respectively
@@ -301,7 +319,7 @@ public class Trade {
 			}
 			
 			if (bankAmount >= STANDARD_TRADE_NUMBER) {
-				carryOutTrade(player, tradeChoice, gainChoice, "standard");
+				carryOutTrade(player, game1, tradeChoice, gainChoice, "standard");
 			}
 			else {
 				Catan.printToClient("Not enough resources available in bank to trade. Trade cancelled.", player);
@@ -315,7 +333,7 @@ public class Trade {
 	}
 
 	//if the user has a special port they can trade 2:1
-	public static void tradeSpecial(Player player, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType) throws IOException{
+	public static void tradeSpecial(Player player, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType) throws IOException {
 		
 		ArrayList<Port> ownedPorts = player.getSpecialPorts();
 		ArrayList<Port> tradePorts = new ArrayList<Port>();
@@ -415,7 +433,7 @@ public class Trade {
 		}
 		
 		if (bankAmount >= SPECIAL_TRADE_NUMBER) {
-			carryOutTrade(player, tradePort, gainResource, "special");
+			carryOutTrade(player, game1, tradePort, gainResource, "special");
 		}
 		else {
 			Catan.printToClient("Not enough resources available in bank to trade. Trade cancelled.", player);
@@ -545,6 +563,14 @@ public class Trade {
 		else if (trade.equals(ACCEPT_TRADE)) {
 			Catan.printToClient("Offer accepted. Trading stopped.", playerTrade);
 			Catan.printToClient("Offer accepted. Trading stopped.", player);
+			
+			//notifies other players of the trade that occurred
+			for (int i = 0; i < players.size(); i++) {
+				if (players.get(i) != player && players.get(i) != playerTrade) {
+					Catan.printToClient("Player " + player.getName() + "and Player "
+							+ playerTrade.getName() + "traded resources", players.get(i));
+				}
+			}
 		}
 
 		players.add(player);
