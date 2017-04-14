@@ -8,6 +8,7 @@ import intergroup.Events.Event;
 import intergroup.Requests.Request;
 import intergroup.board.Board.Harbour;
 import intergroup.board.Board.Hex;
+import intergroup.board.Board.Steal;
 import intergroup.lobby.Lobby.GameSetup.PlayerSetting;
 
 public class Client {
@@ -516,12 +517,76 @@ public class Client {
 				lobbyMem = lobbyNames;
 				
 				break;
-			case "MONOPOLYRESOLUTION":
-				
-				//TODO multisteal
-				
-				
-				break;
+			case "MONOPOLYRESOLUTION":					
+				for(int i = 0; i<event.getMonopolyResolution().getTheftsCount();i++){
+					Steal thisSteal = event.getMonopolyResolution().getThefts(i);
+					int Aquant = thisSteal.getQuantity();
+					int Areco = thisSteal.getResourceValue();
+					
+					if(event.getInstigator().getIdValue()==myID){
+						switch(Areco){
+						//BRICK
+						case  1:
+							System.out.println("you stole brick X"+Aquant+" from player "+thisSteal.getVictim().getIdValue());
+							mybrick+=Aquant;
+							break;
+						//LUMBER
+						case  2:	
+							System.out.println("you stole LUMBER X"+Aquant+" from player "+thisSteal.getVictim().getIdValue());
+							mylumber+=Aquant;
+							break;
+						//WOOL
+						case  3:	
+							System.out.println("you stole WOOL X"+Aquant+" from player "+thisSteal.getVictim().getIdValue());
+							mywool+=Aquant;
+							break;
+						//GRAIN
+						case  4:	
+							System.out.println("you stole GRAIN X"+Aquant+" from player "+thisSteal.getVictim().getIdValue());
+							mygrain+=Aquant;
+							break;
+						//ORE
+						case  5:	
+							System.out.println("you stole ORE X"+Aquant+" from player "+thisSteal.getVictim().getIdValue());
+							myore+=Aquant;
+							break;
+						}
+					}else{
+						if(thisSteal.getVictim().getIdValue() == myID){
+							switch(Areco){
+							//BRICK
+							case  1:
+								System.out.println("you lost brick X"+Aquant+" to player "+event.getInstigator().getIdValue());
+								mybrick-=Aquant;
+								break;
+							//LUMBER
+							case  2:	
+								System.out.println("you lost LUMBER X"+Aquant+" to player "+event.getInstigator().getIdValue());
+								mylumber-=Aquant;
+								break;
+							//WOOL
+							case  3:	
+								System.out.println("you lost WOOL X"+Aquant+" to player "+event.getInstigator().getIdValue());
+								mywool-=Aquant;
+								break;
+							//GRAIN
+							case  4:	
+								System.out.println("you lost GRAIN X"+Aquant+" to player "+event.getInstigator().getIdValue());
+								mygrain-=Aquant;
+								break;
+							//ORE
+							case  5:	
+								System.out.println("you lost ORE X"+Aquant+" to player "+event.getInstigator().getIdValue());
+								myore-=Aquant;
+								break;
+							}
+						}
+						else{
+							System.out.println("player "+event.getInstigator().getIdValue()+" stole "+Aquant+" resources from player"+thisSteal.getVictim().getIdValue());
+						}
+					}					
+				}					
+					break;
 			case "TYPE_NOT_SET	":
 				break;
 			default:
