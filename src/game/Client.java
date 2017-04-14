@@ -229,24 +229,159 @@ public class Client {
 				System.out.println("the robber was moved to: ("+nx+", "+ny+") by player"+ event.getInstigator().getIdValue());
 				break;
 			case "RESOURCESTOLEN":
-				if(event.getInstigator().getIdValue()!=myID){
-					
+				int quant = event.getResourceStolen().getQuantity();
+				int reco = event.getResourceStolen().getResourceValue();
+				
+				if(event.getInstigator().getIdValue()==myID){
+					switch(reco){
+					//BRICK
+					case  1:
+						System.out.println("you stole brick X"+quant+" from player "+event.getResourceStolen().getVictim().getIdValue());
+						mybrick+=quant;
+						break;
+					//LUMBER
+					case  2:	
+						System.out.println("you stole LUMBER X"+quant+" from player "+event.getResourceStolen().getVictim().getIdValue());
+						mylumber+=quant;
+						break;
+					//WOOL
+					case  3:	
+						System.out.println("you stole WOOL X"+quant+" from player "+event.getResourceStolen().getVictim().getIdValue());
+						mywool+=quant;
+						break;
+					//GRAIN
+					case  4:	
+						System.out.println("you stole GRAIN X"+quant+" from player "+event.getResourceStolen().getVictim().getIdValue());
+						mygrain+=quant;
+						break;
+					//ORE
+					case  5:	
+						System.out.println("you stole ORE X"+quant+" from player "+event.getResourceStolen().getVictim().getIdValue());
+						myore+=quant;
+						break;
+					}
 				}else{
-					//TODO me
+					if(event.getResourceStolen().getVictim().getIdValue() == myID){
+						switch(reco){
+						//BRICK
+						case  1:
+							System.out.println("you lost brick X"+quant+" to player "+event.getInstigator().getIdValue());
+							mybrick-=quant;
+							break;
+						//LUMBER
+						case  2:	
+							System.out.println("you lost LUMBER X"+quant+" to player "+event.getInstigator().getIdValue());
+							mylumber-=quant;
+							break;
+						//WOOL
+						case  3:	
+							System.out.println("you lost WOOL X"+quant+" to player "+event.getInstigator().getIdValue());
+							mywool-=quant;
+							break;
+						//GRAIN
+						case  4:	
+							System.out.println("you lost GRAIN X"+quant+" to player "+event.getInstigator().getIdValue());
+							mygrain-=quant;
+							break;
+						//ORE
+						case  5:	
+							System.out.println("you lost ORE X"+quant+" to player "+event.getInstigator().getIdValue());
+							myore-=quant;
+							break;
+						}
+					}
+					else{
+						System.out.println("player "+event.getInstigator().getIdValue()+" stole "+quant+" resources from player"+ event.getResourceStolen().getVictim().getIdValue());
+					}
 				}
 				break;
 			case "RESOURCECHOSEN":
+				//what is this for???
 				if(event.getInstigator().getIdValue()!=myID){
-					
+					switch(event.getResourceChosenValue()){
+					//GENERIC
+					case  0:
+						System.out.println("player "+event.getInstigator().getIdValue()+" chose generic");
+						break;
+					//BRICK
+					case  1:
+						System.out.println("player "+event.getInstigator().getIdValue()+" chose brick");
+						break;
+					//LUMBER
+					case  2:					
+						System.out.println("player "+event.getInstigator().getIdValue()+" chose lumber");
+						break;
+					//WOOL
+					case  3:						
+						System.out.println("player "+event.getInstigator().getIdValue()+" chose wool");
+						break;
+					//GRAIN
+					case  4:						
+						System.out.println("player "+event.getInstigator().getIdValue()+" chose grain");
+						break;
+					//ORE
+					case  5:						
+						System.out.println("player "+event.getInstigator().getIdValue()+" chose ore");
+						break;
+							
+					}
 				}else{
-					//TODO me
+					switch(event.getResourceChosenValue()){
+					//GENERIC
+					case  0:
+						System.out.println("you chose generic");
+						break;
+					//BRICK
+					case  1:
+						System.out.println("you chose brick");
+						break;
+					//LUMBER
+					case  2:					
+						System.out.println("you chose lumber");
+						break;
+					//WOOL
+					case  3:						
+						System.out.println("you chose wool");
+						break;
+					//GRAIN
+					case  4:						
+						System.out.println("you chose grain");
+						break;
+					//ORE
+					case  5:						
+						System.out.println("you chose ore");
+						break;
+							
+					}
 				}
 				break;
 			case "CARDSDISCARDED":
+				//DO YOU ALWAYS GET TO KNOW?
+				/*
+				 message Counts {
+				  int32 brick = 1;
+				  int32 lumber = 2;
+				  int32 wool = 3;
+				  int32 grain = 4;
+				  int32 ore = 5;
+				}
+				 */
+				int brick = event.getCardsDiscarded().getBrick();
+				int lumber = event.getCardsDiscarded().getLumber();
+				int wool = event.getCardsDiscarded().getWool();
+				int grain = event.getCardsDiscarded().getGrain();
+				int ore = event.getCardsDiscarded().getOre();
+
 				if(event.getInstigator().getIdValue()!=myID){
+					System.out.println("player "+event.getInstigator().getIdValue()+"discarded brick: "+brick+", lumber: "+lumber+", wool: "+wool+", grain: "+grain+", ore:"+ore);
 					
 				}else{
-					//TODO me
+					System.out.println("you discarded brick: "+brick+", lumber: "+lumber+", wool: "+wool+", grain: "+grain+", ore:"+ore);
+					   mybrick -= brick;
+					   mylumber -= lumber;
+					   mywool -= wool;
+					   mygrain-= grain;
+					   myore -= ore;
 				}
 				break;
 			case "BANKTRADE":
@@ -382,11 +517,10 @@ public class Client {
 				
 				break;
 			case "MONOPOLYRESOLUTION":
-				if(event.getInstigator().getIdValue()!=myID){
-					
-				}else{
-					//TODO me
-				}
+				
+				//TODO multisteal
+				
+				
 				break;
 			case "TYPE_NOT_SET	":
 				break;

@@ -33,6 +33,15 @@ import intergroup.trade.Trade.WithPlayer;
  */
 public class Catan {
 
+	private static Coordinate[] swapToProtoOrder(Coordinate[] coords){
+		if((coords[0].getX()+coords[0].getY())>(coords[1].getX()+coords[1].getY())){
+			Coordinate keepCoord = coords[0];
+			coords[0]  = coords[1];
+			coords[1] = keepCoord;
+		}
+		return coords;
+	}
+	
 	private static final boolean END_GAME = true;
 
 	public static void main(String[] args) throws Exception {
