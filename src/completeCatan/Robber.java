@@ -150,33 +150,34 @@ public class Robber {
 
 		//choose a player to steal a card from
 		Player target = null;
+		ArrayList<Player> players = game1.getPlayers();
+		players.remove(player);
 			
+		//ensures correct user input
 		while (true) {
 
 			target = null;
-			Catan.printToClient("Please select player to steal from:", player);
-
-			String  name = Catan.getInputFromClient(player, scanner).toUpperCase();
-			ArrayList<Player> allPlayers = game1.getPlayers();
-							
-			//check that the player chose is valid
-			//check if player exists 
-			for (Player current: allPlayers) { 
-				if (current.getName().equals(name)) { 
-					target = current; 
-				}
+			Catan.printToClient("Which player do you want to steal from?", player);
+			
+			for (int i = 0; i < players.size(); i++) {
+				System.out.println(i+1 + ": " + players.get(i));
 			}
-			if (target == null) { 
+
+			int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
+			
+			if (choice <= 0 || choice > players.size()) {
 				Catan.printToClient("Invalid player choice. Please choose again.", player);
 				continue;
-			} 
-			else {
-				break;
 			}
+			else {
+				target = players.get(choice-1);
+				break;
+			}			
 		}
 			
 		ArrayList<Hex> hexes = game1.getBoard().getHexes();
 		boolean allowedToSteal = false; 
+		
 		for (int i = 0; i < hexes.size(); i++) {
 				
 			Hex hex = hexes.get(i);
@@ -192,12 +193,17 @@ public class Robber {
 					if (ownerOfLocation == target) { 
 						allowedToSteal = true; 
 					}
-				}
-					
+				}					
 			}
 		}
+		
 		if (allowedToSteal) { 
 			transferRandomCard(target, player);
+		}
+		else {
+			
+			Catan.printToClient("Cannot steal from this player. They must have a settlement near the robber", player);
+			robberStealCard(player, game1, scanner);
 		}
 	}
 	
