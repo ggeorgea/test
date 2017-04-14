@@ -382,13 +382,14 @@ public class DevelopmentCard {
  	}
 	
 	//plays a year of plenty card
-	public static boolean playYearOfPlentyCard(Player player, Game game1, Scanner scanner) {
+	public static boolean playYearOfPlentyCard(Player player, Game game1, Scanner scanner) throws IOException {
 		
 		ArrayList<ResourceCard> cards = player.getResourceCards();
 		boolean hasResource = true;
 		
 		//lets the player choose two resources from the bank
 		for (int i = 0; i < 2; i++) {
+			
 			hasResource = chooseResourceYOP(cards, game1, scanner, player);
 		}
 		
@@ -399,8 +400,31 @@ public class DevelopmentCard {
 	}
 	
 	//lets the player choose the resource for YOP
-	public static boolean chooseResourceYOP(ArrayList<ResourceCard> cards, Game game1, Scanner scanner, Player player) {
+	public static boolean chooseResourceYOP(ArrayList<ResourceCard> cards, Game game1, Scanner scanner, Player player) throws IOException {
 		
+		Catan.printToClient("What resource do you want?", player);
+		Message enter = Message.newBuilder().build();
+			
+		boolean success = false;
+			
+		while (!success) {
+				
+			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+			
+			if (enter.getRequest().getBodyCase().getNumber() == 12) {
+				success = true;
+			}
+			else {
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a resource request").build()).build()).build(), player.getpSocket().getClientSocket());
+			}
+		}
+		
+		int choice = enter.getRequest().getChooseResourceValue();
+		
+		if (choice == 0) {
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a resource").build()).build()).build(), player.getpSocket().getClientSocket());
+		}
+			
 		ArrayList<ResourceCard> brick = game1.getBrick();
 		ArrayList<ResourceCard> lumber = game1.getLumber();
 		ArrayList<ResourceCard> wool = game1.getWool();
@@ -411,26 +435,28 @@ public class DevelopmentCard {
 		//if not the card is not played
 		if (brick.size() <= 0 && lumber.size() <= 0 && wool.size() <= 0 && ore.size() <= 0 && grain.size() <= 0) {
 			
-			Catan.printToClient("There are no resources left in the bank. You cannot play this development card.", player);
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no resources left in bank. Cannot play card").build()).build()).build(), player.getpSocket().getClientSocket());
 			return false;
 		}
 		
+		/*
 		Catan.printToClient("Pick a resource", player);
-		Catan.printToClient("1. Brick", player);
-		Catan.printToClient("2. Lumber", player);
-		Catan.printToClient("3. Wool", player);
-		Catan.printToClient("4. Ore", player);
-		Catan.printToClient("5. Grain", player);
+		Catan.printToClient("1: Brick", player);
+		Catan.printToClient("2: Lumber", player);
+		Catan.printToClient("3: Wool", player);
+		Catan.printToClient("4: Grain", player);
+		Catan.printToClient("5: Ore", player);
 		
 		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
+		*/
 		
 		//lets the player take a card from the bank
 		switch (choice) {
 		case 1 :
 			if (brick.size() <= 0) {
 				
-				Catan.printToClient("There are no brick resource cards left. Please choose again.", player);
-				chooseResourceYOP(cards, game1, scanner, player);
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no brick cards left").build()).build()).build(), player.getpSocket().getClientSocket());
+				return false;
 			}
 			
 			cards.add(brick.get(0));
@@ -439,8 +465,8 @@ public class DevelopmentCard {
 		case 2 :
 			if (lumber.size() <= 0) {
 				
-				Catan.printToClient("There are no lumber resource cards left. Please choose again.", player);
-				chooseResourceYOP(cards, game1, scanner, player);
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no lumber cards left").build()).build()).build(), player.getpSocket().getClientSocket());
+				return false;			
 			}
 			
 			cards.add(lumber.get(0));
@@ -448,30 +474,33 @@ public class DevelopmentCard {
 			break;
 		case 3 :
 			if (wool.size() <= 0) {
-				Catan.printToClient("There are no wool resource cards left. Please choose again.", player);
-				chooseResourceYOP(cards, game1, scanner, player);
+				
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no wool cards left").build()).build()).build(), player.getpSocket().getClientSocket());
+				return false;
 			}
 			
 			cards.add(wool.get(0));
 			game1.getWool().remove(wool);
 			break;
 		case 4 :			
-			if (ore.size() <= 0) {
-				Catan.printToClient("There are no ore resource cards left. Please choose again.", player);
-				chooseResourceYOP(cards, game1, scanner, player);
-			}
-			
-			cards.add(ore.get(0));
-			game1.getOre().remove(ore);
-			break;
-		case 5 :
 			if (grain.size() <= 0) {
-				Catan.printToClient("There are no grain resource cards left. Please choose again.", player);
-				chooseResourceYOP(cards, game1, scanner, player);
+				
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no grain cards left").build()).build()).build(), player.getpSocket().getClientSocket());
+				return false;
 			}
 			
 			cards.add(grain.get(0));
 			game1.getGrain().remove(grain);
+			break;
+		case 5 :
+			if (ore.size() <= 0) {
+				
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no ore cards left").build()).build()).build(), player.getpSocket().getClientSocket());
+				return false;
+			}
+			
+			cards.add(ore.get(0));
+			game1.getOre().remove(ore);
 			break;
 		default :
 			Catan.printToClient("Invalid choice. Please choose again", player);
