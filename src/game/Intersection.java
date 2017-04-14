@@ -1,4 +1,5 @@
 package game;
+
 import java.util.ArrayList;
 
 /**
@@ -27,42 +28,34 @@ public class Intersection {
 //-----Getters and Setters-----//
 	
 	public Coordinate getCoordinate() {
-	
 		return coordinate;
 	}
 	
 	public void setCoordinate(Coordinate coordinate) {
-	
 		this.coordinate = coordinate;
 	}
 	
 	public Player getOwner() {
-	
 		return owner;
 	}
 	
 	public void setOwner(Player owner) {
-	
 		this.owner = owner;
 	}
 	
 	public Building getBuilding() {
-	
 		return building;
 	}
 	
 	public void setBuilding(Building building) {
-	
 		this.building = building;
 	}
 
 	public ArrayList<Intersection> getIllegal() {
-		
 		return illegal;
 	}
 
 	public void setIllegal(ArrayList<Intersection> illegal) {
-		
 		this.illegal = illegal;
 	}
 }

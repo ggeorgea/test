@@ -1,6 +1,5 @@
 package game;
 
-
 /**
  * Class to store data about hexes
  */
@@ -28,27 +27,22 @@ public class Hex {
 //-----Getters and Setters-----//
 	
 	public Coordinate getCoordinate() {
-	
 		return coordinate;
 	}
 	
 	public void setCoordinate(Coordinate coordinate) {
-	
 		this.coordinate = coordinate;
 	}
 	
 	public String getTerrain() {
-	
 		return terrain;
 	}
 	
 	public void setTerrain(String terrain) {
-	
 		this.terrain = terrain;
 	}
 	
 	public int getNumber() {
-	
 		return number;
 	}
 	
@@ -94,17 +88,14 @@ public class Hex {
 	}
 	
 	public String getnumString() {
-	
 		return numString;
 	}
 	
 	public String getisRobberHere() {
-		
 		return isRobberHere;
 	}
 	
 	public void setisRobberHere(String isRobberHere) {
-	
 		this.isRobberHere = isRobberHere;
 	}
 }

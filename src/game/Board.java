@@ -10,7 +10,7 @@ public class Board {
 
 	private int size;
 	private Coordinate robber;
-	private Robber theRobber;
+	private Robber theRobber; //TODO not required?
 	private ArrayList<Hex> hexes = new ArrayList<Hex>();
 	private ArrayList<Port> ports = new ArrayList<Port>();
 	private ArrayList<Road> roads = new ArrayList<Road>();
@@ -44,92 +44,76 @@ public class Board {
 //-----Getters and Setters-----//
 	
 	public int getSize() {
-		
 		return size;
 	}
 	
-	public void setSize(int size) {
-		
+	public void setSize(int size) {		
 		this.size = size;
 	}
 	
 	public Coordinate getRobber() {
-		
 		return robber;
 	}
 	
 	public void setRobber(Coordinate robber) {
-		
 		this.robber = robber;
 	}
 	
+	//TODO not required
 	public Robber getTheRobber() {
-		
 		return theRobber;
 	}
 
+	//TODO not required
 	public void setTheRobber(Robber theRobber) {
-		
 		this.theRobber = theRobber;
 	}
 	
 	public ArrayList<Hex> getHexes() {
-		
 		return hexes;
 	}
 	
 	public void setHexes(ArrayList<Hex> hexes) {
-		
 		this.hexes = hexes;
 	}
 	
 	public ArrayList<Port> getPorts() {
-		
 		return ports;
 	}
 	
 	public void setPorts(ArrayList<Port> ports) {
-		
 		this.ports = ports;
 	}
 	
 	public ArrayList<Road> getRoads() {
-		
 		return roads;
 	}
 	
 	public void setRoads(ArrayList<Road> roads) {
-		
 		this.roads = roads;
 	}
 	
 	public ArrayList<Intersection> getBuildings() {
-		
 		return buildings;
 	}
 	
 	public void setBuildings(ArrayList<Intersection> buildings) {
-		
 		this.buildings = buildings;
 	}
 	
 	public Location[][] getBoardLocations() {
-		
 		return boardLocations;
 	}
 
 	public void setBoardLocations(Location[][] boardLocations) {
-		
 		this.boardLocations = boardLocations;
 	}
 	
 	public HashMap getRoadmap() {
-		
 		return roadmap;
 	}
 
 	public void setRoadmap(HashMap roadmap) {
-		
 		this.roadmap = roadmap;
 	}
 	
@@ -143,19 +127,23 @@ public class Board {
 		
 		if (coA.getY() == coB.getY()) {
 			if (coA.getX() < coB.getX()) {
+				
 				cFirst = coA;
 				cSecond = coB;
 			}
 			else {
+				
 				cFirst = coB;
 				cSecond = coA;
 			}
 		}
 		else if (coA.getY() > coB.getY()) {
+			
 			cFirst = coA;
 			cSecond = coB;
 		}
 		else {
+			
 			cFirst = coB;
 			cSecond = coA;
 		}
@@ -172,19 +160,23 @@ public class Board {
 		
 		if (coA.getY() == coB.getY()) {
 			if (coA.getX() < coB.getX()) {
+				
 				cFirst = coA;
 				cSecond = coB;
 			}
 			else {
+				
 				cFirst = coB;
 				cSecond = coA;
 			}
 		}
 		else if (coA.getY() > coB.getY()) {
+			
 			cFirst = coA;
 			cSecond = coB;
 		}
 		else {
+			
 			cFirst = coB;
 			cSecond = coA;
 		}
