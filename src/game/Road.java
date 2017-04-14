@@ -90,19 +90,16 @@ public class Road {
 		else if (road == null) {
 			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
-			buildRoad(player, game1, scanner, roadBuilding);
 			return;
 		}
 		else if (road.getOwner().getName() != null) {
 			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("A road has already been placed here. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
-			buildRoad(player, game1, scanner, roadBuilding);
 			return;
 		}
  		else if (!checkConnected(road,player,game1)) {
 	 		
  			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Road must be placed beside other roads or settlements. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
-			buildRoad(player, game1, scanner, roadBuilding);
  			return;
  		 }
 			

@@ -93,7 +93,7 @@ public class Turn {
 					break;
 				case 3:
 					//buildroad
-					Road.buildRoad(player, game1, enter, false);
+					Road.buildRoad(player, game1, scanner, enter, false);
 					break;
 				case 4:
 					//buildsettlement
@@ -105,7 +105,7 @@ public class Turn {
 					break;
 				case 7:
 					//play dev card
-					DevelopmentCard.playDevelopmentCard(player, game1, enter, hasPlayedDevCard);
+					DevelopmentCard.playDevelopmentCard(player, game1, enter, hasPlayedDevCard, scanner);
 					hasPlayedDevCard = true;
 					break;
 				case 8:
@@ -122,7 +122,7 @@ public class Turn {
 						build(player, game1, scanner);
 						break;
 					case 2 :
-						DevelopmentCard.playDevelopmentCard(player, game1, scanner, hasPlayedDevCard);
+						DevelopmentCard.playDevelopmentCard(player, game1, enter, hasPlayedDevCard, scanner);
 						hasPlayedDevCard = true;
 						break;
 					case 3 :
@@ -183,7 +183,7 @@ public class Turn {
 
 		switch(choice) {
 		case 1 :
-			Road.buildRoad(player, game1, scanner, false);
+			Road.buildRoad(player, game1, scanner, enter, false);
 			break;
 		case 2 :
 			Building.buildSettlement(player, game1, scanner);

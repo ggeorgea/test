@@ -66,13 +66,13 @@ public class Building {
 //-----Methods to build a settlement-----//
 	
 	//lets the player build a settlement
-	public static void buildSettlement(Player player, Game game1, Scanner scanner) throws IOException {
+	public static void buildSettlement(Player player, Game game1, Scanner scanner, Message enter) throws IOException {
 				
 		//checks if the player has the resources
 		ArrayList<ResourceCard> resources = hasSettlementResources(player);
 
 		//asks the player for coordinates to place the settlement
-		Intersection settlement = getSettlementCoordinates(player, game1, scanner);
+		Intersection settlement = getSettlementCoordinates(player, game1, scanner, enter);
 		int settlementsLeft = NO_SETTLEMENTS - player.getNoSettlements();
 			
 		//checks that the player can buy and place a settlement at the specified coordinates
@@ -89,19 +89,16 @@ public class Building {
 		if (!checkIllegalCoordinates(settlement)) {
 			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Settlement must be places more than two roads away. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
-			buildSettlement(player, game1, scanner);
 			return;
 		}		
 		if (!checkSuitableCoordinates(player, game1, settlement)) {
 			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Settlement must be placed beside a road. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
-		 	buildSettlement(player, game1, scanner);
 		 	return;
 		}
 		else if (settlement.getOwner().getName() != null) {
 			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("A settlement has already been placed here. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
-			buildSettlement(player, game1, scanner);
 			return;
 		}
 		
@@ -196,25 +193,8 @@ public class Building {
 	}
 		
 	//asks the player for the coordinates for the settlement they want to build
-	public static Intersection getSettlementCoordinates(Player player, Game game1, Scanner scanner) throws IOException {
+	public static Intersection getSettlementCoordinates(Player player, Game game1, Scanner scanner, Message enter) throws IOException {
 			
-		Catan.printToClient("Please send the server a build settlement request", player); //TODO asking for request
-
-		Message enter = null;
-		boolean success = false;
-		
-		while (!success) {
-			
-			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
-				
-			if (enter.getRequest().getBodyCase().getNumber() == 4) {
-				success = true;
-			}
-			else {
-				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a build settlement request").build()).build()).build(), player.getpSocket().getClientSocket());
-			}
-		}
-		
 		int x = enter.getRequest().getBuildSettlement().getX();
 		int y = enter.getRequest().getBuildSettlement().getY();
 		Coordinate a = new Coordinate(x, y);
@@ -310,13 +290,13 @@ public class Building {
 //-----Methods to build a city-----//
 			
 	//lets the player build a city
-	public static void buildCity(Player player, Game game1, Scanner scanner) throws IOException {
+	public static void buildCity(Player player, Game game1, Scanner scanner, Message enter) throws IOException {
 		
 		//checks the player has the correct resources to build the city
 		ArrayList<ResourceCard> resources = hasCityResources(player);
 		
 		//asks the player for coordinates to place the city
-		Intersection city = getCityCoordinates(player, game1, scanner);
+		Intersection city = getCityCoordinates(player, game1, scanner, enter);
 		int citiesLeft = NO_CITIES - player.getNoCities();
 		
 		//checks the player has enough resources and the coordinates are valid
@@ -338,7 +318,6 @@ public class Building {
 		else if (!(city.getOwner().getName().equals(player))) {
 			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("You can only upgrade a settlement you own. Please request again.").build()).build()).build(), player.getpSocket().getClientSocket());
-			buildCity(player, game1, scanner);
 			return;
 		}
 		
@@ -419,23 +398,7 @@ public class Building {
 	}
 	
 	//asks the player for the coordinates for the settlement they want to build
-	public static Intersection getCityCoordinates(Player player, Game game1, Scanner scanner) throws IOException {
-		
-		Catan.printToClient("Please send the server a build city request", player); //TODO asking for request
-
-		Message enter = null;
-		boolean success = false;
-		
-		while (!success) {
-			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
-				
-			if (enter.getRequest().getBodyCase().getNumber() == 1) {
-				success = true;
-			}
-			else {
-				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a build city request").build()).build()).build(), player.getpSocket().getClientSocket());
-			}
-		}
+	public static Intersection getCityCoordinates(Player player, Game game1, Scanner scanner, Message enter) throws IOException {
 		
 		int x = enter.getRequest().getBuildCity().getX();
 		int y = enter.getRequest().getBuildCity().getY();		
@@ -446,7 +409,6 @@ public class Building {
  				||(!game1.getBoard().getLocationFromCoordinate(a).getType().equals(INTERSECTION))) {
 			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again.").build()).build()).build(), player.getpSocket().getClientSocket());
-			buildCity(player, game1, scanner);
 			return null;
 		}
 		
@@ -454,11 +416,5 @@ public class Building {
 		Intersection city = (Intersection) game1.getBoard().getLocationFromCoordinate(a).getContains();
 		
 		return city;
-	}
-	//--------------------------------TURN CONSISTENT PROTOBUFF VERSIONS-----------------------------
-
-	public static void buildSettlement(Player player, Game game1, Message enter) {
-		// TODO Auto-generated method stub
-		
 	}
 }
