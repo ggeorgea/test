@@ -359,7 +359,25 @@ public class DevelopmentCard {
  		
  		//lets the player build two roads
  		for (int i = 0; i < 2; i++) {
- 			Road.buildRoad(player, game1, scanner, roadBuilding);
+ 			
+ 			Catan.printToClient("Where do you want to place your road?", player);
+ 			Message enter = Message.newBuilder().build();
+ 			
+ 			boolean success = false;
+ 			
+ 			while (!success) {
+ 				
+ 				enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+ 				
+ 				if (enter.getRequest().getBodyCase().getNumber() == 3) {
+ 					success = true;
+ 				}
+ 				else {
+ 					Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a road building request").build()).build()).build(), player.getpSocket().getClientSocket());
+ 				}
+ 			}
+ 			
+ 			Road.buildRoad(player, game1, scanner, enter, roadBuilding);
  		}
  	}
 	

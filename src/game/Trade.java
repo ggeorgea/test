@@ -1,7 +1,13 @@
 package game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import intergroup.Events.Event;
+import intergroup.Events.Event.Error;
+import intergroup.Messages.Message;
+import intergroup.resource.Resource.Counts;
 
 /**
  * Class to store methods associated with trade
@@ -46,9 +52,8 @@ public class Trade {
 	
 //-----Methods allowing the player to trade with the bank-----//
 
-	public static void tradeBank(Player player, Scanner scanner, Game game1){
-		//Board board1 = game1.getBoard();
-
+	public static void tradeBank(Player player, Scanner scanner, Message enter, Game game1) throws IOException {
+		
 		player.updatePlayerPorts(player, game1);
 		
 		ArrayList<ResourceCard> resourceType = new ArrayList<ResourceCard>();
@@ -58,8 +63,14 @@ public class Trade {
 		resourceType.addAll(game1.getOre());
 		resourceType.addAll(game1.getWool());
 
-		boolean hasStandard = false; if(player.getStandardPorts().size() > 0) hasStandard = true;
-		boolean hasSpecial = false; if(player.getSpecialPorts().size() > 0) hasSpecial = true;
+		boolean hasStandard = false; 
+		if(player.getStandardPorts().size() > 0) {
+			hasStandard = true;
+		}
+		boolean hasSpecial = false; 
+		if(player.getSpecialPorts().size() > 0) {
+			hasSpecial = true;
+		}
 		
 		Catan.printToClient("Trading options:", player);
 		Catan.printToClient("4: Directly with bank (4:1 receiving a resource of your choice)", player);
@@ -82,8 +93,7 @@ public class Trade {
 				tradeStandard(player, scanner, game1, resourceType);
 			}
 			else {
-				Catan.printToClient("Invalid choice. Please choose again", player);
-				tradeBank(player, scanner, game1);
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid choice. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
 			}
 			break;
 		case 2 :
@@ -91,13 +101,11 @@ public class Trade {
 				tradeSpecial(player, scanner, game1, resourceType);
 			}
 			else {
-				Catan.printToClient("Invalid choice. Please choose again", player);
-				tradeBank(player, scanner, game1);
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid choice. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
 			}
 			break;
 		default :
-			Catan.printToClient("Invalid choice. Please choose again", player);
-			tradeBank(player, scanner, game1);
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid choice. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
 			break;
 		}
 	}

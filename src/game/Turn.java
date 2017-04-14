@@ -165,11 +165,6 @@ public class Turn {
 
 //-----Method to build and buy things for the turn-----//
 
-	private static void trade(Player player, Message enter, Game game1) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	//asks the player if they want to build something
 	public static void build(Player player, Game game1, Scanner scanner) throws IOException {
 
@@ -212,5 +207,18 @@ public class Turn {
 		else {
 			Trade.tradePlayer(player, scanner, game1);
 		}
+	}
+	
+	private static void trade(Player player, Message enter, Game game1) {
+		
+		int trade = enter.getRequest().getInitiateTrade().getTradeCase().getNumber();
+		
+		if (trade == 1) {
+			Trade.tradeBank(player, scanner, enter, game1);
+		}
+		else {
+			Trade.tradePlayer(player, scanner, enter, game1);
+		}
+		
 	}
 }
