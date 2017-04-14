@@ -1,4 +1,5 @@
 package game;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -82,7 +83,6 @@ public class ResourceAllocation {
 			int playersWithResources = 0;
 		
 			for (int j = 0; j < players.size(); j++) {
-			
 				if (players.get(j).getNewResourceCards().contains(bankHasResources.get(i))) {
 					playersWithResources++;
 				}				
@@ -128,12 +128,7 @@ public class ResourceAllocation {
 				ArrayList<Player> players = game1.getPlayers();
 				
 				for (int i = 0; i < players.size(); i++) {
-					
-					PlayerSocket socket = players.get(i).getpSocket();
-					
-					if (socket != null) {
-						socket.sendMessage("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
-					}
+					Catan.printToClient("There are no " + bankHasResources + " cards left. No player gets this resource this turn.", players.get(i));
 				}
 				
 				return bankHasResources;
@@ -148,12 +143,7 @@ public class ResourceAllocation {
 				ArrayList<Player> players = game1.getPlayers();
 				
 				for (int i = 0; i < players.size(); i++) {
-					
-					PlayerSocket socket = players.get(i).getpSocket();
-					
-					if (socket != null) {
-						socket.sendMessage("There are no " + bankHasResources + " cards left. No player gets this resource this turn.");
-					}
+					Catan.printToClient("There are no " + bankHasResources + " cards left. No player gets this resource this turn.", players.get(i));
 				}
 				
 				return bankHasResources;
@@ -279,17 +269,13 @@ public class ResourceAllocation {
 			//if the player gets resources, they are added to their hand and
 			//the allocation printed
 			if (newResourceCards.size() > 0) {
-				if (socket != null) {
-					socket.sendMessage("You get:");
-				}
+				Catan.printToClient("You get:", players.get(i));
 			
 				for (int j = 0; j < newResourceCards.size(); j++) {
 							
 					cards.add(newResourceCards.get(j));
-					
-					if (socket != null) {
-						socket.sendMessage("1x " + newResourceCards.get(j).getResource());
-					}
+
+					Catan.printToClient("1x " + newResourceCards.get(j).getResource(), players.get(i));
 				}
 					
 				player.setResourceCards(cards);

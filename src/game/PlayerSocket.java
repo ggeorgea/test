@@ -1,13 +1,14 @@
 package game;
 
-import intergroup.Events.Event;
-import intergroup.Messages.Message;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+
 import java.net.Socket;
+
+import intergroup.Events.Event;
+import intergroup.Messages.Message;
 
 /**
  * Class that allows the game to communicate with clients
@@ -34,12 +35,10 @@ public class PlayerSocket {
 //-----Getters and Setters-----//	
     
 	public Socket getClientSocket() {
-		
 		return clientSocket;
 	}
 
 	public void setClientSocket(Socket clientSocket) {
-		
 		this.clientSocket = clientSocket;
 	} 
     
@@ -51,16 +50,11 @@ public class PlayerSocket {
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(msg).build()).build(), clientSocket);
 		} 
     	catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-//    	String  outputLine = Message;
-//    	out.println(outputLine);
     }
     
     public void requestMessage() throws IOException{
-    	
     	Catan.requestGenericPBMsg(clientSocket);
     }
     
@@ -68,11 +62,6 @@ public class PlayerSocket {
     	
     	Message m1 = Catan.getPBMsg(clientSocket);
     	return m1.getEvent().getChatMessage();
-    	
-//    	String inputLine;
-//    	inputLine = in.readLine();
-//    	
-//   	return inputLine;
     }
       
     //TODO will this not need to be changed?

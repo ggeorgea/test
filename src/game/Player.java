@@ -1,4 +1,5 @@
 package game;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -7,12 +8,11 @@ import java.util.Scanner;
  * Class that stores information about players
  */
 public class Player {
+	
 	//protocol based requirements
 	private String userName;
 	private int colour;
 	private int ID;
-	
-	
 	
 	private PlayerSocket pSocket;
 	private String name;
@@ -37,13 +37,9 @@ public class Player {
 	private ArrayList<Port> standardPorts = new ArrayList<Port>();
 	private ArrayList<Port> specialPorts = new ArrayList<Port>();
 
-	//make an array list of roads
-	//TODO do we need this?^^
-
 //-----Constructors-----//
 
 	public Player() {
-
 		this.victoryPoints = 2;
 	}
 
@@ -69,188 +65,171 @@ public class Player {
 
 //-----Getters and Setters-----//
 	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public int getColour() {
+		return colour;
+	}
+
+	public void setColour(int colour) {
+		this.colour = colour;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}	
+	
 	public PlayerSocket getpSocket() {
-		
 		return pSocket;
 	}
 
 	public void setpSocket(PlayerSocket pSocket) {
-		
 		this.pSocket = pSocket;
 	}
 	
 	public String getName() {
-
 		return name;
 	}
 
 	public void setName(String name) {
-
 		this.name = name;
 	}
 
 	public int getVictoryPoints() {
-
 		return victoryPoints;
 	}
 
 	public void setVictoryPoints(int victoryPoints) {
-
 		this.victoryPoints = victoryPoints;
 	}
 
 	public int getCurrentRoll() {
-
 		return currentRoll;
 	}
 
 	public void setCurrentRoll(int currentRoll) {
-
 		this.currentRoll = currentRoll;
 	}
 
 	public int getNoRoads() {
-
 		return noRoads;
 	}
 
 	public void setNoRoads(int noRoads) {
-
 		this.noRoads = noRoads;
 	}
 
 	public int getNoSettlements() {
-
 		return noSettlements;
 	}
 
 	public void setNoSettlements(int noSettlements) {
-
 		this.noSettlements = noSettlements;
 	}
 
 	public int getNoCities() {
-
 		return noCities;
 	}
 
 	public void setNoCities(int noCities) {
-
 		this.noCities = noCities;
 	}
 
 	public int getLongestRoad() {
-
 		return longestRoad;
 	}
 
 	public void setLongestRoad(int longestRoad) {
-
 		this.longestRoad = longestRoad;
 	}
 
-	//TODO: What is this??
-	/*public int findLongestRoadLength(){
-
-	}*/
-
 	public int getLargestArmy() {
-
 		return largestArmy;
 	}
 
 	public void setLargestArmy(int largestArmy) {
-
 		this.largestArmy = largestArmy;
 	}
 
 	public boolean hasLongestRoad() {
-
 		return hasLongestRoad;
 	}
 
 	public void setHasLongestRoad(boolean hasLongestRoad) {
-
 		this.hasLongestRoad = hasLongestRoad;
 	}
 
 	public boolean hasLargestArmy() {
-
 		return hasLargestArmy;
 	}
 
 	public void setHasLargestArmy(boolean hasLargestArmy) {
-
 		this.hasLargestArmy = hasLargestArmy;
 	}
 
 	public ArrayList<ResourceCard> getResourceCards() {
-
 		return resourceCards;
 	}
 
 	public void setResourceCards(ArrayList<ResourceCard> resourceCards) {
-
 		this.resourceCards = resourceCards;
 	}
 
 	public ArrayList<DevelopmentCard> getDevelopmentCards() {
-
 		return developmentCards;
 	}
 
 	public void setDevelopmentCards(ArrayList<DevelopmentCard> developmentCards) {
-
 		this.developmentCards = developmentCards;
 	}
 
 	public ArrayList<ResourceCard> getNewResourceCards() {
-
 		return newResourceCards;
 	}
 
 	public void setNewResourceCards(ArrayList<ResourceCard> newResourceCards) {
-
 		this.newResourceCards = newResourceCards;
 	}
 
 	public ArrayList<Intersection> getFirstSettlements() {
-
 		return firstSettlements;
 	}
 
 	public void setFirstSettlements(ArrayList<Intersection> firstSettlements) {
-
 		this.firstSettlements = firstSettlements;
 	}
 
 	public ArrayList<Port> getSettledPorts(){
-
 		return settledPorts;
 	}
 
 	public void setSettledPorts(ArrayList<Port> settledPorts){
-
 		this.settledPorts = settledPorts;
 	}
 
 	public void setStandardPorts(ArrayList<Port> standardPorts){
-
 		this.standardPorts = standardPorts;
 	}
 
 	public ArrayList<Port> getStandardPorts(){
-
 		return standardPorts;
 	}
 
 	public void setSpecialPorts(ArrayList<Port> specialPorts){
-
 		this.specialPorts = specialPorts;
 	}
 
 	public ArrayList<Port> getSpecialPorts(){
-
 		return specialPorts;
 	}
 
@@ -292,6 +271,7 @@ public class Player {
 				message = message + ", ";
 			}
 		}
+		
 		message = message + ")";
 		Catan.printToClient(message, player);
 	}
@@ -310,6 +290,7 @@ public class Player {
 				message = message + ", ";
 			}
 		}
+		
 		message = message + ")";
 		Catan.printToClient(message, player);
 	}
@@ -320,7 +301,6 @@ public class Player {
 		ArrayList<DevelopmentCard> developmentCards = player.getDevelopmentCards();
 
 		for (int i = 0; i < developmentCards.size(); i++) {
-
 			developmentCards.get(i).setHidden(false);
 		}
 	}
@@ -333,12 +313,11 @@ public class Player {
 		
 		for (int i = 0; i < board1.getPorts().size(); i++) {
 			if (board1.getPorts().get(i).getOwner() == player) {
+				
 				if (board1.getPorts().get(i).getResource().equals("?")) {
-					
 					standard.add(board1.getPorts().get(i));
 				}
 				else {
-					
 					special.add(board1.getPorts().get(i));
 				}
 			}
@@ -347,31 +326,4 @@ public class Player {
 		player.setStandardPorts(standard);
 		player.setSpecialPorts(special);
 	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public int getColour() {
-		return colour;
-	}
-
-	public void setColour(int colour) {
-		this.colour = colour;
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
-	}	
-	
-	
-	
 }

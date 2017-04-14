@@ -56,12 +56,12 @@ public class Robber {
 
 			//asks the player to choose a card to remove
 			for (int j = 0; j < cards.size(); j++) {
-
 				Catan.printToClient(j + ": " + cards.get(j).getResource(), player);
 			}
 
 			//removes the card they choose
 			try {
+				
 				int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 
 				if (choice < 0 || choice >= cards.size()) {
@@ -109,6 +109,7 @@ public class Robber {
 	public static void moveRobber(Player player, Game game1, Scanner scanner){
 
 		try {
+			
 			Catan.printToClient("Please select where to place the robber", player);
 
 			Catan.printToClient("Select X coordinate", player);
@@ -161,6 +162,7 @@ public class Robber {
 				}
 			}
 			if (target == null) { 
+				
 				Catan.printToClient("Invalid player choice. Please choose again.", player);
 				continue;
 			} 
@@ -177,7 +179,6 @@ public class Robber {
 					
 			//if the hex value is the same as the dice roll and the robber
 			//is not there, resources can be given out
-				
 			if ((hex.getisRobberHere().equals(ROBBER))) {
 				for (Coordinate c : getNearbyCoordinates(hex.getCoordinate())) { 
 					
@@ -227,46 +228,4 @@ public class Robber {
 	    Catan.printToClient("Stolen from you: 1x " + card.getResource(), from);
 	    Catan.printToClient("You have stolen: 1x " + card.getResource(), to);
 	}
-
-	
-	
-	//TODO do we still need this?
-	
-	/*
-	//robber will be put on different coordinates based on where the player has placed it 
-	private Coordinate  c = new Coordinate(); 
-	// p will represent the current player that moved the robber
-	//if the player is null then no one is responsible for moving the robber at the moment 
-	private Player  p = new Player(); 
-
-
-
-	//new logic
-	//player will roll dice and if they land on 7 robber will be activated or if someone plays knight card
-	//robber will only perform actions if he is activated otherwise it cannot move 
-
-	boolean activated = false; 
-
-	public Robber(Coordinate c , Player p, Boolean activate){ 
-
-		this.c = c ; 
-		this.p = p; 
-		this.activated = activate;
-	}
-
-	public Player getCurrentPlayer(){
-		return p;
-	}
-
-	public Coordinate getCurrentCoordinate(){ 
-		return c; 
-	}
-
-	public boolean getActivationStatus(){
-		return activated;
-	}
-
-	public void setToActivated(){
-		activated = true;
-	}*/
 }

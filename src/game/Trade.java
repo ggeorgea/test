@@ -1,4 +1,5 @@
 package game;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -498,7 +499,6 @@ public class Trade {
 		
 		for (int i = 0; i < board1.getPorts().size(); i++) {
 			if ((xCoord == board1.getPorts().get(i).getCoordinateA().getX()) && (yCoord == board1.getPorts().get(i).getCoordinateA().getY())) {
-				
 				board1.getPorts().get(i).setOwner(player);
 			}
 		}
@@ -602,7 +602,6 @@ public class Trade {
 			
 			choice = chooseResources(playerTradeResources, scanner, player);
 			playerTradeToTrade.add(playerTradeResources.get(choice));
-			//playerTradeResources.remove(choice);
 
 			choice = chooseMoreResources(scanner, player);
 		}

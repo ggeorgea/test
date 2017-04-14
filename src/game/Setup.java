@@ -1,10 +1,12 @@
 package game;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
+
+import java.io.IOException;
 
 import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
@@ -224,7 +226,6 @@ public class Setup {
 
 		//asks each player to roll the dice
 		for (int i = 0; i < players.size(); i++) {
-
 			Dice.rollDice(players.get(i), scanner, game1);
 		}
 
@@ -251,11 +252,7 @@ public class Setup {
 		//prints player order
 		for (int i = 0; i < players.size(); i++) {
 			
-			PlayerSocket socket = players.get(i).getpSocket();
-			
-			if (socket != null) {
-				socket.sendMessage("Player order: ");
-			}
+			Catan.printToClient("Player order: ", players.get(i));
 			
 			for (int j = 0; j < players.size(); j++) {
 				Catan.printToClient((j+1)+ ": " + players.get(j).getName(), players.get(i));
@@ -421,7 +418,7 @@ public class Setup {
 		while (!success) {
 			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
 				
-			if (enter.getRequest().getBodyCase().getNumber() == 1) {
+			if (enter.getRequest().getBodyCase().getNumber() == 3) {
 				success = true;
 			}
 			else {
@@ -434,33 +431,15 @@ public class Setup {
 		int x2 = enter.getRequest().getBuildRoad().getB().getX();
 		int y2 = enter.getRequest().getBuildRoad().getB().getY();
 		
-		/*Catan.printToClient("Please select where to place your road:", player);
-
-		Catan.printToClient("Coordinate 1: ", player);
-		Catan.printToClient("Select X coordinate", player);
-		int x1 = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-
-		Catan.printToClient("Select Y coordinate", player);
-		int y1 = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-
-		Catan.printToClient("Coordinate 2: ", player);
-		Catan.printToClient("Select X coordinate", player);
-		int x2 = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-
-		Catan.printToClient("Select Y coordinate", player);
-		int y2 = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-		 */
 		//checks the coordinates are in the correct range
 		if ((!((2*y1 <= x1+8) || (2*y1 >= x1-8) && (y1 <= 2*x1+8) && (y1 >= 2*x1-8) && (y1 >= -x1-8) 
 				&& (y1 <= -x1+8))) && (!((2*y2 <= x2+8) || (2*y2 >= x2-8) && (y2 <= 2*x2+8) && (y2 >= 2*x2-8) && (y2 >= -x2-8)))) {
 			
-			//Catan.printToClient("Invalid coordinates. Please choose again", player);
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
 			return placeRoad(player, board1, scanner, game1);
 		}
 		else if (!checkNear(board1, x1,y1,x2,y2)) {
 			
-			//Catan.printToClient("Invalid coordinates. Please choose again", player);
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
 			return placeRoad(player, board1, scanner, game1);
 		}
@@ -468,45 +447,36 @@ public class Setup {
 
 			Coordinate a = new Coordinate(x1, y1);
 			Coordinate b = new Coordinate(x2, y2);
-
 			Road road = board1.getRoadFromCo(a, b);
 
 			if (road == null) {
 
-				//Catan.printToClient("Invalid coordinates. Please choose again", player);
 				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
 				return placeRoad(player, board1, scanner, game1);
 			}
 			else if (road.getOwner().getName() != null) {
 
-				//Catan.printToClient("A road has already been placed here. Please choose again", player);
 				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("A road has already been placed here. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
 				return placeRoad(player, board1, scanner, game1);
 			}
 			else {
 
 				int playerNum = 0;
+				
 				for (int i = 0; i < game1.getPlayers().size(); i++) {
 					if (game1.getPlayers().get(i).equals(player)) {
-						playerNum=i;
+						playerNum = i;
 					}
 				}
 
 				Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setRoadBuilt(Board.Edge.newBuilder().setA(Board.Point.newBuilder().setX(x1).setY(y1).build()).setB(Board.Point.newBuilder().setX(x2).setY(y2).build()).build()).build()).build();
-				//Catan.printToClient("You placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")", player);
 				Catan.printToClient(m, player);
 				
 				ArrayList<Player> players = game1.getPlayers();
 				
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i) != player) {
-						
-						PlayerSocket socket = players.get(i).getpSocket();
-						
-						if (socket != null) {
-							Catan.printToClient(m, players.get(i));
-							//socket.sendMessage("Player " + player.getName() + " placed road at: (" + x1 + "," + y1 + "),(" + x2 + "," + y2 + ")");
-						}
+						Catan.printToClient(m, players.get(i));
 					}
 				}
 				
@@ -529,7 +499,7 @@ public class Setup {
 		while (!success) {
 			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
 				
-			if (enter.getRequest().getBodyCase().getNumber() == 1) {
+			if (enter.getRequest().getBodyCase().getNumber() == 4) {
 				success = true;
 			}
 			else {
@@ -539,15 +509,6 @@ public class Setup {
 		
 		int x = enter.getRequest().getBuildSettlement().getX();
 		int y = enter.getRequest().getBuildSettlement().getY();
-		
-		/*Catan.printToClient("Please select where to place your settlement", player);
-		
-		Catan.printToClient("Select X coordinate", player);
-		int x = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-
-		Catan.printToClient("Select Y coordinate", player);
-		int y = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-		*/
 		Coordinate a = new Coordinate(x, y);
 
 		//checks the coordinates are in the correct range
@@ -555,7 +516,6 @@ public class Setup {
 				|| (!(board1.getLocationFromCoordinate(a).getType().equals(INTERSECTION)))) {
 
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
-			//Catan.printToClient("Invalid coordinates. Please choose again", player);
 			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
@@ -566,52 +526,43 @@ public class Setup {
 				&& !(road.getCoordinateB().getX() == x && road.getCoordinateB().getY() == y)) {
 
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Settlement must be placed beside road. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
-			//Catan.printToClient("Settlement must be placed beside road. Please choose again", player);
 			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
 		if (settlement.getOwner().getName() != null) {
 
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("A settlement has already been placed here. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
-			//Catan.printToClient("A settlement has already been placed here. Please choose again", player);
 			return placeSettlement(player, road, board1, scanner, game1);
 		}
 
 		for (int i = 0; i < illegal.size(); i++) {
 
 			Intersection inter = illegal.get(i);
-			//System.out.println("A"+illegal.get(i).getCoordinate().getX()+","+illegal.get(i).getCoordinate().getY());
+			
 			if (inter.getOwner().getName() != null) {
 				
 				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Settlement must be placed more than two roads away. Please request again").build()).build()).build(), player.getpSocket().getClientSocket());
-				//Catan.printToClient("Settlement must be placed more than two roads away. Please choose again", player);
 				return placeSettlement(player, road, board1, scanner, game1);
 			}
 		}
 
 		int playerNum = 0;
+		
 		for (int i = 0; i < game1.getPlayers().size(); i++) {
 			if (game1.getPlayers().get(i).equals(player)) {
-				playerNum=i;
+				playerNum = i;
 			}
 		}
 		
 		Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setSettlementBuilt(Board.Point.newBuilder().setX(x).setY(y).build()).build()).build();
-		//Catan.printToClient("You placed settlement at: (" + x + "," + y + ")", player);
+		
 		Catan.printToClient(m, player);
 		
 		ArrayList<Player> players = game1.getPlayers();
 		
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i) != player) {
-				
-				PlayerSocket socket = players.get(i).getpSocket();
-				
-				if (socket != null) {
-					Catan.printToClient(m, players.get(i));
-					//socket.sendMessage("Player " + player.getName() + ""
-					//		+ " placed settlement at: (" + x + "," + y + ")");
-				}
+				Catan.printToClient(m, players.get(i));
 			}
 		}
 		
@@ -635,28 +586,34 @@ public class Setup {
 		Coordinate nearbyHex;
 
 		nearbyHex = new Coordinate(x, y-1);
-		if(game.Board.CoordInRange(nearbyHex)){
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
+		if (game.Board.CoordInRange(nearbyHex)) {
+			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		}
 
 		nearbyHex = new Coordinate(x, y+1);
-		if(game.Board.CoordInRange(nearbyHex)){
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
+		if (game.Board.CoordInRange(nearbyHex)) {
+			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		}
 
 		nearbyHex = new Coordinate(x-1, y);
-		if(game.Board.CoordInRange(nearbyHex)){
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
+		if (game.Board.CoordInRange(nearbyHex)) { 
+			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		}
 
 		nearbyHex = new Coordinate(x+1, y);
-		if(game.Board.CoordInRange(nearbyHex)){
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);};
+		if (game.Board.CoordInRange(nearbyHex)) {
+			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		}
 
 		nearbyHex = new Coordinate(x-1, y-1);
-		if(game.Board.CoordInRange(nearbyHex)){
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
+		if (game.Board.CoordInRange(nearbyHex)) {
+			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		}
 
 		nearbyHex = new Coordinate(x+1, y+1);
-		if(game.Board.CoordInRange(nearbyHex)){
-		resourceCards = getResources(player, resourceCards, nearbyHex, game1);}
+		if (game.Board.CoordInRange(nearbyHex)) {
+			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
+		}
 
 		//prints what each player gets
 		Catan.printToClient("You get:", player);
@@ -665,16 +622,12 @@ public class Setup {
 		
 		for (int i = 0; i < players.size(); i++) {
 			
-			PlayerSocket socket = players.get(i).getpSocket();
-			
 			if (players.get(i) != player) {
-				if (socket != null) {
-					socket.sendMessage("Player " + player.getName() + " gets:");
-				}
+				
+				Catan.printToClient("Player " + player.getName() + " gets:", players.get(i));
+	
 				for (int j = 0; j < resourceCards.size(); j++) {
-					if (socket != null) {
-						socket.sendMessage("1x " + resourceCards.get(j).getResource());
-					}
+					Catan.printToClient("1x " + resourceCards.get(j).getResource(), players.get(i));
 				}
 			}
 		}
@@ -731,7 +684,6 @@ public class Setup {
 
 			//if the card is not null, it adds the card to the player's hand
 			if (card != null) {
-
 				resourceCards.add(card);
 			}
 		}
@@ -758,7 +710,7 @@ public class Setup {
 			String terr = terrainSt.next();
 			Hex current = Hexes.get(r);
 			current.setTerrain(terr);
-			//current.setNumber(11);
+
 			Hexes.set(r, current);
 			board1.setHexes(Hexes);
 			
@@ -797,7 +749,6 @@ public class Setup {
 				
 				Hex hexa = new Hex();
 				hexa.setCoordinate(new Coordinate(startx + xof, starty + yof));
-				//System.out.println((startx+xof)+", "+(starty+yof));
 				
 				if (((startx + xof) == 0) && ((starty + yof) == 0)) {
 					past = true;
@@ -848,10 +799,6 @@ public class Setup {
 		int[] normalNumbers = {5,2,3,10,9,12,11,4,10,9,4,5,3,11};
 		int[] redNumbers = {6,8,8,6};
 		Hex hexwDes = board1.getHexes().get(givenDesert);
-		
-		//TODO do we still need this?
-		//Robber robber1 = new Robber(hexwDes.getCoordinate(),null,false);
-		//board1.setTheRobber(robber1);
 		
 		board1.setRobber(hexwDes.getCoordinate());
 		hexwDes.setisRobberHere("R");
@@ -953,7 +900,7 @@ public class Setup {
 			
 			if (robLoc.getNumber() == -1 && robLoc.getisRobberHere().equals(ROBBER)) {
 				
-				System.out.println("The robber was left out "+robLoc.getisRobberHere()+robLoc.getNumber());
+				//System.out.println("The robber was left out "+robLoc.getisRobberHere()+robLoc.getNumber());
 				robLoc.setNumber(7);
 
 				break;
@@ -992,7 +939,7 @@ public class Setup {
 		for (int xv = 0; xv < 11; xv++) {
 			for (int yv = 0; yv<11; yv++) {
 				
-				boardLocations[xv][yv]=new Location(new Coordinate(xv-5,yv-5),"empty", null);
+				boardLocations[xv][yv] = new Location(new Coordinate(xv-5,yv-5), "empty", null);
 			}
 		}
 		
@@ -1007,6 +954,7 @@ public class Setup {
 			boardLocations[newX][newY].setType(HEX);
 			
 			for (int rl = 0; rl < 6; rl++) {
+				
 				switch(rl){
 				case 0: 
 					setUpInter(newX+1,newY, boardLocations, board1);
@@ -1222,11 +1170,6 @@ public class Setup {
 					if (returnedLoc != null) {
 						illegals.add(returnedLoc);
 					}
-
-//					returnedLoc = isOwned(board1,j+1,g-1);
-//					if(returnedLoc!=null){
-//						illegals.add(returnedLoc);
-//					}
 
 					returnedLoc = isOwned(board1,j+1,g+1);
 					if (returnedLoc != null) {

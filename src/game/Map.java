@@ -2,7 +2,6 @@ package game;
 
 import java.util.ArrayList;
 
-
 /**
  * Class that contains the print statement for the Settlers Of Catan Board
  */
@@ -27,12 +26,9 @@ public class Map {
 		//these must be replaced to iterate through roads and cities
 		int roadOwn = 0;
 		int getPort = 0;
-
-		//String getPort = "P";
-		
-		boolean hasPrintedToConsole = false;
 		
 		for (int i = 0; i < players.size(); i++) {
+			
 			 rn = 0;
 			 tn = 0;
 			 nn = 0;
@@ -40,11 +36,8 @@ public class Map {
 			 btn = 0;		
 			 roadOwn = 0;
 			 getPort = 0;
-			PlayerSocket socket = players.get(i).getpSocket();
-			
-			if (socket != null) {
-				Catan.printToClient(
-//				socket.sendMessage(
+
+			 Catan.printToClient(
 
 					"                                         "+board1.getPorts().get(getPort++).getResource()+"                           \n"                                                                                    
 							+"                    "+ 
@@ -234,206 +227,8 @@ public class Map {
 
 
 	            ,players.get(i));
-		//				);
+
 				Catan.printToClient("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY()+"\n", players.get(i));
-		//		socket.sendMessage("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
-			}
-			else if (!hasPrintedToConsole) {
-				
-				//Below is a printout of the board 
-				System.out.println(
-
-				"                                         "+board1.getPorts().get(getPort++).getResource()+"                           \n"                                                                                    
-						+"                    "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"            "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"   /        "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"                                      \n"
-						+"             "+board1.getPorts().get(getPort++).getResource()+"   "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"      "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"      "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"        \n"
-						+"               \\   /  \\          /  \\          /  \\          \n"
-						+"                  /    \\        /    \\        /    \\          \n"
-						+"             "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  / -2,2 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  0,3 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  2,4 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"     \n" 
-						+"                |    "+board1.getHexes().get(rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |        \n"
-						+"                |        |    |        |    |        |          \n"
-						+"              "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"       \n"
-						+"                |        |    |        |    |        |          \n"
-						+"                |    "+board1.getHexes().get(nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |          \n"
-						+"             "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"       \n"
-						+"                  \\    /        \\    /        \\    /             \n"
-						+"          "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  / "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  / "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  / "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"    "+board1.getPorts().get(getPort++).getResource()+"      \n"
-						+"            /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\    /    \n"
-						+"           /    \\        /    \\        /    \\        /    \\       \n"
-						+"      "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  / -3,0 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  / -1,1 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  1,2 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  3,3 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"   \n"
-						+"         |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |        \n"
-						+"         |        |    |        |    |        |    |        |         \n"
-						+"   "+board1.getPorts().get(getPort++).getResource()+" - "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"      \n"
-						+"         |        |    |        |    |        |    |        |          \n"
-						+"         |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |         \n"
-						+"      "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /   "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+" \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"        \n"
-						+"           \\    /        \\    /        \\    /        \\    /               \n"
-						+"   "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  / "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  /  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  / "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  / "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"          \n"
-						+"     /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\              \n"
-						+"    /    \\        /    \\        /    \\        /    \\        /    \\             \n"
-						+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+" /-4,-2 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /-2,-1 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  0,0 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  2,1 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  4,2 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"        \n"
-						+"  |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |           \n"
-						+"  |        |    |        |    |        |    |        |    |        |           \n"
-						+ 
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName())+" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" - "+board1.getPorts().get(getPort++).getResource()+"      \n"
-						+"  |        |    |        |    |        |    |        |    |        |           \n"
-						+"  |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |           \n"+
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+" \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"       \n"
-						+"    \\    /        \\    /        \\    /        \\    /        \\    /          \n"    
-						+"   "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  /  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  /  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  /  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  /  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  /  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"       \n"
-						+"      \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/         \n"
-						+"           /    \\        /    \\        /    \\        /    \\             \n"
-						+"       "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+" /-3,-3 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /-1,-2 \\   "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+" / 1,-1 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /  3,0 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"        \n"
-						+"         |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |         \n"
-						+"         |        |    |        |    |        |    |        |        \n"
-						+"   "+board1.getPorts().get(getPort++).getResource()+" - "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"     \n"
-						+"         |        |    |        |    |        |    |        |        \n"
-						+"         |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |     \n"
-						+"       "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+" \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"   \n"      
-						+"           \\    /        \\    /        \\    /        \\    /         \n" 
-						+"          "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  / "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  / "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  / "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  /\\  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  /  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"     \n"
-						+"             \\/    /  \\    \\/    /  \\    \\/    /  \\    \\/  \\       \n"
-						+"                  /    \\        /    \\        /    \\         "+board1.getPorts().get(getPort++).getResource()+"          \n"
-						+"             "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  /-2,-4 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  / 0,-3 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  / 2,-2 \\  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"    \n"
-						+"                |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |    |    "+board1.getHexes().get(++rn).getisRobberHere()+"   |      \n"
-						+"                |        |    |        |    |        |      \n"
-						+"              "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" |    "+board1.getHexes().get(++tn).getTerrain()+"   |  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"   \n"
-						+"                |        |    |        |    |        |      \n"
-						+"                |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |    |    "+board1.getHexes().get(++nn).getnumString()+"  |      \n"
-						+"             "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"  \\      /  "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"   \n"
-						+"                  \\    /        \\    /        \\    /       \n"
-						+"                "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"  \\  /  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"     "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  /  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"     "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +" \\  /  "+  
-((board1.getRoads().get(roadOwn++).getOwner().getName()==null) ? " " : board1.getRoads().get(roadOwn-1).getOwner().getName()) +"     \n"
-						+"                 /  \\/            \\/ \\          \\/        \n"
-						+"                "+board1.getPorts().get(getPort++).getResource()+"   "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"            "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"   "+board1.getPorts().get(getPort++).getResource()+"        "+ 
-((board1.getBuildings().get(ton++).getOwner().getName()==null) ? " " : board1.getBuildings().get(ton-1).getOwner().getName())+((board1.getBuildings().get(btn++).getBuilding().getType()==null) ? " " : board1.getBuildings().get(btn-1).getBuilding().getType())+"                   \n"
-
-
-				);
-				System.out.println("robber is at: "+board1.getRobber().getX()+", "+board1.getRobber().getY());
-				hasPrintedToConsole = true;
-			}
 		}
 	}
 }

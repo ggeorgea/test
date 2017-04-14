@@ -1,12 +1,14 @@
 package game;
-import intergroup.Events.Event;
-import intergroup.Events.Event.Error;
-import intergroup.Messages.Message;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import java.io.IOException;
+
+import intergroup.Events.Event;
+import intergroup.Events.Event.Error;
+import intergroup.Messages.Message;
 
 /**
  * Class contains all the methods to allow players to do things on their turn
@@ -17,11 +19,6 @@ public class Turn {
 	private static final int END_TURN = 8;
 
 	private static final int ROBBER = 7;
-
-	//TODO do we need this?
-	//create an instance of robber and a coordinate where it begins
-	//Coordinate c = new Coordinate();
-	//Robber robber = new Robber(c, null, null);
 
 //-----Methods to actually let the player have their turn-----//
 
@@ -40,7 +37,6 @@ public class Turn {
 		else {
 			Robber.checkCardRemoval(game1, scanner);
 			Robber.moveRobber(player, game1, scanner);
-			//TODO card steal?
 		}
 
 		int choice = 0;
@@ -48,6 +44,7 @@ public class Turn {
 		boolean hasEnded = !END_GAME;
 
 		while (choice != END_TURN && !hasEnded) {
+			
 			try{
 				Catan.printToClient("What do you want to do?", player);
 				Catan.printToClient("1: Build a road, settlement, city or development card?", player);
@@ -59,25 +56,36 @@ public class Turn {
 				Catan.printToClient("7: Count your victory pionts", player);
 				Catan.printToClient("8: End turn?", player);
 				Catan.printToClient("PLEASE USE PROTOBUFF MESSAGES", player);
+				
 				int num =-1;
+				
 				Message enter = Message.newBuilder().build();
+				
 				boolean success = false;
-				while(!success){
-				try {
-					enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
-					if(!enter.getEvent().equals(Event.getDefaultInstance())) {
-						Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not an appropriate message for this time").build()).build()).build(), player.getpSocket().getClientSocket());
-						continue;}
-					num = enter.getRequest().getBodyCase().getNumber();
-					if(!(num==1||num==6||num==9||num==10||num==11||num==12||num==14)){
-						success=true;
+				
+				while (!success) {
+					try {
+						enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+						
+						if (!enter.getEvent().equals(Event.getDefaultInstance())) {
+							
+							Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not an appropriate message for this time").build()).build()).build(), player.getpSocket().getClientSocket());
+							continue;
+						}
+						
+						num = enter.getRequest().getBodyCase().getNumber();
+						
+						if (!(num == 1 || num == 6 || num == 9 || num == 10 || num == 11 || num == 12 || num == 14)) {
+							success = true;
+						}
+						else{
+							Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not an appropriate message for this time").build()).build()).build(), player.getpSocket().getClientSocket());
+						}
+					} 
+					catch (IOException e) {
 					}
-					else{
-						Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not an appropriate message for this time").build()).build()).build(), player.getpSocket().getClientSocket());
-					}
-				} catch (IOException e) {
 				}
-				}
+				
 				switch(num){
 				case 2:
 					//buydevcard
@@ -141,8 +149,6 @@ public class Turn {
 					break;
 				}
 				
-				//choice  = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-
 				hasEnded = Game.checkEndOfGame(player, game1);
 			}
 			catch(InputMismatchException e) {
@@ -197,7 +203,9 @@ public class Turn {
 //-----Method to allow the player to trade-----//
 
 	public static void trade(Player player, Scanner scanner, Game game1){
+		
 		boolean bank = Trade.tradeBankOrPlayer(player, scanner);
+		
 		if (bank) {
 			Trade.tradeBank(player, scanner, game1);
 		}
