@@ -422,7 +422,9 @@ public class DevelopmentCard {
 		int choice = enter.getRequest().getChooseResourceValue();
 		
 		if (choice == 0) {
+			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a resource").build()).build()).build(), player.getpSocket().getClientSocket());
+			return false;
 		}
 			
 		ArrayList<ResourceCard> brick = game1.getBrick();
@@ -438,17 +440,6 @@ public class DevelopmentCard {
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no resources left in bank. Cannot play card").build()).build()).build(), player.getpSocket().getClientSocket());
 			return false;
 		}
-		
-		/*
-		Catan.printToClient("Pick a resource", player);
-		Catan.printToClient("1: Brick", player);
-		Catan.printToClient("2: Lumber", player);
-		Catan.printToClient("3: Wool", player);
-		Catan.printToClient("4: Grain", player);
-		Catan.printToClient("5: Ore", player);
-		
-		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-		*/
 		
 		//lets the player take a card from the bank
 		switch (choice) {
@@ -511,9 +502,14 @@ public class DevelopmentCard {
 	}
 	
 	//plays a monopoly card
-	public static void playMonopolyCard(Player player, Game game1, Scanner scanner) {
+	public static void playMonopolyCard(Player player, Game game1, Scanner scanner) throws IOException {
 		
 		String resource = chooseResourceMonopoly(scanner, player);
+		
+		if (resource.equals("")) {
+			return;
+		}
+		
 		ArrayList<ResourceCard> cards = player.getResourceCards();
 		
 		ArrayList<Player> players = game1.getPlayers();
@@ -544,16 +540,32 @@ public class DevelopmentCard {
 	}
 	
 	//lets the player choose the resource for monopoly
-	public static String chooseResourceMonopoly(Scanner scanner, Player player) {
+	public static String chooseResourceMonopoly(Scanner scanner, Player player) throws IOException {
 		
-		Catan.printToClient("Pick a resource", player);
-		Catan.printToClient("1. Brick", player);
-		Catan.printToClient("2. Lumber", player);
-		Catan.printToClient("3. Wool", player);
-		Catan.printToClient("4. Ore", player);
-		Catan.printToClient("5. Grain", player);
+		Catan.printToClient("What resource do you want?", player);
+		Message enter = Message.newBuilder().build();
+			
+		boolean success = false;
+			
+		while (!success) {
+				
+			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+			
+			if (enter.getRequest().getBodyCase().getNumber() == 12) {
+				success = true;
+			}
+			else {
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a resource request").build()).build()).build(), player.getpSocket().getClientSocket());
+			}
+		}
 		
-		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
+		int choice = enter.getRequest().getChooseResourceValue();
+		
+		if (choice == 0) {
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a resource").build()).build()).build(), player.getpSocket().getClientSocket());
+			return "";
+		}
+		
 		String resource = "";
 		
 		switch (choice) {
