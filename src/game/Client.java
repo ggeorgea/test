@@ -386,17 +386,59 @@ public class Client {
 				}
 				break;
 			case "BANKTRADE":
+				int brickO = event.getBankTrade().getOffering().getBrick();
+				int lumberO = event.getBankTrade().getOffering().getLumber();
+				int woolO = event.getBankTrade().getOffering().getWool();
+				int grainO = event.getBankTrade().getOffering().getGrain();
+				int oreO = event.getBankTrade().getOffering().getOre();
+				int brickW = event.getBankTrade().getWanting().getBrick();
+				int lumberW = event.getBankTrade().getWanting().getLumber();
+				int woolW = event.getBankTrade().getWanting().getWool();
+				int grainW = event.getBankTrade().getWanting().getGrain();
+				int oreW = event.getBankTrade().getWanting().getOre();
+				
 				if(event.getInstigator().getIdValue()!=myID){
-					
+					System.out.println("player "+event.getInstigator().getIdValue()+" traded with the bank, GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
 				}else{
-					//TODO me
+					System.out.println("you traded with the bank, GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
+					   mybrick += brickW-brickO;
+					   mylumber += lumberW- lumberO;
+					   mywool += woolW-woolO;
+					   mygrain += grainW-grainO;
+					   myore  += oreW-oreO;
 				}
 				break;
 			case "PLAYERTRADE":
+				 brickO = event.getBankTrade().getOffering().getBrick();
+				 lumberO = event.getBankTrade().getOffering().getLumber();
+				 woolO = event.getBankTrade().getOffering().getWool();
+				 grainO = event.getBankTrade().getOffering().getGrain();
+				 oreO = event.getBankTrade().getOffering().getOre();
+				 brickW = event.getBankTrade().getWanting().getBrick();
+				 lumberW = event.getBankTrade().getWanting().getLumber();
+				 woolW = event.getBankTrade().getWanting().getWool();
+				 grainW = event.getBankTrade().getWanting().getGrain();
+				 oreW = event.getBankTrade().getWanting().getOre();
 				if(event.getInstigator().getIdValue()!=myID){
-					
+					if(event.getPlayerTrade().getOther().getIdValue()!=myID){
+						System.out.println("player "+event.getInstigator().getIdValue()+" traded with player "+ event.getPlayerTrade().getOther().getIdValue()+", GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
+					}
+					else{
+						System.out.println("player "+event.getInstigator().getIdValue()+" traded with you , GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
+						  mybrick -= brickW-brickO;
+						   mylumber -= lumberW- lumberO;
+						   mywool -= woolW-woolO;
+						   mygrain -= grainW-grainO;
+						   myore  -= oreW-oreO;
+						   mybrick += brickW-brickO;
+						   mylumber += lumberW- lumberO;
+						   mywool += woolW-woolO;
+						   mygrain += grainW-grainO;
+						   myore  += oreW-oreO;
+					}
 				}else{
-					//TODO me
+					System.out.println("you traded with player "+ event.getPlayerTrade().getOther().getIdValue()+", GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
+
 				}
 				break;
 			case "TURNENDED":
