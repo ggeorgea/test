@@ -22,6 +22,7 @@ import intergroup.board.Board.Edge;
 import intergroup.board.Board.PlayableDevCard;
 import intergroup.board.Board.Player;
 import intergroup.board.Board.Point;
+import intergroup.lobby.Lobby.Join;
 import intergroup.resource.Resource.Counts;
 import intergroup.resource.Resource.Kind;
 import intergroup.trade.Trade.Response;
@@ -112,7 +113,8 @@ public class Catan {
 			int defaultPortNumber = 6789;
 
 			if (answer.equals("y")) {
-				
+        		System.out.println("please enter a userName:");
+        		String userName = scanner.nextLine();
 				//CLIENT SIDE
 				System.out.println("please enter the address where you wish to connect\nPlease note that to enter a command, enter \"c\"\nto see the map, enter \"map\"\nto see your resources, enter \"resources\"\nto see your development cards, enter \"cards\"");
 				String hostName = scanner.nextLine();
@@ -122,10 +124,8 @@ public class Catan {
 		        	
 		        	Client client = new Client();
 	        		Socket kkSocket = new Socket(hostName, portNumber);	  
-	        		//TODO implement lobby join request
-//        			//join
-//        			case "JOINLOBBY":
-//        				break;
+	        		Message joinRequest = Message.newBuilder().setRequest(Request.newBuilder().setJoinLobby(Join.newBuilder().setUsername(userName).build()).build()).build();
+	        		sendPBMsg(joinRequest,kkSocket);
 	        		
 	        		String fromServer;
 		            String fromUser;
