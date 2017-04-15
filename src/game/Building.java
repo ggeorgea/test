@@ -204,7 +204,6 @@ public class Building {
 				||(!game1.getBoard().getLocationFromCoordinate(a).getType().equals(INTERSECTION))) {
 			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates. Please request again.").build()).build()).build(), player.getpSocket().getClientSocket());
-			buildSettlement(player, game1, scanner);
 			return null;
 		}
 			

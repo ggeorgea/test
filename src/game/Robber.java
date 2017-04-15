@@ -1,9 +1,14 @@
 package game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
+
+import intergroup.Events.Event;
+import intergroup.Events.Event.Error;
+import intergroup.Messages.Message;
 
 /**
  * Class to store information and methods concerning 
@@ -106,25 +111,35 @@ public class Robber {
 	}
 
 	//allows the player to move the robber and steal a card from a player
-	public static void moveRobber(Player player, Game game1, Scanner scanner){
+	public static void moveRobber(Player player, Game game1, Scanner scanner) {
 
 		try {
+			Catan.printToClient("Please send a move robber request.", player);
+			Message enter = Message.newBuilder().build();
 			
-			Catan.printToClient("Please select where to place the robber", player);
-
-			Catan.printToClient("Select X coordinate", player);
-			int x = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-
-			Catan.printToClient("Select Y coordinate", player);
-			int y = Integer.parseInt(Catan.getInputFromClient(player, scanner));
+			boolean success = false;
+			
+			while (!success) {
+				
+				enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+			
+				if (enter.getRequest().getBodyCase().getNumber() == 6) {
+ 					success = true;
+ 				}
+ 				else {
+ 					Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a move robber request").build()).build()).build(), player.getpSocket().getClientSocket());
+ 				}
+			}
+			
+			int x = enter.getRequest().getMoveRobber().getX();
+			int y = enter.getRequest().getMoveRobber().getY();
 			Coordinate a = new Coordinate(x, y);
 
 			//checks the coordinates are in the correct range
 			if((!((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8)))
 					|| (!game1.getBoard().getLocationFromCoordinate(a).getType().equals(HEX))) {
 
-				Catan.printToClient("Invalid coordinates. Please choose again", player);
-				moveRobber(player, game1, scanner);
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates.").build()).build()).build(), player.getpSocket().getClientSocket());
 				return;
 			}
 
@@ -138,10 +153,13 @@ public class Robber {
 			
 			scanner.nextLine();
 			moveRobber(player,game1,scanner);
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
-	public static void robberStealCard(Player player, Game game1, Scanner scanner) {
+	public static void robberStealCard(Player player, Game game1, Scanner scanner) throws IOException {
 
 		//choose a player to steal a card from
 		Player target = null;
@@ -149,21 +167,35 @@ public class Robber {
 		while (true) {
 
 			target = null;
-			Catan.printToClient("Please select player to steal from:", player);
+			
+			Catan.printToClient("Who do you want to steal from?", player);
+ 			Message enter = Message.newBuilder().build();
+ 			
+ 			boolean success = false;
+ 			
+ 			while (!success) {
+ 				
+ 				enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+ 				
+ 				if (enter.getRequest().getBodyCase().getNumber() == 11) {
+ 					success = true;
+ 				}
+ 				else {
+ 					Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a target player request").build()).build()).build(), player.getpSocket().getClientSocket());
+ 				}
+ 			}
+			
+ 			int id = enter.getRequest().getSubmitTargetPlayer().getIdValue();
 
-			String  name = Catan.getInputFromClient(player, scanner).toUpperCase();
 			ArrayList<Player> allPlayers = game1.getPlayers();
 				
-			//check that the player chose is valid
-			//check if player exists 
-			for (Player current: allPlayers) { 
-				if (current.getName().equals(name)) { 
-					target = current; 
-				}
-			}
-			if (target == null) { 
+ 			if (id >= 0 && id < allPlayers.size()-1) {
+ 				target = allPlayers.get(id);
+ 			}
+ 			
+			if (target == null || target == player) { 
 				
-				Catan.printToClient("Invalid player choice. Please choose again.", player);
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("incorrect player choice").build()).build()).build(), player.getpSocket().getClientSocket());
 				continue;
 			} 
 			else {
