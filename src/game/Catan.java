@@ -541,6 +541,7 @@ public class Catan {
 
 						 Socket clientSocket = serverSocket.accept();
 						 PlayerSocket foundConnect = new PlayerSocket(clientSocket);
+						 //TODO, add waiting for lobby join requests here, just add on the usernames to a thing or something? an arraykist mbe, mbe add a field in playersocket?
 						 SocketArray.add(foundConnect);
 						 System.out.println("Player connected!");
 					}
@@ -585,7 +586,7 @@ public class Catan {
 				Setup.getPlayerOrder(game1, scanner);
 
 				Map.printMap(game1.getBoard(), game1.getPlayers());
-
+				// add a start game TODO lobby message here, just go through an iterator of hex, port, and players, but remebrer to do it in a loop where each player also gets the correct your id field
 				
 				//place roads and settlements
 				Setup.setInitialRoadsAndSettlements(game1, scanner);
@@ -701,7 +702,7 @@ public class Catan {
 				sendPBMsg(m,socket.getClientSocket());
 			} 
 			catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -721,7 +722,6 @@ public class Catan {
 				sendPBMsg(message,socket.getClientSocket());
 			} 
 			catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -746,7 +746,6 @@ public class Catan {
 				m3 = getPBMsg(socket.getClientSocket());
 			} 
 			catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
