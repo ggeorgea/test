@@ -114,7 +114,7 @@ public class Catan {
 			if (answer.equals("y")) {
 				
 				//CLIENT SIDE
-				System.out.println("please enter the address where you wish to connect\nPlease note that to enter a command, enter \"c\"");
+				System.out.println("please enter the address where you wish to connect\nPlease note that to enter a command, enter \"c\"\nto see the map, enter \"map\"\nto see your resources, enter \"resources\"\nto see your development cards, enter \"cards\"");
 				String hostName = scanner.nextLine();
 				int portNumber = defaultPortNumber;
 				
@@ -135,13 +135,8 @@ public class Catan {
 		            while(true){
 		            	if(kkSocket.getInputStream().available()!=0){
 			            Message m1 = getPBMsg(kkSocket);		
-			         //  System.out.println(Event.getDescriptor().getFullName()+", "+m1.hasField( m1.getDescriptorForType().findFieldByName("ChatMessage")));
-
-			            
 				            if(m1.getTypeCase().name().equals("EVENT")){
 					          if(m1.getEvent().getTypeCase().name().equals("CHATMESSAGE")){
-					            	//DEALING WITH EVENTS
-					            	//TODO move to a seperate class/method so all kinds of events/requests can be dealt with correctly
 					            	fromServer = m1.getEvent().getChatMessage();				            	
 					              	System.out.println(fromServer);		
 					                if (fromServer.equals("Goodbye!")) {
@@ -152,28 +147,25 @@ public class Catan {
 					        	  client.resolveEvent(m1.getEvent(),kkSocket);
 					          }
 				            }			    
-			            // CLIENTS DONT RECEIVE REQUESTS :(
-//				            else if(m1.getTypeCase().name().equals("REQUEST")){
-//			            	//DEALING WITH REQUESTS
-//			            	//TODO move to a seperate class/method so all kinds of events/requests can be dealt with correctly
-//			            	if(m1.getRequest().getBodyCase().name().equals("CHATMESSAGE")){
-//				            	fromUser = scanner.nextLine();
-//				                System.out.println("Client: " + fromUser);
-//			                	sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(fromUser).build()).build(),kkSocket);
-//			            	}
-//			            	else{
-//			            		Client.resolveRequest(m1.getRequest(),kkSocket);
-//			            	}
-//			            	
-//			            	
-//			            	
-//			            	}
 				            else{
 				            	System.out.println(":(");
 				            }
 		            }
 		            	else if (System.in.available()!=0){
 		            		String instruction = scanner.nextLine();
+		            		if(instruction.equals("map")){
+		            			ArrayList<game.Player> emptyP = new ArrayList<game.Player>();
+		            			game.Player playerE = new game.Player();
+		            			playerE.setpSocket(null);
+		            			emptyP.add(playerE);
+		            			Map.printMap(client.game.getBoard(), emptyP);
+		            		}
+		            		if(instruction.equals("resources")){
+		            			System.out.println("You have: brick "+client.mybrick+", wool "+client.mywool+", grain "+client.mygrain+", lumber "+client.mylumber+", ore "+client.myore);
+		            		}
+		            		if(instruction.equals("cards")){
+		            			System.out.println("You have: unplayedKnights "+client.myUnplayedKnights+", played knights "+client.myPlayedKnights+", monopoly cards "+client.myMonopolyCards+", victory point cards "+client.victoryPointsCards+", year of plenty cards "+client.yearOfPlentyCards+", road building cards "+client.myRoadBuildingCards+"");
+		            		}
 		            		if(instruction.equals("c")){
 		            			System.out.println("creating a message: to see options type \"P\", to cancel, type \"E\"");
 		            			String instruction2 = scanner.nextLine();
