@@ -2,7 +2,6 @@ package completeCatan;
  
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -166,21 +165,23 @@ import java.net.UnknownHostException;
 		        	String fromServer;
 		            String fromUser;
 
-		            while ((fromServer = in.readLine()) != null) {
-
-		              	System.out.println(fromServer);
-
-		                if (fromServer.equals("Goodbye!")) {
-		                    break;
-		                }
+		            while (true) {
+		            	if(in.ready()){
+		            		fromServer = in.readLine();
+			            	System.out.println(fromServer);
+	
+			                if (fromServer.equals("Goodbye!")) {
+			                    break;
+			                }
 		                
-		                if (!(in.ready())) {
-
+		            	}
+		                if(System.in.available()!=0){
 			                fromUser = scanner.nextLine();
 			                
 			                if (fromUser != null) {
 			                     out.println(fromUser);
 			                }
+		                	
 		                }
 		            }
 		        }
