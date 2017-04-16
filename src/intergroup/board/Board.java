@@ -3711,6 +3711,741 @@ public final class Board {
 
   }
 
+  public interface InitialResourceAllocationOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:intergroup.board.InitialResourceAllocation)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+     */
+    java.util.List<intergroup.board.Board.ResourceAllocation> 
+        getResourceAllocationList();
+    /**
+     * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+     */
+    intergroup.board.Board.ResourceAllocation getResourceAllocation(int index);
+    /**
+     * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+     */
+    int getResourceAllocationCount();
+    /**
+     * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+     */
+    java.util.List<? extends intergroup.board.Board.ResourceAllocationOrBuilder> 
+        getResourceAllocationOrBuilderList();
+    /**
+     * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+     */
+    intergroup.board.Board.ResourceAllocationOrBuilder getResourceAllocationOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code intergroup.board.InitialResourceAllocation}
+   */
+  public  static final class InitialResourceAllocation extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:intergroup.board.InitialResourceAllocation)
+      InitialResourceAllocationOrBuilder {
+    // Use InitialResourceAllocation.newBuilder() to construct.
+    private InitialResourceAllocation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private InitialResourceAllocation() {
+      resourceAllocation_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private InitialResourceAllocation(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                resourceAllocation_ = new java.util.ArrayList<intergroup.board.Board.ResourceAllocation>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              resourceAllocation_.add(
+                  input.readMessage(intergroup.board.Board.ResourceAllocation.parser(), extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          resourceAllocation_ = java.util.Collections.unmodifiableList(resourceAllocation_);
+        }
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return intergroup.board.Board.internal_static_intergroup_board_InitialResourceAllocation_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return intergroup.board.Board.internal_static_intergroup_board_InitialResourceAllocation_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              intergroup.board.Board.InitialResourceAllocation.class, intergroup.board.Board.InitialResourceAllocation.Builder.class);
+    }
+
+    public static final int RESOURCEALLOCATION_FIELD_NUMBER = 1;
+    private java.util.List<intergroup.board.Board.ResourceAllocation> resourceAllocation_;
+    /**
+     * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+     */
+    public java.util.List<intergroup.board.Board.ResourceAllocation> getResourceAllocationList() {
+      return resourceAllocation_;
+    }
+    /**
+     * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+     */
+    public java.util.List<? extends intergroup.board.Board.ResourceAllocationOrBuilder> 
+        getResourceAllocationOrBuilderList() {
+      return resourceAllocation_;
+    }
+    /**
+     * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+     */
+    public int getResourceAllocationCount() {
+      return resourceAllocation_.size();
+    }
+    /**
+     * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+     */
+    public intergroup.board.Board.ResourceAllocation getResourceAllocation(int index) {
+      return resourceAllocation_.get(index);
+    }
+    /**
+     * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+     */
+    public intergroup.board.Board.ResourceAllocationOrBuilder getResourceAllocationOrBuilder(
+        int index) {
+      return resourceAllocation_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < resourceAllocation_.size(); i++) {
+        output.writeMessage(1, resourceAllocation_.get(i));
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < resourceAllocation_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, resourceAllocation_.get(i));
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof intergroup.board.Board.InitialResourceAllocation)) {
+        return super.equals(obj);
+      }
+      intergroup.board.Board.InitialResourceAllocation other = (intergroup.board.Board.InitialResourceAllocation) obj;
+
+      boolean result = true;
+      result = result && getResourceAllocationList()
+          .equals(other.getResourceAllocationList());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      if (getResourceAllocationCount() > 0) {
+        hash = (37 * hash) + RESOURCEALLOCATION_FIELD_NUMBER;
+        hash = (53 * hash) + getResourceAllocationList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static intergroup.board.Board.InitialResourceAllocation parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static intergroup.board.Board.InitialResourceAllocation parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static intergroup.board.Board.InitialResourceAllocation parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static intergroup.board.Board.InitialResourceAllocation parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static intergroup.board.Board.InitialResourceAllocation parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static intergroup.board.Board.InitialResourceAllocation parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static intergroup.board.Board.InitialResourceAllocation parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static intergroup.board.Board.InitialResourceAllocation parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static intergroup.board.Board.InitialResourceAllocation parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static intergroup.board.Board.InitialResourceAllocation parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(intergroup.board.Board.InitialResourceAllocation prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code intergroup.board.InitialResourceAllocation}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:intergroup.board.InitialResourceAllocation)
+        intergroup.board.Board.InitialResourceAllocationOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return intergroup.board.Board.internal_static_intergroup_board_InitialResourceAllocation_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return intergroup.board.Board.internal_static_intergroup_board_InitialResourceAllocation_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                intergroup.board.Board.InitialResourceAllocation.class, intergroup.board.Board.InitialResourceAllocation.Builder.class);
+      }
+
+      // Construct using intergroup.board.Board.InitialResourceAllocation.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getResourceAllocationFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (resourceAllocationBuilder_ == null) {
+          resourceAllocation_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          resourceAllocationBuilder_.clear();
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return intergroup.board.Board.internal_static_intergroup_board_InitialResourceAllocation_descriptor;
+      }
+
+      public intergroup.board.Board.InitialResourceAllocation getDefaultInstanceForType() {
+        return intergroup.board.Board.InitialResourceAllocation.getDefaultInstance();
+      }
+
+      public intergroup.board.Board.InitialResourceAllocation build() {
+        intergroup.board.Board.InitialResourceAllocation result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public intergroup.board.Board.InitialResourceAllocation buildPartial() {
+        intergroup.board.Board.InitialResourceAllocation result = new intergroup.board.Board.InitialResourceAllocation(this);
+        int from_bitField0_ = bitField0_;
+        if (resourceAllocationBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            resourceAllocation_ = java.util.Collections.unmodifiableList(resourceAllocation_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.resourceAllocation_ = resourceAllocation_;
+        } else {
+          result.resourceAllocation_ = resourceAllocationBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof intergroup.board.Board.InitialResourceAllocation) {
+          return mergeFrom((intergroup.board.Board.InitialResourceAllocation)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(intergroup.board.Board.InitialResourceAllocation other) {
+        if (other == intergroup.board.Board.InitialResourceAllocation.getDefaultInstance()) return this;
+        if (resourceAllocationBuilder_ == null) {
+          if (!other.resourceAllocation_.isEmpty()) {
+            if (resourceAllocation_.isEmpty()) {
+              resourceAllocation_ = other.resourceAllocation_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureResourceAllocationIsMutable();
+              resourceAllocation_.addAll(other.resourceAllocation_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.resourceAllocation_.isEmpty()) {
+            if (resourceAllocationBuilder_.isEmpty()) {
+              resourceAllocationBuilder_.dispose();
+              resourceAllocationBuilder_ = null;
+              resourceAllocation_ = other.resourceAllocation_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              resourceAllocationBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getResourceAllocationFieldBuilder() : null;
+            } else {
+              resourceAllocationBuilder_.addAllMessages(other.resourceAllocation_);
+            }
+          }
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        intergroup.board.Board.InitialResourceAllocation parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (intergroup.board.Board.InitialResourceAllocation) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<intergroup.board.Board.ResourceAllocation> resourceAllocation_ =
+        java.util.Collections.emptyList();
+      private void ensureResourceAllocationIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          resourceAllocation_ = new java.util.ArrayList<intergroup.board.Board.ResourceAllocation>(resourceAllocation_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          intergroup.board.Board.ResourceAllocation, intergroup.board.Board.ResourceAllocation.Builder, intergroup.board.Board.ResourceAllocationOrBuilder> resourceAllocationBuilder_;
+
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public java.util.List<intergroup.board.Board.ResourceAllocation> getResourceAllocationList() {
+        if (resourceAllocationBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(resourceAllocation_);
+        } else {
+          return resourceAllocationBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public int getResourceAllocationCount() {
+        if (resourceAllocationBuilder_ == null) {
+          return resourceAllocation_.size();
+        } else {
+          return resourceAllocationBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public intergroup.board.Board.ResourceAllocation getResourceAllocation(int index) {
+        if (resourceAllocationBuilder_ == null) {
+          return resourceAllocation_.get(index);
+        } else {
+          return resourceAllocationBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public Builder setResourceAllocation(
+          int index, intergroup.board.Board.ResourceAllocation value) {
+        if (resourceAllocationBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureResourceAllocationIsMutable();
+          resourceAllocation_.set(index, value);
+          onChanged();
+        } else {
+          resourceAllocationBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public Builder setResourceAllocation(
+          int index, intergroup.board.Board.ResourceAllocation.Builder builderForValue) {
+        if (resourceAllocationBuilder_ == null) {
+          ensureResourceAllocationIsMutable();
+          resourceAllocation_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          resourceAllocationBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public Builder addResourceAllocation(intergroup.board.Board.ResourceAllocation value) {
+        if (resourceAllocationBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureResourceAllocationIsMutable();
+          resourceAllocation_.add(value);
+          onChanged();
+        } else {
+          resourceAllocationBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public Builder addResourceAllocation(
+          int index, intergroup.board.Board.ResourceAllocation value) {
+        if (resourceAllocationBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureResourceAllocationIsMutable();
+          resourceAllocation_.add(index, value);
+          onChanged();
+        } else {
+          resourceAllocationBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public Builder addResourceAllocation(
+          intergroup.board.Board.ResourceAllocation.Builder builderForValue) {
+        if (resourceAllocationBuilder_ == null) {
+          ensureResourceAllocationIsMutable();
+          resourceAllocation_.add(builderForValue.build());
+          onChanged();
+        } else {
+          resourceAllocationBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public Builder addResourceAllocation(
+          int index, intergroup.board.Board.ResourceAllocation.Builder builderForValue) {
+        if (resourceAllocationBuilder_ == null) {
+          ensureResourceAllocationIsMutable();
+          resourceAllocation_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          resourceAllocationBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public Builder addAllResourceAllocation(
+          java.lang.Iterable<? extends intergroup.board.Board.ResourceAllocation> values) {
+        if (resourceAllocationBuilder_ == null) {
+          ensureResourceAllocationIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, resourceAllocation_);
+          onChanged();
+        } else {
+          resourceAllocationBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public Builder clearResourceAllocation() {
+        if (resourceAllocationBuilder_ == null) {
+          resourceAllocation_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          resourceAllocationBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public Builder removeResourceAllocation(int index) {
+        if (resourceAllocationBuilder_ == null) {
+          ensureResourceAllocationIsMutable();
+          resourceAllocation_.remove(index);
+          onChanged();
+        } else {
+          resourceAllocationBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public intergroup.board.Board.ResourceAllocation.Builder getResourceAllocationBuilder(
+          int index) {
+        return getResourceAllocationFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public intergroup.board.Board.ResourceAllocationOrBuilder getResourceAllocationOrBuilder(
+          int index) {
+        if (resourceAllocationBuilder_ == null) {
+          return resourceAllocation_.get(index);  } else {
+          return resourceAllocationBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public java.util.List<? extends intergroup.board.Board.ResourceAllocationOrBuilder> 
+           getResourceAllocationOrBuilderList() {
+        if (resourceAllocationBuilder_ != null) {
+          return resourceAllocationBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(resourceAllocation_);
+        }
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public intergroup.board.Board.ResourceAllocation.Builder addResourceAllocationBuilder() {
+        return getResourceAllocationFieldBuilder().addBuilder(
+            intergroup.board.Board.ResourceAllocation.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public intergroup.board.Board.ResourceAllocation.Builder addResourceAllocationBuilder(
+          int index) {
+        return getResourceAllocationFieldBuilder().addBuilder(
+            index, intergroup.board.Board.ResourceAllocation.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .intergroup.board.ResourceAllocation resourceAllocation = 1;</code>
+       */
+      public java.util.List<intergroup.board.Board.ResourceAllocation.Builder> 
+           getResourceAllocationBuilderList() {
+        return getResourceAllocationFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          intergroup.board.Board.ResourceAllocation, intergroup.board.Board.ResourceAllocation.Builder, intergroup.board.Board.ResourceAllocationOrBuilder> 
+          getResourceAllocationFieldBuilder() {
+        if (resourceAllocationBuilder_ == null) {
+          resourceAllocationBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              intergroup.board.Board.ResourceAllocation, intergroup.board.Board.ResourceAllocation.Builder, intergroup.board.Board.ResourceAllocationOrBuilder>(
+                  resourceAllocation_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          resourceAllocation_ = null;
+        }
+        return resourceAllocationBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:intergroup.board.InitialResourceAllocation)
+    }
+
+    // @@protoc_insertion_point(class_scope:intergroup.board.InitialResourceAllocation)
+    private static final intergroup.board.Board.InitialResourceAllocation DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new intergroup.board.Board.InitialResourceAllocation();
+    }
+
+    public static intergroup.board.Board.InitialResourceAllocation getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<InitialResourceAllocation>
+        PARSER = new com.google.protobuf.AbstractParser<InitialResourceAllocation>() {
+      public InitialResourceAllocation parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new InitialResourceAllocation(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<InitialResourceAllocation> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<InitialResourceAllocation> getParserForType() {
+      return PARSER;
+    }
+
+    public intergroup.board.Board.InitialResourceAllocation getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface DevCardOrBuilder extends
       // @@protoc_insertion_point(interface_extends:intergroup.board.DevCard)
       com.google.protobuf.MessageOrBuilder {
@@ -7792,6 +8527,11 @@ public final class Board {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_intergroup_board_ResourceAllocation_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_intergroup_board_InitialResourceAllocation_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_intergroup_board_InitialResourceAllocation_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_intergroup_board_DevCard_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -7843,26 +8583,28 @@ public final class Board {
       "ntergroup.board.ResourceAllocation\"n\n\022Re" +
       "sourceAllocation\022(\n\006player\030\001 \001(\0132\030.inter" +
       "group.board.Player\022.\n\tresources\030\002 \001(\0132\033." +
-      "intergroup.resource.Counts\"\263\001\n\007DevCard\022*" +
-      "\n\007unknown\030\001 \001(\0132\027.intergroup.board.Empty" +
-      "H\000\022<\n\017playableDevCard\030\002 \001(\0162!.intergroup" +
-      ".board.PlayableDevCardH\000\0226\n\014victoryPoint" +
-      "\030\003 \001(\0162\036.intergroup.board.VictoryPointH\000" +
-      "B\006\n\004card\"p\n\005Steal\022(\n\006victim\030\001 \001(\0132\030.inte" +
-      "rgroup.board.Player\022+\n\010resource\030\002 \001(\0162\031.",
-      "intergroup.resource.Kind\022\020\n\010quantity\030\003 \001" +
-      "(\005\"5\n\nMultiSteal\022\'\n\006thefts\030\001 \003(\0132\027.inter" +
-      "group.board.Steal\"p\n\003Hex\022)\n\010location\030\001 \001" +
-      "(\0132\027.intergroup.board.Point\022)\n\007terrain\030\002" +
-      " \001(\0162\030.intergroup.terrain.Kind\022\023\n\013number" +
-      "Token\030\003 \001(\005\"`\n\007Harbour\022(\n\010location\030\001 \001(\013" +
-      "2\026.intergroup.board.Edge\022+\n\010resource\030\002 \001" +
-      "(\0162\031.intergroup.resource.Kind\"\007\n\005Empty*R" +
-      "\n\017PlayableDevCard\022\n\n\006KNIGHT\020\000\022\021\n\rROAD_BU" +
-      "ILDING\020\001\022\014\n\010MONOPOLY\020\002\022\022\n\016YEAR_OF_PLENTY",
-      "\020\003*O\n\014VictoryPoint\022\n\n\006CHAPEL\020\000\022\013\n\007LIBRAR" +
-      "Y\020\001\022\n\n\006MARKET\020\002\022\n\n\006PALACE\020\003\022\016\n\nUNIVERSIT" +
-      "Y\020\004b\006proto3"
+      "intergroup.resource.Counts\"]\n\031InitialRes" +
+      "ourceAllocation\022@\n\022resourceAllocation\030\001 " +
+      "\003(\0132$.intergroup.board.ResourceAllocatio" +
+      "n\"\263\001\n\007DevCard\022*\n\007unknown\030\001 \001(\0132\027.intergr" +
+      "oup.board.EmptyH\000\022<\n\017playableDevCard\030\002 \001" +
+      "(\0162!.intergroup.board.PlayableDevCardH\000\022" +
+      "6\n\014victoryPoint\030\003 \001(\0162\036.intergroup.board",
+      ".VictoryPointH\000B\006\n\004card\"p\n\005Steal\022(\n\006vict" +
+      "im\030\001 \001(\0132\030.intergroup.board.Player\022+\n\010re" +
+      "source\030\002 \001(\0162\031.intergroup.resource.Kind\022" +
+      "\020\n\010quantity\030\003 \001(\005\"5\n\nMultiSteal\022\'\n\006theft" +
+      "s\030\001 \003(\0132\027.intergroup.board.Steal\"p\n\003Hex\022" +
+      ")\n\010location\030\001 \001(\0132\027.intergroup.board.Poi" +
+      "nt\022)\n\007terrain\030\002 \001(\0162\030.intergroup.terrain" +
+      ".Kind\022\023\n\013numberToken\030\003 \001(\005\"`\n\007Harbour\022(\n" +
+      "\010location\030\001 \001(\0132\026.intergroup.board.Edge\022" +
+      "+\n\010resource\030\002 \001(\0162\031.intergroup.resource.",
+      "Kind\"\007\n\005Empty*R\n\017PlayableDevCard\022\n\n\006KNIG" +
+      "HT\020\000\022\021\n\rROAD_BUILDING\020\001\022\014\n\010MONOPOLY\020\002\022\022\n" +
+      "\016YEAR_OF_PLENTY\020\003*O\n\014VictoryPoint\022\n\n\006CHA" +
+      "PEL\020\000\022\013\n\007LIBRARY\020\001\022\n\n\006MARKET\020\002\022\n\n\006PALACE" +
+      "\020\003\022\016\n\nUNIVERSITY\020\004b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -7908,38 +8650,44 @@ public final class Board {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_intergroup_board_ResourceAllocation_descriptor,
         new java.lang.String[] { "Player", "Resources", });
-    internal_static_intergroup_board_DevCard_descriptor =
+    internal_static_intergroup_board_InitialResourceAllocation_descriptor =
       getDescriptor().getMessageTypes().get(5);
+    internal_static_intergroup_board_InitialResourceAllocation_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_intergroup_board_InitialResourceAllocation_descriptor,
+        new java.lang.String[] { "ResourceAllocation", });
+    internal_static_intergroup_board_DevCard_descriptor =
+      getDescriptor().getMessageTypes().get(6);
     internal_static_intergroup_board_DevCard_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_intergroup_board_DevCard_descriptor,
         new java.lang.String[] { "Unknown", "PlayableDevCard", "VictoryPoint", "Card", });
     internal_static_intergroup_board_Steal_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_intergroup_board_Steal_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_intergroup_board_Steal_descriptor,
         new java.lang.String[] { "Victim", "Resource", "Quantity", });
     internal_static_intergroup_board_MultiSteal_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_intergroup_board_MultiSteal_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_intergroup_board_MultiSteal_descriptor,
         new java.lang.String[] { "Thefts", });
     internal_static_intergroup_board_Hex_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_intergroup_board_Hex_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_intergroup_board_Hex_descriptor,
         new java.lang.String[] { "Location", "Terrain", "NumberToken", });
     internal_static_intergroup_board_Harbour_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_intergroup_board_Harbour_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_intergroup_board_Harbour_descriptor,
         new java.lang.String[] { "Location", "Resource", });
     internal_static_intergroup_board_Empty_descriptor =
-      getDescriptor().getMessageTypes().get(10);
+      getDescriptor().getMessageTypes().get(11);
     internal_static_intergroup_board_Empty_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_intergroup_board_Empty_descriptor,

@@ -97,11 +97,11 @@ public class Turn {
 					break;
 				case 4:
 					//buildsettlement
-					Building.buildSettlement(player, game1, enter);
+					game.Building.buildSettlement(player, game1, enter);
 					break;
 				case 5:
 					//buildcity
-					Building.buildCity(player, game1, scanner);
+					game.Building.buildCity(player, game1, scanner);
 					break;
 				case 7:
 					//play dev card

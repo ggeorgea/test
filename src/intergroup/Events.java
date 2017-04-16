@@ -139,6 +139,15 @@ public final class Events {
     intergroup.board.Board.RollOrBuilder getRolledOrBuilder();
 
     /**
+     * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+     */
+    intergroup.board.Board.InitialResourceAllocation getInitialAllocation();
+    /**
+     * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+     */
+    intergroup.board.Board.InitialResourceAllocationOrBuilder getInitialAllocationOrBuilder();
+
+    /**
      * <code>optional .intergroup.board.Edge roadBuilt = 4;</code>
      */
     intergroup.board.Board.Edge getRoadBuilt();
@@ -229,65 +238,83 @@ public final class Events {
     intergroup.trade.Trade.WithBankOrBuilder getBankTradeOrBuilder();
 
     /**
-     * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+     * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
      */
-    intergroup.trade.Trade.WithPlayer getPlayerTrade();
+    intergroup.trade.Trade.WithPlayer getPlayerTradeInitiated();
     /**
-     * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+     * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
      */
-    intergroup.trade.Trade.WithPlayerOrBuilder getPlayerTradeOrBuilder();
+    intergroup.trade.Trade.WithPlayerOrBuilder getPlayerTradeInitiatedOrBuilder();
 
     /**
-     * <code>optional .intergroup.Empty turnEnded = 15;</code>
+     * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+     */
+    intergroup.trade.Trade.WithPlayer getPlayerTradeAccepted();
+    /**
+     * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+     */
+    intergroup.trade.Trade.WithPlayerOrBuilder getPlayerTradeAcceptedOrBuilder();
+
+    /**
+     * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+     */
+    intergroup.EmptyOuterClass.Empty getPlayerTradeRejected();
+    /**
+     * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+     */
+    intergroup.EmptyOuterClass.EmptyOrBuilder getPlayerTradeRejectedOrBuilder();
+
+    /**
+     * <code>optional .intergroup.Empty turnEnded = 16;</code>
      */
     intergroup.EmptyOuterClass.Empty getTurnEnded();
     /**
-     * <code>optional .intergroup.Empty turnEnded = 15;</code>
+     * <code>optional .intergroup.Empty turnEnded = 16;</code>
      */
     intergroup.EmptyOuterClass.EmptyOrBuilder getTurnEndedOrBuilder();
 
     /**
-     * <code>optional .intergroup.Empty gameWon = 16;</code>
+     * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
      */
-    intergroup.EmptyOuterClass.Empty getGameWon();
+    intergroup.lobby.Lobby.GameWon getGameWon();
     /**
-     * <code>optional .intergroup.Empty gameWon = 16;</code>
+     * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
      */
-    intergroup.EmptyOuterClass.EmptyOrBuilder getGameWonOrBuilder();
+    intergroup.lobby.Lobby.GameWonOrBuilder getGameWonOrBuilder();
 
     /**
-     * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+     * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
      */
     intergroup.lobby.Lobby.GameSetup getBeginGame();
     /**
-     * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+     * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
      */
     intergroup.lobby.Lobby.GameSetupOrBuilder getBeginGameOrBuilder();
 
     /**
-     * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+     * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
      */
     intergroup.lobby.Lobby.Usernames getLobbyUpdate();
     /**
-     * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+     * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
      */
     intergroup.lobby.Lobby.UsernamesOrBuilder getLobbyUpdateOrBuilder();
 
     /**
-     * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+     * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
      */
     intergroup.board.Board.MultiSteal getMonopolyResolution();
     /**
-     * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+     * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
      */
     intergroup.board.Board.MultiStealOrBuilder getMonopolyResolutionOrBuilder();
 
     /**
-     * <code>optional string chatMessage = 20;</code>
+     * <code>optional string chatMessage = 21;</code>
      */
     java.lang.String getChatMessage();
     /**
-     * <code>optional string chatMessage = 20;</code>
+     * <code>optional string chatMessage = 21;</code>
      */
     com.google.protobuf.ByteString
         getChatMessageBytes();
@@ -513,14 +540,14 @@ public final class Events {
               break;
             }
             case 122: {
-              intergroup.EmptyOuterClass.Empty.Builder subBuilder = null;
+              intergroup.trade.Trade.WithPlayer.Builder subBuilder = null;
               if (typeCase_ == 15) {
-                subBuilder = ((intergroup.EmptyOuterClass.Empty) type_).toBuilder();
+                subBuilder = ((intergroup.trade.Trade.WithPlayer) type_).toBuilder();
               }
               type_ =
-                  input.readMessage(intergroup.EmptyOuterClass.Empty.parser(), extensionRegistry);
+                  input.readMessage(intergroup.trade.Trade.WithPlayer.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom((intergroup.EmptyOuterClass.Empty) type_);
+                subBuilder.mergeFrom((intergroup.trade.Trade.WithPlayer) type_);
                 type_ = subBuilder.buildPartial();
               }
               typeCase_ = 15;
@@ -541,8 +568,22 @@ public final class Events {
               break;
             }
             case 138: {
-              intergroup.lobby.Lobby.GameSetup.Builder subBuilder = null;
+              intergroup.lobby.Lobby.GameWon.Builder subBuilder = null;
               if (typeCase_ == 17) {
+                subBuilder = ((intergroup.lobby.Lobby.GameWon) type_).toBuilder();
+              }
+              type_ =
+                  input.readMessage(intergroup.lobby.Lobby.GameWon.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((intergroup.lobby.Lobby.GameWon) type_);
+                type_ = subBuilder.buildPartial();
+              }
+              typeCase_ = 17;
+              break;
+            }
+            case 146: {
+              intergroup.lobby.Lobby.GameSetup.Builder subBuilder = null;
+              if (typeCase_ == 18) {
                 subBuilder = ((intergroup.lobby.Lobby.GameSetup) type_).toBuilder();
               }
               type_ =
@@ -551,12 +592,12 @@ public final class Events {
                 subBuilder.mergeFrom((intergroup.lobby.Lobby.GameSetup) type_);
                 type_ = subBuilder.buildPartial();
               }
-              typeCase_ = 17;
+              typeCase_ = 18;
               break;
             }
-            case 146: {
+            case 154: {
               intergroup.lobby.Lobby.Usernames.Builder subBuilder = null;
-              if (typeCase_ == 18) {
+              if (typeCase_ == 19) {
                 subBuilder = ((intergroup.lobby.Lobby.Usernames) type_).toBuilder();
               }
               type_ =
@@ -565,12 +606,12 @@ public final class Events {
                 subBuilder.mergeFrom((intergroup.lobby.Lobby.Usernames) type_);
                 type_ = subBuilder.buildPartial();
               }
-              typeCase_ = 18;
+              typeCase_ = 19;
               break;
             }
-            case 154: {
+            case 162: {
               intergroup.board.Board.MultiSteal.Builder subBuilder = null;
-              if (typeCase_ == 19) {
+              if (typeCase_ == 20) {
                 subBuilder = ((intergroup.board.Board.MultiSteal) type_).toBuilder();
               }
               type_ =
@@ -579,13 +620,41 @@ public final class Events {
                 subBuilder.mergeFrom((intergroup.board.Board.MultiSteal) type_);
                 type_ = subBuilder.buildPartial();
               }
-              typeCase_ = 19;
+              typeCase_ = 20;
               break;
             }
-            case 162: {
+            case 170: {
               java.lang.String s = input.readStringRequireUtf8();
-              typeCase_ = 20;
+              typeCase_ = 21;
               type_ = s;
+              break;
+            }
+            case 178: {
+              intergroup.EmptyOuterClass.Empty.Builder subBuilder = null;
+              if (typeCase_ == 22) {
+                subBuilder = ((intergroup.EmptyOuterClass.Empty) type_).toBuilder();
+              }
+              type_ =
+                  input.readMessage(intergroup.EmptyOuterClass.Empty.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((intergroup.EmptyOuterClass.Empty) type_);
+                type_ = subBuilder.buildPartial();
+              }
+              typeCase_ = 22;
+              break;
+            }
+            case 186: {
+              intergroup.board.Board.InitialResourceAllocation.Builder subBuilder = null;
+              if (typeCase_ == 23) {
+                subBuilder = ((intergroup.board.Board.InitialResourceAllocation) type_).toBuilder();
+              }
+              type_ =
+                  input.readMessage(intergroup.board.Board.InitialResourceAllocation.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((intergroup.board.Board.InitialResourceAllocation) type_);
+                type_ = subBuilder.buildPartial();
+              }
+              typeCase_ = 23;
               break;
             }
           }
@@ -1212,6 +1281,7 @@ public final class Events {
         implements com.google.protobuf.Internal.EnumLite {
       ERROR(2),
       ROLLED(3),
+      INITIALALLOCATION(23),
       ROADBUILT(4),
       SETTLEMENTBUILT(5),
       CITYBUILT(6),
@@ -1222,13 +1292,15 @@ public final class Events {
       RESOURCECHOSEN(11),
       CARDSDISCARDED(12),
       BANKTRADE(13),
-      PLAYERTRADE(14),
-      TURNENDED(15),
-      GAMEWON(16),
-      BEGINGAME(17),
-      LOBBYUPDATE(18),
-      MONOPOLYRESOLUTION(19),
-      CHATMESSAGE(20),
+      PLAYERTRADEINITIATED(14),
+      PLAYERTRADEACCEPTED(15),
+      PLAYERTRADEREJECTED(22),
+      TURNENDED(16),
+      GAMEWON(17),
+      BEGINGAME(18),
+      LOBBYUPDATE(19),
+      MONOPOLYRESOLUTION(20),
+      CHATMESSAGE(21),
       TYPE_NOT_SET(0);
       private final int value;
       private TypeCase(int value) {
@@ -1246,6 +1318,7 @@ public final class Events {
         switch (value) {
           case 2: return ERROR;
           case 3: return ROLLED;
+          case 23: return INITIALALLOCATION;
           case 4: return ROADBUILT;
           case 5: return SETTLEMENTBUILT;
           case 6: return CITYBUILT;
@@ -1256,13 +1329,15 @@ public final class Events {
           case 11: return RESOURCECHOSEN;
           case 12: return CARDSDISCARDED;
           case 13: return BANKTRADE;
-          case 14: return PLAYERTRADE;
-          case 15: return TURNENDED;
-          case 16: return GAMEWON;
-          case 17: return BEGINGAME;
-          case 18: return LOBBYUPDATE;
-          case 19: return MONOPOLYRESOLUTION;
-          case 20: return CHATMESSAGE;
+          case 14: return PLAYERTRADEINITIATED;
+          case 15: return PLAYERTRADEACCEPTED;
+          case 22: return PLAYERTRADEREJECTED;
+          case 16: return TURNENDED;
+          case 17: return GAMEWON;
+          case 18: return BEGINGAME;
+          case 19: return LOBBYUPDATE;
+          case 20: return MONOPOLYRESOLUTION;
+          case 21: return CHATMESSAGE;
           case 0: return TYPE_NOT_SET;
           default: return null;
         }
@@ -1337,6 +1412,26 @@ public final class Events {
          return (intergroup.board.Board.Roll) type_;
       }
       return intergroup.board.Board.Roll.getDefaultInstance();
+    }
+
+    public static final int INITIALALLOCATION_FIELD_NUMBER = 23;
+    /**
+     * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+     */
+    public intergroup.board.Board.InitialResourceAllocation getInitialAllocation() {
+      if (typeCase_ == 23) {
+         return (intergroup.board.Board.InitialResourceAllocation) type_;
+      }
+      return intergroup.board.Board.InitialResourceAllocation.getDefaultInstance();
+    }
+    /**
+     * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+     */
+    public intergroup.board.Board.InitialResourceAllocationOrBuilder getInitialAllocationOrBuilder() {
+      if (typeCase_ == 23) {
+         return (intergroup.board.Board.InitialResourceAllocation) type_;
+      }
+      return intergroup.board.Board.InitialResourceAllocation.getDefaultInstance();
     }
 
     public static final int ROADBUILT_FIELD_NUMBER = 4;
@@ -1543,133 +1638,173 @@ public final class Events {
       return intergroup.trade.Trade.WithBank.getDefaultInstance();
     }
 
-    public static final int PLAYERTRADE_FIELD_NUMBER = 14;
+    public static final int PLAYERTRADEINITIATED_FIELD_NUMBER = 14;
     /**
-     * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+     * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
      */
-    public intergroup.trade.Trade.WithPlayer getPlayerTrade() {
+    public intergroup.trade.Trade.WithPlayer getPlayerTradeInitiated() {
       if (typeCase_ == 14) {
          return (intergroup.trade.Trade.WithPlayer) type_;
       }
       return intergroup.trade.Trade.WithPlayer.getDefaultInstance();
     }
     /**
-     * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+     * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
      */
-    public intergroup.trade.Trade.WithPlayerOrBuilder getPlayerTradeOrBuilder() {
+    public intergroup.trade.Trade.WithPlayerOrBuilder getPlayerTradeInitiatedOrBuilder() {
       if (typeCase_ == 14) {
          return (intergroup.trade.Trade.WithPlayer) type_;
       }
       return intergroup.trade.Trade.WithPlayer.getDefaultInstance();
     }
 
-    public static final int TURNENDED_FIELD_NUMBER = 15;
+    public static final int PLAYERTRADEACCEPTED_FIELD_NUMBER = 15;
     /**
-     * <code>optional .intergroup.Empty turnEnded = 15;</code>
+     * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+     */
+    public intergroup.trade.Trade.WithPlayer getPlayerTradeAccepted() {
+      if (typeCase_ == 15) {
+         return (intergroup.trade.Trade.WithPlayer) type_;
+      }
+      return intergroup.trade.Trade.WithPlayer.getDefaultInstance();
+    }
+    /**
+     * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+     */
+    public intergroup.trade.Trade.WithPlayerOrBuilder getPlayerTradeAcceptedOrBuilder() {
+      if (typeCase_ == 15) {
+         return (intergroup.trade.Trade.WithPlayer) type_;
+      }
+      return intergroup.trade.Trade.WithPlayer.getDefaultInstance();
+    }
+
+    public static final int PLAYERTRADEREJECTED_FIELD_NUMBER = 22;
+    /**
+     * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+     */
+    public intergroup.EmptyOuterClass.Empty getPlayerTradeRejected() {
+      if (typeCase_ == 22) {
+         return (intergroup.EmptyOuterClass.Empty) type_;
+      }
+      return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
+    }
+    /**
+     * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+     */
+    public intergroup.EmptyOuterClass.EmptyOrBuilder getPlayerTradeRejectedOrBuilder() {
+      if (typeCase_ == 22) {
+         return (intergroup.EmptyOuterClass.Empty) type_;
+      }
+      return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
+    }
+
+    public static final int TURNENDED_FIELD_NUMBER = 16;
+    /**
+     * <code>optional .intergroup.Empty turnEnded = 16;</code>
      */
     public intergroup.EmptyOuterClass.Empty getTurnEnded() {
-      if (typeCase_ == 15) {
+      if (typeCase_ == 16) {
          return (intergroup.EmptyOuterClass.Empty) type_;
       }
       return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
     }
     /**
-     * <code>optional .intergroup.Empty turnEnded = 15;</code>
+     * <code>optional .intergroup.Empty turnEnded = 16;</code>
      */
     public intergroup.EmptyOuterClass.EmptyOrBuilder getTurnEndedOrBuilder() {
-      if (typeCase_ == 15) {
-         return (intergroup.EmptyOuterClass.Empty) type_;
-      }
-      return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
-    }
-
-    public static final int GAMEWON_FIELD_NUMBER = 16;
-    /**
-     * <code>optional .intergroup.Empty gameWon = 16;</code>
-     */
-    public intergroup.EmptyOuterClass.Empty getGameWon() {
-      if (typeCase_ == 16) {
-         return (intergroup.EmptyOuterClass.Empty) type_;
-      }
-      return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
-    }
-    /**
-     * <code>optional .intergroup.Empty gameWon = 16;</code>
-     */
-    public intergroup.EmptyOuterClass.EmptyOrBuilder getGameWonOrBuilder() {
       if (typeCase_ == 16) {
          return (intergroup.EmptyOuterClass.Empty) type_;
       }
       return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
     }
 
-    public static final int BEGINGAME_FIELD_NUMBER = 17;
+    public static final int GAMEWON_FIELD_NUMBER = 17;
     /**
-     * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+     * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
+     */
+    public intergroup.lobby.Lobby.GameWon getGameWon() {
+      if (typeCase_ == 17) {
+         return (intergroup.lobby.Lobby.GameWon) type_;
+      }
+      return intergroup.lobby.Lobby.GameWon.getDefaultInstance();
+    }
+    /**
+     * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
+     */
+    public intergroup.lobby.Lobby.GameWonOrBuilder getGameWonOrBuilder() {
+      if (typeCase_ == 17) {
+         return (intergroup.lobby.Lobby.GameWon) type_;
+      }
+      return intergroup.lobby.Lobby.GameWon.getDefaultInstance();
+    }
+
+    public static final int BEGINGAME_FIELD_NUMBER = 18;
+    /**
+     * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
      */
     public intergroup.lobby.Lobby.GameSetup getBeginGame() {
-      if (typeCase_ == 17) {
+      if (typeCase_ == 18) {
          return (intergroup.lobby.Lobby.GameSetup) type_;
       }
       return intergroup.lobby.Lobby.GameSetup.getDefaultInstance();
     }
     /**
-     * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+     * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
      */
     public intergroup.lobby.Lobby.GameSetupOrBuilder getBeginGameOrBuilder() {
-      if (typeCase_ == 17) {
+      if (typeCase_ == 18) {
          return (intergroup.lobby.Lobby.GameSetup) type_;
       }
       return intergroup.lobby.Lobby.GameSetup.getDefaultInstance();
     }
 
-    public static final int LOBBYUPDATE_FIELD_NUMBER = 18;
+    public static final int LOBBYUPDATE_FIELD_NUMBER = 19;
     /**
-     * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+     * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
      */
     public intergroup.lobby.Lobby.Usernames getLobbyUpdate() {
-      if (typeCase_ == 18) {
+      if (typeCase_ == 19) {
          return (intergroup.lobby.Lobby.Usernames) type_;
       }
       return intergroup.lobby.Lobby.Usernames.getDefaultInstance();
     }
     /**
-     * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+     * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
      */
     public intergroup.lobby.Lobby.UsernamesOrBuilder getLobbyUpdateOrBuilder() {
-      if (typeCase_ == 18) {
+      if (typeCase_ == 19) {
          return (intergroup.lobby.Lobby.Usernames) type_;
       }
       return intergroup.lobby.Lobby.Usernames.getDefaultInstance();
     }
 
-    public static final int MONOPOLYRESOLUTION_FIELD_NUMBER = 19;
+    public static final int MONOPOLYRESOLUTION_FIELD_NUMBER = 20;
     /**
-     * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+     * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
      */
     public intergroup.board.Board.MultiSteal getMonopolyResolution() {
-      if (typeCase_ == 19) {
+      if (typeCase_ == 20) {
          return (intergroup.board.Board.MultiSteal) type_;
       }
       return intergroup.board.Board.MultiSteal.getDefaultInstance();
     }
     /**
-     * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+     * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
      */
     public intergroup.board.Board.MultiStealOrBuilder getMonopolyResolutionOrBuilder() {
-      if (typeCase_ == 19) {
+      if (typeCase_ == 20) {
          return (intergroup.board.Board.MultiSteal) type_;
       }
       return intergroup.board.Board.MultiSteal.getDefaultInstance();
     }
 
-    public static final int CHATMESSAGE_FIELD_NUMBER = 20;
+    public static final int CHATMESSAGE_FIELD_NUMBER = 21;
     /**
-     * <code>optional string chatMessage = 20;</code>
+     * <code>optional string chatMessage = 21;</code>
      */
     public java.lang.String getChatMessage() {
       java.lang.Object ref = "";
-      if (typeCase_ == 20) {
+      if (typeCase_ == 21) {
         ref = type_;
       }
       if (ref instanceof java.lang.String) {
@@ -1678,26 +1813,26 @@ public final class Events {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        if (typeCase_ == 20) {
+        if (typeCase_ == 21) {
           type_ = s;
         }
         return s;
       }
     }
     /**
-     * <code>optional string chatMessage = 20;</code>
+     * <code>optional string chatMessage = 21;</code>
      */
     public com.google.protobuf.ByteString
         getChatMessageBytes() {
       java.lang.Object ref = "";
-      if (typeCase_ == 20) {
+      if (typeCase_ == 21) {
         ref = type_;
       }
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        if (typeCase_ == 20) {
+        if (typeCase_ == 21) {
           type_ = b;
         }
         return b;
@@ -1761,22 +1896,31 @@ public final class Events {
         output.writeMessage(14, (intergroup.trade.Trade.WithPlayer) type_);
       }
       if (typeCase_ == 15) {
-        output.writeMessage(15, (intergroup.EmptyOuterClass.Empty) type_);
+        output.writeMessage(15, (intergroup.trade.Trade.WithPlayer) type_);
       }
       if (typeCase_ == 16) {
         output.writeMessage(16, (intergroup.EmptyOuterClass.Empty) type_);
       }
       if (typeCase_ == 17) {
-        output.writeMessage(17, (intergroup.lobby.Lobby.GameSetup) type_);
+        output.writeMessage(17, (intergroup.lobby.Lobby.GameWon) type_);
       }
       if (typeCase_ == 18) {
-        output.writeMessage(18, (intergroup.lobby.Lobby.Usernames) type_);
+        output.writeMessage(18, (intergroup.lobby.Lobby.GameSetup) type_);
       }
       if (typeCase_ == 19) {
-        output.writeMessage(19, (intergroup.board.Board.MultiSteal) type_);
+        output.writeMessage(19, (intergroup.lobby.Lobby.Usernames) type_);
       }
       if (typeCase_ == 20) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 20, type_);
+        output.writeMessage(20, (intergroup.board.Board.MultiSteal) type_);
+      }
+      if (typeCase_ == 21) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 21, type_);
+      }
+      if (typeCase_ == 22) {
+        output.writeMessage(22, (intergroup.EmptyOuterClass.Empty) type_);
+      }
+      if (typeCase_ == 23) {
+        output.writeMessage(23, (intergroup.board.Board.InitialResourceAllocation) type_);
       }
     }
 
@@ -1843,7 +1987,7 @@ public final class Events {
       }
       if (typeCase_ == 15) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(15, (intergroup.EmptyOuterClass.Empty) type_);
+          .computeMessageSize(15, (intergroup.trade.Trade.WithPlayer) type_);
       }
       if (typeCase_ == 16) {
         size += com.google.protobuf.CodedOutputStream
@@ -1851,18 +1995,30 @@ public final class Events {
       }
       if (typeCase_ == 17) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(17, (intergroup.lobby.Lobby.GameSetup) type_);
+          .computeMessageSize(17, (intergroup.lobby.Lobby.GameWon) type_);
       }
       if (typeCase_ == 18) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(18, (intergroup.lobby.Lobby.Usernames) type_);
+          .computeMessageSize(18, (intergroup.lobby.Lobby.GameSetup) type_);
       }
       if (typeCase_ == 19) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(19, (intergroup.board.Board.MultiSteal) type_);
+          .computeMessageSize(19, (intergroup.lobby.Lobby.Usernames) type_);
       }
       if (typeCase_ == 20) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(20, type_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(20, (intergroup.board.Board.MultiSteal) type_);
+      }
+      if (typeCase_ == 21) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(21, type_);
+      }
+      if (typeCase_ == 22) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(22, (intergroup.EmptyOuterClass.Empty) type_);
+      }
+      if (typeCase_ == 23) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(23, (intergroup.board.Board.InitialResourceAllocation) type_);
       }
       memoizedSize = size;
       return size;
@@ -1896,6 +2052,10 @@ public final class Events {
         case 3:
           result = result && getRolled()
               .equals(other.getRolled());
+          break;
+        case 23:
+          result = result && getInitialAllocation()
+              .equals(other.getInitialAllocation());
           break;
         case 4:
           result = result && getRoadBuilt()
@@ -1938,30 +2098,38 @@ public final class Events {
               .equals(other.getBankTrade());
           break;
         case 14:
-          result = result && getPlayerTrade()
-              .equals(other.getPlayerTrade());
+          result = result && getPlayerTradeInitiated()
+              .equals(other.getPlayerTradeInitiated());
           break;
         case 15:
+          result = result && getPlayerTradeAccepted()
+              .equals(other.getPlayerTradeAccepted());
+          break;
+        case 22:
+          result = result && getPlayerTradeRejected()
+              .equals(other.getPlayerTradeRejected());
+          break;
+        case 16:
           result = result && getTurnEnded()
               .equals(other.getTurnEnded());
           break;
-        case 16:
+        case 17:
           result = result && getGameWon()
               .equals(other.getGameWon());
           break;
-        case 17:
+        case 18:
           result = result && getBeginGame()
               .equals(other.getBeginGame());
           break;
-        case 18:
+        case 19:
           result = result && getLobbyUpdate()
               .equals(other.getLobbyUpdate());
           break;
-        case 19:
+        case 20:
           result = result && getMonopolyResolution()
               .equals(other.getMonopolyResolution());
           break;
-        case 20:
+        case 21:
           result = result && getChatMessage()
               .equals(other.getChatMessage());
           break;
@@ -1990,6 +2158,10 @@ public final class Events {
         case 3:
           hash = (37 * hash) + ROLLED_FIELD_NUMBER;
           hash = (53 * hash) + getRolled().hashCode();
+          break;
+        case 23:
+          hash = (37 * hash) + INITIALALLOCATION_FIELD_NUMBER;
+          hash = (53 * hash) + getInitialAllocation().hashCode();
           break;
         case 4:
           hash = (37 * hash) + ROADBUILT_FIELD_NUMBER;
@@ -2032,30 +2204,38 @@ public final class Events {
           hash = (53 * hash) + getBankTrade().hashCode();
           break;
         case 14:
-          hash = (37 * hash) + PLAYERTRADE_FIELD_NUMBER;
-          hash = (53 * hash) + getPlayerTrade().hashCode();
+          hash = (37 * hash) + PLAYERTRADEINITIATED_FIELD_NUMBER;
+          hash = (53 * hash) + getPlayerTradeInitiated().hashCode();
           break;
         case 15:
+          hash = (37 * hash) + PLAYERTRADEACCEPTED_FIELD_NUMBER;
+          hash = (53 * hash) + getPlayerTradeAccepted().hashCode();
+          break;
+        case 22:
+          hash = (37 * hash) + PLAYERTRADEREJECTED_FIELD_NUMBER;
+          hash = (53 * hash) + getPlayerTradeRejected().hashCode();
+          break;
+        case 16:
           hash = (37 * hash) + TURNENDED_FIELD_NUMBER;
           hash = (53 * hash) + getTurnEnded().hashCode();
           break;
-        case 16:
+        case 17:
           hash = (37 * hash) + GAMEWON_FIELD_NUMBER;
           hash = (53 * hash) + getGameWon().hashCode();
           break;
-        case 17:
+        case 18:
           hash = (37 * hash) + BEGINGAME_FIELD_NUMBER;
           hash = (53 * hash) + getBeginGame().hashCode();
           break;
-        case 18:
+        case 19:
           hash = (37 * hash) + LOBBYUPDATE_FIELD_NUMBER;
           hash = (53 * hash) + getLobbyUpdate().hashCode();
           break;
-        case 19:
+        case 20:
           hash = (37 * hash) + MONOPOLYRESOLUTION_FIELD_NUMBER;
           hash = (53 * hash) + getMonopolyResolution().hashCode();
           break;
-        case 20:
+        case 21:
           hash = (37 * hash) + CHATMESSAGE_FIELD_NUMBER;
           hash = (53 * hash) + getChatMessage().hashCode();
           break;
@@ -2229,6 +2409,13 @@ public final class Events {
             result.type_ = rolledBuilder_.build();
           }
         }
+        if (typeCase_ == 23) {
+          if (initialAllocationBuilder_ == null) {
+            result.type_ = type_;
+          } else {
+            result.type_ = initialAllocationBuilder_.build();
+          }
+        }
         if (typeCase_ == 4) {
           if (roadBuiltBuilder_ == null) {
             result.type_ = type_;
@@ -2292,48 +2479,62 @@ public final class Events {
           }
         }
         if (typeCase_ == 14) {
-          if (playerTradeBuilder_ == null) {
+          if (playerTradeInitiatedBuilder_ == null) {
             result.type_ = type_;
           } else {
-            result.type_ = playerTradeBuilder_.build();
+            result.type_ = playerTradeInitiatedBuilder_.build();
           }
         }
         if (typeCase_ == 15) {
+          if (playerTradeAcceptedBuilder_ == null) {
+            result.type_ = type_;
+          } else {
+            result.type_ = playerTradeAcceptedBuilder_.build();
+          }
+        }
+        if (typeCase_ == 22) {
+          if (playerTradeRejectedBuilder_ == null) {
+            result.type_ = type_;
+          } else {
+            result.type_ = playerTradeRejectedBuilder_.build();
+          }
+        }
+        if (typeCase_ == 16) {
           if (turnEndedBuilder_ == null) {
             result.type_ = type_;
           } else {
             result.type_ = turnEndedBuilder_.build();
           }
         }
-        if (typeCase_ == 16) {
+        if (typeCase_ == 17) {
           if (gameWonBuilder_ == null) {
             result.type_ = type_;
           } else {
             result.type_ = gameWonBuilder_.build();
           }
         }
-        if (typeCase_ == 17) {
+        if (typeCase_ == 18) {
           if (beginGameBuilder_ == null) {
             result.type_ = type_;
           } else {
             result.type_ = beginGameBuilder_.build();
           }
         }
-        if (typeCase_ == 18) {
+        if (typeCase_ == 19) {
           if (lobbyUpdateBuilder_ == null) {
             result.type_ = type_;
           } else {
             result.type_ = lobbyUpdateBuilder_.build();
           }
         }
-        if (typeCase_ == 19) {
+        if (typeCase_ == 20) {
           if (monopolyResolutionBuilder_ == null) {
             result.type_ = type_;
           } else {
             result.type_ = monopolyResolutionBuilder_.build();
           }
         }
-        if (typeCase_ == 20) {
+        if (typeCase_ == 21) {
           result.type_ = type_;
         }
         result.typeCase_ = typeCase_;
@@ -2390,6 +2591,10 @@ public final class Events {
             mergeRolled(other.getRolled());
             break;
           }
+          case INITIALALLOCATION: {
+            mergeInitialAllocation(other.getInitialAllocation());
+            break;
+          }
           case ROADBUILT: {
             mergeRoadBuilt(other.getRoadBuilt());
             break;
@@ -2430,8 +2635,16 @@ public final class Events {
             mergeBankTrade(other.getBankTrade());
             break;
           }
-          case PLAYERTRADE: {
-            mergePlayerTrade(other.getPlayerTrade());
+          case PLAYERTRADEINITIATED: {
+            mergePlayerTradeInitiated(other.getPlayerTradeInitiated());
+            break;
+          }
+          case PLAYERTRADEACCEPTED: {
+            mergePlayerTradeAccepted(other.getPlayerTradeAccepted());
+            break;
+          }
+          case PLAYERTRADEREJECTED: {
+            mergePlayerTradeRejected(other.getPlayerTradeRejected());
             break;
           }
           case TURNENDED: {
@@ -2455,7 +2668,7 @@ public final class Events {
             break;
           }
           case CHATMESSAGE: {
-            typeCase_ = 20;
+            typeCase_ = 21;
             type_ = other.type_;
             onChanged();
             break;
@@ -2880,6 +3093,136 @@ public final class Events {
         typeCase_ = 3;
         onChanged();;
         return rolledBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          intergroup.board.Board.InitialResourceAllocation, intergroup.board.Board.InitialResourceAllocation.Builder, intergroup.board.Board.InitialResourceAllocationOrBuilder> initialAllocationBuilder_;
+      /**
+       * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+       */
+      public intergroup.board.Board.InitialResourceAllocation getInitialAllocation() {
+        if (initialAllocationBuilder_ == null) {
+          if (typeCase_ == 23) {
+            return (intergroup.board.Board.InitialResourceAllocation) type_;
+          }
+          return intergroup.board.Board.InitialResourceAllocation.getDefaultInstance();
+        } else {
+          if (typeCase_ == 23) {
+            return initialAllocationBuilder_.getMessage();
+          }
+          return intergroup.board.Board.InitialResourceAllocation.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+       */
+      public Builder setInitialAllocation(intergroup.board.Board.InitialResourceAllocation value) {
+        if (initialAllocationBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          type_ = value;
+          onChanged();
+        } else {
+          initialAllocationBuilder_.setMessage(value);
+        }
+        typeCase_ = 23;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+       */
+      public Builder setInitialAllocation(
+          intergroup.board.Board.InitialResourceAllocation.Builder builderForValue) {
+        if (initialAllocationBuilder_ == null) {
+          type_ = builderForValue.build();
+          onChanged();
+        } else {
+          initialAllocationBuilder_.setMessage(builderForValue.build());
+        }
+        typeCase_ = 23;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+       */
+      public Builder mergeInitialAllocation(intergroup.board.Board.InitialResourceAllocation value) {
+        if (initialAllocationBuilder_ == null) {
+          if (typeCase_ == 23 &&
+              type_ != intergroup.board.Board.InitialResourceAllocation.getDefaultInstance()) {
+            type_ = intergroup.board.Board.InitialResourceAllocation.newBuilder((intergroup.board.Board.InitialResourceAllocation) type_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            type_ = value;
+          }
+          onChanged();
+        } else {
+          if (typeCase_ == 23) {
+            initialAllocationBuilder_.mergeFrom(value);
+          }
+          initialAllocationBuilder_.setMessage(value);
+        }
+        typeCase_ = 23;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+       */
+      public Builder clearInitialAllocation() {
+        if (initialAllocationBuilder_ == null) {
+          if (typeCase_ == 23) {
+            typeCase_ = 0;
+            type_ = null;
+            onChanged();
+          }
+        } else {
+          if (typeCase_ == 23) {
+            typeCase_ = 0;
+            type_ = null;
+          }
+          initialAllocationBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+       */
+      public intergroup.board.Board.InitialResourceAllocation.Builder getInitialAllocationBuilder() {
+        return getInitialAllocationFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+       */
+      public intergroup.board.Board.InitialResourceAllocationOrBuilder getInitialAllocationOrBuilder() {
+        if ((typeCase_ == 23) && (initialAllocationBuilder_ != null)) {
+          return initialAllocationBuilder_.getMessageOrBuilder();
+        } else {
+          if (typeCase_ == 23) {
+            return (intergroup.board.Board.InitialResourceAllocation) type_;
+          }
+          return intergroup.board.Board.InitialResourceAllocation.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .intergroup.board.InitialResourceAllocation initialAllocation = 23;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          intergroup.board.Board.InitialResourceAllocation, intergroup.board.Board.InitialResourceAllocation.Builder, intergroup.board.Board.InitialResourceAllocationOrBuilder> 
+          getInitialAllocationFieldBuilder() {
+        if (initialAllocationBuilder_ == null) {
+          if (!(typeCase_ == 23)) {
+            type_ = intergroup.board.Board.InitialResourceAllocation.getDefaultInstance();
+          }
+          initialAllocationBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              intergroup.board.Board.InitialResourceAllocation, intergroup.board.Board.InitialResourceAllocation.Builder, intergroup.board.Board.InitialResourceAllocationOrBuilder>(
+                  (intergroup.board.Board.InitialResourceAllocation) type_,
+                  getParentForChildren(),
+                  isClean());
+          type_ = null;
+        }
+        typeCase_ = 23;
+        onChanged();;
+        return initialAllocationBuilder_;
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
@@ -4029,58 +4372,58 @@ public final class Events {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
-          intergroup.trade.Trade.WithPlayer, intergroup.trade.Trade.WithPlayer.Builder, intergroup.trade.Trade.WithPlayerOrBuilder> playerTradeBuilder_;
+          intergroup.trade.Trade.WithPlayer, intergroup.trade.Trade.WithPlayer.Builder, intergroup.trade.Trade.WithPlayerOrBuilder> playerTradeInitiatedBuilder_;
       /**
-       * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+       * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
        */
-      public intergroup.trade.Trade.WithPlayer getPlayerTrade() {
-        if (playerTradeBuilder_ == null) {
+      public intergroup.trade.Trade.WithPlayer getPlayerTradeInitiated() {
+        if (playerTradeInitiatedBuilder_ == null) {
           if (typeCase_ == 14) {
             return (intergroup.trade.Trade.WithPlayer) type_;
           }
           return intergroup.trade.Trade.WithPlayer.getDefaultInstance();
         } else {
           if (typeCase_ == 14) {
-            return playerTradeBuilder_.getMessage();
+            return playerTradeInitiatedBuilder_.getMessage();
           }
           return intergroup.trade.Trade.WithPlayer.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+       * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
        */
-      public Builder setPlayerTrade(intergroup.trade.Trade.WithPlayer value) {
-        if (playerTradeBuilder_ == null) {
+      public Builder setPlayerTradeInitiated(intergroup.trade.Trade.WithPlayer value) {
+        if (playerTradeInitiatedBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
           type_ = value;
           onChanged();
         } else {
-          playerTradeBuilder_.setMessage(value);
+          playerTradeInitiatedBuilder_.setMessage(value);
         }
         typeCase_ = 14;
         return this;
       }
       /**
-       * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+       * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
        */
-      public Builder setPlayerTrade(
+      public Builder setPlayerTradeInitiated(
           intergroup.trade.Trade.WithPlayer.Builder builderForValue) {
-        if (playerTradeBuilder_ == null) {
+        if (playerTradeInitiatedBuilder_ == null) {
           type_ = builderForValue.build();
           onChanged();
         } else {
-          playerTradeBuilder_.setMessage(builderForValue.build());
+          playerTradeInitiatedBuilder_.setMessage(builderForValue.build());
         }
         typeCase_ = 14;
         return this;
       }
       /**
-       * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+       * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
        */
-      public Builder mergePlayerTrade(intergroup.trade.Trade.WithPlayer value) {
-        if (playerTradeBuilder_ == null) {
+      public Builder mergePlayerTradeInitiated(intergroup.trade.Trade.WithPlayer value) {
+        if (playerTradeInitiatedBuilder_ == null) {
           if (typeCase_ == 14 &&
               type_ != intergroup.trade.Trade.WithPlayer.getDefaultInstance()) {
             type_ = intergroup.trade.Trade.WithPlayer.newBuilder((intergroup.trade.Trade.WithPlayer) type_)
@@ -4091,18 +4434,18 @@ public final class Events {
           onChanged();
         } else {
           if (typeCase_ == 14) {
-            playerTradeBuilder_.mergeFrom(value);
+            playerTradeInitiatedBuilder_.mergeFrom(value);
           }
-          playerTradeBuilder_.setMessage(value);
+          playerTradeInitiatedBuilder_.setMessage(value);
         }
         typeCase_ = 14;
         return this;
       }
       /**
-       * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+       * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
        */
-      public Builder clearPlayerTrade() {
-        if (playerTradeBuilder_ == null) {
+      public Builder clearPlayerTradeInitiated() {
+        if (playerTradeInitiatedBuilder_ == null) {
           if (typeCase_ == 14) {
             typeCase_ = 0;
             type_ = null;
@@ -4113,22 +4456,22 @@ public final class Events {
             typeCase_ = 0;
             type_ = null;
           }
-          playerTradeBuilder_.clear();
+          playerTradeInitiatedBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+       * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
        */
-      public intergroup.trade.Trade.WithPlayer.Builder getPlayerTradeBuilder() {
-        return getPlayerTradeFieldBuilder().getBuilder();
+      public intergroup.trade.Trade.WithPlayer.Builder getPlayerTradeInitiatedBuilder() {
+        return getPlayerTradeInitiatedFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+       * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
        */
-      public intergroup.trade.Trade.WithPlayerOrBuilder getPlayerTradeOrBuilder() {
-        if ((typeCase_ == 14) && (playerTradeBuilder_ != null)) {
-          return playerTradeBuilder_.getMessageOrBuilder();
+      public intergroup.trade.Trade.WithPlayerOrBuilder getPlayerTradeInitiatedOrBuilder() {
+        if ((typeCase_ == 14) && (playerTradeInitiatedBuilder_ != null)) {
+          return playerTradeInitiatedBuilder_.getMessageOrBuilder();
         } else {
           if (typeCase_ == 14) {
             return (intergroup.trade.Trade.WithPlayer) type_;
@@ -4137,16 +4480,16 @@ public final class Events {
         }
       }
       /**
-       * <code>optional .intergroup.trade.WithPlayer playerTrade = 14;</code>
+       * <code>optional .intergroup.trade.WithPlayer playerTradeInitiated = 14;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           intergroup.trade.Trade.WithPlayer, intergroup.trade.Trade.WithPlayer.Builder, intergroup.trade.Trade.WithPlayerOrBuilder> 
-          getPlayerTradeFieldBuilder() {
-        if (playerTradeBuilder_ == null) {
+          getPlayerTradeInitiatedFieldBuilder() {
+        if (playerTradeInitiatedBuilder_ == null) {
           if (!(typeCase_ == 14)) {
             type_ = intergroup.trade.Trade.WithPlayer.getDefaultInstance();
           }
-          playerTradeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          playerTradeInitiatedBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               intergroup.trade.Trade.WithPlayer, intergroup.trade.Trade.WithPlayer.Builder, intergroup.trade.Trade.WithPlayerOrBuilder>(
                   (intergroup.trade.Trade.WithPlayer) type_,
                   getParentForChildren(),
@@ -4155,29 +4498,289 @@ public final class Events {
         }
         typeCase_ = 14;
         onChanged();;
-        return playerTradeBuilder_;
+        return playerTradeInitiatedBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          intergroup.trade.Trade.WithPlayer, intergroup.trade.Trade.WithPlayer.Builder, intergroup.trade.Trade.WithPlayerOrBuilder> playerTradeAcceptedBuilder_;
+      /**
+       * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+       */
+      public intergroup.trade.Trade.WithPlayer getPlayerTradeAccepted() {
+        if (playerTradeAcceptedBuilder_ == null) {
+          if (typeCase_ == 15) {
+            return (intergroup.trade.Trade.WithPlayer) type_;
+          }
+          return intergroup.trade.Trade.WithPlayer.getDefaultInstance();
+        } else {
+          if (typeCase_ == 15) {
+            return playerTradeAcceptedBuilder_.getMessage();
+          }
+          return intergroup.trade.Trade.WithPlayer.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+       */
+      public Builder setPlayerTradeAccepted(intergroup.trade.Trade.WithPlayer value) {
+        if (playerTradeAcceptedBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          type_ = value;
+          onChanged();
+        } else {
+          playerTradeAcceptedBuilder_.setMessage(value);
+        }
+        typeCase_ = 15;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+       */
+      public Builder setPlayerTradeAccepted(
+          intergroup.trade.Trade.WithPlayer.Builder builderForValue) {
+        if (playerTradeAcceptedBuilder_ == null) {
+          type_ = builderForValue.build();
+          onChanged();
+        } else {
+          playerTradeAcceptedBuilder_.setMessage(builderForValue.build());
+        }
+        typeCase_ = 15;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+       */
+      public Builder mergePlayerTradeAccepted(intergroup.trade.Trade.WithPlayer value) {
+        if (playerTradeAcceptedBuilder_ == null) {
+          if (typeCase_ == 15 &&
+              type_ != intergroup.trade.Trade.WithPlayer.getDefaultInstance()) {
+            type_ = intergroup.trade.Trade.WithPlayer.newBuilder((intergroup.trade.Trade.WithPlayer) type_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            type_ = value;
+          }
+          onChanged();
+        } else {
+          if (typeCase_ == 15) {
+            playerTradeAcceptedBuilder_.mergeFrom(value);
+          }
+          playerTradeAcceptedBuilder_.setMessage(value);
+        }
+        typeCase_ = 15;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+       */
+      public Builder clearPlayerTradeAccepted() {
+        if (playerTradeAcceptedBuilder_ == null) {
+          if (typeCase_ == 15) {
+            typeCase_ = 0;
+            type_ = null;
+            onChanged();
+          }
+        } else {
+          if (typeCase_ == 15) {
+            typeCase_ = 0;
+            type_ = null;
+          }
+          playerTradeAcceptedBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+       */
+      public intergroup.trade.Trade.WithPlayer.Builder getPlayerTradeAcceptedBuilder() {
+        return getPlayerTradeAcceptedFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+       */
+      public intergroup.trade.Trade.WithPlayerOrBuilder getPlayerTradeAcceptedOrBuilder() {
+        if ((typeCase_ == 15) && (playerTradeAcceptedBuilder_ != null)) {
+          return playerTradeAcceptedBuilder_.getMessageOrBuilder();
+        } else {
+          if (typeCase_ == 15) {
+            return (intergroup.trade.Trade.WithPlayer) type_;
+          }
+          return intergroup.trade.Trade.WithPlayer.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .intergroup.trade.WithPlayer playerTradeAccepted = 15;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          intergroup.trade.Trade.WithPlayer, intergroup.trade.Trade.WithPlayer.Builder, intergroup.trade.Trade.WithPlayerOrBuilder> 
+          getPlayerTradeAcceptedFieldBuilder() {
+        if (playerTradeAcceptedBuilder_ == null) {
+          if (!(typeCase_ == 15)) {
+            type_ = intergroup.trade.Trade.WithPlayer.getDefaultInstance();
+          }
+          playerTradeAcceptedBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              intergroup.trade.Trade.WithPlayer, intergroup.trade.Trade.WithPlayer.Builder, intergroup.trade.Trade.WithPlayerOrBuilder>(
+                  (intergroup.trade.Trade.WithPlayer) type_,
+                  getParentForChildren(),
+                  isClean());
+          type_ = null;
+        }
+        typeCase_ = 15;
+        onChanged();;
+        return playerTradeAcceptedBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          intergroup.EmptyOuterClass.Empty, intergroup.EmptyOuterClass.Empty.Builder, intergroup.EmptyOuterClass.EmptyOrBuilder> playerTradeRejectedBuilder_;
+      /**
+       * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+       */
+      public intergroup.EmptyOuterClass.Empty getPlayerTradeRejected() {
+        if (playerTradeRejectedBuilder_ == null) {
+          if (typeCase_ == 22) {
+            return (intergroup.EmptyOuterClass.Empty) type_;
+          }
+          return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
+        } else {
+          if (typeCase_ == 22) {
+            return playerTradeRejectedBuilder_.getMessage();
+          }
+          return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+       */
+      public Builder setPlayerTradeRejected(intergroup.EmptyOuterClass.Empty value) {
+        if (playerTradeRejectedBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          type_ = value;
+          onChanged();
+        } else {
+          playerTradeRejectedBuilder_.setMessage(value);
+        }
+        typeCase_ = 22;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+       */
+      public Builder setPlayerTradeRejected(
+          intergroup.EmptyOuterClass.Empty.Builder builderForValue) {
+        if (playerTradeRejectedBuilder_ == null) {
+          type_ = builderForValue.build();
+          onChanged();
+        } else {
+          playerTradeRejectedBuilder_.setMessage(builderForValue.build());
+        }
+        typeCase_ = 22;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+       */
+      public Builder mergePlayerTradeRejected(intergroup.EmptyOuterClass.Empty value) {
+        if (playerTradeRejectedBuilder_ == null) {
+          if (typeCase_ == 22 &&
+              type_ != intergroup.EmptyOuterClass.Empty.getDefaultInstance()) {
+            type_ = intergroup.EmptyOuterClass.Empty.newBuilder((intergroup.EmptyOuterClass.Empty) type_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            type_ = value;
+          }
+          onChanged();
+        } else {
+          if (typeCase_ == 22) {
+            playerTradeRejectedBuilder_.mergeFrom(value);
+          }
+          playerTradeRejectedBuilder_.setMessage(value);
+        }
+        typeCase_ = 22;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+       */
+      public Builder clearPlayerTradeRejected() {
+        if (playerTradeRejectedBuilder_ == null) {
+          if (typeCase_ == 22) {
+            typeCase_ = 0;
+            type_ = null;
+            onChanged();
+          }
+        } else {
+          if (typeCase_ == 22) {
+            typeCase_ = 0;
+            type_ = null;
+          }
+          playerTradeRejectedBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+       */
+      public intergroup.EmptyOuterClass.Empty.Builder getPlayerTradeRejectedBuilder() {
+        return getPlayerTradeRejectedFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+       */
+      public intergroup.EmptyOuterClass.EmptyOrBuilder getPlayerTradeRejectedOrBuilder() {
+        if ((typeCase_ == 22) && (playerTradeRejectedBuilder_ != null)) {
+          return playerTradeRejectedBuilder_.getMessageOrBuilder();
+        } else {
+          if (typeCase_ == 22) {
+            return (intergroup.EmptyOuterClass.Empty) type_;
+          }
+          return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .intergroup.Empty playerTradeRejected = 22;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          intergroup.EmptyOuterClass.Empty, intergroup.EmptyOuterClass.Empty.Builder, intergroup.EmptyOuterClass.EmptyOrBuilder> 
+          getPlayerTradeRejectedFieldBuilder() {
+        if (playerTradeRejectedBuilder_ == null) {
+          if (!(typeCase_ == 22)) {
+            type_ = intergroup.EmptyOuterClass.Empty.getDefaultInstance();
+          }
+          playerTradeRejectedBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              intergroup.EmptyOuterClass.Empty, intergroup.EmptyOuterClass.Empty.Builder, intergroup.EmptyOuterClass.EmptyOrBuilder>(
+                  (intergroup.EmptyOuterClass.Empty) type_,
+                  getParentForChildren(),
+                  isClean());
+          type_ = null;
+        }
+        typeCase_ = 22;
+        onChanged();;
+        return playerTradeRejectedBuilder_;
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
           intergroup.EmptyOuterClass.Empty, intergroup.EmptyOuterClass.Empty.Builder, intergroup.EmptyOuterClass.EmptyOrBuilder> turnEndedBuilder_;
       /**
-       * <code>optional .intergroup.Empty turnEnded = 15;</code>
+       * <code>optional .intergroup.Empty turnEnded = 16;</code>
        */
       public intergroup.EmptyOuterClass.Empty getTurnEnded() {
         if (turnEndedBuilder_ == null) {
-          if (typeCase_ == 15) {
+          if (typeCase_ == 16) {
             return (intergroup.EmptyOuterClass.Empty) type_;
           }
           return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
         } else {
-          if (typeCase_ == 15) {
+          if (typeCase_ == 16) {
             return turnEndedBuilder_.getMessage();
           }
           return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .intergroup.Empty turnEnded = 15;</code>
+       * <code>optional .intergroup.Empty turnEnded = 16;</code>
        */
       public Builder setTurnEnded(intergroup.EmptyOuterClass.Empty value) {
         if (turnEndedBuilder_ == null) {
@@ -4189,11 +4792,11 @@ public final class Events {
         } else {
           turnEndedBuilder_.setMessage(value);
         }
-        typeCase_ = 15;
+        typeCase_ = 16;
         return this;
       }
       /**
-       * <code>optional .intergroup.Empty turnEnded = 15;</code>
+       * <code>optional .intergroup.Empty turnEnded = 16;</code>
        */
       public Builder setTurnEnded(
           intergroup.EmptyOuterClass.Empty.Builder builderForValue) {
@@ -4203,144 +4806,14 @@ public final class Events {
         } else {
           turnEndedBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 15;
+        typeCase_ = 16;
         return this;
       }
       /**
-       * <code>optional .intergroup.Empty turnEnded = 15;</code>
+       * <code>optional .intergroup.Empty turnEnded = 16;</code>
        */
       public Builder mergeTurnEnded(intergroup.EmptyOuterClass.Empty value) {
         if (turnEndedBuilder_ == null) {
-          if (typeCase_ == 15 &&
-              type_ != intergroup.EmptyOuterClass.Empty.getDefaultInstance()) {
-            type_ = intergroup.EmptyOuterClass.Empty.newBuilder((intergroup.EmptyOuterClass.Empty) type_)
-                .mergeFrom(value).buildPartial();
-          } else {
-            type_ = value;
-          }
-          onChanged();
-        } else {
-          if (typeCase_ == 15) {
-            turnEndedBuilder_.mergeFrom(value);
-          }
-          turnEndedBuilder_.setMessage(value);
-        }
-        typeCase_ = 15;
-        return this;
-      }
-      /**
-       * <code>optional .intergroup.Empty turnEnded = 15;</code>
-       */
-      public Builder clearTurnEnded() {
-        if (turnEndedBuilder_ == null) {
-          if (typeCase_ == 15) {
-            typeCase_ = 0;
-            type_ = null;
-            onChanged();
-          }
-        } else {
-          if (typeCase_ == 15) {
-            typeCase_ = 0;
-            type_ = null;
-          }
-          turnEndedBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>optional .intergroup.Empty turnEnded = 15;</code>
-       */
-      public intergroup.EmptyOuterClass.Empty.Builder getTurnEndedBuilder() {
-        return getTurnEndedFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>optional .intergroup.Empty turnEnded = 15;</code>
-       */
-      public intergroup.EmptyOuterClass.EmptyOrBuilder getTurnEndedOrBuilder() {
-        if ((typeCase_ == 15) && (turnEndedBuilder_ != null)) {
-          return turnEndedBuilder_.getMessageOrBuilder();
-        } else {
-          if (typeCase_ == 15) {
-            return (intergroup.EmptyOuterClass.Empty) type_;
-          }
-          return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>optional .intergroup.Empty turnEnded = 15;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          intergroup.EmptyOuterClass.Empty, intergroup.EmptyOuterClass.Empty.Builder, intergroup.EmptyOuterClass.EmptyOrBuilder> 
-          getTurnEndedFieldBuilder() {
-        if (turnEndedBuilder_ == null) {
-          if (!(typeCase_ == 15)) {
-            type_ = intergroup.EmptyOuterClass.Empty.getDefaultInstance();
-          }
-          turnEndedBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              intergroup.EmptyOuterClass.Empty, intergroup.EmptyOuterClass.Empty.Builder, intergroup.EmptyOuterClass.EmptyOrBuilder>(
-                  (intergroup.EmptyOuterClass.Empty) type_,
-                  getParentForChildren(),
-                  isClean());
-          type_ = null;
-        }
-        typeCase_ = 15;
-        onChanged();;
-        return turnEndedBuilder_;
-      }
-
-      private com.google.protobuf.SingleFieldBuilderV3<
-          intergroup.EmptyOuterClass.Empty, intergroup.EmptyOuterClass.Empty.Builder, intergroup.EmptyOuterClass.EmptyOrBuilder> gameWonBuilder_;
-      /**
-       * <code>optional .intergroup.Empty gameWon = 16;</code>
-       */
-      public intergroup.EmptyOuterClass.Empty getGameWon() {
-        if (gameWonBuilder_ == null) {
-          if (typeCase_ == 16) {
-            return (intergroup.EmptyOuterClass.Empty) type_;
-          }
-          return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
-        } else {
-          if (typeCase_ == 16) {
-            return gameWonBuilder_.getMessage();
-          }
-          return intergroup.EmptyOuterClass.Empty.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>optional .intergroup.Empty gameWon = 16;</code>
-       */
-      public Builder setGameWon(intergroup.EmptyOuterClass.Empty value) {
-        if (gameWonBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          type_ = value;
-          onChanged();
-        } else {
-          gameWonBuilder_.setMessage(value);
-        }
-        typeCase_ = 16;
-        return this;
-      }
-      /**
-       * <code>optional .intergroup.Empty gameWon = 16;</code>
-       */
-      public Builder setGameWon(
-          intergroup.EmptyOuterClass.Empty.Builder builderForValue) {
-        if (gameWonBuilder_ == null) {
-          type_ = builderForValue.build();
-          onChanged();
-        } else {
-          gameWonBuilder_.setMessage(builderForValue.build());
-        }
-        typeCase_ = 16;
-        return this;
-      }
-      /**
-       * <code>optional .intergroup.Empty gameWon = 16;</code>
-       */
-      public Builder mergeGameWon(intergroup.EmptyOuterClass.Empty value) {
-        if (gameWonBuilder_ == null) {
           if (typeCase_ == 16 &&
               type_ != intergroup.EmptyOuterClass.Empty.getDefaultInstance()) {
             type_ = intergroup.EmptyOuterClass.Empty.newBuilder((intergroup.EmptyOuterClass.Empty) type_)
@@ -4351,18 +4824,18 @@ public final class Events {
           onChanged();
         } else {
           if (typeCase_ == 16) {
-            gameWonBuilder_.mergeFrom(value);
+            turnEndedBuilder_.mergeFrom(value);
           }
-          gameWonBuilder_.setMessage(value);
+          turnEndedBuilder_.setMessage(value);
         }
         typeCase_ = 16;
         return this;
       }
       /**
-       * <code>optional .intergroup.Empty gameWon = 16;</code>
+       * <code>optional .intergroup.Empty turnEnded = 16;</code>
        */
-      public Builder clearGameWon() {
-        if (gameWonBuilder_ == null) {
+      public Builder clearTurnEnded() {
+        if (turnEndedBuilder_ == null) {
           if (typeCase_ == 16) {
             typeCase_ = 0;
             type_ = null;
@@ -4373,22 +4846,22 @@ public final class Events {
             typeCase_ = 0;
             type_ = null;
           }
-          gameWonBuilder_.clear();
+          turnEndedBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>optional .intergroup.Empty gameWon = 16;</code>
+       * <code>optional .intergroup.Empty turnEnded = 16;</code>
        */
-      public intergroup.EmptyOuterClass.Empty.Builder getGameWonBuilder() {
-        return getGameWonFieldBuilder().getBuilder();
+      public intergroup.EmptyOuterClass.Empty.Builder getTurnEndedBuilder() {
+        return getTurnEndedFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .intergroup.Empty gameWon = 16;</code>
+       * <code>optional .intergroup.Empty turnEnded = 16;</code>
        */
-      public intergroup.EmptyOuterClass.EmptyOrBuilder getGameWonOrBuilder() {
-        if ((typeCase_ == 16) && (gameWonBuilder_ != null)) {
-          return gameWonBuilder_.getMessageOrBuilder();
+      public intergroup.EmptyOuterClass.EmptyOrBuilder getTurnEndedOrBuilder() {
+        if ((typeCase_ == 16) && (turnEndedBuilder_ != null)) {
+          return turnEndedBuilder_.getMessageOrBuilder();
         } else {
           if (typeCase_ == 16) {
             return (intergroup.EmptyOuterClass.Empty) type_;
@@ -4397,16 +4870,16 @@ public final class Events {
         }
       }
       /**
-       * <code>optional .intergroup.Empty gameWon = 16;</code>
+       * <code>optional .intergroup.Empty turnEnded = 16;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           intergroup.EmptyOuterClass.Empty, intergroup.EmptyOuterClass.Empty.Builder, intergroup.EmptyOuterClass.EmptyOrBuilder> 
-          getGameWonFieldBuilder() {
-        if (gameWonBuilder_ == null) {
+          getTurnEndedFieldBuilder() {
+        if (turnEndedBuilder_ == null) {
           if (!(typeCase_ == 16)) {
             type_ = intergroup.EmptyOuterClass.Empty.getDefaultInstance();
           }
-          gameWonBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          turnEndedBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               intergroup.EmptyOuterClass.Empty, intergroup.EmptyOuterClass.Empty.Builder, intergroup.EmptyOuterClass.EmptyOrBuilder>(
                   (intergroup.EmptyOuterClass.Empty) type_,
                   getParentForChildren(),
@@ -4415,29 +4888,159 @@ public final class Events {
         }
         typeCase_ = 16;
         onChanged();;
+        return turnEndedBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          intergroup.lobby.Lobby.GameWon, intergroup.lobby.Lobby.GameWon.Builder, intergroup.lobby.Lobby.GameWonOrBuilder> gameWonBuilder_;
+      /**
+       * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
+       */
+      public intergroup.lobby.Lobby.GameWon getGameWon() {
+        if (gameWonBuilder_ == null) {
+          if (typeCase_ == 17) {
+            return (intergroup.lobby.Lobby.GameWon) type_;
+          }
+          return intergroup.lobby.Lobby.GameWon.getDefaultInstance();
+        } else {
+          if (typeCase_ == 17) {
+            return gameWonBuilder_.getMessage();
+          }
+          return intergroup.lobby.Lobby.GameWon.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
+       */
+      public Builder setGameWon(intergroup.lobby.Lobby.GameWon value) {
+        if (gameWonBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          type_ = value;
+          onChanged();
+        } else {
+          gameWonBuilder_.setMessage(value);
+        }
+        typeCase_ = 17;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
+       */
+      public Builder setGameWon(
+          intergroup.lobby.Lobby.GameWon.Builder builderForValue) {
+        if (gameWonBuilder_ == null) {
+          type_ = builderForValue.build();
+          onChanged();
+        } else {
+          gameWonBuilder_.setMessage(builderForValue.build());
+        }
+        typeCase_ = 17;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
+       */
+      public Builder mergeGameWon(intergroup.lobby.Lobby.GameWon value) {
+        if (gameWonBuilder_ == null) {
+          if (typeCase_ == 17 &&
+              type_ != intergroup.lobby.Lobby.GameWon.getDefaultInstance()) {
+            type_ = intergroup.lobby.Lobby.GameWon.newBuilder((intergroup.lobby.Lobby.GameWon) type_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            type_ = value;
+          }
+          onChanged();
+        } else {
+          if (typeCase_ == 17) {
+            gameWonBuilder_.mergeFrom(value);
+          }
+          gameWonBuilder_.setMessage(value);
+        }
+        typeCase_ = 17;
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
+       */
+      public Builder clearGameWon() {
+        if (gameWonBuilder_ == null) {
+          if (typeCase_ == 17) {
+            typeCase_ = 0;
+            type_ = null;
+            onChanged();
+          }
+        } else {
+          if (typeCase_ == 17) {
+            typeCase_ = 0;
+            type_ = null;
+          }
+          gameWonBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
+       */
+      public intergroup.lobby.Lobby.GameWon.Builder getGameWonBuilder() {
+        return getGameWonFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
+       */
+      public intergroup.lobby.Lobby.GameWonOrBuilder getGameWonOrBuilder() {
+        if ((typeCase_ == 17) && (gameWonBuilder_ != null)) {
+          return gameWonBuilder_.getMessageOrBuilder();
+        } else {
+          if (typeCase_ == 17) {
+            return (intergroup.lobby.Lobby.GameWon) type_;
+          }
+          return intergroup.lobby.Lobby.GameWon.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .intergroup.lobby.GameWon gameWon = 17;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          intergroup.lobby.Lobby.GameWon, intergroup.lobby.Lobby.GameWon.Builder, intergroup.lobby.Lobby.GameWonOrBuilder> 
+          getGameWonFieldBuilder() {
+        if (gameWonBuilder_ == null) {
+          if (!(typeCase_ == 17)) {
+            type_ = intergroup.lobby.Lobby.GameWon.getDefaultInstance();
+          }
+          gameWonBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              intergroup.lobby.Lobby.GameWon, intergroup.lobby.Lobby.GameWon.Builder, intergroup.lobby.Lobby.GameWonOrBuilder>(
+                  (intergroup.lobby.Lobby.GameWon) type_,
+                  getParentForChildren(),
+                  isClean());
+          type_ = null;
+        }
+        typeCase_ = 17;
+        onChanged();;
         return gameWonBuilder_;
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
           intergroup.lobby.Lobby.GameSetup, intergroup.lobby.Lobby.GameSetup.Builder, intergroup.lobby.Lobby.GameSetupOrBuilder> beginGameBuilder_;
       /**
-       * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+       * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
        */
       public intergroup.lobby.Lobby.GameSetup getBeginGame() {
         if (beginGameBuilder_ == null) {
-          if (typeCase_ == 17) {
+          if (typeCase_ == 18) {
             return (intergroup.lobby.Lobby.GameSetup) type_;
           }
           return intergroup.lobby.Lobby.GameSetup.getDefaultInstance();
         } else {
-          if (typeCase_ == 17) {
+          if (typeCase_ == 18) {
             return beginGameBuilder_.getMessage();
           }
           return intergroup.lobby.Lobby.GameSetup.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+       * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
        */
       public Builder setBeginGame(intergroup.lobby.Lobby.GameSetup value) {
         if (beginGameBuilder_ == null) {
@@ -4449,11 +5052,11 @@ public final class Events {
         } else {
           beginGameBuilder_.setMessage(value);
         }
-        typeCase_ = 17;
+        typeCase_ = 18;
         return this;
       }
       /**
-       * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+       * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
        */
       public Builder setBeginGame(
           intergroup.lobby.Lobby.GameSetup.Builder builderForValue) {
@@ -4463,15 +5066,15 @@ public final class Events {
         } else {
           beginGameBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 17;
+        typeCase_ = 18;
         return this;
       }
       /**
-       * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+       * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
        */
       public Builder mergeBeginGame(intergroup.lobby.Lobby.GameSetup value) {
         if (beginGameBuilder_ == null) {
-          if (typeCase_ == 17 &&
+          if (typeCase_ == 18 &&
               type_ != intergroup.lobby.Lobby.GameSetup.getDefaultInstance()) {
             type_ = intergroup.lobby.Lobby.GameSetup.newBuilder((intergroup.lobby.Lobby.GameSetup) type_)
                 .mergeFrom(value).buildPartial();
@@ -4480,26 +5083,26 @@ public final class Events {
           }
           onChanged();
         } else {
-          if (typeCase_ == 17) {
+          if (typeCase_ == 18) {
             beginGameBuilder_.mergeFrom(value);
           }
           beginGameBuilder_.setMessage(value);
         }
-        typeCase_ = 17;
+        typeCase_ = 18;
         return this;
       }
       /**
-       * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+       * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
        */
       public Builder clearBeginGame() {
         if (beginGameBuilder_ == null) {
-          if (typeCase_ == 17) {
+          if (typeCase_ == 18) {
             typeCase_ = 0;
             type_ = null;
             onChanged();
           }
         } else {
-          if (typeCase_ == 17) {
+          if (typeCase_ == 18) {
             typeCase_ = 0;
             type_ = null;
           }
@@ -4508,32 +5111,32 @@ public final class Events {
         return this;
       }
       /**
-       * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+       * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
        */
       public intergroup.lobby.Lobby.GameSetup.Builder getBeginGameBuilder() {
         return getBeginGameFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+       * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
        */
       public intergroup.lobby.Lobby.GameSetupOrBuilder getBeginGameOrBuilder() {
-        if ((typeCase_ == 17) && (beginGameBuilder_ != null)) {
+        if ((typeCase_ == 18) && (beginGameBuilder_ != null)) {
           return beginGameBuilder_.getMessageOrBuilder();
         } else {
-          if (typeCase_ == 17) {
+          if (typeCase_ == 18) {
             return (intergroup.lobby.Lobby.GameSetup) type_;
           }
           return intergroup.lobby.Lobby.GameSetup.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .intergroup.lobby.GameSetup beginGame = 17;</code>
+       * <code>optional .intergroup.lobby.GameSetup beginGame = 18;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           intergroup.lobby.Lobby.GameSetup, intergroup.lobby.Lobby.GameSetup.Builder, intergroup.lobby.Lobby.GameSetupOrBuilder> 
           getBeginGameFieldBuilder() {
         if (beginGameBuilder_ == null) {
-          if (!(typeCase_ == 17)) {
+          if (!(typeCase_ == 18)) {
             type_ = intergroup.lobby.Lobby.GameSetup.getDefaultInstance();
           }
           beginGameBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -4543,7 +5146,7 @@ public final class Events {
                   isClean());
           type_ = null;
         }
-        typeCase_ = 17;
+        typeCase_ = 18;
         onChanged();;
         return beginGameBuilder_;
       }
@@ -4551,23 +5154,23 @@ public final class Events {
       private com.google.protobuf.SingleFieldBuilderV3<
           intergroup.lobby.Lobby.Usernames, intergroup.lobby.Lobby.Usernames.Builder, intergroup.lobby.Lobby.UsernamesOrBuilder> lobbyUpdateBuilder_;
       /**
-       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
        */
       public intergroup.lobby.Lobby.Usernames getLobbyUpdate() {
         if (lobbyUpdateBuilder_ == null) {
-          if (typeCase_ == 18) {
+          if (typeCase_ == 19) {
             return (intergroup.lobby.Lobby.Usernames) type_;
           }
           return intergroup.lobby.Lobby.Usernames.getDefaultInstance();
         } else {
-          if (typeCase_ == 18) {
+          if (typeCase_ == 19) {
             return lobbyUpdateBuilder_.getMessage();
           }
           return intergroup.lobby.Lobby.Usernames.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
        */
       public Builder setLobbyUpdate(intergroup.lobby.Lobby.Usernames value) {
         if (lobbyUpdateBuilder_ == null) {
@@ -4579,11 +5182,11 @@ public final class Events {
         } else {
           lobbyUpdateBuilder_.setMessage(value);
         }
-        typeCase_ = 18;
+        typeCase_ = 19;
         return this;
       }
       /**
-       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
        */
       public Builder setLobbyUpdate(
           intergroup.lobby.Lobby.Usernames.Builder builderForValue) {
@@ -4593,15 +5196,15 @@ public final class Events {
         } else {
           lobbyUpdateBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 18;
+        typeCase_ = 19;
         return this;
       }
       /**
-       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
        */
       public Builder mergeLobbyUpdate(intergroup.lobby.Lobby.Usernames value) {
         if (lobbyUpdateBuilder_ == null) {
-          if (typeCase_ == 18 &&
+          if (typeCase_ == 19 &&
               type_ != intergroup.lobby.Lobby.Usernames.getDefaultInstance()) {
             type_ = intergroup.lobby.Lobby.Usernames.newBuilder((intergroup.lobby.Lobby.Usernames) type_)
                 .mergeFrom(value).buildPartial();
@@ -4610,26 +5213,26 @@ public final class Events {
           }
           onChanged();
         } else {
-          if (typeCase_ == 18) {
+          if (typeCase_ == 19) {
             lobbyUpdateBuilder_.mergeFrom(value);
           }
           lobbyUpdateBuilder_.setMessage(value);
         }
-        typeCase_ = 18;
+        typeCase_ = 19;
         return this;
       }
       /**
-       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
        */
       public Builder clearLobbyUpdate() {
         if (lobbyUpdateBuilder_ == null) {
-          if (typeCase_ == 18) {
+          if (typeCase_ == 19) {
             typeCase_ = 0;
             type_ = null;
             onChanged();
           }
         } else {
-          if (typeCase_ == 18) {
+          if (typeCase_ == 19) {
             typeCase_ = 0;
             type_ = null;
           }
@@ -4638,32 +5241,32 @@ public final class Events {
         return this;
       }
       /**
-       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
        */
       public intergroup.lobby.Lobby.Usernames.Builder getLobbyUpdateBuilder() {
         return getLobbyUpdateFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
        */
       public intergroup.lobby.Lobby.UsernamesOrBuilder getLobbyUpdateOrBuilder() {
-        if ((typeCase_ == 18) && (lobbyUpdateBuilder_ != null)) {
+        if ((typeCase_ == 19) && (lobbyUpdateBuilder_ != null)) {
           return lobbyUpdateBuilder_.getMessageOrBuilder();
         } else {
-          if (typeCase_ == 18) {
+          if (typeCase_ == 19) {
             return (intergroup.lobby.Lobby.Usernames) type_;
           }
           return intergroup.lobby.Lobby.Usernames.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 18;</code>
+       * <code>optional .intergroup.lobby.Usernames lobbyUpdate = 19;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           intergroup.lobby.Lobby.Usernames, intergroup.lobby.Lobby.Usernames.Builder, intergroup.lobby.Lobby.UsernamesOrBuilder> 
           getLobbyUpdateFieldBuilder() {
         if (lobbyUpdateBuilder_ == null) {
-          if (!(typeCase_ == 18)) {
+          if (!(typeCase_ == 19)) {
             type_ = intergroup.lobby.Lobby.Usernames.getDefaultInstance();
           }
           lobbyUpdateBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -4673,7 +5276,7 @@ public final class Events {
                   isClean());
           type_ = null;
         }
-        typeCase_ = 18;
+        typeCase_ = 19;
         onChanged();;
         return lobbyUpdateBuilder_;
       }
@@ -4681,23 +5284,23 @@ public final class Events {
       private com.google.protobuf.SingleFieldBuilderV3<
           intergroup.board.Board.MultiSteal, intergroup.board.Board.MultiSteal.Builder, intergroup.board.Board.MultiStealOrBuilder> monopolyResolutionBuilder_;
       /**
-       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
        */
       public intergroup.board.Board.MultiSteal getMonopolyResolution() {
         if (monopolyResolutionBuilder_ == null) {
-          if (typeCase_ == 19) {
+          if (typeCase_ == 20) {
             return (intergroup.board.Board.MultiSteal) type_;
           }
           return intergroup.board.Board.MultiSteal.getDefaultInstance();
         } else {
-          if (typeCase_ == 19) {
+          if (typeCase_ == 20) {
             return monopolyResolutionBuilder_.getMessage();
           }
           return intergroup.board.Board.MultiSteal.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
        */
       public Builder setMonopolyResolution(intergroup.board.Board.MultiSteal value) {
         if (monopolyResolutionBuilder_ == null) {
@@ -4709,11 +5312,11 @@ public final class Events {
         } else {
           monopolyResolutionBuilder_.setMessage(value);
         }
-        typeCase_ = 19;
+        typeCase_ = 20;
         return this;
       }
       /**
-       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
        */
       public Builder setMonopolyResolution(
           intergroup.board.Board.MultiSteal.Builder builderForValue) {
@@ -4723,15 +5326,15 @@ public final class Events {
         } else {
           monopolyResolutionBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 19;
+        typeCase_ = 20;
         return this;
       }
       /**
-       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
        */
       public Builder mergeMonopolyResolution(intergroup.board.Board.MultiSteal value) {
         if (monopolyResolutionBuilder_ == null) {
-          if (typeCase_ == 19 &&
+          if (typeCase_ == 20 &&
               type_ != intergroup.board.Board.MultiSteal.getDefaultInstance()) {
             type_ = intergroup.board.Board.MultiSteal.newBuilder((intergroup.board.Board.MultiSteal) type_)
                 .mergeFrom(value).buildPartial();
@@ -4740,26 +5343,26 @@ public final class Events {
           }
           onChanged();
         } else {
-          if (typeCase_ == 19) {
+          if (typeCase_ == 20) {
             monopolyResolutionBuilder_.mergeFrom(value);
           }
           monopolyResolutionBuilder_.setMessage(value);
         }
-        typeCase_ = 19;
+        typeCase_ = 20;
         return this;
       }
       /**
-       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
        */
       public Builder clearMonopolyResolution() {
         if (monopolyResolutionBuilder_ == null) {
-          if (typeCase_ == 19) {
+          if (typeCase_ == 20) {
             typeCase_ = 0;
             type_ = null;
             onChanged();
           }
         } else {
-          if (typeCase_ == 19) {
+          if (typeCase_ == 20) {
             typeCase_ = 0;
             type_ = null;
           }
@@ -4768,32 +5371,32 @@ public final class Events {
         return this;
       }
       /**
-       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
        */
       public intergroup.board.Board.MultiSteal.Builder getMonopolyResolutionBuilder() {
         return getMonopolyResolutionFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
        */
       public intergroup.board.Board.MultiStealOrBuilder getMonopolyResolutionOrBuilder() {
-        if ((typeCase_ == 19) && (monopolyResolutionBuilder_ != null)) {
+        if ((typeCase_ == 20) && (monopolyResolutionBuilder_ != null)) {
           return monopolyResolutionBuilder_.getMessageOrBuilder();
         } else {
-          if (typeCase_ == 19) {
+          if (typeCase_ == 20) {
             return (intergroup.board.Board.MultiSteal) type_;
           }
           return intergroup.board.Board.MultiSteal.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 19;</code>
+       * <code>optional .intergroup.board.MultiSteal monopolyResolution = 20;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           intergroup.board.Board.MultiSteal, intergroup.board.Board.MultiSteal.Builder, intergroup.board.Board.MultiStealOrBuilder> 
           getMonopolyResolutionFieldBuilder() {
         if (monopolyResolutionBuilder_ == null) {
-          if (!(typeCase_ == 19)) {
+          if (!(typeCase_ == 20)) {
             type_ = intergroup.board.Board.MultiSteal.getDefaultInstance();
           }
           monopolyResolutionBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -4803,24 +5406,24 @@ public final class Events {
                   isClean());
           type_ = null;
         }
-        typeCase_ = 19;
+        typeCase_ = 20;
         onChanged();;
         return monopolyResolutionBuilder_;
       }
 
       /**
-       * <code>optional string chatMessage = 20;</code>
+       * <code>optional string chatMessage = 21;</code>
        */
       public java.lang.String getChatMessage() {
         java.lang.Object ref = "";
-        if (typeCase_ == 20) {
+        if (typeCase_ == 21) {
           ref = type_;
         }
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          if (typeCase_ == 20) {
+          if (typeCase_ == 21) {
             type_ = s;
           }
           return s;
@@ -4829,19 +5432,19 @@ public final class Events {
         }
       }
       /**
-       * <code>optional string chatMessage = 20;</code>
+       * <code>optional string chatMessage = 21;</code>
        */
       public com.google.protobuf.ByteString
           getChatMessageBytes() {
         java.lang.Object ref = "";
-        if (typeCase_ == 20) {
+        if (typeCase_ == 21) {
           ref = type_;
         }
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          if (typeCase_ == 20) {
+          if (typeCase_ == 21) {
             type_ = b;
           }
           return b;
@@ -4850,23 +5453,23 @@ public final class Events {
         }
       }
       /**
-       * <code>optional string chatMessage = 20;</code>
+       * <code>optional string chatMessage = 21;</code>
        */
       public Builder setChatMessage(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  typeCase_ = 20;
+  typeCase_ = 21;
         type_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string chatMessage = 20;</code>
+       * <code>optional string chatMessage = 21;</code>
        */
       public Builder clearChatMessage() {
-        if (typeCase_ == 20) {
+        if (typeCase_ == 21) {
           typeCase_ = 0;
           type_ = null;
           onChanged();
@@ -4874,7 +5477,7 @@ public final class Events {
         return this;
       }
       /**
-       * <code>optional string chatMessage = 20;</code>
+       * <code>optional string chatMessage = 21;</code>
        */
       public Builder setChatMessageBytes(
           com.google.protobuf.ByteString value) {
@@ -4882,7 +5485,7 @@ public final class Events {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        typeCase_ = 20;
+        typeCase_ = 21;
         type_ = value;
         onChanged();
         return this;
@@ -4958,33 +5561,39 @@ public final class Events {
       "\n\014events.proto\022\nintergroup\032\013empty.proto\032" +
       "\021board/board.proto\032\027resource/resource.pr" +
       "oto\032\021lobby/lobby.proto\032\021trade/trade.prot" +
-      "o\"\221\010\n\005Event\022,\n\ninstigator\030\001 \001(\0132\030.interg" +
+      "o\"\333\t\n\005Event\022,\n\ninstigator\030\001 \001(\0132\030.interg" +
       "roup.board.Player\022(\n\005error\030\002 \001(\0132\027.inter" +
       "group.Event.ErrorH\000\022(\n\006rolled\030\003 \001(\0132\026.in" +
-      "tergroup.board.RollH\000\022+\n\troadBuilt\030\004 \001(\013" +
-      "2\026.intergroup.board.EdgeH\000\0222\n\017settlement" +
-      "Built\030\005 \001(\0132\027.intergroup.board.PointH\000\022," +
-      "\n\tcityBuilt\030\006 \001(\0132\027.intergroup.board.Poi",
-      "ntH\000\0222\n\rdevCardBought\030\007 \001(\0132\031.intergroup" +
-      ".board.DevCardH\000\022:\n\rdevCardPlayed\030\010 \001(\0162" +
-      "!.intergroup.board.PlayableDevCardH\000\022.\n\013" +
-      "robberMoved\030\t \001(\0132\027.intergroup.board.Poi" +
-      "ntH\000\0221\n\016resourceStolen\030\n \001(\0132\027.intergrou" +
-      "p.board.StealH\000\0223\n\016resourceChosen\030\013 \001(\0162" +
-      "\031.intergroup.resource.KindH\000\0225\n\016cardsDis" +
-      "carded\030\014 \001(\0132\033.intergroup.resource.Count" +
-      "sH\000\022/\n\tbankTrade\030\r \001(\0132\032.intergroup.trad" +
-      "e.WithBankH\000\0223\n\013playerTrade\030\016 \001(\0132\034.inte",
-      "rgroup.trade.WithPlayerH\000\022&\n\tturnEnded\030\017" +
-      " \001(\0132\021.intergroup.EmptyH\000\022$\n\007gameWon\030\020 \001" +
-      "(\0132\021.intergroup.EmptyH\000\0220\n\tbeginGame\030\021 \001" +
-      "(\0132\033.intergroup.lobby.GameSetupH\000\0222\n\013lob" +
-      "byUpdate\030\022 \001(\0132\033.intergroup.lobby.Userna" +
-      "mesH\000\022:\n\022monopolyResolution\030\023 \001(\0132\034.inte" +
-      "rgroup.board.MultiStealH\000\022\025\n\013chatMessage" +
-      "\030\024 \001(\tH\000\032C\n\005Error\022%\n\005cause\030\001 \001(\0162\026.inter" +
-      "group.ErrorCause\022\023\n\013description\030\002 \001(\tB\006\n" +
-      "\004type*\031\n\nErrorCause\022\013\n\007UNKNOWN\020\000b\006proto3"
+      "tergroup.board.RollH\000\022H\n\021initialAllocati" +
+      "on\030\027 \001(\0132+.intergroup.board.InitialResou" +
+      "rceAllocationH\000\022+\n\troadBuilt\030\004 \001(\0132\026.int" +
+      "ergroup.board.EdgeH\000\0222\n\017settlementBuilt\030",
+      "\005 \001(\0132\027.intergroup.board.PointH\000\022,\n\tcity" +
+      "Built\030\006 \001(\0132\027.intergroup.board.PointH\000\0222" +
+      "\n\rdevCardBought\030\007 \001(\0132\031.intergroup.board" +
+      ".DevCardH\000\022:\n\rdevCardPlayed\030\010 \001(\0162!.inte" +
+      "rgroup.board.PlayableDevCardH\000\022.\n\013robber" +
+      "Moved\030\t \001(\0132\027.intergroup.board.PointH\000\0221" +
+      "\n\016resourceStolen\030\n \001(\0132\027.intergroup.boar" +
+      "d.StealH\000\0223\n\016resourceChosen\030\013 \001(\0162\031.inte" +
+      "rgroup.resource.KindH\000\0225\n\016cardsDiscarded" +
+      "\030\014 \001(\0132\033.intergroup.resource.CountsH\000\022/\n",
+      "\tbankTrade\030\r \001(\0132\032.intergroup.trade.With" +
+      "BankH\000\022<\n\024playerTradeInitiated\030\016 \001(\0132\034.i" +
+      "ntergroup.trade.WithPlayerH\000\022;\n\023playerTr" +
+      "adeAccepted\030\017 \001(\0132\034.intergroup.trade.Wit" +
+      "hPlayerH\000\0220\n\023playerTradeRejected\030\026 \001(\0132\021" +
+      ".intergroup.EmptyH\000\022&\n\tturnEnded\030\020 \001(\0132\021" +
+      ".intergroup.EmptyH\000\022,\n\007gameWon\030\021 \001(\0132\031.i" +
+      "ntergroup.lobby.GameWonH\000\0220\n\tbeginGame\030\022" +
+      " \001(\0132\033.intergroup.lobby.GameSetupH\000\0222\n\013l" +
+      "obbyUpdate\030\023 \001(\0132\033.intergroup.lobby.User",
+      "namesH\000\022:\n\022monopolyResolution\030\024 \001(\0132\034.in" +
+      "tergroup.board.MultiStealH\000\022\025\n\013chatMessa" +
+      "ge\030\025 \001(\tH\000\032C\n\005Error\022%\n\005cause\030\001 \001(\0162\026.int" +
+      "ergroup.ErrorCause\022\023\n\013description\030\002 \001(\tB" +
+      "\006\n\004type*\031\n\nErrorCause\022\013\n\007UNKNOWN\020\000b\006prot" +
+      "o3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5008,7 +5617,7 @@ public final class Events {
     internal_static_intergroup_Event_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_intergroup_Event_descriptor,
-        new java.lang.String[] { "Instigator", "Error", "Rolled", "RoadBuilt", "SettlementBuilt", "CityBuilt", "DevCardBought", "DevCardPlayed", "RobberMoved", "ResourceStolen", "ResourceChosen", "CardsDiscarded", "BankTrade", "PlayerTrade", "TurnEnded", "GameWon", "BeginGame", "LobbyUpdate", "MonopolyResolution", "ChatMessage", "Type", });
+        new java.lang.String[] { "Instigator", "Error", "Rolled", "InitialAllocation", "RoadBuilt", "SettlementBuilt", "CityBuilt", "DevCardBought", "DevCardPlayed", "RobberMoved", "ResourceStolen", "ResourceChosen", "CardsDiscarded", "BankTrade", "PlayerTradeInitiated", "PlayerTradeAccepted", "PlayerTradeRejected", "TurnEnded", "GameWon", "BeginGame", "LobbyUpdate", "MonopolyResolution", "ChatMessage", "Type", });
     internal_static_intergroup_Event_Error_descriptor =
       internal_static_intergroup_Event_descriptor.getNestedTypes().get(0);
     internal_static_intergroup_Event_Error_fieldAccessorTable = new

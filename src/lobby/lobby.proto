@@ -46,3 +46,13 @@ message GameSetup {
     }
 }
 
+message GameWon {
+	board.Player winner = 1;
+	repeated CardReveal hiddenCards = 2;
+
+	message CardReveal {
+		board.Player player = 1;
+		repeated board.VictoryPoint VPCards = 2;
+	}
+}
+

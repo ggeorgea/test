@@ -502,7 +502,7 @@ public class Trade {
 	
 	public static void checkIfPortSettled(Player player, Intersection settlement, Game game1) {
 		
-		Board board1 = game1.getBoard();
+		game.Board board1 = game1.getBoard();
 		int xCoord = settlement.getCoordinate().getX();
 		int yCoord = settlement.getCoordinate().getY();
 		

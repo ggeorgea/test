@@ -3846,6 +3846,1757 @@ public final class Lobby {
 
   }
 
+  public interface GameWonOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:intergroup.lobby.GameWon)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional .intergroup.board.Player winner = 1;</code>
+     */
+    boolean hasWinner();
+    /**
+     * <code>optional .intergroup.board.Player winner = 1;</code>
+     */
+    intergroup.board.Board.Player getWinner();
+    /**
+     * <code>optional .intergroup.board.Player winner = 1;</code>
+     */
+    intergroup.board.Board.PlayerOrBuilder getWinnerOrBuilder();
+
+    /**
+     * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+     */
+    java.util.List<intergroup.lobby.Lobby.GameWon.CardReveal> 
+        getHiddenCardsList();
+    /**
+     * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+     */
+    intergroup.lobby.Lobby.GameWon.CardReveal getHiddenCards(int index);
+    /**
+     * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+     */
+    int getHiddenCardsCount();
+    /**
+     * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+     */
+    java.util.List<? extends intergroup.lobby.Lobby.GameWon.CardRevealOrBuilder> 
+        getHiddenCardsOrBuilderList();
+    /**
+     * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+     */
+    intergroup.lobby.Lobby.GameWon.CardRevealOrBuilder getHiddenCardsOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code intergroup.lobby.GameWon}
+   */
+  public  static final class GameWon extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:intergroup.lobby.GameWon)
+      GameWonOrBuilder {
+    // Use GameWon.newBuilder() to construct.
+    private GameWon(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private GameWon() {
+      hiddenCards_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private GameWon(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              intergroup.board.Board.Player.Builder subBuilder = null;
+              if (winner_ != null) {
+                subBuilder = winner_.toBuilder();
+              }
+              winner_ = input.readMessage(intergroup.board.Board.Player.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(winner_);
+                winner_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                hiddenCards_ = new java.util.ArrayList<intergroup.lobby.Lobby.GameWon.CardReveal>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              hiddenCards_.add(
+                  input.readMessage(intergroup.lobby.Lobby.GameWon.CardReveal.parser(), extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          hiddenCards_ = java.util.Collections.unmodifiableList(hiddenCards_);
+        }
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return intergroup.lobby.Lobby.internal_static_intergroup_lobby_GameWon_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return intergroup.lobby.Lobby.internal_static_intergroup_lobby_GameWon_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              intergroup.lobby.Lobby.GameWon.class, intergroup.lobby.Lobby.GameWon.Builder.class);
+    }
+
+    public interface CardRevealOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:intergroup.lobby.GameWon.CardReveal)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>optional .intergroup.board.Player player = 1;</code>
+       */
+      boolean hasPlayer();
+      /**
+       * <code>optional .intergroup.board.Player player = 1;</code>
+       */
+      intergroup.board.Board.Player getPlayer();
+      /**
+       * <code>optional .intergroup.board.Player player = 1;</code>
+       */
+      intergroup.board.Board.PlayerOrBuilder getPlayerOrBuilder();
+
+      /**
+       * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+       */
+      java.util.List<intergroup.board.Board.VictoryPoint> getVPCardsList();
+      /**
+       * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+       */
+      int getVPCardsCount();
+      /**
+       * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+       */
+      intergroup.board.Board.VictoryPoint getVPCards(int index);
+      /**
+       * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+       */
+      java.util.List<java.lang.Integer>
+      getVPCardsValueList();
+      /**
+       * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+       */
+      int getVPCardsValue(int index);
+    }
+    /**
+     * Protobuf type {@code intergroup.lobby.GameWon.CardReveal}
+     */
+    public  static final class CardReveal extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:intergroup.lobby.GameWon.CardReveal)
+        CardRevealOrBuilder {
+      // Use CardReveal.newBuilder() to construct.
+      private CardReveal(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private CardReveal() {
+        vPCards_ = java.util.Collections.emptyList();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      }
+      private CardReveal(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        int mutable_bitField0_ = 0;
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!input.skipField(tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 10: {
+                intergroup.board.Board.Player.Builder subBuilder = null;
+                if (player_ != null) {
+                  subBuilder = player_.toBuilder();
+                }
+                player_ = input.readMessage(intergroup.board.Board.Player.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(player_);
+                  player_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+              case 16: {
+                int rawValue = input.readEnum();
+                if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                  vPCards_ = new java.util.ArrayList<java.lang.Integer>();
+                  mutable_bitField0_ |= 0x00000002;
+                }
+                vPCards_.add(rawValue);
+                break;
+              }
+              case 18: {
+                int length = input.readRawVarint32();
+                int oldLimit = input.pushLimit(length);
+                while(input.getBytesUntilLimit() > 0) {
+                  int rawValue = input.readEnum();
+                  if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                    vPCards_ = new java.util.ArrayList<java.lang.Integer>();
+                    mutable_bitField0_ |= 0x00000002;
+                  }
+                  vPCards_.add(rawValue);
+                }
+                input.popLimit(oldLimit);
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+            vPCards_ = java.util.Collections.unmodifiableList(vPCards_);
+          }
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return intergroup.lobby.Lobby.internal_static_intergroup_lobby_GameWon_CardReveal_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return intergroup.lobby.Lobby.internal_static_intergroup_lobby_GameWon_CardReveal_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                intergroup.lobby.Lobby.GameWon.CardReveal.class, intergroup.lobby.Lobby.GameWon.CardReveal.Builder.class);
+      }
+
+      private int bitField0_;
+      public static final int PLAYER_FIELD_NUMBER = 1;
+      private intergroup.board.Board.Player player_;
+      /**
+       * <code>optional .intergroup.board.Player player = 1;</code>
+       */
+      public boolean hasPlayer() {
+        return player_ != null;
+      }
+      /**
+       * <code>optional .intergroup.board.Player player = 1;</code>
+       */
+      public intergroup.board.Board.Player getPlayer() {
+        return player_ == null ? intergroup.board.Board.Player.getDefaultInstance() : player_;
+      }
+      /**
+       * <code>optional .intergroup.board.Player player = 1;</code>
+       */
+      public intergroup.board.Board.PlayerOrBuilder getPlayerOrBuilder() {
+        return getPlayer();
+      }
+
+      public static final int VPCARDS_FIELD_NUMBER = 2;
+      private java.util.List<java.lang.Integer> vPCards_;
+      private static final com.google.protobuf.Internal.ListAdapter.Converter<
+          java.lang.Integer, intergroup.board.Board.VictoryPoint> vPCards_converter_ =
+              new com.google.protobuf.Internal.ListAdapter.Converter<
+                  java.lang.Integer, intergroup.board.Board.VictoryPoint>() {
+                public intergroup.board.Board.VictoryPoint convert(java.lang.Integer from) {
+                  intergroup.board.Board.VictoryPoint result = intergroup.board.Board.VictoryPoint.valueOf(from);
+                  return result == null ? intergroup.board.Board.VictoryPoint.UNRECOGNIZED : result;
+                }
+              };
+      /**
+       * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+       */
+      public java.util.List<intergroup.board.Board.VictoryPoint> getVPCardsList() {
+        return new com.google.protobuf.Internal.ListAdapter<
+            java.lang.Integer, intergroup.board.Board.VictoryPoint>(vPCards_, vPCards_converter_);
+      }
+      /**
+       * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+       */
+      public int getVPCardsCount() {
+        return vPCards_.size();
+      }
+      /**
+       * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+       */
+      public intergroup.board.Board.VictoryPoint getVPCards(int index) {
+        return vPCards_converter_.convert(vPCards_.get(index));
+      }
+      /**
+       * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+       */
+      public java.util.List<java.lang.Integer>
+      getVPCardsValueList() {
+        return vPCards_;
+      }
+      /**
+       * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+       */
+      public int getVPCardsValue(int index) {
+        return vPCards_.get(index);
+      }
+      private int vPCardsMemoizedSerializedSize;
+
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        getSerializedSize();
+        if (player_ != null) {
+          output.writeMessage(1, getPlayer());
+        }
+        if (getVPCardsList().size() > 0) {
+          output.writeUInt32NoTag(18);
+          output.writeUInt32NoTag(vPCardsMemoizedSerializedSize);
+        }
+        for (int i = 0; i < vPCards_.size(); i++) {
+          output.writeEnumNoTag(vPCards_.get(i));
+        }
+      }
+
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (player_ != null) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(1, getPlayer());
+        }
+        {
+          int dataSize = 0;
+          for (int i = 0; i < vPCards_.size(); i++) {
+            dataSize += com.google.protobuf.CodedOutputStream
+              .computeEnumSizeNoTag(vPCards_.get(i));
+          }
+          size += dataSize;
+          if (!getVPCardsList().isEmpty()) {  size += 1;
+            size += com.google.protobuf.CodedOutputStream
+              .computeUInt32SizeNoTag(dataSize);
+          }vPCardsMemoizedSerializedSize = dataSize;
+        }
+        memoizedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof intergroup.lobby.Lobby.GameWon.CardReveal)) {
+          return super.equals(obj);
+        }
+        intergroup.lobby.Lobby.GameWon.CardReveal other = (intergroup.lobby.Lobby.GameWon.CardReveal) obj;
+
+        boolean result = true;
+        result = result && (hasPlayer() == other.hasPlayer());
+        if (hasPlayer()) {
+          result = result && getPlayer()
+              .equals(other.getPlayer());
+        }
+        result = result && vPCards_.equals(other.vPCards_);
+        return result;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptorForType().hashCode();
+        if (hasPlayer()) {
+          hash = (37 * hash) + PLAYER_FIELD_NUMBER;
+          hash = (53 * hash) + getPlayer().hashCode();
+        }
+        if (getVPCardsCount() > 0) {
+          hash = (37 * hash) + VPCARDS_FIELD_NUMBER;
+          hash = (53 * hash) + vPCards_.hashCode();
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static intergroup.lobby.Lobby.GameWon.CardReveal parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static intergroup.lobby.Lobby.GameWon.CardReveal parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static intergroup.lobby.Lobby.GameWon.CardReveal parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static intergroup.lobby.Lobby.GameWon.CardReveal parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static intergroup.lobby.Lobby.GameWon.CardReveal parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static intergroup.lobby.Lobby.GameWon.CardReveal parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static intergroup.lobby.Lobby.GameWon.CardReveal parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static intergroup.lobby.Lobby.GameWon.CardReveal parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static intergroup.lobby.Lobby.GameWon.CardReveal parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static intergroup.lobby.Lobby.GameWon.CardReveal parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(intergroup.lobby.Lobby.GameWon.CardReveal prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code intergroup.lobby.GameWon.CardReveal}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:intergroup.lobby.GameWon.CardReveal)
+          intergroup.lobby.Lobby.GameWon.CardRevealOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return intergroup.lobby.Lobby.internal_static_intergroup_lobby_GameWon_CardReveal_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return intergroup.lobby.Lobby.internal_static_intergroup_lobby_GameWon_CardReveal_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  intergroup.lobby.Lobby.GameWon.CardReveal.class, intergroup.lobby.Lobby.GameWon.CardReveal.Builder.class);
+        }
+
+        // Construct using intergroup.lobby.Lobby.GameWon.CardReveal.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        public Builder clear() {
+          super.clear();
+          if (playerBuilder_ == null) {
+            player_ = null;
+          } else {
+            player_ = null;
+            playerBuilder_ = null;
+          }
+          vPCards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          return this;
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return intergroup.lobby.Lobby.internal_static_intergroup_lobby_GameWon_CardReveal_descriptor;
+        }
+
+        public intergroup.lobby.Lobby.GameWon.CardReveal getDefaultInstanceForType() {
+          return intergroup.lobby.Lobby.GameWon.CardReveal.getDefaultInstance();
+        }
+
+        public intergroup.lobby.Lobby.GameWon.CardReveal build() {
+          intergroup.lobby.Lobby.GameWon.CardReveal result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public intergroup.lobby.Lobby.GameWon.CardReveal buildPartial() {
+          intergroup.lobby.Lobby.GameWon.CardReveal result = new intergroup.lobby.Lobby.GameWon.CardReveal(this);
+          int from_bitField0_ = bitField0_;
+          int to_bitField0_ = 0;
+          if (playerBuilder_ == null) {
+            result.player_ = player_;
+          } else {
+            result.player_ = playerBuilder_.build();
+          }
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            vPCards_ = java.util.Collections.unmodifiableList(vPCards_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.vPCards_ = vPCards_;
+          result.bitField0_ = to_bitField0_;
+          onBuilt();
+          return result;
+        }
+
+        public Builder clone() {
+          return (Builder) super.clone();
+        }
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.setField(field, value);
+        }
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return (Builder) super.clearField(field);
+        }
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return (Builder) super.clearOneof(oneof);
+        }
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, Object value) {
+          return (Builder) super.setRepeatedField(field, index, value);
+        }
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.addRepeatedField(field, value);
+        }
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof intergroup.lobby.Lobby.GameWon.CardReveal) {
+            return mergeFrom((intergroup.lobby.Lobby.GameWon.CardReveal)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(intergroup.lobby.Lobby.GameWon.CardReveal other) {
+          if (other == intergroup.lobby.Lobby.GameWon.CardReveal.getDefaultInstance()) return this;
+          if (other.hasPlayer()) {
+            mergePlayer(other.getPlayer());
+          }
+          if (!other.vPCards_.isEmpty()) {
+            if (vPCards_.isEmpty()) {
+              vPCards_ = other.vPCards_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureVPCardsIsMutable();
+              vPCards_.addAll(other.vPCards_);
+            }
+            onChanged();
+          }
+          onChanged();
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          intergroup.lobby.Lobby.GameWon.CardReveal parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (intergroup.lobby.Lobby.GameWon.CardReveal) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int bitField0_;
+
+        private intergroup.board.Board.Player player_ = null;
+        private com.google.protobuf.SingleFieldBuilderV3<
+            intergroup.board.Board.Player, intergroup.board.Board.Player.Builder, intergroup.board.Board.PlayerOrBuilder> playerBuilder_;
+        /**
+         * <code>optional .intergroup.board.Player player = 1;</code>
+         */
+        public boolean hasPlayer() {
+          return playerBuilder_ != null || player_ != null;
+        }
+        /**
+         * <code>optional .intergroup.board.Player player = 1;</code>
+         */
+        public intergroup.board.Board.Player getPlayer() {
+          if (playerBuilder_ == null) {
+            return player_ == null ? intergroup.board.Board.Player.getDefaultInstance() : player_;
+          } else {
+            return playerBuilder_.getMessage();
+          }
+        }
+        /**
+         * <code>optional .intergroup.board.Player player = 1;</code>
+         */
+        public Builder setPlayer(intergroup.board.Board.Player value) {
+          if (playerBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            player_ = value;
+            onChanged();
+          } else {
+            playerBuilder_.setMessage(value);
+          }
+
+          return this;
+        }
+        /**
+         * <code>optional .intergroup.board.Player player = 1;</code>
+         */
+        public Builder setPlayer(
+            intergroup.board.Board.Player.Builder builderForValue) {
+          if (playerBuilder_ == null) {
+            player_ = builderForValue.build();
+            onChanged();
+          } else {
+            playerBuilder_.setMessage(builderForValue.build());
+          }
+
+          return this;
+        }
+        /**
+         * <code>optional .intergroup.board.Player player = 1;</code>
+         */
+        public Builder mergePlayer(intergroup.board.Board.Player value) {
+          if (playerBuilder_ == null) {
+            if (player_ != null) {
+              player_ =
+                intergroup.board.Board.Player.newBuilder(player_).mergeFrom(value).buildPartial();
+            } else {
+              player_ = value;
+            }
+            onChanged();
+          } else {
+            playerBuilder_.mergeFrom(value);
+          }
+
+          return this;
+        }
+        /**
+         * <code>optional .intergroup.board.Player player = 1;</code>
+         */
+        public Builder clearPlayer() {
+          if (playerBuilder_ == null) {
+            player_ = null;
+            onChanged();
+          } else {
+            player_ = null;
+            playerBuilder_ = null;
+          }
+
+          return this;
+        }
+        /**
+         * <code>optional .intergroup.board.Player player = 1;</code>
+         */
+        public intergroup.board.Board.Player.Builder getPlayerBuilder() {
+          
+          onChanged();
+          return getPlayerFieldBuilder().getBuilder();
+        }
+        /**
+         * <code>optional .intergroup.board.Player player = 1;</code>
+         */
+        public intergroup.board.Board.PlayerOrBuilder getPlayerOrBuilder() {
+          if (playerBuilder_ != null) {
+            return playerBuilder_.getMessageOrBuilder();
+          } else {
+            return player_ == null ?
+                intergroup.board.Board.Player.getDefaultInstance() : player_;
+          }
+        }
+        /**
+         * <code>optional .intergroup.board.Player player = 1;</code>
+         */
+        private com.google.protobuf.SingleFieldBuilderV3<
+            intergroup.board.Board.Player, intergroup.board.Board.Player.Builder, intergroup.board.Board.PlayerOrBuilder> 
+            getPlayerFieldBuilder() {
+          if (playerBuilder_ == null) {
+            playerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+                intergroup.board.Board.Player, intergroup.board.Board.Player.Builder, intergroup.board.Board.PlayerOrBuilder>(
+                    getPlayer(),
+                    getParentForChildren(),
+                    isClean());
+            player_ = null;
+          }
+          return playerBuilder_;
+        }
+
+        private java.util.List<java.lang.Integer> vPCards_ =
+          java.util.Collections.emptyList();
+        private void ensureVPCardsIsMutable() {
+          if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+            vPCards_ = new java.util.ArrayList<java.lang.Integer>(vPCards_);
+            bitField0_ |= 0x00000002;
+          }
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public java.util.List<intergroup.board.Board.VictoryPoint> getVPCardsList() {
+          return new com.google.protobuf.Internal.ListAdapter<
+              java.lang.Integer, intergroup.board.Board.VictoryPoint>(vPCards_, vPCards_converter_);
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public int getVPCardsCount() {
+          return vPCards_.size();
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public intergroup.board.Board.VictoryPoint getVPCards(int index) {
+          return vPCards_converter_.convert(vPCards_.get(index));
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public Builder setVPCards(
+            int index, intergroup.board.Board.VictoryPoint value) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureVPCardsIsMutable();
+          vPCards_.set(index, value.getNumber());
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public Builder addVPCards(intergroup.board.Board.VictoryPoint value) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureVPCardsIsMutable();
+          vPCards_.add(value.getNumber());
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public Builder addAllVPCards(
+            java.lang.Iterable<? extends intergroup.board.Board.VictoryPoint> values) {
+          ensureVPCardsIsMutable();
+          for (intergroup.board.Board.VictoryPoint value : values) {
+            vPCards_.add(value.getNumber());
+          }
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public Builder clearVPCards() {
+          vPCards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public java.util.List<java.lang.Integer>
+        getVPCardsValueList() {
+          return java.util.Collections.unmodifiableList(vPCards_);
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public int getVPCardsValue(int index) {
+          return vPCards_.get(index);
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public Builder setVPCardsValue(
+            int index, int value) {
+          ensureVPCardsIsMutable();
+          vPCards_.set(index, value);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public Builder addVPCardsValue(int value) {
+          ensureVPCardsIsMutable();
+          vPCards_.add(value);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated .intergroup.board.VictoryPoint VPCards = 2;</code>
+         */
+        public Builder addAllVPCardsValue(
+            java.lang.Iterable<java.lang.Integer> values) {
+          ensureVPCardsIsMutable();
+          for (int value : values) {
+            vPCards_.add(value);
+          }
+          onChanged();
+          return this;
+        }
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:intergroup.lobby.GameWon.CardReveal)
+      }
+
+      // @@protoc_insertion_point(class_scope:intergroup.lobby.GameWon.CardReveal)
+      private static final intergroup.lobby.Lobby.GameWon.CardReveal DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new intergroup.lobby.Lobby.GameWon.CardReveal();
+      }
+
+      public static intergroup.lobby.Lobby.GameWon.CardReveal getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      private static final com.google.protobuf.Parser<CardReveal>
+          PARSER = new com.google.protobuf.AbstractParser<CardReveal>() {
+        public CardReveal parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            return new CardReveal(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<CardReveal> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<CardReveal> getParserForType() {
+        return PARSER;
+      }
+
+      public intergroup.lobby.Lobby.GameWon.CardReveal getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    private int bitField0_;
+    public static final int WINNER_FIELD_NUMBER = 1;
+    private intergroup.board.Board.Player winner_;
+    /**
+     * <code>optional .intergroup.board.Player winner = 1;</code>
+     */
+    public boolean hasWinner() {
+      return winner_ != null;
+    }
+    /**
+     * <code>optional .intergroup.board.Player winner = 1;</code>
+     */
+    public intergroup.board.Board.Player getWinner() {
+      return winner_ == null ? intergroup.board.Board.Player.getDefaultInstance() : winner_;
+    }
+    /**
+     * <code>optional .intergroup.board.Player winner = 1;</code>
+     */
+    public intergroup.board.Board.PlayerOrBuilder getWinnerOrBuilder() {
+      return getWinner();
+    }
+
+    public static final int HIDDENCARDS_FIELD_NUMBER = 2;
+    private java.util.List<intergroup.lobby.Lobby.GameWon.CardReveal> hiddenCards_;
+    /**
+     * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+     */
+    public java.util.List<intergroup.lobby.Lobby.GameWon.CardReveal> getHiddenCardsList() {
+      return hiddenCards_;
+    }
+    /**
+     * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+     */
+    public java.util.List<? extends intergroup.lobby.Lobby.GameWon.CardRevealOrBuilder> 
+        getHiddenCardsOrBuilderList() {
+      return hiddenCards_;
+    }
+    /**
+     * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+     */
+    public int getHiddenCardsCount() {
+      return hiddenCards_.size();
+    }
+    /**
+     * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+     */
+    public intergroup.lobby.Lobby.GameWon.CardReveal getHiddenCards(int index) {
+      return hiddenCards_.get(index);
+    }
+    /**
+     * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+     */
+    public intergroup.lobby.Lobby.GameWon.CardRevealOrBuilder getHiddenCardsOrBuilder(
+        int index) {
+      return hiddenCards_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (winner_ != null) {
+        output.writeMessage(1, getWinner());
+      }
+      for (int i = 0; i < hiddenCards_.size(); i++) {
+        output.writeMessage(2, hiddenCards_.get(i));
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (winner_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getWinner());
+      }
+      for (int i = 0; i < hiddenCards_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, hiddenCards_.get(i));
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof intergroup.lobby.Lobby.GameWon)) {
+        return super.equals(obj);
+      }
+      intergroup.lobby.Lobby.GameWon other = (intergroup.lobby.Lobby.GameWon) obj;
+
+      boolean result = true;
+      result = result && (hasWinner() == other.hasWinner());
+      if (hasWinner()) {
+        result = result && getWinner()
+            .equals(other.getWinner());
+      }
+      result = result && getHiddenCardsList()
+          .equals(other.getHiddenCardsList());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      if (hasWinner()) {
+        hash = (37 * hash) + WINNER_FIELD_NUMBER;
+        hash = (53 * hash) + getWinner().hashCode();
+      }
+      if (getHiddenCardsCount() > 0) {
+        hash = (37 * hash) + HIDDENCARDS_FIELD_NUMBER;
+        hash = (53 * hash) + getHiddenCardsList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static intergroup.lobby.Lobby.GameWon parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static intergroup.lobby.Lobby.GameWon parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static intergroup.lobby.Lobby.GameWon parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static intergroup.lobby.Lobby.GameWon parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static intergroup.lobby.Lobby.GameWon parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static intergroup.lobby.Lobby.GameWon parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static intergroup.lobby.Lobby.GameWon parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static intergroup.lobby.Lobby.GameWon parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static intergroup.lobby.Lobby.GameWon parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static intergroup.lobby.Lobby.GameWon parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(intergroup.lobby.Lobby.GameWon prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code intergroup.lobby.GameWon}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:intergroup.lobby.GameWon)
+        intergroup.lobby.Lobby.GameWonOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return intergroup.lobby.Lobby.internal_static_intergroup_lobby_GameWon_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return intergroup.lobby.Lobby.internal_static_intergroup_lobby_GameWon_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                intergroup.lobby.Lobby.GameWon.class, intergroup.lobby.Lobby.GameWon.Builder.class);
+      }
+
+      // Construct using intergroup.lobby.Lobby.GameWon.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getHiddenCardsFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (winnerBuilder_ == null) {
+          winner_ = null;
+        } else {
+          winner_ = null;
+          winnerBuilder_ = null;
+        }
+        if (hiddenCardsBuilder_ == null) {
+          hiddenCards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          hiddenCardsBuilder_.clear();
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return intergroup.lobby.Lobby.internal_static_intergroup_lobby_GameWon_descriptor;
+      }
+
+      public intergroup.lobby.Lobby.GameWon getDefaultInstanceForType() {
+        return intergroup.lobby.Lobby.GameWon.getDefaultInstance();
+      }
+
+      public intergroup.lobby.Lobby.GameWon build() {
+        intergroup.lobby.Lobby.GameWon result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public intergroup.lobby.Lobby.GameWon buildPartial() {
+        intergroup.lobby.Lobby.GameWon result = new intergroup.lobby.Lobby.GameWon(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (winnerBuilder_ == null) {
+          result.winner_ = winner_;
+        } else {
+          result.winner_ = winnerBuilder_.build();
+        }
+        if (hiddenCardsBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            hiddenCards_ = java.util.Collections.unmodifiableList(hiddenCards_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.hiddenCards_ = hiddenCards_;
+        } else {
+          result.hiddenCards_ = hiddenCardsBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof intergroup.lobby.Lobby.GameWon) {
+          return mergeFrom((intergroup.lobby.Lobby.GameWon)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(intergroup.lobby.Lobby.GameWon other) {
+        if (other == intergroup.lobby.Lobby.GameWon.getDefaultInstance()) return this;
+        if (other.hasWinner()) {
+          mergeWinner(other.getWinner());
+        }
+        if (hiddenCardsBuilder_ == null) {
+          if (!other.hiddenCards_.isEmpty()) {
+            if (hiddenCards_.isEmpty()) {
+              hiddenCards_ = other.hiddenCards_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureHiddenCardsIsMutable();
+              hiddenCards_.addAll(other.hiddenCards_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.hiddenCards_.isEmpty()) {
+            if (hiddenCardsBuilder_.isEmpty()) {
+              hiddenCardsBuilder_.dispose();
+              hiddenCardsBuilder_ = null;
+              hiddenCards_ = other.hiddenCards_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              hiddenCardsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getHiddenCardsFieldBuilder() : null;
+            } else {
+              hiddenCardsBuilder_.addAllMessages(other.hiddenCards_);
+            }
+          }
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        intergroup.lobby.Lobby.GameWon parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (intergroup.lobby.Lobby.GameWon) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private intergroup.board.Board.Player winner_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          intergroup.board.Board.Player, intergroup.board.Board.Player.Builder, intergroup.board.Board.PlayerOrBuilder> winnerBuilder_;
+      /**
+       * <code>optional .intergroup.board.Player winner = 1;</code>
+       */
+      public boolean hasWinner() {
+        return winnerBuilder_ != null || winner_ != null;
+      }
+      /**
+       * <code>optional .intergroup.board.Player winner = 1;</code>
+       */
+      public intergroup.board.Board.Player getWinner() {
+        if (winnerBuilder_ == null) {
+          return winner_ == null ? intergroup.board.Board.Player.getDefaultInstance() : winner_;
+        } else {
+          return winnerBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .intergroup.board.Player winner = 1;</code>
+       */
+      public Builder setWinner(intergroup.board.Board.Player value) {
+        if (winnerBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          winner_ = value;
+          onChanged();
+        } else {
+          winnerBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.board.Player winner = 1;</code>
+       */
+      public Builder setWinner(
+          intergroup.board.Board.Player.Builder builderForValue) {
+        if (winnerBuilder_ == null) {
+          winner_ = builderForValue.build();
+          onChanged();
+        } else {
+          winnerBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.board.Player winner = 1;</code>
+       */
+      public Builder mergeWinner(intergroup.board.Board.Player value) {
+        if (winnerBuilder_ == null) {
+          if (winner_ != null) {
+            winner_ =
+              intergroup.board.Board.Player.newBuilder(winner_).mergeFrom(value).buildPartial();
+          } else {
+            winner_ = value;
+          }
+          onChanged();
+        } else {
+          winnerBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.board.Player winner = 1;</code>
+       */
+      public Builder clearWinner() {
+        if (winnerBuilder_ == null) {
+          winner_ = null;
+          onChanged();
+        } else {
+          winner_ = null;
+          winnerBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .intergroup.board.Player winner = 1;</code>
+       */
+      public intergroup.board.Board.Player.Builder getWinnerBuilder() {
+        
+        onChanged();
+        return getWinnerFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .intergroup.board.Player winner = 1;</code>
+       */
+      public intergroup.board.Board.PlayerOrBuilder getWinnerOrBuilder() {
+        if (winnerBuilder_ != null) {
+          return winnerBuilder_.getMessageOrBuilder();
+        } else {
+          return winner_ == null ?
+              intergroup.board.Board.Player.getDefaultInstance() : winner_;
+        }
+      }
+      /**
+       * <code>optional .intergroup.board.Player winner = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          intergroup.board.Board.Player, intergroup.board.Board.Player.Builder, intergroup.board.Board.PlayerOrBuilder> 
+          getWinnerFieldBuilder() {
+        if (winnerBuilder_ == null) {
+          winnerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              intergroup.board.Board.Player, intergroup.board.Board.Player.Builder, intergroup.board.Board.PlayerOrBuilder>(
+                  getWinner(),
+                  getParentForChildren(),
+                  isClean());
+          winner_ = null;
+        }
+        return winnerBuilder_;
+      }
+
+      private java.util.List<intergroup.lobby.Lobby.GameWon.CardReveal> hiddenCards_ =
+        java.util.Collections.emptyList();
+      private void ensureHiddenCardsIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          hiddenCards_ = new java.util.ArrayList<intergroup.lobby.Lobby.GameWon.CardReveal>(hiddenCards_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          intergroup.lobby.Lobby.GameWon.CardReveal, intergroup.lobby.Lobby.GameWon.CardReveal.Builder, intergroup.lobby.Lobby.GameWon.CardRevealOrBuilder> hiddenCardsBuilder_;
+
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public java.util.List<intergroup.lobby.Lobby.GameWon.CardReveal> getHiddenCardsList() {
+        if (hiddenCardsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(hiddenCards_);
+        } else {
+          return hiddenCardsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public int getHiddenCardsCount() {
+        if (hiddenCardsBuilder_ == null) {
+          return hiddenCards_.size();
+        } else {
+          return hiddenCardsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public intergroup.lobby.Lobby.GameWon.CardReveal getHiddenCards(int index) {
+        if (hiddenCardsBuilder_ == null) {
+          return hiddenCards_.get(index);
+        } else {
+          return hiddenCardsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public Builder setHiddenCards(
+          int index, intergroup.lobby.Lobby.GameWon.CardReveal value) {
+        if (hiddenCardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureHiddenCardsIsMutable();
+          hiddenCards_.set(index, value);
+          onChanged();
+        } else {
+          hiddenCardsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public Builder setHiddenCards(
+          int index, intergroup.lobby.Lobby.GameWon.CardReveal.Builder builderForValue) {
+        if (hiddenCardsBuilder_ == null) {
+          ensureHiddenCardsIsMutable();
+          hiddenCards_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          hiddenCardsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public Builder addHiddenCards(intergroup.lobby.Lobby.GameWon.CardReveal value) {
+        if (hiddenCardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureHiddenCardsIsMutable();
+          hiddenCards_.add(value);
+          onChanged();
+        } else {
+          hiddenCardsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public Builder addHiddenCards(
+          int index, intergroup.lobby.Lobby.GameWon.CardReveal value) {
+        if (hiddenCardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureHiddenCardsIsMutable();
+          hiddenCards_.add(index, value);
+          onChanged();
+        } else {
+          hiddenCardsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public Builder addHiddenCards(
+          intergroup.lobby.Lobby.GameWon.CardReveal.Builder builderForValue) {
+        if (hiddenCardsBuilder_ == null) {
+          ensureHiddenCardsIsMutable();
+          hiddenCards_.add(builderForValue.build());
+          onChanged();
+        } else {
+          hiddenCardsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public Builder addHiddenCards(
+          int index, intergroup.lobby.Lobby.GameWon.CardReveal.Builder builderForValue) {
+        if (hiddenCardsBuilder_ == null) {
+          ensureHiddenCardsIsMutable();
+          hiddenCards_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          hiddenCardsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public Builder addAllHiddenCards(
+          java.lang.Iterable<? extends intergroup.lobby.Lobby.GameWon.CardReveal> values) {
+        if (hiddenCardsBuilder_ == null) {
+          ensureHiddenCardsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, hiddenCards_);
+          onChanged();
+        } else {
+          hiddenCardsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public Builder clearHiddenCards() {
+        if (hiddenCardsBuilder_ == null) {
+          hiddenCards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          hiddenCardsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public Builder removeHiddenCards(int index) {
+        if (hiddenCardsBuilder_ == null) {
+          ensureHiddenCardsIsMutable();
+          hiddenCards_.remove(index);
+          onChanged();
+        } else {
+          hiddenCardsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public intergroup.lobby.Lobby.GameWon.CardReveal.Builder getHiddenCardsBuilder(
+          int index) {
+        return getHiddenCardsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public intergroup.lobby.Lobby.GameWon.CardRevealOrBuilder getHiddenCardsOrBuilder(
+          int index) {
+        if (hiddenCardsBuilder_ == null) {
+          return hiddenCards_.get(index);  } else {
+          return hiddenCardsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public java.util.List<? extends intergroup.lobby.Lobby.GameWon.CardRevealOrBuilder> 
+           getHiddenCardsOrBuilderList() {
+        if (hiddenCardsBuilder_ != null) {
+          return hiddenCardsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(hiddenCards_);
+        }
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public intergroup.lobby.Lobby.GameWon.CardReveal.Builder addHiddenCardsBuilder() {
+        return getHiddenCardsFieldBuilder().addBuilder(
+            intergroup.lobby.Lobby.GameWon.CardReveal.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public intergroup.lobby.Lobby.GameWon.CardReveal.Builder addHiddenCardsBuilder(
+          int index) {
+        return getHiddenCardsFieldBuilder().addBuilder(
+            index, intergroup.lobby.Lobby.GameWon.CardReveal.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .intergroup.lobby.GameWon.CardReveal hiddenCards = 2;</code>
+       */
+      public java.util.List<intergroup.lobby.Lobby.GameWon.CardReveal.Builder> 
+           getHiddenCardsBuilderList() {
+        return getHiddenCardsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          intergroup.lobby.Lobby.GameWon.CardReveal, intergroup.lobby.Lobby.GameWon.CardReveal.Builder, intergroup.lobby.Lobby.GameWon.CardRevealOrBuilder> 
+          getHiddenCardsFieldBuilder() {
+        if (hiddenCardsBuilder_ == null) {
+          hiddenCardsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              intergroup.lobby.Lobby.GameWon.CardReveal, intergroup.lobby.Lobby.GameWon.CardReveal.Builder, intergroup.lobby.Lobby.GameWon.CardRevealOrBuilder>(
+                  hiddenCards_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          hiddenCards_ = null;
+        }
+        return hiddenCardsBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:intergroup.lobby.GameWon)
+    }
+
+    // @@protoc_insertion_point(class_scope:intergroup.lobby.GameWon)
+    private static final intergroup.lobby.Lobby.GameWon DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new intergroup.lobby.Lobby.GameWon();
+    }
+
+    public static intergroup.lobby.Lobby.GameWon getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<GameWon>
+        PARSER = new com.google.protobuf.AbstractParser<GameWon>() {
+      public GameWon parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new GameWon(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<GameWon> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GameWon> getParserForType() {
+      return PARSER;
+    }
+
+    public intergroup.lobby.Lobby.GameWon getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_intergroup_lobby_Join_descriptor;
   private static final 
@@ -3866,6 +5617,16 @@ public final class Lobby {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_intergroup_lobby_GameSetup_PlayerSetting_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_intergroup_lobby_GameWon_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_intergroup_lobby_GameWon_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_intergroup_lobby_GameWon_CardReveal_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_intergroup_lobby_GameWon_CardReveal_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3888,8 +5649,13 @@ public final class Lobby {
       "oup.board.Player\022@\n\006colour\030\003 \001(\01620.inter" +
       "group.lobby.GameSetup.PlayerSetting.Colo" +
       "ur\"H\n\006Colour\022\007\n\003RED\020\000\022\010\n\004BLUE\020\001\022\n\n\006ORANG" +
-      "E\020\002\022\t\n\005WHITE\020\003\022\t\n\005GREEN\020\004\022\t\n\005BROWN\020\005b\006pr" +
-      "oto3"
+      "E\020\002\022\t\n\005WHITE\020\003\022\t\n\005GREEN\020\004\022\t\n\005BROWN\020\005\"\327\001\n" +
+      "\007GameWon\022(\n\006winner\030\001 \001(\0132\030.intergroup.bo" +
+      "ard.Player\0229\n\013hiddenCards\030\002 \003(\0132$.interg" +
+      "roup.lobby.GameWon.CardReveal\032g\n\nCardRev" +
+      "eal\022(\n\006player\030\001 \001(\0132\030.intergroup.board.P" +
+      "layer\022/\n\007VPCards\030\002 \003(\0162\036.intergroup.boar" +
+      "d.VictoryPointb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3928,6 +5694,18 @@ public final class Lobby {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_intergroup_lobby_GameSetup_PlayerSetting_descriptor,
         new java.lang.String[] { "Username", "Player", "Colour", });
+    internal_static_intergroup_lobby_GameWon_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_intergroup_lobby_GameWon_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_intergroup_lobby_GameWon_descriptor,
+        new java.lang.String[] { "Winner", "HiddenCards", });
+    internal_static_intergroup_lobby_GameWon_CardReveal_descriptor =
+      internal_static_intergroup_lobby_GameWon_descriptor.getNestedTypes().get(0);
+    internal_static_intergroup_lobby_GameWon_CardReveal_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_intergroup_lobby_GameWon_CardReveal_descriptor,
+        new java.lang.String[] { "Player", "VPCards", });
     intergroup.board.Board.getDescriptor();
   }
 
