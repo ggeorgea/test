@@ -126,6 +126,7 @@ public class DevelopmentCard {
 	
 			Message m = null;
 		
+			//TODO dev card bought events
 			if (card != -1) {
 				m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setDevCardBought(Board.DevCard.newBuilder().setPlayableDevCardValue(card).build()).build()).build();
 			}

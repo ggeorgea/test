@@ -10,7 +10,6 @@ public class Board {
 
 	private int size;
 	private Coordinate robber;
-	private Robber theRobber; //TODO not required?
 	private ArrayList<Hex> hexes = new ArrayList<Hex>();
 	private ArrayList<Port> ports = new ArrayList<Port>();
 	private ArrayList<Road> roads = new ArrayList<Road>();
@@ -58,17 +57,7 @@ public class Board {
 	public void setRobber(Coordinate robber) {
 		this.robber = robber;
 	}
-	
-	//TODO not required
-	public Robber getTheRobber() {
-		return theRobber;
-	}
-
-	//TODO not required
-	public void setTheRobber(Robber theRobber) {
-		this.theRobber = theRobber;
-	}
-	
+		
 	public ArrayList<Hex> getHexes() {
 		return hexes;
 	}
@@ -191,7 +180,7 @@ public class Board {
 		return boardLocations[coA.getX()+5][coA.getY()+5];
 	}
 	
-	public static boolean CoordInRange(Coordinate coA){
+	public static boolean coordInRange(Coordinate coA){
 		
 		int x = coA.getX() ;
 		int y = coA.getY() ;
