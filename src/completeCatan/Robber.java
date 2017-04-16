@@ -156,16 +156,23 @@ public class Robber {
 		//choose a player to steal a card from
 		Player target = null;
 		ArrayList<Player> players = game1.getPlayers();
-		players.remove(player);
 			
+		int j = 0;
+		
 		//ensures correct user input
 		while (true) {
 
+			j++;
+			if (j >= 5) {
+				Catan.printToClient("Cannot steal from any player", player);
+				return;
+			}
+			
 			target = null;
 			Catan.printToClient("Which player do you want to steal from?", player);
 			
 			for (int i = 0; i < players.size(); i++) {
-				System.out.println(i+1 + ": " + players.get(i));
+				Catan.printToClient(i+1 + ": " + players.get(i).getName(), player);
 			}
 
 			int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
@@ -174,10 +181,14 @@ public class Robber {
 				Catan.printToClient("Invalid player choice. Please choose again.", player);
 				continue;
 			}
+			else if (players.get(choice-1).equals(player)) {
+				Catan.printToClient("You cannot steal from yourself. Please choose again", player);
+				continue;
+			}
 			else {
 				target = players.get(choice-1);
 				break;
-			}			
+			}	
 		}
 			
 		ArrayList<Hex> hexes = game1.getBoard().getHexes();

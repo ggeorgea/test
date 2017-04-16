@@ -19,7 +19,7 @@ public class Turn {
 //-----Methods to actually let the player have their turn-----//
  
  	//allows the player to have their turn
- 	public static boolean newTurn(Player player, Game game1, Scanner scanner) throws IOException{
+ 	public static boolean newTurn(Player player, Game game1, Scanner scanner) throws IOException {
  
  		ArrayList<Player> players = game1.getPlayers();
  		Map.printMap(game1.getBoard(), players);

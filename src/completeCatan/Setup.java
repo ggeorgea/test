@@ -503,6 +503,10 @@ public class Setup {
  
  		//prints what each player gets
  		Catan.printToClient("You get:", player);
+ 		
+ 		for (int i = 0; i < resourceCards.size(); i++) {
+ 			Catan.printToClient("1x " + resourceCards.get(i).getResource(), player);
+ 		}
 		
  		ArrayList<Player> players = game1.getPlayers();
 		
@@ -513,7 +517,6 @@ public class Setup {
 				
  				for (int j = 0; j < resourceCards.size(); j++) {
  					
- 					Catan.printToClient("1x " + resourceCards.get(j).getResource(), player);
 					Catan.printToClient("1x " + resourceCards.get(j).getResource(), players.get(i));
  				}
  			}

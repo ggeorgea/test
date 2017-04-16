@@ -660,7 +660,7 @@ public class Trade {
 		//lets the player choose what to trade from their own hand
 		while (choice == 1) {
 
-			Catan.printToClient("What do you want to trade from your hand?", playerTrade);
+			Catan.printToClient("What do you want to trade from your hand?", player);
 
 			choice = chooseResources(playerResources, scanner, player);
 			playerToTrade.add(playerResources.get(choice));
@@ -674,7 +674,7 @@ public class Trade {
 		//lets the player choose what resources they want from the other player's hand
 		while (choice == 1) {
 
-			Catan.printToClient("What do you want from " + playerTrade.getName() + "'s hand?", playerTrade);
+			Catan.printToClient("What do you want from " + playerTrade.getName() + "'s hand?", player);
 			
 			choice = chooseResources(playerTradeResources, scanner, player);
 			playerTradeToTrade.add(playerTradeResources.get(choice));
@@ -703,13 +703,16 @@ public class Trade {
 				tradePlayerResources(player, playerTrade, playerToTrade, playerTradeToTrade);
 			}
 			else {
+				boolean tradeRestore = true;
+				restoreResources(player, playerTrade, playerToTrade, playerTradeToTrade, tradeRestore);
 				offer = REJECT_TRADE;
 			}
 		}
 
 		//otherwise the resources have to be added back in to both players' hands
 		else {
-			restoreResources(player, playerTrade, playerToTrade, playerTradeToTrade);
+			boolean tradeRestore = false;
+			restoreResources(player, playerTrade, playerToTrade, playerTradeToTrade, tradeRestore);
 		}
 
 		return offer;
@@ -879,7 +882,7 @@ public class Trade {
 
 	//puts the trade resources back into players' hands
 	public static void restoreResources(Player player, Player playerTrade, ArrayList<ResourceCard> playerToTrade, 
-			ArrayList<ResourceCard> playerTradeToTrade) {
+			ArrayList<ResourceCard> playerTradeToTrade, boolean tradeRestore) {
 
 		ArrayList<ResourceCard> playerResources = player.getResourceCards();
 		ArrayList<ResourceCard> playerTradeResources = playerTrade.getResourceCards();
@@ -890,13 +893,15 @@ public class Trade {
 			playerResources.add(card);
 		}
 
-		for (int i = 0; i < playerTradeToTrade.size(); i++) {
+		if (tradeRestore) {
+			for (int i = 0; i < playerTradeToTrade.size(); i++) {
 
-			ResourceCard card = playerTradeToTrade.get(i);
-			playerTradeResources.add(card);
+				ResourceCard card = playerTradeToTrade.get(i);
+				playerTradeResources.add(card);
+			}
+
+			player.setResourceCards(playerResources);
+			playerTrade.setResourceCards(playerTradeResources);
 		}
-
-		player.setResourceCards(playerResources);
-		playerTrade.setResourceCards(playerTradeResources);
 	}
 }
