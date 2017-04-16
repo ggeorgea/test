@@ -129,6 +129,7 @@ public class Building {
 				}
 			}
 			
+			//TODO settlement built event
 			Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setSettlementBuilt(Board.Point.newBuilder().setX(settlement.getCoordinate().getX()).setY(settlement.getCoordinate().getY()).build()).build()).build();
 			Catan.printToClient(m, player);
 			
@@ -345,6 +346,7 @@ public class Building {
 				}
 			}
 			
+			//TODO city built event
 			Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setCityBuilt(Board.Point.newBuilder().setX(city.getCoordinate().getX()).setY(city.getCoordinate().getY()).build()).build()).build();
 
 			Catan.printToClient(m, player);

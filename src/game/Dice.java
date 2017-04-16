@@ -62,6 +62,8 @@ public class Dice {
 				playerNum = i;
 			}
 		}
+		
+		//TODO dice roll event
 		Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setRolled(Board.Roll.newBuilder().setA(dice1).setB(dice2).build()).build()).build();
 		Catan.printToClient(m, player);
 		

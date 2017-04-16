@@ -23,7 +23,7 @@ public class Turn {
 //-----Methods to actually let the player have their turn-----//
 
 	//allows the player to have their turn
-	public static boolean newTurn(Player player, Game game1, Scanner scanner){
+	public static boolean newTurn(Player player, Game game1, Scanner scanner) throws IOException{
 
 		ArrayList<Player> players = game1.getPlayers();
 		
@@ -97,11 +97,11 @@ public class Turn {
 					break;
 				case 4:
 					//buildsettlement
-					game.Building.buildSettlement(player, game1, enter);
+					game.Building.buildSettlement(player, game1, scanner, enter);
 					break;
 				case 5:
 					//buildcity
-					game.Building.buildCity(player, game1, scanner);
+					game.Building.buildCity(player, game1, scanner, enter);
 					break;
 				case 7:
 					//play dev card
@@ -109,7 +109,7 @@ public class Turn {
 					hasPlayedDevCard = true;
 					break;
 				case 8:
-					trade(player, enter, game1);
+					trade(player, scanner, game1, enter);
 					break;
 				case 13:
 					choice = END_TURN;
@@ -119,14 +119,14 @@ public class Turn {
 					String chatMsg = enter.getRequest().getChatMessage();
 					switch (Integer.parseInt(chatMsg)) {
 					case 1 :
-						build(player, game1, scanner);
+						build(player, game1, scanner, enter);
 						break;
 					case 2 :
 						DevelopmentCard.playDevelopmentCard(player, game1, enter, hasPlayedDevCard, scanner);
 						hasPlayedDevCard = true;
 						break;
 					case 3 :
-						trade(player, scanner, game1);
+						trade(player, scanner, game1, enter);
 						break;
 					case 4 :
 						Player.printHand(player, scanner);
@@ -166,7 +166,7 @@ public class Turn {
 //-----Method to build and buy things for the turn-----//
 
 	//asks the player if they want to build something
-	public static void build(Player player, Game game1, Scanner scanner) throws IOException {
+	public static void build(Player player, Game game1, Scanner scanner, Message enter) throws IOException {
 
 		Catan.printToClient("What do you want to build?", player);
 		Catan.printToClient("1. Road", player);
@@ -181,44 +181,32 @@ public class Turn {
 			Road.buildRoad(player, game1, scanner, enter, false);
 			break;
 		case 2 :
-			Building.buildSettlement(player, game1, scanner);
+			Building.buildSettlement(player, game1, scanner, enter);
 			break;
 		case 3 :
-			Building.buildCity(player, game1, scanner);
+			Building.buildCity(player, game1, scanner, enter);
 			break;
 		case 4 :
-			DevelopmentCard.buyDevelopmentCard(player, game1, scanner);
+			DevelopmentCard.buyDevelopmentCard(player, game1, enter);
 			break;
 		default :
 			Catan.printToClient("Invalid choice, Please choose again", player);
-			build(player, game1, scanner);
+			build(player, game1, scanner, enter);
 		}
 	}
 
 //-----Method to allow the player to trade-----//
 
-	public static void trade(Player player, Scanner scanner, Game game1){
+	public static void trade(Player player, Scanner scanner, Game game1, Message enter) throws IOException {
 		
 		boolean bank = Trade.tradeBankOrPlayer(player, scanner);
-		
-		if (bank) {
-			Trade.tradeBank(player, scanner, game1);
-		}
-		else {
-			Trade.tradePlayer(player, scanner, game1);
-		}
-	}
-	
-	private static void trade(Player player, Message enter, Game game1) {
-		
 		int trade = enter.getRequest().getInitiateTrade().getTradeCase().getNumber();
 		
-		if (trade == 1) {
+		if (bank || trade == 1) {
 			Trade.tradeBank(player, scanner, enter, game1);
 		}
 		else {
 			Trade.tradePlayer(player, scanner, enter, game1);
 		}
-		
 	}
 }

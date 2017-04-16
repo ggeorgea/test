@@ -635,8 +635,8 @@ public class Trade {
 			//notifies other players of the trade that occurred
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i) != player && players.get(i) != playerTrade) {
-					Catan.printToClient("Player " + player.getName() + "and Player "
-							+ playerTrade.getName() + "traded resources", players.get(i));
+					Catan.printToClient("Player " + player.getName() + " and Player "
+							+ playerTrade.getName() + " traded resources", players.get(i));
 				}
 			}
 		}
