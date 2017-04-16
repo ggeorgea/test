@@ -19,9 +19,15 @@ import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
 import intergroup.Requests.Request;
 import intergroup.board.Board.Edge;
+import intergroup.board.Board.Hex;
+import intergroup.board.Board.Harbour;
+import intergroup.lobby.Lobby.*;
 import intergroup.board.Board.PlayableDevCard;
 import intergroup.board.Board.Player;
 import intergroup.board.Board.Point;
+import intergroup.lobby.Lobby.GameSetup;
+import intergroup.lobby.Lobby.GameSetup.Builder;
+import intergroup.lobby.Lobby.GameSetup.PlayerSetting;
 import intergroup.lobby.Lobby.Join;
 import intergroup.resource.Resource.Counts;
 import intergroup.resource.Resource.Kind;
@@ -116,7 +122,7 @@ public class Catan {
         		System.out.println("please enter a userName:");
         		String userName = scanner.nextLine();
 				//CLIENT SIDE
-				System.out.println("please enter the address where you wish to connect\nPlease note that to enter a command, enter \"c\"\nto see the map, enter \"map\"\nto see your resources, enter \"resources\"\nto see your development cards, enter \"cards\"");
+				System.out.println("please enter the address where you wish to connect\nPlease note that to enter a command, enter \"c\"\nto see the map, enter \"map\"\nto see your resources, enter \"resources\"\nto see your development cards, enter \"cards\"\nto see the usernames and colours of players, enter \"players\"");
 				String hostName = scanner.nextLine();
 				int portNumber = defaultPortNumber;
 				
@@ -159,6 +165,11 @@ public class Catan {
 		            			playerE.setpSocket(null);
 		            			emptyP.add(playerE);
 		            			Map.printMap(client.game.getBoard(), emptyP);
+		            		}
+		            		if(instruction.equals("players")){
+		            			for(game.Player p : client.game.getPlayers()){
+		            				System.out.println("player "+p.getID()+" , aka: "+p.getUserName()+" playing as: "+p.getName());
+		            			}
 		            		}
 		            		if(instruction.equals("resources")){
 		            			System.out.println("You have: brick "+client.mybrick+", wool "+client.mywool+", grain "+client.mygrain+", lumber "+client.mylumber+", ore "+client.myore);
@@ -523,7 +534,7 @@ public class Catan {
 			else {
 				//SERVER SIDE
 				int clientsToFind;
-
+				ArrayList<String> unsernames = new ArrayList<String>();
 				clientsToFind = Setup.requestClients(scanner);
 				ArrayList<PlayerSocket> SocketArray = new ArrayList<PlayerSocket>();
 
@@ -541,8 +552,30 @@ public class Catan {
 
 						 Socket clientSocket = serverSocket.accept();
 						 PlayerSocket foundConnect = new PlayerSocket(clientSocket);
-						 //TODO, add waiting for lobby join requests here, just add on the usernames to a thing or something? an arraykist mbe, mbe add a field in playersocket?
 						 SocketArray.add(foundConnect);
+						 
+						 boolean success = false;
+						 while (!success) {
+							try {
+								
+								Message enter = Catan.getPBMsg(clientSocket);
+							
+								if (enter.getRequest().getBodyCase().getNumber() == 14) {
+									success = true;
+									unsernames.add(enter.getRequest().getJoinLobby().getUsername());
+									for(PlayerSocket sok : SocketArray){
+										Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setLobbyUpdate(Usernames.newBuilder().addAllUsername(unsernames).build()).build()).build(), sok.getClientSocket());
+									}
+								}
+								else{
+									Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a lobby join request").build()).build()).build(),clientSocket);
+								}
+							} 
+							catch (IOException e) {
+							}
+						}
+						 
+						 
 						 System.out.println("Player connected!");
 					}
 
@@ -578,7 +611,7 @@ public class Catan {
 				game1.setBrick(brick);
 
 				//sets up players, ALSO USES THE NETWORKING'S SOCKET ARRAY!
-				ArrayList<game.Player> players = Setup.setPlayers(scanner,SocketArray);
+				ArrayList<game.Player> players = Setup.setPlayers(scanner,SocketArray,unsernames);
 				game1.setPlayers(players);
 
 				//roll dice for each player
@@ -586,7 +619,8 @@ public class Catan {
 				Setup.getPlayerOrder(game1, scanner);
 
 				Map.printMap(game1.getBoard(), game1.getPlayers());
-				// add a start game TODO lobby message here, just go through an iterator of hex, port, and players, but remebrer to do it in a loop where each player also gets the correct your id field
+				SendGameStars(game1);
+				
 				
 				//place roads and settlements
 				Setup.setInitialRoadsAndSettlements(game1, scanner);
@@ -627,6 +661,106 @@ public class Catan {
 		}
 
 		System.out.println("Goodbye!");
+	}
+
+	private static void SendGameStars(Game game1) {
+		
+		ArrayList<Harbour> habs = new ArrayList<Harbour>();
+		ArrayList<Hex> hexes = new ArrayList<Hex>();
+		ArrayList<PlayerSetting> plas = new ArrayList<PlayerSetting>();
+		ArrayList<game.Hex> boardHexes = game1.getBoard().getHexes();
+		ArrayList<Port> boadPorts = game1.getBoard().getPorts();
+		ArrayList<game.Player> boardPlayers = game1.getPlayers();
+		for(game.Hex h:boardHexes){
+			int terrNum = 0;
+			switch(h.getTerrain()){
+				case "P":
+					 terrNum = 1;
+					break;
+				case "F":
+					 terrNum = 4;
+					break;
+				case "M":
+					 terrNum = 2;
+					break;
+				case "H":
+					 terrNum = 0;
+					break;
+				case "G":
+					 terrNum = 3;
+					break;
+			}
+			intergroup.board.Board.Hex.Builder proHex = Hex.newBuilder();
+			proHex.setLocation(Point.newBuilder().setX(h.getCoordinate().getX()).setY(h.getCoordinate().getY()).build());
+			proHex.setNumberToken(h.getNumber());
+			proHex.setTerrainValue(terrNum);
+			hexes.add(proHex.build());
+		}
+		
+		for(Port p : boadPorts){
+			intergroup.board.Board.Harbour.Builder proHab = Harbour.newBuilder();
+			Coordinate[] loc  = swapToProtoOrder(new Coordinate[]{p.getCoordinateA(),p.getCoordinateB()});
+			proHab.setLocation(Edge.newBuilder().setA(Point.newBuilder().setX(loc[0].getX()).setY(loc[0].getY())).setB(Point.newBuilder().setX(loc[1].getX()).setY(loc[1].getY()).build()).build());
+			int recNo = 0;
+			switch(p.getResource()){
+				case "?":
+					break;
+				case "H":
+					recNo = 1;
+					break;
+				case "F":
+					recNo = 2;
+					break;
+				case "P":
+					recNo = 3;
+					break;
+				case "G":
+					recNo = 4;
+					break;
+				case "M":
+					recNo = 5;
+					break;
+				
+			}
+			proHab.setResourceValue(recNo);
+			habs.add(proHab.build());
+		}
+		for(game.Player play : boardPlayers){
+			int colSet = 0;
+			switch(play.getName()){
+				case "W":
+					colSet = 3;
+					break;
+				case "R":
+					colSet = 0;
+					break;
+				case "G":
+					colSet = 4;
+					break;
+				case "B":
+					colSet = 1;
+					break;
+				case "O":
+					colSet = 2;
+					break;
+				case "Y":
+					colSet = 5;
+					break;
+			}
+			
+			intergroup.lobby.Lobby.GameSetup.PlayerSetting.Builder proSet = PlayerSetting.newBuilder().setUsername(play.getUserName()).setPlayer(Player.newBuilder().setIdValue(play.getID()).build());
+			proSet.setColourValue(colSet);
+			plas.add(proSet.build());
+		}
+		
+		for(game.Player p: game1.getPlayers()){
+			Builder set = GameSetup.newBuilder().addAllHarbours(habs).addAllHexes(hexes).addAllPlayerSettings(plas);
+			set.setOwnPlayer(Player.newBuilder().setIdValue(p.getID()).build());
+			GameSetup setup = set.build();
+			Message bigGameSetup = Message.newBuilder().setEvent(Event.newBuilder().setBeginGame(setup).build()).build();
+			printToClient(bigGameSetup,p);
+		}
+		
 	}
 
 	//asks the players if they want to play again

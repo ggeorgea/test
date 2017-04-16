@@ -5,13 +5,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
-
 import java.io.IOException;
 
 import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
 import intergroup.board.Board;
+import intergroup.lobby.Lobby.Usernames;
 
 /**
  * Class contains all the methods to set up the game and board
@@ -42,7 +42,7 @@ public class Setup {
 //-----Methods to initialise players and their order for the game-----//
 
 	//gets an array list of players with unique identifiers
-	public static ArrayList<Player> setPlayers(Scanner scanner, ArrayList<PlayerSocket> socketArray) throws IOException {
+	public static ArrayList<Player> setPlayers(Scanner scanner, ArrayList<PlayerSocket> socketArray, ArrayList<String> unsernames) throws IOException {
 
 		//gets how many players there are
 		int n = requestPlayers(scanner, socketArray.size());
@@ -66,6 +66,7 @@ public class Setup {
 			//pairs players with clients
 			if (i < socketArray.size()) {
 				player.setpSocket(socketArray.get(i));
+				player.setUserName(unsernames.get(i));
 			}
 			
 			selectPlayerName(player, players, i, scanner);
