@@ -38,8 +38,6 @@ import java.net.UnknownHostException;
  			Game game1 = new Game();
  			game1.setBoard(board1);
  
- 			Map.printMap(game1.getBoard(), new ArrayList<Player>());
- 
  			//sets up development cards
  			ArrayList<DevelopmentCard> developmentCards = Setup.getDevCardDeck();
  			game1.setDevelopmentCards(developmentCards);
@@ -65,6 +63,8 @@ import java.net.UnknownHostException;
  			//changes player order with largest dice roll first
  			Setup.getPlayerOrder(game1, scanner);
  
+ 			Map.printMap(game1.getBoard(), players);
+ 			
  			//place roads and settlements
  			Setup.setInitialRoadsAndSettlements(game1, scanner);
  

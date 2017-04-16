@@ -193,6 +193,7 @@ public class Trade {
 		
 		for (int i = 0; i < tradeNumber; i++) {
 			playerResources.remove(removeResource);
+			returnToBank(removeResource, game1);
 		}
 		
 		ResourceCard addResource = gainChoice.get(0);
@@ -207,6 +208,39 @@ public class Trade {
 			if (players.get(i) != player) {
 				Catan.printToClient("Player " + player.getName() + "traded with the bank", players.get(i));
 			}
+		}
+	}
+	
+	public static void returnToBank(ResourceCard removeResource, Game game1) {
+		
+		ArrayList<ResourceCard> temp;
+		
+		switch(removeResource.getResource()){
+		case "ore" :
+			temp = game1.getOre();
+			temp.add(removeResource);
+			game1.setOre(temp);
+			break;
+		case "grain" :
+			temp = game1.getGrain();
+			temp.add(removeResource);
+			game1.setGrain(temp);
+			break;
+		case "lumber" :
+			temp = game1.getLumber();
+			temp.add(removeResource);
+			game1.setLumber(temp);
+			break;
+		case "wool" :
+			temp = game1.getWool();
+			temp.add(removeResource);
+			game1.setWool(temp);
+			break;
+		case "brick" :
+			temp = game1.getBrick();
+			temp.add(removeResource);
+			game1.setBrick(temp);
+			break;
 		}
 	}
 
