@@ -67,7 +67,9 @@ public class Turn {
  					Player.printHand(player, scanner);
  					break;
  				case 5 :
- 					Map.printMap(game1.getBoard(), players);
+ 					ArrayList<Player> playerToPrint = new ArrayList<Player>();
+ 					playerToPrint.add(player);
+ 					Map.printMap(game1.getBoard(), playerToPrint);
  					break;
  				case 6 :
  					Catan.printToClient("Your Longest Road Length is: " + player.getLongestRoad(), player);
