@@ -12,13 +12,12 @@ import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
 import intergroup.board.Board;
-<<<<<<< HEAD
+
 import intergroup.board.Board.InitialResourceAllocation;
 import intergroup.board.Board.ResourceAllocation.Builder;
 import intergroup.lobby.Lobby.Usernames;
 import intergroup.resource.Resource.Counts;
-=======
->>>>>>> b43348d1f9b2f88b085b65baed505ca6a1d2c6fa
+
 
 /**
  * Class contains all the methods to set up the game and board
@@ -630,32 +629,32 @@ public class Setup {
 		Coordinate nearbyHex;
 
 		nearbyHex = new Coordinate(x, y-1);
-		if (game.Board.CoordInRange(nearbyHex)) {
+		if (game.Board.coordInRange(nearbyHex)) {
 			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
 		}
 
 		nearbyHex = new Coordinate(x, y+1);
-		if (game.Board.CoordInRange(nearbyHex)) {
+		if (game.Board.coordInRange(nearbyHex)) {
 			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
 		}
 
 		nearbyHex = new Coordinate(x-1, y);
-		if (game.Board.CoordInRange(nearbyHex)) { 
+		if (game.Board.coordInRange(nearbyHex)) { 
 			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
 		}
 
 		nearbyHex = new Coordinate(x+1, y);
-		if (game.Board.CoordInRange(nearbyHex)) {
+		if (game.Board.coordInRange(nearbyHex)) {
 			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
 		}
 
 		nearbyHex = new Coordinate(x-1, y-1);
-		if (game.Board.CoordInRange(nearbyHex)) {
+		if (game.Board.coordInRange(nearbyHex)) {
 			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
 		}
 
 		nearbyHex = new Coordinate(x+1, y+1);
-		if (game.Board.CoordInRange(nearbyHex)) {
+		if (game.Board.coordInRange(nearbyHex)) {
 			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
 		}
 
