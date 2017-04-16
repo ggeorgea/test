@@ -29,7 +29,7 @@ public class Robber {
 
 	//checks if any players have more than seven cards when the robber
 	//is activated
-	public static void checkCardRemoval(Game game1, Scanner scanner) {
+	public static void checkCardRemoval(Game game1, Scanner scanner) throws IOException {
 
 		ArrayList<Player> players = game1.getPlayers();
 
@@ -51,62 +51,103 @@ public class Robber {
 	}
 
 	//asks players with more than seven cards to choose the cards they remove
-	public static void cardRemoval(Player player, ArrayList<ResourceCard> cards, Game game1, Scanner scanner) {
+	public static void cardRemoval(Player player, ArrayList<ResourceCard> cards, Game game1, Scanner scanner) throws IOException {
 
 		//calculates how many cards to be removed
 		int noCardsToRemove = cards.size()/2;
-
-		Catan.printToClient("Please select " + noCardsToRemove + " cards to remove", player);
-		for (int i = 0; i < noCardsToRemove; i++) {
-
-			//asks the player to choose a card to remove
-			for (int j = 0; j < cards.size(); j++) {
-				Catan.printToClient(j + ": " + cards.get(j).getResource(), player);
-			}
-
-			//removes the card they choose
-			try {
-				
-				int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
-
-				if (choice < 0 || choice >= cards.size()) {
-					Catan.printToClient("Invalid choice. Please choose again", player);
-					cardRemoval(player, cards, game1, scanner);
+		
+		Catan.printToClient("Please choose resources to discard.", player);
+		Message enter = Message.newBuilder().build();
+		
+		boolean success = false;
+		
+		while (!success) {
+			
+			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+		
+			if (enter.getRequest().getBodyCase().getNumber() == 10) {
+					success = true;
 				}
-
-				ResourceCard card = cards.get(choice);
-
-				switch (card.getResource()) {
-				case ORE :
-					ArrayList<ResourceCard> ore = game1.getOre();
-					ore.add(card);
-					break;
-				case LUMBER :
-					ArrayList<ResourceCard> lumber = game1.getLumber();
-					lumber.add(card);
-					break;
-				case BRICK :
-					ArrayList<ResourceCard> brick = game1.getBrick();
-					brick.add(card);
-					break;
-				case WOOL :
-					ArrayList<ResourceCard> wool = game1.getWool();
-					wool.add(card);
-					break;
-				case GRAIN :
-					ArrayList<ResourceCard> grain = game1.getGrain();
-					grain.add(card);
-					break;
+				else {
+					Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a move robber request").build()).build()).build(), player.getpSocket().getClientSocket());
 				}
-
-				cards.remove(choice);
+		}
+		
+		int noBrick = enter.getRequest().getDiscardResources().getBrick();
+		int noOre  = enter.getRequest().getDiscardResources().getOre();
+		int noLumber = enter.getRequest().getDiscardResources().getLumber();
+		int noWool = enter.getRequest().getDiscardResources().getWool();
+		int noGrain = enter.getRequest().getDiscardResources().getGrain();
+		
+		if (noBrick + noWool + noLumber + noWool + noGrain != noCardsToRemove) {
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not the correct amount of resources").build()).build()).build(), player.getpSocket().getClientSocket());
+			cardRemoval(player, cards, game1, scanner);
+			return;
+		}
+		else {
+			
+			ArrayList<ResourceCard> brick = game1.getBrick();
+			ArrayList<ResourceCard> ore = game1.getOre();
+			ArrayList<ResourceCard> lumber = game1.getLumber();
+			ArrayList<ResourceCard> wool = game1.getWool();
+			ArrayList<ResourceCard> grain = game1.getGrain();
+			
+			for (int i = 0; i < noBrick; i++) {
+				for (int j = 0; j < cards.size(); j++) {
+					if (cards.get(j).getResource().equals(BRICK)) {
+						
+						brick.add(cards.get(j));
+						cards.remove(cards.get(j));
+					}
+				}
 			}
-			catch(InputMismatchException e) {
-				
-				Catan.printToClient("Invalid choice. Please choose again", player);
-				scanner.nextLine();
-				cardRemoval(player,cards,game1,scanner);
+			
+			for (int i = 0; i < noOre; i++) {
+				for (int j = 0; j < cards.size(); j++) {
+					if (cards.get(j).getResource().equals(BRICK)) {
+						
+						ore.add(cards.get(j));
+						cards.remove(cards.get(j));
+					}
+				}
 			}
+			
+			for (int i = 0; i < noLumber; i++) {
+				for (int j = 0; j < cards.size(); j++) {
+					if (cards.get(j).getResource().equals(BRICK)) {
+						
+						lumber.add(cards.get(j));
+						cards.remove(cards.get(j));
+					}
+				}
+			}
+			
+			for (int i = 0; i < noWool; i++) {
+				for (int j = 0; j < cards.size(); j++) {
+					if (cards.get(j).getResource().equals(BRICK)) {
+						
+						wool.add(cards.get(j));
+						cards.remove(cards.get(j));
+					}
+				}
+			}
+			
+			for (int i = 0; i < noGrain; i++) {
+				for (int j = 0; j < cards.size(); j++) {
+					if (cards.get(j).getResource().equals(BRICK)) {
+						
+						grain.add(cards.get(j));
+						cards.remove(cards.get(j));
+					}
+				}
+			}
+			
+			
+			game1.setBrick(brick);
+			game1.setOre(ore);
+			game1.setLumber(lumber);
+			game1.setWool(wool);
+			game1.setGrain(grain);			
 		}
 	}
 

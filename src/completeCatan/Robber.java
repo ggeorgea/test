@@ -80,22 +80,27 @@ public class Robber {
 				case ORE :
 					ArrayList<ResourceCard> ore = game1.getOre();
 					ore.add(card);
+					game1.setOre(ore);
 					break;
 				case LUMBER :
 					ArrayList<ResourceCard> lumber = game1.getLumber();
 					lumber.add(card);
+					game1.setLumber(lumber);
 					break;
 				case BRICK :
 					ArrayList<ResourceCard> brick = game1.getBrick();
 					brick.add(card);
+					game1.setBrick(brick);
 					break;
 				case WOOL :
 					ArrayList<ResourceCard> wool = game1.getWool();
 					wool.add(card);
+					game1.setWool(wool);
 					break;
 				case GRAIN :
 					ArrayList<ResourceCard> grain = game1.getGrain();
 					grain.add(card);
+					game1.setGrain(grain);
 					break;
 				}
 
