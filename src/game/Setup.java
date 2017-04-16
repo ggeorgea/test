@@ -11,7 +11,10 @@ import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
 import intergroup.board.Board;
+import intergroup.board.Board.InitialResourceAllocation;
+import intergroup.board.Board.ResourceAllocation.Builder;
 import intergroup.lobby.Lobby.Usernames;
+import intergroup.resource.Resource.Counts;
 
 /**
  * Class contains all the methods to set up the game and board
@@ -368,7 +371,9 @@ public class Setup {
 
 	//gets the players to set the initial roads and settlements before turn 1
 	public static void setInitialRoadsAndSettlements(Game game1, Scanner scanner) throws IOException {
-
+		ArrayList<ArrayList<ResourceCard>> recs = new ArrayList<ArrayList<ResourceCard>>();
+		
+		
 		ArrayList<Player> players = game1.getPlayers();
 		game.Board board1 = game1.getBoard();
 
@@ -384,9 +389,43 @@ public class Setup {
 			//each player places road, then settlement
 			Road road = placeRoad(players.get(i), board1, scanner, game1);
 			Intersection settlement = placeSettlement(players.get(i), road, board1, scanner, game1);
-			initialResourceAllocation(players.get(i), settlement, game1);
+			recs.add(initialResourceAllocation(players.get(i), settlement, game1));
 		}
 
+		ArrayList<Board.ResourceAllocation> proRecAl = new ArrayList<Board.ResourceAllocation>();
+		for (int i = players.size()-1; i >= 0; i--) {
+			ArrayList<ResourceCard> thisAlloc = recs.get(i);
+			Builder proRA = intergroup.board.Board.ResourceAllocation.newBuilder();
+			proRA.setPlayer(intergroup.board.Board.Player.newBuilder().setIdValue(players.get(i).getID()).build());
+			intergroup.resource.Resource.Counts.Builder countBuilder = Counts.newBuilder().setBrick(0).setGrain(0).setLumber(0).setWool(0).setOre(0);
+			
+			for(ResourceCard r : thisAlloc){
+				switch(r.getResource()){
+					case "ore":
+						countBuilder.setOre(countBuilder.getOre()+1);
+						break;
+					case "grain":
+						countBuilder.setGrain(countBuilder.getGrain()+1);
+						break;
+					case "lumber":
+						countBuilder.setLumber(countBuilder.getLumber()+1);
+						break;
+					case "wool":
+						countBuilder.setWool(countBuilder.getWool()+1);
+						break;
+					case "brick":
+						countBuilder.setBrick(countBuilder.getBrick()+1);
+						break;
+				}
+			}
+			proRA.setResources(countBuilder.build());
+			proRecAl.add(proRA.build());
+		}
+		Message mess = Message.newBuilder().setEvent(Event.newBuilder().setInitialAllocation(InitialResourceAllocation.newBuilder().addAllResourceAllocation(proRecAl).build()).build()).build();
+		for(Player j:players){
+			Catan.printToClient(mess, j);
+		}
+		
 		game1.setPlayers(players);
 		game1.setBoard(board1);
 	}
@@ -577,7 +616,7 @@ public class Setup {
 	}
 
 	//gets the resources based on the placement of the second settlement for the player
-	public static void initialResourceAllocation(Player player, Intersection settlement, Game game1) {
+	public static ArrayList<ResourceCard> initialResourceAllocation(Player player, Intersection settlement, Game game1) {
 
 		ArrayList<ResourceCard> resourceCards = player.getResourceCards();
 
@@ -634,6 +673,7 @@ public class Setup {
 		}
 		
 		player.setResourceCards(resourceCards);
+		return resourceCards;
 	}
 
 	//gets the resources for a player from a hex
