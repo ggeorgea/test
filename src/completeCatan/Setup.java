@@ -472,32 +472,32 @@ public class Setup {
  		Coordinate nearbyHex;
  
  		nearbyHex = new Coordinate(x, y-1);
- 		if (Board.CoordInRange(nearbyHex)) {
+ 		if (Board.coordInRange(nearbyHex)) {
  			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
  		}
  
  		nearbyHex = new Coordinate(x, y+1);
- 		if (Board.CoordInRange(nearbyHex)) {
+ 		if (Board.coordInRange(nearbyHex)) {
  			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
  		}
  
  		nearbyHex = new Coordinate(x-1, y);
- 		if (Board.CoordInRange(nearbyHex)) {
+ 		if (Board.coordInRange(nearbyHex)) {
  			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
  		}
  
  		nearbyHex = new Coordinate(x+1, y);
- 		if (Board.CoordInRange(nearbyHex)) {
+ 		if (Board.coordInRange(nearbyHex)) {
  			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
  		}
  
  		nearbyHex = new Coordinate(x-1, y-1);
- 		if (Board.CoordInRange(nearbyHex)) {
+ 		if (Board.coordInRange(nearbyHex)) {
  			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
  		}
  
  		nearbyHex = new Coordinate(x+1, y+1);
- 		if (Board.CoordInRange(nearbyHex)) {
+ 		if (Board.coordInRange(nearbyHex)) {
  			resourceCards = getResources(player, resourceCards, nearbyHex, game1);
  		}
  

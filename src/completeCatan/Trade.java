@@ -432,19 +432,19 @@ public class Trade {
 		ResourceCard tradePort = null;
 		
 		switch (portChoice.getResource().toLowerCase()) {
-		case "brick" :
+		case BRICK :
 			portChoice = game1.getBrick().get(0);
 			break;
-		case "grain" :
+		case GRAIN :
 			portChoice = game1.getGrain().get(0);
 			break;
-		case "lumber" :
+		case LUMBER :
 			portChoice = game1.getLumber().get(0);
 			break;
-		case "ore" :
+		case ORE :
 			portChoice = game1.getOre().get(0);
 			break;
-		case "wool" :
+		case WOOL :
 			portChoice = game1.getWool().get(0);
 			break;
 		}
@@ -578,7 +578,6 @@ public class Trade {
 	public static void tradePlayer(Player player, Scanner scanner, Game game1) throws IOException {
 
 		ArrayList<Player> players = game1.getPlayers();
-		players.remove(player);
 
 		//asks the player to choose a player to trade with
 		Catan.printToClient("Who do you want to trade with?", player);
@@ -593,6 +592,13 @@ public class Trade {
 		if (choice > players.size()+1 || choice <= 0) {
 			
 			Catan.printToClient("Invalid choice. Please choose again.", player);
+			tradePlayer(player, scanner, game1);
+			return;
+		}
+		
+		if (players.get(choice-1).equals(player)) {
+			
+			Catan.printToClient("You cannot trade with yourself. Please choose again.", player);
 			tradePlayer(player, scanner, game1);
 			return;
 		}
@@ -844,7 +850,18 @@ public class Trade {
 		
 		for (int i = 0; i < resourcesToTrade.size(); i++) {
 		
-			hasResource = resources.remove(resourcesToTrade.get(i));
+			String resource = resourcesToTrade.get(i).getResource();
+			
+			for (int j = 0; j < resources.size(); j++) {
+				
+				if (resources.get(j).getResource().equals(resource)) {
+					hasResource = resources.remove(resources.get(j));
+					break;
+				}
+				else {
+					hasResource = false;
+				}
+			}			
 			
 			if(!hasResource) {
 				break;
