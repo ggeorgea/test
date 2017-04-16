@@ -683,12 +683,13 @@ public class Trade {
 		}
 
 		boolean validTrade = checkOffer(playerToTrade, playerTradeToTrade);
-
+		boolean tradeRestore = false;
+		
 		//checks if the trade is valid
 		if (!validTrade) {
 			
 			Catan.printToClient("You cannot trade the same resources i.e 1 wool for 2 wool. Please choose again.", playerTrade);
-			restoreResources(player, playerTrade, playerToTrade, playerTradeToTrade);
+			restoreResources(player, playerTrade, playerToTrade, playerTradeToTrade, tradeRestore);
 			
 			return proposeTrade(player, playerTrade, scanner);
 		}
@@ -703,7 +704,7 @@ public class Trade {
 				tradePlayerResources(player, playerTrade, playerToTrade, playerTradeToTrade);
 			}
 			else {
-				boolean tradeRestore = true;
+				tradeRestore = true;
 				restoreResources(player, playerTrade, playerToTrade, playerTradeToTrade, tradeRestore);
 				offer = REJECT_TRADE;
 			}
@@ -711,7 +712,7 @@ public class Trade {
 
 		//otherwise the resources have to be added back in to both players' hands
 		else {
-			boolean tradeRestore = false;
+			tradeRestore = false;
 			restoreResources(player, playerTrade, playerToTrade, playerTradeToTrade, tradeRestore);
 		}
 
