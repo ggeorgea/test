@@ -41,22 +41,21 @@ public class ResourceAllocation {
 		ArrayList<Hex> hexes = game1.getBoard().getHexes();
 		Board board = game1.getBoard();
 		ArrayList<String> bankHasResources = new ArrayList<String>();
-		
+
 		resetNewResources(players);
 		
 		for (int i = 0; i < hexes.size(); i++) {
-			
+
 			Hex hex = hexes.get(i);
-			
+
 			//if the hex value is the same as the dice roll and the robber
 			//is not there, resources can be given out
 			if (hex.getNumber() == hexValue) {
 				if (!(hex.getisRobberHere().equals(ROBBER))) {
-					
+
 					//checks each intersection around the hex for 
 					//settlements and cities and gives the owners 
 					//resources
-					
 					int x = hex.getCoordinate().getX();
 					int y = hex.getCoordinate().getY();
 					
@@ -67,26 +66,26 @@ public class ResourceAllocation {
 
 					nearbyIntersection = new Coordinate(x, y+1);
 					bankHasResources.add(getIntersectionResources(board, nearbyIntersection, hex, game1));
-					
+
 					nearbyIntersection = new Coordinate(x-1, y);
 					bankHasResources.add(getIntersectionResources(board, nearbyIntersection, hex, game1));
-					
+
 					nearbyIntersection = new Coordinate(x+1, y);
 					bankHasResources.add(getIntersectionResources(board, nearbyIntersection, hex, game1));
-					
+
 					nearbyIntersection = new Coordinate(x-1, y-1);
 					bankHasResources.add(getIntersectionResources(board, nearbyIntersection, hex, game1));
-					
+
 					nearbyIntersection = new Coordinate(x+1, y+1);
 					bankHasResources.add(getIntersectionResources(board, nearbyIntersection, hex, game1));
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < bankHasResources.size(); i++) {
-			
+
 			int playersWithResources = 0;
-			
+
 			for (int j = 0; j < players.size(); j++) {
 				if (players.get(j).getNewResourceCards().contains(bankHasResources.get(i))) {
 					playersWithResources++;
@@ -103,7 +102,7 @@ public class ResourceAllocation {
 		game1.setPlayers(players);
 		return prorecAl;
 	}
-	
+
 	//resets the 'newResourceCards' field in each player object
 	public static void resetNewResources(ArrayList<game.Player> players) {
 		
@@ -167,7 +166,7 @@ public class ResourceAllocation {
 		ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
 		
 		for (int i = 0; i < n; i++) {
-			
+
 			ResourceCard card = null;
 			switch(terrain) {
 				case PASTURE : 
@@ -176,7 +175,7 @@ public class ResourceAllocation {
 				if (wool.size() <= 0) {
 					return WOOL;
 				}
-				
+
 				card = wool.get(0);
 				wool.remove(0);
 				game1.setWool(wool);
@@ -231,7 +230,7 @@ public class ResourceAllocation {
 				newResourceCards.add(card);
 			}
 		}
-		
+
 		player.setNewResourceCards(newResourceCards);
 		return null;
 	}
@@ -261,7 +260,7 @@ public class ResourceAllocation {
 			}	
 		}
 	}
-	
+
 	//adds the cards in 'newResourceCards' to 'resourceCards' for each player
 	public static ArrayList<intergroup.board.Board.ResourceAllocation> setResources(ArrayList<game.Player> players) {
 		ArrayList<intergroup.board.Board.ResourceAllocation> proRecAl = new ArrayList<intergroup.board.Board.ResourceAllocation>();
@@ -271,15 +270,15 @@ public class ResourceAllocation {
 			PlayerSocket socket = player.getpSocket();
 			ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
 			ArrayList<ResourceCard> cards = player.getResourceCards();
-			
+
 			//if the player gets resources, they are added to their hand and
 			Builder proC = Counts.newBuilder();
 			//the allocation printed
 			if (newResourceCards.size() > 0) {
 			//	Catan.printToClient("You get:", players.get(i));
-				
+
 				for (int j = 0; j < newResourceCards.size(); j++) {
-					
+
 					cards.add(newResourceCards.get(j));
 					switch(newResourceCards.get(j).getResource()){
 						case "ore":
@@ -298,9 +297,9 @@ public class ResourceAllocation {
 						proC.setBrick(proC.getBrick()+1);
 						break;
 					}
-					
+
 				}
-				
+
 				player.setResourceCards(cards);
 			}
 			thisProAl.setResources(proC.build());

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.IOException;
-
 import intergroup.EmptyOuterClass.Empty;
 import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
@@ -93,62 +92,62 @@ public class Turn {
 				}
 				
 				switch(num){
-				case 2:
+					case 2:
 					//buydevcard
 					DevelopmentCard.buyDevelopmentCard(player, game1, enter);
 					break;
-				case 3:
+					case 3:
 					//buildroad
 					Road.buildRoad(player, game1, scanner, enter, false);
 					break;
-				case 4:
+					case 4:
 					//buildsettlement
 					game.Building.buildSettlement(player, game1, scanner, enter);
 					break;
-				case 5:
+					case 5:
 					//buildcity
 					game.Building.buildCity(player, game1, scanner, enter);
 					break;
-				case 7:
+					case 7:
 					//play dev card
 					DevelopmentCard.playDevelopmentCard(player, game1, enter, hasPlayedDevCard, scanner);
 					hasPlayedDevCard = true;
 					break;
-				case 8:
+					case 8:
 					trade(player, scanner, game1, enter);
 					break;
-				case 13:
+					case 13:
 					choice = END_TURN;
 					break;
-				case 15:
+					case 15:
 					//TODO chatmessage, treating it as a normal choice for now!
 					String chatMsg = enter.getRequest().getChatMessage();
 					switch (Integer.parseInt(chatMsg)) {
-					case 1 :
+						case 1 :
 						build(player, game1, scanner, enter);
 						break;
-					case 2 :
+						case 2 :
 						DevelopmentCard.playDevelopmentCard(player, game1, enter, hasPlayedDevCard, scanner);
 						hasPlayedDevCard = true;
 						break;
-					case 3 :
+						case 3 :
 						trade(player, scanner, game1, enter);
 						break;
-					case 4 :
+						case 4 :
 						Player.printHand(player, scanner);
 						break;
-					case 5 :
+						case 5 :
 						Map.printMap(game1.getBoard(), players);
 						break;
-					case 6 :
+						case 6 :
 						Catan.printToClient("Your Longest Road Length is: " + player.getLongestRoad(), player);
 						break;
-					case 7:
+						case 7:
 						Catan.printToClient("You have " + player.getVictoryPoints() + " victory points", player);
 						break;
-					case 8:
+						case 8:
 						break;
-					default :
+						default :
 						Catan.printToClient("Invalid choice. Please choose again", player);
 					}
 					
@@ -188,19 +187,19 @@ public class Turn {
 		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 
 		switch(choice) {
-		case 1 :
+			case 1 :
 			Road.buildRoad(player, game1, scanner, enter, false);
 			break;
-		case 2 :
+			case 2 :
 			Building.buildSettlement(player, game1, scanner, enter);
 			break;
-		case 3 :
+			case 3 :
 			Building.buildCity(player, game1, scanner, enter);
 			break;
-		case 4 :
+			case 4 :
 			DevelopmentCard.buyDevelopmentCard(player, game1, enter);
 			break;
-		default :
+			default :
 			Catan.printToClient("Invalid choice, Please choose again", player);
 			build(player, game1, scanner, enter);
 		}
