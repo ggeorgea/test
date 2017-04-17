@@ -20,7 +20,6 @@ public class Client {
 	Board board = new Board();
 	int myID = -1;
 	Player myPlayer;
-	
 	boolean gameStarted= false;
 	int mybrick = 0;
 	int mylumber = 0;
@@ -33,7 +32,7 @@ public class Client {
 	int victoryPointsCards = 0;
 	int yearOfPlentyCards = 0;
 	int myRoadBuildingCards = 0;
-	
+
 	public void adjustRecourses(int brickAdj, int lumberAdj, int woolAdj, int grainAdj, int oreAdj){
 		mybrick+=brickAdj;
 		mylumber+=lumberAdj;
@@ -44,7 +43,6 @@ public class Client {
 	public void resolveEvent(Event event, Socket mySocket) {
 		switch (event.getTypeCase().name()) {
 			case "INITIALALLOCATION":
-				//TODO:initialallocation
 			for(ResourceAllocation rA : event.getInitialAllocation().getResourceAllocationList()){
 				if(rA.getPlayer().getIdValue()==myID){
 					mybrick += rA.getResources().getBrick();
@@ -81,15 +79,15 @@ public class Client {
 					}
 				}
 			}
-			
+
 			break;
 			case "ROADBUILT":
 			int rx1 = event.getRoadBuilt().getA().getX();
 			int ry1 = event.getRoadBuilt().getA().getY();
 			int rx2 = event.getRoadBuilt().getB().getX();
 			int ry2 = event.getRoadBuilt().getB().getY();
-			
-			
+
+
 			Player roadplayer = null;
 			for(Player p : game.getPlayers()){
 				if(p.getID()==event.getInstigator().getIdValue()){
@@ -101,7 +99,7 @@ public class Client {
 			road.setOwner(roadplayer);
 			roadplayer.setNoRoads(roadplayer.getNoRoads() - 1);
 			System.out.println("player "+roadplayer.getID()+" placed a road at ("+rx1+", "+ry1+"),("+rx2+", "+ry2+")");
-			
+
 			if(roadplayer.getID()==myID){
 				mybrick --;
 				mylumber --;
@@ -123,7 +121,7 @@ public class Client {
 			thisplayer.setNoSettlements(thisplayer.getNoSettlements() + 1);
 			thisplayer.setVictoryPoints(thisplayer.getVictoryPoints() + 1);		
 			Trade.checkIfPortSettled(thisplayer, settlement, game);		
-			
+
 			System.out.println("player "+thisplayer.getID()+" placed a settlement at ("+bx+", "+by+")");
 			if(thisplayer.getID()==myID){
 				mybrick --;
@@ -136,7 +134,7 @@ public class Client {
 			int cx = event.getCityBuilt().getX();
 			int cy = event.getCityBuilt().getY();
 			Intersection city = (Intersection) game.getBoard().getLocationFromCoordinate(new Coordinate (cx,cy)).getContains();
-			
+
 			Player cityPlayer = null;
 			for(Player p : game.getPlayers()){
 				if(p.getID()==event.getInstigator().getIdValue()){
@@ -196,7 +194,7 @@ public class Client {
 						yearOfPlentyCards++;
 						System.out.println("you bought a year Of Plenty Card");
 					}
-					
+
 					break;					
 				}				
 				mywool --;
@@ -206,24 +204,24 @@ public class Client {
 			break;
 			case "DEVCARDPLAYED":
 			int playableType = event.getDevCardPlayed().getNumber();
-			
+
 			if(event.getInstigator().getIdValue()!=myID){
 				int instID = event.getInstigator().getIdValue();
 				switch(playableType){
-					  //KNIGHT 
+					//KNIGHT 
 					case 0:
 					System.out.println("player "+instID+" played a knight");
-					 // ROAD_BUILDING = 
+					// ROAD_BUILDING = 
 					case 1:
 					System.out.println("player "+instID+" played a road building card");
-					 // MONOPOLY = 
+					// MONOPOLY = 
 					case 2:
 					System.out.println("player "+instID+" played a monopoly card");
 					//  YEAR_OF_PLENTY = 
 					case 3: 
 					System.out.println("player "+instID+" played a year Of Plenty Card");
 				}
-				
+
 			}else{
 				switch(playableType){
 						  //KNIGHT 
@@ -255,7 +253,7 @@ public class Client {
 			case "RESOURCESTOLEN":
 			int quant = event.getResourceStolen().getQuantity();
 			int reco = event.getResourceStolen().getResourceValue();
-			
+
 			if(event.getInstigator().getIdValue()==myID){
 				switch(reco){
 					//BRICK
@@ -347,7 +345,7 @@ public class Client {
 					case  5:						
 					System.out.println("player "+event.getInstigator().getIdValue()+" chose ore");
 					break;
-					
+
 				}
 			}else{
 				switch(event.getResourceChosenValue()){
@@ -375,7 +373,7 @@ public class Client {
 					case  5:						
 					System.out.println("you chose ore");
 					break;
-					
+
 				}
 			}
 			break;
@@ -389,7 +387,7 @@ public class Client {
 
 			if(event.getInstigator().getIdValue()!=myID){
 				System.out.println("player "+event.getInstigator().getIdValue()+"discarded brick: "+brick+", lumber: "+lumber+", wool: "+wool+", grain: "+grain+", ore:"+ore);
-				
+
 			}else{
 				System.out.println("you discarded brick: "+brick+", lumber: "+lumber+", wool: "+wool+", grain: "+grain+", ore:"+ore);
 				mybrick -= brick;
@@ -410,7 +408,7 @@ public class Client {
 			int woolW = event.getBankTrade().getWanting().getWool();
 			int grainW = event.getBankTrade().getWanting().getGrain();
 			int oreW = event.getBankTrade().getWanting().getOre();
-			
+
 			if(event.getInstigator().getIdValue()!=myID){
 				System.out.println("player "+event.getInstigator().getIdValue()+" traded with the bank, GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
 			}else{
@@ -547,7 +545,7 @@ public class Client {
 						break;
 					}
 				}
-				
+
 				int rec = habour.getResourceValue();
 				String recourse = "";
 				switch(rec){
@@ -574,8 +572,8 @@ public class Client {
 				}
 				boardPort.setResource(recourse);
 				myID = event.getBeginGame().getOwnPlayer().getIdValue();
-				
-				
+
+
 			}
 			game.setBoard(board);
 			game.setPlayers(players);
@@ -598,14 +596,14 @@ public class Client {
 				}
 			}
 			lobbyMem = lobbyNames;
-			
+
 			break;
 			case "MONOPOLYRESOLUTION":					
 			for(int i = 0; i<event.getMonopolyResolution().getTheftsCount();i++){
 				Steal thisSteal = event.getMonopolyResolution().getThefts(i);
 				int Aquant = thisSteal.getQuantity();
 				int Areco = thisSteal.getResourceValue();
-				
+
 				if(event.getInstigator().getIdValue()==myID){
 					switch(Areco){
 						//BRICK

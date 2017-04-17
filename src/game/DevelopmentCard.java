@@ -42,7 +42,7 @@ public class DevelopmentCard {
 	}
 	
 	public DevelopmentCard(String type, boolean hidden) {
-	
+		
 		this.type = type;
 		this.hidden = hidden;
 	}
@@ -74,39 +74,39 @@ public class DevelopmentCard {
 		ArrayList<ResourceCard> resources = hasDevelopmentCardResources(player);
 		ArrayList<DevelopmentCard> developmentCards = game1.getDevelopmentCards();
 		ArrayList<DevelopmentCard> playerDevCards = player.getDevelopmentCards();
-	
+		
 		//checks if a development card can be bought
 		if (resources.size() != 3) {
-		
+			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("You do not have enough resources").build()).build()).build(), player.getpSocket().getClientSocket());
 			return;
 		}
 		else if (developmentCards.size() <= 0) {
-		
+			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("There are no development cards left").build()).build()).build(), player.getpSocket().getClientSocket());
 			return;			
 		}
-	
+		
 		//if a development card can be bought, the resources are removed from
 		//the player's hand and the development card is added
 		else {
-		
+			
 			ArrayList<ResourceCard> cards = player.getResourceCards();
-		
+			
 			for (int i = 0; i < 3; i++) {
 				cards.remove(resources.get(i));
 			}
-		
+			
 			player.setResourceCards(cards);
-		
+			
 			DevelopmentCard developmentCard = developmentCards.get(0);
 			developmentCards.remove(developmentCard);
 			game1.setDevelopmentCards(developmentCards);
-		
+			
 			playerDevCards.add(developmentCard);
-		
+			
 			int card = -1;
-		
+			
 			if (developmentCard.getType().equals(KNIGHT)) {
 				card = 0;
 			}
@@ -119,45 +119,44 @@ public class DevelopmentCard {
 			if (developmentCard.getType().equals(YEAR_OF_PLENTY)) {
 				card = 3;
 			}
-		
+			
 			int playerNum = 0;
-		
+			
 			for (int i = 0; i < game1.getPlayers().size(); i++) {
 				if (game1.getPlayers().get(i).equals(player)) {
 					playerNum = i;
 				}
 			}
-	
+			
 			Message m = null;
-		
-			//TODO dev card bought events
+			
 			if (card != -1) {
 				m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setDevCardBought(Board.DevCard.newBuilder().setPlayableDevCardValue(card).build()).build()).build();
 			}
 			else {
 				m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setDevCardBought(Board.DevCard.newBuilder().setVictoryPointValue(1).build()).build()).build();
 			}
-		
+			
 			ArrayList<Player> players = game1.getPlayers();
 			
 			for (int i = 0; i < players.size(); i++) {
 				Catan.printToClient(m, players.get(i));
 			}
-		
+			
 			String type = developmentCard.getType();
 			
 			//if the development card is a victory point card, it is 
 			//played immediately
 			if (type.equals(VICTORY_POINT)) {
-			
+				
 				playVictoryPointCard(player);
 				playerDevCards.remove(developmentCard);
 			}
-		
+			
 			player.setDevelopmentCards(playerDevCards);
 		}
 	}
-		
+	
 	//checks if the player enough resources to build the settlement
 	public static ArrayList<ResourceCard> hasDevelopmentCardResources(Player player) {
 		
@@ -174,7 +173,7 @@ public class DevelopmentCard {
 			while (ore == null || wool == null || grain == null) {
 				
 				ResourceCard card = cards.get(i);
-			
+				
 				if (ore == null && card.getResource().equals(ORE)) {
 					ore = card;
 				}
@@ -184,13 +183,13 @@ public class DevelopmentCard {
 				if (grain == null && card.getResource().equals(GRAIN)) {
 					grain = card;
 				}
-			
+				
 				i++;
 			}
 		}
 		catch(IndexOutOfBoundsException e) {
- 			return new ArrayList<ResourceCard>();
- 		}
+			return new ArrayList<ResourceCard>();
+		}
 		
 		//if the player has the resources then they are returned
 		if (ore != null && wool != null && grain != null) {
@@ -205,114 +204,110 @@ public class DevelopmentCard {
 	
 	
 //-----Methods to play a development card-----//
-		
+	
 	//lets the player select a development card to play
 	public static void playDevelopmentCard(Player player, Game game1, Message enter, boolean hasPlayedDevCard, Scanner scanner) throws IOException {
- 		
-	 	ArrayList<DevelopmentCard> cards = player.getDevelopmentCards();
-	 	ArrayList<DevelopmentCard> playCards = new ArrayList<DevelopmentCard>();
-	 	boolean cardPlayed = true;
-		 		 		
-	 	for (int i = 0; i < cards.size(); i++) {
-	 			
-	 		DevelopmentCard card = cards.get(i);
-	 			
-	 		if (!card.isHidden()) {
-	 			playCards.add(card);
-	 		}
-	 	}
-		 		
-	 	if (hasPlayedDevCard) {
-	 			
-	 		Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("You can only play one development card on your turn.").build()).build()).build(), player.getpSocket().getClientSocket());
-	 		return;
-	 	}
-	 	if (playCards.size() <= 0) {
-	 			
-	 		Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("You don't have any development cards to play.").build()).build()).build(), player.getpSocket().getClientSocket());
-	 		return;
-	 	}
+		
+		ArrayList<DevelopmentCard> cards = player.getDevelopmentCards();
+		ArrayList<DevelopmentCard> playCards = new ArrayList<DevelopmentCard>();
+		boolean cardPlayed = true;
+		
+		for (int i = 0; i < cards.size(); i++) {
 			
+			DevelopmentCard card = cards.get(i);
+			
+			if (!card.isHidden()) {
+				playCards.add(card);
+			}
+		}
+		
+		if (hasPlayedDevCard) {
+			
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("You can only play one development card on your turn.").build()).build()).build(), player.getpSocket().getClientSocket());
+			return;
+		}
+		if (playCards.size() <= 0) {
+			
+			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("You don't have any development cards to play.").build()).build()).build(), player.getpSocket().getClientSocket());
+			return;
+		}
+		
 		int card = enter.getRequest().getPlayDevCardValue();
 		DevelopmentCard play = null;
-			
+		
 		for (int i = 0; i < playCards.size(); i++) {
-	
+			
 			if (playCards.get(i).getType().equals(KNIGHT) && card == 0) {
-					
+				
 				play = playCards.get(i);
 				break;
 			}
 			if (playCards.get(i).getType().equals(ROAD_BUILDING) && card == 1) {
-					
+				
 				play = playCards.get(i);
 				break;
 			}
 			if (playCards.get(i).getType().equals(MONOPOLY) && card == 2) {
-					
+				
 				play = playCards.get(i);
 				break;
 			}
 			if (playCards.get(i).getType().equals(YEAR_OF_PLENTY) && card == 3) {
-					
+				
 				play = playCards.get(i);
 				break;
 			}
 		}
-			
+		
 		if (play == null) {
-				
+			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("you do not have this dev card").build()).build()).build(), player.getpSocket().getClientSocket());
 			return;
 		}
-				 		
-	 	String type = play.getType();
-	 	Message m = Message.newBuilder().build();
-	 		
+		
+		String type = play.getType();
+		Message m = Message.newBuilder().build();
+		
 	 	//selects the correct method depending on the type of card being played
-	 	if (type.equals(KNIGHT)) {
-	 		
-	 		playKnightCard(player, game1, scanner);
-	 		m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.KNIGHT).build()).build();
-	 	}
-	 	if (type.equals(ROAD_BUILDING)) {
-	 		
-	 		playRoadBuildingCard(player, game1, scanner);
-	 		m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.ROAD_BUILDING).build()).build();
-	 	}
-	 	if (type.equals(YEAR_OF_PLENTY)) {
-	 		
-	 		cardPlayed = playYearOfPlentyCard(player, game1, scanner);
-	 		m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.YEAR_OF_PLENTY).build()).build();
-	 	}
-	 	if (type.equals(MONOPOLY)) {
-	 		
-	 		playMonopolyCard(player, game1, scanner);
-	 		m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.MONOPOLY).build()).build();
-	 	}
-	 	
-	 	//should not ever be needed since victory point cards are played immediately
-	 	//here in case
-	 	if (type.equals(VICTORY_POINT)) {
-	 		
-	 		playVictoryPointCard(player);
-	 	}
-	 		
+		if (type.equals(KNIGHT)) {
+			
+			playKnightCard(player, game1, scanner);
+			m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.KNIGHT).build()).build();
+		}
+		if (type.equals(ROAD_BUILDING)) {
+			
+			playRoadBuildingCard(player, game1, scanner);
+			m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.ROAD_BUILDING).build()).build();
+		}
+		if (type.equals(YEAR_OF_PLENTY)) {
+			
+			cardPlayed = playYearOfPlentyCard(player, game1, scanner);
+			m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.YEAR_OF_PLENTY).build()).build();
+		}
+		if (type.equals(MONOPOLY)) {
+			
+			playMonopolyCard(player, game1, scanner);
+			m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.MONOPOLY).build()).build();
+		}
+
+		if (type.equals(VICTORY_POINT)) {
+			
+			playVictoryPointCard(player);
+		}
+		
 	 	//if the card has been played, it is removed from the player's hand
-	 	if (cardPlayed) {
-	 			
-	 		cards.remove(play);
-	 		player.setDevelopmentCards(cards);
-	 		
-	 		ArrayList<Player> players = game1.getPlayers();
-	 		
-	 		//TODO play dev card event
-	 		for (int i = 0; i < players.size(); i++) {
-	 			Catan.printToClient(m, players.get(i));
-	 		}
-	 	}
-	 }
- 	
+		if (cardPlayed) {
+			
+			cards.remove(play);
+			player.setDevelopmentCards(cards);
+			
+			ArrayList<Player> players = game1.getPlayers();
+			for (int i = 0; i < players.size(); i++) {
+				Catan.printToClient(m, players.get(i));
+			}
+		}
+	}
+	
  	//plays a knight card
 	public static void playKnightCard(Player player, Game game1, Scanner scanner) {
 		
@@ -320,10 +315,10 @@ public class DevelopmentCard {
 		Robber.moveRobber(player, game1, scanner);
 		
 		player.setLargestArmy(player.getLargestArmy() + 1);
- 				
+		
 		//checks for largest army
 		checkLargestArmy(player, game1);		
- 	}
+	}
 	
 	//updates who has the largest army card
 	public static void checkLargestArmy(Player player, Game game1) {
@@ -336,7 +331,7 @@ public class DevelopmentCard {
 			
 			boolean larger = false;
 			ArrayList<Player> players = game1.getPlayers();
-	
+			
 			//checks if there is another player with more knights than the
 			//current player
 			for (Player p : players) {
@@ -369,35 +364,35 @@ public class DevelopmentCard {
 			}
 		}		
 	}
- 	
+	
 	//plays a road building card
 	public static void playRoadBuildingCard(Player player, Game game1, Scanner scanner) throws IOException {
- 		
- 		boolean roadBuilding = true;
- 		
+		
+		boolean roadBuilding = true;
+		
  		//lets the player build two roads
- 		for (int i = 0; i < 2; i++) {
- 			
- 			Catan.printToClient("Where do you want to place your road?", player);
- 			Message enter = Message.newBuilder().build();
- 			
- 			boolean success = false;
- 			
- 			while (!success) {
- 				
- 				enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
- 				
- 				if (enter.getRequest().getBodyCase().getNumber() == 3) {
- 					success = true;
- 				}
- 				else {
- 					Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a road building request").build()).build()).build(), player.getpSocket().getClientSocket());
- 				}
- 			}
- 			
- 			Road.buildRoad(player, game1, scanner, enter, roadBuilding);
- 		}
- 	}
+		for (int i = 0; i < 2; i++) {
+			
+			Catan.printToClient("Where do you want to place your road?", player);
+			Message enter = Message.newBuilder().build();
+			
+			boolean success = false;
+			
+			while (!success) {
+				
+				enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+				
+				if (enter.getRequest().getBodyCase().getNumber() == 3) {
+					success = true;
+				}
+				else {
+					Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a road building request").build()).build()).build(), player.getpSocket().getClientSocket());
+				}
+			}
+			
+			Road.buildRoad(player, game1, scanner, enter, roadBuilding);
+		}
+	}
 	
 	//plays a year of plenty card
 	public static boolean playYearOfPlentyCard(Player player, Game game1, Scanner scanner) throws IOException {
@@ -422,11 +417,11 @@ public class DevelopmentCard {
 		
 		Catan.printToClient("What resource do you want?", player);
 		Message enter = Message.newBuilder().build();
-			
+		
 		boolean success = false;
-			
+		
 		while (!success) {
-				
+			
 			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
 			
 			if (enter.getRequest().getBodyCase().getNumber() == 12) {
@@ -444,7 +439,7 @@ public class DevelopmentCard {
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a resource").build()).build()).build(), player.getpSocket().getClientSocket());
 			return false;
 		}
-			
+		
 		ArrayList<ResourceCard> brick = game1.getBrick();
 		ArrayList<ResourceCard> lumber = game1.getLumber();
 		ArrayList<ResourceCard> wool = game1.getWool();
@@ -461,7 +456,7 @@ public class DevelopmentCard {
 		
 		//lets the player take a card from the bank
 		switch (choice) {
-		case 1 :
+			case 1 :
 			if (brick.size() <= 0) {
 				
 				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no brick cards left").build()).build()).build(), player.getpSocket().getClientSocket());
@@ -471,7 +466,7 @@ public class DevelopmentCard {
 			cards.add(brick.get(0));
 			game1.getBrick().remove(brick);
 			break;
-		case 2 :
+			case 2 :
 			if (lumber.size() <= 0) {
 				
 				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no lumber cards left").build()).build()).build(), player.getpSocket().getClientSocket());
@@ -481,7 +476,7 @@ public class DevelopmentCard {
 			cards.add(lumber.get(0));
 			game1.getLumber().remove(lumber);
 			break;
-		case 3 :
+			case 3 :
 			if (wool.size() <= 0) {
 				
 				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no wool cards left").build()).build()).build(), player.getpSocket().getClientSocket());
@@ -491,7 +486,7 @@ public class DevelopmentCard {
 			cards.add(wool.get(0));
 			game1.getWool().remove(wool);
 			break;
-		case 4 :			
+			case 4 :			
 			if (grain.size() <= 0) {
 				
 				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no grain cards left").build()).build()).build(), player.getpSocket().getClientSocket());
@@ -501,7 +496,7 @@ public class DevelopmentCard {
 			cards.add(grain.get(0));
 			game1.getGrain().remove(grain);
 			break;
-		case 5 :
+			case 5 :
 			if (ore.size() <= 0) {
 				
 				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("no ore cards left").build()).build()).build(), player.getpSocket().getClientSocket());
@@ -511,7 +506,7 @@ public class DevelopmentCard {
 			cards.add(ore.get(0));
 			game1.getOre().remove(ore);
 			break;
-		default :
+			default :
 			Catan.printToClient("Invalid choice. Please choose again", player);
 			chooseResourceYOP(cards, game1, scanner, player);
 		}
@@ -526,19 +521,19 @@ public class DevelopmentCard {
 		int resourceValue = 0;
 		
 		switch (resource) {
-		case BRICK :
+			case BRICK :
 			resourceValue = 1;
 			break;
-		case LUMBER :
+			case LUMBER :
 			resourceValue = 2;
 			break;
-		case WOOL :
+			case WOOL :
 			resourceValue = 3;
 			break;
-		case GRAIN :
+			case GRAIN :
 			resourceValue = 4;
 			break;
-		case ORE :
+			case ORE :
 			resourceValue = 5;
 			break;			
 		}
@@ -563,11 +558,11 @@ public class DevelopmentCard {
 				ArrayList<ResourceCard> player2Cards = player2.getResourceCards();
 				
 				for (int j = 0; j < player2Cards.size(); j++) {
-				
+					
 					ResourceCard card = player2Cards.get(i);
-									
+					
 					if (card.getResource().equals(resource)) {
-											
+						
 						Steal theft = Steal.newBuilder().setVictim(Board.Player.newBuilder().setIdValue(i).build()).setResourceValue(resourceValue).build();
 						thefts.add(theft);
 						
@@ -579,13 +574,11 @@ public class DevelopmentCard {
 				player2.setResourceCards(player2Cards);
 			}			
 		}
-	
+		
 		player.setResourceCards(cards);
 		game1.setPlayers(players);
-			
-		Message m = Message.newBuilder().setEvent(Event.newBuilder().setMonopolyResolution(MultiSteal.newBuilder().addAllThefts(thefts).build()).build()).build();
 		
-		//TODO monopoly resolution event
+		Message m = Message.newBuilder().setEvent(Event.newBuilder().setMonopolyResolution(MultiSteal.newBuilder().addAllThefts(thefts).build()).build()).build();
 		for (int i = 0; i < players.size(); i++) {
 			Catan.printToClient(m, players.get(i));
 		}
@@ -596,11 +589,11 @@ public class DevelopmentCard {
 		
 		Catan.printToClient("What resource do you want?", player);
 		Message enter = Message.newBuilder().build();
-			
+		
 		boolean success = false;
-			
+		
 		while (!success) {
-				
+			
 			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
 			
 			if (enter.getRequest().getBodyCase().getNumber() == 12) {
@@ -621,22 +614,22 @@ public class DevelopmentCard {
 		String resource = "";
 		
 		switch (choice) {
-		case 1 :
+			case 1 :
 			resource = BRICK;
 			break;
-		case 2 : 
+			case 2 : 
 			resource = LUMBER;
 			break;
-		case 3 :
+			case 3 :
 			resource = WOOL;
 			break;
-		case 4 :
+			case 4 :
 			resource = ORE;
 			break;
-		case 5 :
+			case 5 :
 			resource = GRAIN;
 			break;
-		default :
+			default :
 			Catan.printToClient("Invalid choice. Please choose again", player);
 			chooseResourceMonopoly(scanner, player);
 		}
@@ -646,7 +639,7 @@ public class DevelopmentCard {
 	
 	//plays a victory point card
 	public static void playVictoryPointCard(Player player) {
-				
+		
 		player.setVictoryPoints(player.getVictoryPoints() + 1);
 	}
 }

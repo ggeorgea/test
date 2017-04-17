@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.io.IOException;
-
 import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
 import intergroup .board.Board;
 import intergroup.board.Board.Roll.Builder;
-
 
 /**
  * Class used to roll the dice
@@ -32,7 +30,7 @@ public class Dice {
 			try {
 				
 				enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
-			
+				
 				if (enter.getRequest().getBodyCase().getNumber() == 1) {
 					success = true;
 				}
@@ -43,7 +41,7 @@ public class Dice {
 			catch (IOException e) {
 			}
 		}
-			
+		
 		//rolls the two dice and adds the sum
 		//this preserves the probability of rolling values from
 		//the actual game
@@ -61,18 +59,6 @@ public class Dice {
 			}
 		}
 		
-//		//TODO dice roll event
-//		Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setRolled(Board.Roll.newBuilder().setA(dice1).setB(dice2).build()).build()).build();
-//		Catan.printToClient(m, player);
-//		
-//		ArrayList<Player> players = game1.getPlayers();
-//		
-//		for (int i = 0; i < players.size(); i++) {
-//			if (players.get(i) != player) {
-//				Catan.printToClient(m, players.get(i));
-//			}
-//		}
-			
 		player.setCurrentRoll(diceRoll);
 		return intergroup.board.Board.Roll.newBuilder().setA(dice1).setB(dice2);
 	}
@@ -93,7 +79,7 @@ public class Dice {
 			try {
 				
 				enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
-			
+				
 				if (enter.getRequest().getBodyCase().getNumber() == 1) {
 					success = true;
 				}
@@ -104,7 +90,7 @@ public class Dice {
 			catch (IOException e) {
 			}
 		}
-			
+		
 		//rolls the two dice and adds the sum
 		//this preserves the probability of rolling values from
 		//the actual game
@@ -122,7 +108,6 @@ public class Dice {
 			}
 		}
 		
-		//TODO dice roll event
 		Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setRolled(Board.Roll.newBuilder().setA(dice1).setB(dice2).build()).build()).build();
 		Catan.printToClient(m, player);
 		
@@ -133,7 +118,7 @@ public class Dice {
 				Catan.printToClient(m, players.get(i));
 			}
 		}
-			
+		
 		player.setCurrentRoll(diceRoll);
 	}
 
