@@ -129,14 +129,11 @@ public class Road {
 
 			//TODO build road event
 			Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setRoadBuilt(Board.Edge.newBuilder().setA(Board.Point.newBuilder().setX(road.getCoordinateA().getX()).setY(road.getCoordinateA().getY()).build()).setB(Board.Point.newBuilder().setX(road.getCoordinateB().getX()).setY(road.getCoordinateB().getY()).build()).build()).build()).build();
-			Catan.printToClient(m, player);
 			
 			ArrayList<Player> players = game1.getPlayers();
 			
 			for (int i = 0; i < players.size(); i++) {
-				if (players.get(i) != player) {
-						Catan.printToClient(m, players.get(i));
-				}
+				Catan.printToClient(m, players.get(i));
 			}
 			
 			//checks if the player has the longest road

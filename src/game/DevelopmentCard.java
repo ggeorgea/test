@@ -136,14 +136,10 @@ public class DevelopmentCard {
 				m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setDevCardBought(Board.DevCard.newBuilder().setVictoryPointValue(1).build()).build()).build();
 			}
 		
-			Catan.printToClient(m, player);
-		
 			ArrayList<Player> players = game1.getPlayers();
 			
 			for (int i = 0; i < players.size(); i++) {
-				if (players.get(i) != player) {
-					Catan.printToClient(m, players.get(i));
-				}
+				Catan.printToClient(m, players.get(i));
 			}
 		
 			String type = developmentCard.getType();
@@ -306,8 +302,12 @@ public class DevelopmentCard {
 	 		cards.remove(play);
 	 		player.setDevelopmentCards(cards);
 	 		
+	 		ArrayList<Player> players = game1.getPlayers();
+	 		
 	 		//TODO play dev card event
-	 		Catan.printToClient(m, player);
+	 		for (int i = 0; i < players.size(); i++) {
+	 			Catan.printToClient(m, players.get(i));
+	 		}
 	 	}
 	 }
  	

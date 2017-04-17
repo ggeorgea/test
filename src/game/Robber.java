@@ -155,7 +155,13 @@ public class Robber {
 			
 			//TODO card discard event
 			Message m = Message.newBuilder().setEvent(Event.newBuilder().setCardsDiscarded(Resource.Counts.newBuilder().setBrick(noBrick).setOre(noOre).setLumber(noLumber).setGrain(noGrain).setWool(noWool).build()).build()).build();
-			Catan.printToClient(m, player);
+			
+			ArrayList<Player> players = game1.getPlayers();
+			
+			for (int i = 0; i < players.size(); i++) {
+				Catan.printToClient(m, players.get(i));	
+			}
+
 		}
 	}
 
@@ -314,15 +320,16 @@ public class Robber {
 	    fromCards.remove(card);
 	    toCards.add(card);
 	    
+	    ArrayList<Player> players = game1.getPlayers();
 	    
 		int playerNum = 0;
 		int playerStealNum = 0;
 		
-		for (int i = 0; i < game1.getPlayers().size(); i++) {
-			if (game1.getPlayers().get(i).equals(from)) {
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).equals(from)) {
 				playerNum = i;
 			}
-			else if (game1.getPlayers().get(i).equals(to)) {
+			else if (players.get(i).equals(to)) {
 				playerStealNum = i;
 			}
 		}
@@ -350,7 +357,8 @@ public class Robber {
 		//TODO card stolen event
 	    Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setResourceStolen(Steal.newBuilder().setVictim(Board.Player.newBuilder().setIdValue(playerStealNum).build()).setResourceValue(resource).build()).build()).build();
 	    
-	    Catan.printToClient(m, from);
-	    Catan.printToClient(m, to);
+	    for (int i = 0; i < players.size(); i++) {
+	    	Catan.printToClient(m, players.get(i));
+	    }
 	}
 }

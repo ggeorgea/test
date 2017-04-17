@@ -65,14 +65,11 @@ public class Dice {
 		
 		//TODO dice roll event
 		Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setRolled(Board.Roll.newBuilder().setA(dice1).setB(dice2).build()).build()).build();
-		Catan.printToClient(m, player);
 		
 		ArrayList<Player> players = game1.getPlayers();
 		
 		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i) != player) {
-				Catan.printToClient(m, players.get(i));
-			}
+			Catan.printToClient(m, players.get(i));
 		}
 			
 		player.setCurrentRoll(diceRoll);
