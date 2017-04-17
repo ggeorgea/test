@@ -658,7 +658,6 @@ public class Trade {
 			}
 		}
 
-		players.add(player);
 		game1.setPlayers(players);
 	}
 
@@ -666,7 +665,6 @@ public class Trade {
 	public static String proposeTrade(Player player, Player playerTrade, Scanner scanner) throws IOException {
 
 		ArrayList<ResourceCard> playerResources = player.getResourceCards();
-		//ArrayList<ResourceCard> playerTradeResources = playerTrade.getResourceCards();
 		
 		ArrayList<ResourceCard> playerTradeResources = new ArrayList<ResourceCard>();
 		playerTradeResources.add(new ResourceCard(WOOL));
