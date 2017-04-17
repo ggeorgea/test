@@ -419,30 +419,34 @@ public class DevelopmentCard {
 		ArrayList<ResourceCard> cards = player.getResourceCards();
 		
 		ArrayList<Player> players = game1.getPlayers();
-		players.remove(player);
 		
 		//takes the resources of specified type from each of the other
 		//players' hands and gives them to the player
 		for (int i = 0; i < players.size(); i++) {
 			
 			Player player2 = players.get(i);
-			ArrayList<ResourceCard> player2Cards = player2.getResourceCards();
 			
-			for (int j = 0; j < player2Cards.size(); j++) {
+			if (!player2.equals(player2)) {
 				
-				ResourceCard card = player2Cards.get(i);
-				
-				if (card.getResource().equals(resource)) {
+				ArrayList<ResourceCard> player2Cards = player2.getResourceCards();
+			
+				for (int j = 0; j < player2Cards.size(); j++) {
 					
-					player2Cards.remove(card);
-					cards.add(card);
+					ResourceCard card = player2Cards.get(i);
+				
+					if (card.getResource().equals(resource)) {
+					
+						player2Cards.remove(card);
+						cards.add(card);
+					}
 				}
+				
+				player2.setResourceCards(player2Cards);
 			}
-			
-			player2.setResourceCards(player2Cards);
 		}
 	
 		player.setResourceCards(cards);
+		game1.setPlayers(players);
 	}
 	
 	//lets the player choose the resource for monopoly
