@@ -9,6 +9,8 @@ import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
 import intergroup.board.Board;
+import intergroup.board.Board.MultiSteal;
+import intergroup.board.Board.PlayableDevCard;
 
 /**
  * Class to store information about development cards
@@ -267,24 +269,34 @@ public class DevelopmentCard {
 		}
 				 		
 	 	String type = play.getType();
+	 	Message m = Message.newBuilder().build();
 	 		
 	 	//selects the correct method depending on the type of card being played
 	 	if (type.equals(KNIGHT)) {
+	 		
 	 		playKnightCard(player, game1, scanner);
+	 		m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.KNIGHT).build()).build();
 	 	}
 	 	if (type.equals(ROAD_BUILDING)) {
+	 		
 	 		playRoadBuildingCard(player, game1, scanner);
+	 		m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.ROAD_BUILDING).build()).build();
 	 	}
 	 	if (type.equals(YEAR_OF_PLENTY)) {
+	 		
 	 		cardPlayed = playYearOfPlentyCard(player, game1, scanner);
+	 		m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.YEAR_OF_PLENTY).build()).build();
 	 	}
 	 	if (type.equals(MONOPOLY)) {
+	 		
 	 		playMonopolyCard(player, game1, scanner);
+	 		m = Message.newBuilder().setEvent(Event.newBuilder().setDevCardPlayed(PlayableDevCard.MONOPOLY).build()).build();
 	 	}
 	 	
 	 	//should not ever be needed since victory point cards are played immediately
 	 	//here in case
 	 	if (type.equals(VICTORY_POINT)) {
+	 		
 	 		playVictoryPointCard(player);
 	 	}
 	 		
@@ -293,6 +305,9 @@ public class DevelopmentCard {
 	 			
 	 		cards.remove(play);
 	 		player.setDevelopmentCards(cards);
+	 		
+	 		//TODO play dev card event
+	 		Catan.printToClient(m, player);
 	 	}
 	 }
  	
