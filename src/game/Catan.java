@@ -82,12 +82,8 @@ public class Catan {
 					Socket kkSocket = new Socket(hostName, portNumber);	  
 					Message joinRequest = Message.newBuilder().setRequest(Request.newBuilder().setJoinLobby(Join.newBuilder().setUsername(userName).build()).build()).build();
 					sendPBMsg(joinRequest,kkSocket);
-
 					String fromServer;
 					String fromUser;
-
-
-
 					while(true){
 						if(kkSocket.getInputStream().available()!=0){
 							Message m1 = getPBMsg(kkSocket);		
@@ -292,11 +288,8 @@ public class Catan {
 										int pNum = scanner.nextInt();
 
 										sendPBMsg(Message.newBuilder().setRequest(Request.newBuilder().setInitiateTrade(intergroup.trade.Trade.Kind.newBuilder().setPlayer(WithPlayer.newBuilder().setOther(Player.newBuilder().setIdValue(pNum).build()).setWanting(Counts.newBuilder().setBrick(brick1).setGrain(grain1).setLumber(lumber1).setOre(ore1).setWool(wool1).build()).setOffering(Counts.newBuilder().setBrick(brick2).setGrain(grain2).setLumber(lumber2).setOre(ore2).setWool(wool2).build()).build()).build()).build()).build(),kkSocket);
-
-
 										break;
 										case("BANK"):
-
 										finished1 = false;
 										brick1 = 0;
 										lumber1 = 0;
@@ -377,7 +370,6 @@ public class Catan {
 
 										break;
 									}
-
 									break;
 									case "SUBMITTRADERESPONSE":
 									System.out.println("do you ACCEPT?");
@@ -396,7 +388,6 @@ public class Catan {
 									int grain = 0;
 									int ore = 0;
 									boolean finished = false;
-
 									while(!finished){
 										System.out.println("pick a number of a specific resource to discard, if you have finished discarding, enter -1");
 										int numChos = scanner.nextInt();
@@ -525,13 +516,11 @@ public class Catan {
 							}
 						}
 
-
 						System.out.println("Player connected!");
 					}
 
 					System.out.println("All players connected!");
 				}
-
 //---------------------------------------------------------
 //STANDARD GAME CODE STARTS HERE
 				//scanner = new Scanner(new File("./src/test.txt"));
@@ -539,9 +528,6 @@ public class Catan {
 				board1 = Setup.getMeABoard();
 				Game game1 = new Game();
 				game1.setBoard(board1);
-
-			//	Map.printMap(game1.getBoard(), new ArrayList<Player>());
-
 				//sets up development cards
 				ArrayList<DevelopmentCard> developmentCards = Setup
 				.getDevCardDeck();
@@ -567,7 +553,6 @@ public class Catan {
 				//roll dice for each player
 				//changes player order with largest dice roll first
 				Setup.getPlayerOrder(game1, scanner);
-
 				Map.printMap(game1.getBoard(), game1.getPlayers());
 				SendGameStars(game1);
 				
@@ -575,9 +560,7 @@ public class Catan {
 				//place roads and settlements
 				Setup.setInitialRoadsAndSettlements(game1, scanner);
 
-
 				//pass from automated set up to actually playing the game
-				
 				System.out.println("-----now in manual mode-------");
 				scanner = new Scanner(System.in);
 
@@ -586,14 +569,6 @@ public class Catan {
 				// will keep letting players take turns until someone wins
 				while (!hasEnded) {
 					for (int i = 0; i < game1.getPlayers().size(); i++) {
-
-						//  for a test of longest road:
-						/*
-						if (i>0){
-							System.out.println("-----now in manual mode-------");
-							scanner = new Scanner(System.in);
-						}
-						*/
 
 						// lets the player have a turn
 						hasEnded = Turn.newTurn(game1.getPlayers().get(i), game1,
@@ -739,16 +714,7 @@ public class Catan {
 	
 	//sends a protobuf message through a socket, this could be an event, a request etc...
 	public static void sendPBMsg(Message mssg, Socket sock) throws IOException {
-		/*
-		byte[] toOutBy = mssg.toByteArray();		
-	    int toLen = toOutBy.length;
-	    byte[] bytesStr = new byte[4];
-	 	bytesStr = ByteBuffer.allocate(4).putInt(toLen).array();
-	 	int test = ((bytesStr[0] & 0xff) << 24) | ((bytesStr[1] & 0xff) << 16) |
-		          ((bytesStr[2] & 0xff) << 8)  | (bytesStr[3] & 0xff);	
-	 	
-	 	sock.getOutputStream().write(bytesStr);
-	 	sock.getOutputStream().write(toOutBy);*/
+
 	 	mssg.writeDelimitedTo(sock.getOutputStream());
 	 	
 	 }
@@ -847,6 +813,4 @@ public class Catan {
     	}
     	return enter;
     }
-
-
 }
