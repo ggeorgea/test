@@ -33,6 +33,8 @@ public class Player {
 	private ArrayList<Port> settledPorts = new ArrayList<Port>();
 	private ArrayList<Port> standardPorts = new ArrayList<Port>();
 	private ArrayList<Port> specialPorts = new ArrayList<Port>();
+	
+	private static final String STANDARD_PORT = "?";
 
 //-----Constructors-----//
 
@@ -288,7 +290,7 @@ public class Player {
 		for (int i = 0; i < board1.getPorts().size(); i++) {
 			if (board1.getPorts().get(i).getOwner() == player) {
 				
-				if (board1.getPorts().get(i).getResource().equals("?")) {
+				if (board1.getPorts().get(i).getResource().equals(STANDARD_PORT)) {
 					standard.add(board1.getPorts().get(i));
 				}
 				else {

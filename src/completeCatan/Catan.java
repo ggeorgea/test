@@ -18,6 +18,14 @@ import java.net.UnknownHostException;
  public class Catan {
  
  	private static final boolean END_GAME = true;
+ 	
+ 	private static final String ORE = "ore";
+ 	private static final String GRAIN = "grain";
+ 	private static final String LUMBER = "lumber";
+ 	private static final String WOOL = "wool";
+ 	private static final String BRICK = "brick";
+ 	
+ 	private static final String YES = "y";
  
  	public static void main(String[] args) throws Exception {
  
@@ -43,11 +51,11 @@ import java.net.UnknownHostException;
  			game1.setDevelopmentCards(developmentCards);
  
  			//sets up resource cards
- 			ArrayList<ResourceCard> ore = Setup.getResourceCardDeck("ore");
- 			ArrayList<ResourceCard> grain = Setup.getResourceCardDeck("grain");
- 			ArrayList<ResourceCard> lumber = Setup.getResourceCardDeck("lumber");
- 			ArrayList<ResourceCard> wool = Setup.getResourceCardDeck("wool");
- 			ArrayList<ResourceCard> brick = Setup.getResourceCardDeck("brick");
+ 			ArrayList<ResourceCard> ore = Setup.getResourceCardDeck(ORE);
+ 			ArrayList<ResourceCard> grain = Setup.getResourceCardDeck(GRAIN);
+ 			ArrayList<ResourceCard> lumber = Setup.getResourceCardDeck(LUMBER);
+ 			ArrayList<ResourceCard> wool = Setup.getResourceCardDeck(WOOL);
+ 			ArrayList<ResourceCard> brick = Setup.getResourceCardDeck(BRICK);
  
  			game1.setOre(ore);
  			game1.setGrain(grain);
@@ -152,7 +160,7 @@ import java.net.UnknownHostException;
 		String answer = scanner.nextLine().toLowerCase();
 		int defaultPortNumber = 6789;
 
-		if (answer.equals("y")) {
+		if (answer.equals(YES)) {
 
 			System.out.println("Please enter the address where you wish to connect");
 			String hostName = scanner.nextLine();
@@ -162,67 +170,69 @@ import java.net.UnknownHostException;
 		    		PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
 		            BufferedReader in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()))) {
 
-		        	String fromServer;
-		            String fromUser;
+		        String fromServer;
+		        String fromUser;
 
-		            while (true) {
-		            	if(in.ready()){
-		            		fromServer = in.readLine();
-			            	System.out.println(fromServer);
+		        while (true) {
+		            	
+		        	if (in.ready()) {
+		            		
+		         		fromServer = in.readLine();
+			           	System.out.println(fromServer);
 	
-			                if (fromServer.equals("Goodbye!")) {
-			                    break;
-			                }
-		                
-		            	}
-		                if(System.in.available()!=0){
-			                fromUser = scanner.nextLine();
-			                
-			                if (fromUser != null) {
-			                     out.println(fromUser);
-			                }
+			            if (fromServer.equals("Goodbye!")) {
+			                break;
+			            }
+		               
+		          	}
+		            if (System.in.available()!= 0) {
 		                	
-		                }
+			            fromUser = scanner.nextLine();
+			                
+			            if (fromUser != null) {
+			                 out.println(fromUser);
+			            }
 		            }
 		        }
-		        catch (UnknownHostException e) {
-		            System.err.println("Don't know about host " + hostName);
-		            System.exit(1);
-		        }
-		        catch (IOException e) {
-		            System.err.println("Couldn't get I/O for the connection to " + hostName);
-		            System.exit(1);
-		        }
-			}
-			else {
+		    }
+		    catch (UnknownHostException e) {
+		        System.err.println("Don't know about host " + hostName);
+		        System.exit(1);
+		    }
+		    catch (IOException e) {
+		        System.err.println("Couldn't get I/O for the connection to " + hostName);
+		        System.exit(1);
+		    }
+		}
+		else {
 
-				int clientsToFind;
+			int clientsToFind;
 
-				clientsToFind = Setup.requestClients(scanner);
-				socketArray = new ArrayList<PlayerSocket>();
+			clientsToFind = Setup.requestClients(scanner);
+			socketArray = new ArrayList<PlayerSocket>();
 
-				if (clientsToFind != 0) {
+			if (clientsToFind != 0) {
 
-			    	InetAddress iAddress = InetAddress.getLocalHost();
-			    	String currentIp = iAddress.getHostAddress();
+		    	InetAddress iAddress = InetAddress.getLocalHost();
+		    	String currentIp = iAddress.getHostAddress();
 
-					System.out.println("Your ip address is : " + currentIp + ". The other players should connect now");
+				System.out.println("Your ip address is : " + currentIp + ". The other players should connect now");
 
-					int portNumber = defaultPortNumber;
-	                ServerSocket serverSocket = new ServerSocket(portNumber);
+				int portNumber = defaultPortNumber;
+	            ServerSocket serverSocket = new ServerSocket(portNumber);
 
-	                for (int j = 0; j < clientsToFind; j++) {
+	            for (int j = 0; j < clientsToFind; j++) {
 
-						 Socket clientSocket = serverSocket.accept();
-						 PlayerSocket foundConnect = new PlayerSocket(clientSocket);
-						 socketArray.add(foundConnect);
-						 System.out.println("Player connected!");
-					}
-
-					System.out.println("All players connected!");
+	            	Socket clientSocket = serverSocket.accept();
+					PlayerSocket foundConnect = new PlayerSocket(clientSocket);
+					socketArray.add(foundConnect);
+					System.out.println("Player connected!");
 				}
+
+				System.out.println("All players connected!");
 			}
-			
-			return socketArray;
+		}
+					
+		return socketArray;
  	}
 }

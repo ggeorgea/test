@@ -299,6 +299,7 @@ public class Trade {
 		int numPrinted = 0;
 		for (int i = 0; i < resourceCount.length; i++) {
 			if (resourceCount[i] >= DIRECT_TRADE_NUMBER) {
+				
 				Catan.printToClient((numPrinted+1) + ": " + resourceType.get(i).getResource() + " (" + resourceCount[i] + " available)", player);
 				canTrade.add(i);
 				numPrinted++;

@@ -224,7 +224,7 @@ public class Robber {
 	}
 	
 	//method to return all coord given hex 
-	public static ArrayList<Coordinate> getNearbyCoordinates(Coordinate coordinate){ 
+	public static ArrayList<Coordinate> getNearbyCoordinates(Coordinate coordinate) { 
 	
 		ArrayList<Coordinate> nearbyCoordinates = new ArrayList<>(); 
 		int x = coordinate.getX();
@@ -242,7 +242,7 @@ public class Robber {
 		
 	//randomly picks a card from the other player's hand to gives
 	//it to the current player
-	public static void transferRandomCard(Player from, Player to ){ 
+	public static void transferRandomCard(Player from, Player to) { 
 	
 		Random r = new Random(); 
 		ArrayList<ResourceCard> fromCards = from.getResourceCards();

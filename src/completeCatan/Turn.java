@@ -129,10 +129,11 @@ public class Turn {
  
  //-----Method to allow the player to trade-----//
  
- 	public static void trade(Player player, Scanner scanner, Game game1) throws IOException{
+ 	public static void trade(Player player, Scanner scanner, Game game1) throws IOException {
  		
  		boolean bank = Trade.tradeBankOrPlayer(player, scanner);
-		if (bank) {
+		
+ 		if (bank) {
 			Trade.tradeBank(player, scanner, game1);
 		}
 		else {

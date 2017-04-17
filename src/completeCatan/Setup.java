@@ -70,7 +70,7 @@ public class Setup {
  		return players;
  	}
  
- 	//asks the client how many clients there are, ABOVE METHOD JUST COPIED/TWEAKED FOR NETWORKING
+ 	//asks the client how many clients there are
  	public static int requestClients(Scanner scanner) {
  
  		System.out.println("How many Clients should connect? 2 or 3");

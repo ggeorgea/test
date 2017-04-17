@@ -220,7 +220,7 @@ public class Road {
 	}
 		
 	//checks if a road is connected to your other roads
-	public static boolean checkConnected(Road road, Player player, Game game1){
+	public static boolean checkConnected(Road road, Player player, Game game1) {
 	
 		//game1.getBoard().getLocationFromCoordinate(road.getCoordinateA());
 		Board board1 = game1.getBoard();

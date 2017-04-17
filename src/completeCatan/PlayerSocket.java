@@ -20,7 +20,7 @@ public class PlayerSocket {
 		
 	}
 	
-    PlayerSocket(Socket ClientSocket) throws IOException{
+    PlayerSocket(Socket ClientSocket) throws IOException { 
     	    
     	this.clientSocket = ClientSocket;
     	this.out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -45,14 +45,14 @@ public class PlayerSocket {
     	out.println(outputLine);
     }
     
-    public String getMessage() throws IOException{
+    public String getMessage() throws IOException {
     
     	String inputLine;
     	inputLine = in.readLine();
     	return inputLine;
     }
     
-    public String Communicate(String Message) throws IOException{
+    public String Communicate(String Message) throws IOException {
     
     	String inputLine;
     	String  outputLine = Message;
