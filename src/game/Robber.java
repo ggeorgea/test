@@ -9,6 +9,10 @@ import java.util.Scanner;
 import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
+import intergroup.board.Board;
+import intergroup.board.Board.Point;
+import intergroup.board.Board.Steal;
+import intergroup.resource.Resource;
 
 /**
  * Class to store information and methods concerning 
@@ -147,7 +151,11 @@ public class Robber {
 			game1.setOre(ore);
 			game1.setLumber(lumber);
 			game1.setWool(wool);
-			game1.setGrain(grain);			
+			game1.setGrain(grain);	
+			
+			//TODO card discard event
+			Message m = Message.newBuilder().setEvent(Event.newBuilder().setCardsDiscarded(Resource.Counts.newBuilder().setBrick(noBrick).setOre(noOre).setLumber(noLumber).setGrain(noGrain).setWool(noWool).build()).build()).build();
+			Catan.printToClient(m, player);
 		}
 	}
 
@@ -187,6 +195,14 @@ public class Robber {
 			Hex hex1 = (Hex) game1.getBoard().getLocationFromCoordinate(a).getContains();
 			hex1.setisRobberHere(ROBBER);
 			game1.getBoard().setRobber(a);
+			
+			ArrayList<Player> players = game1.getPlayers();
+			Message m = Message.newBuilder().setEvent(Event.newBuilder().setRobberMoved(Point.newBuilder().setX(x).setY(y).build()).build()).build();
+			
+			//TODO event for robber moved
+			for (int i = 0; i < players.size(); i++) {
+				Catan.printToClient(m, players.get(i));
+			}			
 				
 			robberStealCard(player,  game1, scanner);
 		}
@@ -265,12 +281,12 @@ public class Robber {
 			}
 		}
 		if (allowedToSteal) { 
-			transferRandomCard(target, player);
+			transferRandomCard(target, player, game1);
 		}
 	}
 	
 	//method to return all coord given hex 
-	public static ArrayList<Coordinate> getNearbyCoordinates(Coordinate coordinate){ 
+	public static ArrayList<Coordinate> getNearbyCoordinates(Coordinate coordinate) { 
 	
 		ArrayList<Coordinate> nearbyCoordinates = new ArrayList<>(); 
 		int x = coordinate.getX();
@@ -288,7 +304,7 @@ public class Robber {
 	}
 		
 	
-	public static void transferRandomCard(Player from, Player to ){ 
+	public static void transferRandomCard(Player from, Player to, Game game1) { 
 	
 		Random r = new Random(); 
 		ArrayList<ResourceCard> fromCards = from.getResourceCards();
@@ -298,7 +314,43 @@ public class Robber {
 	    fromCards.remove(card);
 	    toCards.add(card);
 	    
-	    Catan.printToClient("Stolen from you: 1x " + card.getResource(), from);
-	    Catan.printToClient("You have stolen: 1x " + card.getResource(), to);
+	    
+		int playerNum = 0;
+		int playerStealNum = 0;
+		
+		for (int i = 0; i < game1.getPlayers().size(); i++) {
+			if (game1.getPlayers().get(i).equals(from)) {
+				playerNum = i;
+			}
+			else if (game1.getPlayers().get(i).equals(to)) {
+				playerStealNum = i;
+			}
+		}
+		
+		int resource = 0;
+		
+		switch(card.getResource()) {
+		case BRICK : 
+			resource = 1;
+			break;
+		case LUMBER :
+			resource = 2;
+			break;
+		case WOOL :
+			resource = 3;
+			break;
+		case GRAIN :
+			resource = 4;
+			break;
+		case ORE :
+			resource = 5;
+			break;
+		}
+		
+		//TODO card stolen event
+	    Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setResourceStolen(Steal.newBuilder().setVictim(Board.Player.newBuilder().setIdValue(playerStealNum).build()).setResourceValue(resource).build()).build()).build();
+	    
+	    Catan.printToClient(m, from);
+	    Catan.printToClient(m, to);
 	}
 }
