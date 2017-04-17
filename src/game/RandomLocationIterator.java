@@ -20,7 +20,6 @@ public class RandomLocationIterator implements Iterator {
 	public RandomLocationIterator() {
 		
 	}
-	
 	public RandomLocationIterator(Board board1) {
 		
 		ArrayList<ArrayList<Location>> shuffledAL= new ArrayList<ArrayList<Location>>();
@@ -44,7 +43,6 @@ public class RandomLocationIterator implements Iterator {
 			Collections.shuffle(CloneY);
 			shuffledAL.add(CloneY);
 		}
-		
 		this.shuffledAL=shuffledAL;
 		this.XLen = shuffledAL.size();
 		this.YLen = shuffledAL.get(0).size();
@@ -55,8 +53,6 @@ public class RandomLocationIterator implements Iterator {
 	public Location next() {
 		
 		Location nextLoc = shuffledAL.get(Xindex).get(Yindex);
-		//finish makinng here
-		
 		Yindex++;
 		
 		if (Yindex == YLen) {
@@ -79,8 +75,6 @@ public class RandomLocationIterator implements Iterator {
 		if (nextLoc.getType().equals("hex")) {
 			found = true;
 		}
-		
-		//finish making here
 		Yindex++;
 		if (Yindex == YLen) {
 			Yindex = 0;

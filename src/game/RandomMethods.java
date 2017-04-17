@@ -5,9 +5,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//TODO this should not be needed anymore
-//TODO delete this class
-
 public class RandomMethods {
 
 	/**
@@ -26,7 +23,7 @@ public class RandomMethods {
 			player1.setVictoryPoints(victoryPoints + 2);
 		}
 		else if (player1.getLongestRoad() > player2.getLongestRoad()) {
-						
+			
 			player1.setHasLongestRoad(true);
 			int victoryPoints = player1.getVictoryPoints();
 			player1.setVictoryPoints(victoryPoints + 2);
@@ -60,7 +57,6 @@ public class RandomMethods {
 	
 	/**
 	 * Method should be called every time a player completes an action
-	 * like builds something, plays a card...
 	 * 
 	 * @param player the player that just did an action
 	 */
@@ -81,13 +77,9 @@ public class RandomMethods {
 		
 		System.out.println(player.getName() + " Wins!");
 	}
-	
-	//TODO robber stuff
-	//G: note, i added a robber text field to each of the hexes, to be filled with " " if the robber is elsewhere, and "R" if the robber is present
-	//here so no errors
+
 	ArrayList<Road> validRoads = null;
-	
-	//TODO update build road method to how buildcity is
+
 	/**
 	 * Method should be called when a player wants to build a road
 	 * 
@@ -126,7 +118,7 @@ public class RandomMethods {
 			
 			if (roadsLeft > 0) {
 				if (validRoads.contains(road)) {
-				
+					
 					if (!roadBuilding) {
 						cards.remove(brick);
 						cards.remove(lumber);
@@ -134,7 +126,7 @@ public class RandomMethods {
 					}
 					
 					player.setNoRoads(player.getNoRoads() - 1);
-				
+					
 					//what about valid settlements?
 					updateValidRoads(road);
 					updateRoadLength(player);
@@ -188,11 +180,9 @@ public class RandomMethods {
 			checkLongestRoad(player, player2);			
 		}
 	}
-	
-	//here so no errors
+
 	ArrayList<Building> validSettlements = null;
 	
-	//TODO update build settlement method to how buildcity is
 	/**
 	 * Method should be called when the player wants to build a road
 	 * 
@@ -314,20 +304,20 @@ public class RandomMethods {
 			
 			if (citiesLeft > 0) {
 				if (player.getNoSettlements() > 0) {
-				
+					
 					//check the city they want to place is on a player settlement
-				
+					
 					cards.remove(ore.get(0));
 					cards.remove(ore.get(1));
 					cards.remove(ore.get(2));
 					cards.remove(grain.get(0));
 					cards.remove(grain.get(1));
 					player.setResourceCards(cards);
-				
+					
 					player.setNoCities(player.getNoCities() + 1);
 					player.setNoSettlements(player.getNoSettlements() - 1);
 					player.setVictoryPoints(player.getVictoryPoints() + 1);
-				
+					
 					checkEndOfGame(player);
 				}
 				else {
@@ -431,17 +421,17 @@ public class RandomMethods {
 		String type = developmentCard.getType();
 		
 		if (!developmentCard.isHidden()) {
-		
+			
 			if (type.equals("knight")) {
 				
 				playKnightCard(player, developmentCard);
 			}
 			if (type.equals("progress")) {
-			
+				
 				playProgressCard(player, developmentCard);
 			}
 			if (type.equals("victory point")) {
-			
+				
 				playVictoryPointCard(player, developmentCard);
 			}
 		}
@@ -518,7 +508,7 @@ public class RandomMethods {
 		for (int i = 0; i < 2; i++) {
 			
 			System.out.println("Pick a road to build");
-				
+			
 			//will let player choose coord for roads
 			Road road = null;
 			buildRoad(player, road, roadBuilding);
@@ -545,22 +535,22 @@ public class RandomMethods {
 			String resource = reader.readLine();
 			
 			if (resource.equals("brick") || resource.equals("lumber") || resource.equals("wool") 
-					|| resource.equals("ore") || resource.equals("grain")) {
-			
-				card.setResource(resource);
-				cards.add(card);				
-			}
-			else {
+				|| resource.equals("ore") || resource.equals("grain")) {
 				
-				System.out.println("Invalid reource type!");
-			}
+				card.setResource(resource);
+			cards.add(card);				
 		}
-		
-		player.setResourceCards(cards);
-		
-		reader.close();
+		else {
+			
+			System.out.println("Invalid reource type!");
+		}
 	}
 	
+	player.setResourceCards(cards);
+	
+	reader.close();
+}
+
 	/**
 	 * Method should be used when a player wants to play the monopoly card
 	 * 
@@ -578,36 +568,36 @@ public class RandomMethods {
 		String resource = reader.readLine();
 		
 		if (resource.equals("brick") || resource.equals("lumber") || resource.equals("wool") 
-				|| resource.equals("ore") || resource.equals("grain")) {
+			|| resource.equals("ore") || resource.equals("grain")) {
 			
 			ArrayList<Player> players = game.getPlayers();
-			players.remove(player);
+		players.remove(player);
+		
+		for (int i = 0; i < players.size(); i++) {
 			
-			for (int i = 0; i < players.size(); i++) {
+			Player player2 = players.get(i);
+			ArrayList<ResourceCard> player2Cards = player2.getResourceCards();
+			
+			for (int j = 0; j < player2Cards.size(); j++) {
 				
-				Player player2 = players.get(i);
-				ArrayList<ResourceCard> player2Cards = player2.getResourceCards();
+				ResourceCard card = player2Cards.get(i);
 				
-				for (int j = 0; j < player2Cards.size(); j++) {
+				if (card.getResource().equals(resource)) {
 					
-					ResourceCard card = player2Cards.get(i);
-					
-					if (card.getResource().equals(resource)) {
-						
-						player2Cards.remove(card);
-						cards.add(card);
-					}
+					player2Cards.remove(card);
+					cards.add(card);
 				}
-				
-				player2.setResourceCards(player2Cards);
 			}
+			
+			player2.setResourceCards(player2Cards);
 		}
-		
-		player.setResourceCards(cards);
-		
-		reader.close();
 	}
 	
+	player.setResourceCards(cards);
+	
+	reader.close();
+}
+
 	/**
 	 * Method should be used when a player buys a victory point card
 	 * 
