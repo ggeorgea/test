@@ -14,6 +14,9 @@ public class Trade {
 	private static final int STANDARD_TRADE_NUMBER = 3;
 	private static final int SPECIAL_TRADE_NUMBER = 2;
 	
+	private static final String STANDARD = "standard";
+	private static final String SPECIAL = "special";
+	
 	public static final String WOOL = "wool";
 	public static final String LUMBER = "lumber";
 	public static final String ORE = "ore";
@@ -115,7 +118,7 @@ public class Trade {
 
 	//prompts the user to select what resource they want to trade
 	public static ResourceCard selectTradeResource(Player player, Scanner scanner, Game game1, ArrayList<Integer> canTrade, 
-			ArrayList<ResourceCard> resourceType) throws IOException {
+			ArrayList<ResourceCard> resourceType, String[] resourceTypes) throws IOException {
 			
 		Catan.printToClient("Please select resource to trade with the bank:", player);
 		
@@ -124,12 +127,19 @@ public class Trade {
 		if (selection > canTrade.size()) {
 			
 			Catan.printToClient("Invalid choice. Please choose again", player);
-			return selectTradeResource(player, scanner, game1, canTrade, resourceType);
+			return selectTradeResource(player, scanner, game1, canTrade, resourceType, resourceTypes);
 		}
 		else {
 			
 			int choice = canTrade.get(selection - 1);
-			ResourceCard tradeChoice = resourceType.get(choice);
+			ResourceCard tradeChoice = null;
+			
+			for (int i = 0; i < resourceType.size(); i++) {
+				if (resourceType.get(i).getResource().equals(resourceTypes[choice])) {
+					tradeChoice = resourceType.get(i);
+					break;
+				}
+			}
 			
 			return tradeChoice;
 		}
@@ -179,35 +189,24 @@ public class Trade {
 		
 		int tradeNumber = 0;;
 		
-//		switch (tradeType) {
-//		case "direct" :
-//			tradeNumber = DIRECT_TRADE_NUMBER; 
-//			break;
-//		case "standard" :
-//			tradeNumber = STANDARD_TRADE_NUMBER; 
-//			break;
-//		case "special" :
-//			tradeNumber = SPECIAL_TRADE_NUMBER; 
-//			break;
-//		}
-		
-		if(tradeType.equals("standard")){
+		if (tradeType.equals(STANDARD)) {
 			tradeNumber = STANDARD_TRADE_NUMBER;
 		}
-		else if(tradeType.equals("special")){
+		else if (tradeType.equals(SPECIAL)) {
 			tradeNumber = SPECIAL_TRADE_NUMBER;
 		}
-		else{
+		else {
 			tradeNumber = DIRECT_TRADE_NUMBER;
 		}
 		
-//		for (int i = 0; i < tradeNumber; i++) {
-//			playerResources.remove(removeResource);
-//		}
-		
 		for (int i = 0; i < tradeNumber; i++) {
-			playerResources.remove(removeResource);
-			returnToBank(removeResource, game1);
+			for (int j = 0; j < playerResources.size(); j++) {
+				if (playerResources.get(j).getResource().equals(removeResource.getResource())) {
+					playerResources.remove(playerResources.get(j));
+					returnToBank(removeResource, game1);
+					break;
+				}
+			}
 		}
 		
 		ResourceCard addResource = gainChoice.get(0);
@@ -220,7 +219,7 @@ public class Trade {
 		
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i) != player) {
-				Catan.printToClient("Player " + player.getName() + "traded with the bank", players.get(i));
+				Catan.printToClient("Player " + player.getName() + " traded with the bank", players.get(i));
 			}
 		}
 	}
@@ -263,6 +262,7 @@ public class Trade {
 		
 		ArrayList<ResourceCard> resources = player.getResourceCards();
 		int[] resourceCount = {0, 0, 0, 0, 0}; //array positions indicate brick, grain, lumber, ore, wool respectively
+		String[] resourceTypes = {BRICK, GRAIN, LUMBER, ORE, WOOL};
 		int bankAmount = 0;
 		
 		for (int i = 0; i < resources.size(); i++) {
@@ -300,7 +300,7 @@ public class Trade {
 		for (int i = 0; i < resourceCount.length; i++) {
 			if (resourceCount[i] >= DIRECT_TRADE_NUMBER) {
 				
-				Catan.printToClient((numPrinted+1) + ": " + resourceType.get(i).getResource() + " (" + resourceCount[i] + " available)", player);
+				Catan.printToClient((numPrinted+1) + ": " + resourceTypes[i] + " (" + resourceCount[i] + " available)", player);
 				canTrade.add(i);
 				numPrinted++;
 			}
@@ -308,7 +308,7 @@ public class Trade {
 		
 		if (canTrade.size() != 0) {
 			
-			ResourceCard tradeChoice = selectTradeResource(player, scanner, game1, canTrade, resourceType);
+			ResourceCard tradeChoice = selectTradeResource(player, scanner, game1, canTrade, resourceType, resourceTypes);
 			ArrayList<ResourceCard> gainChoice = selectGainResource(player, scanner, game1);
 			
 			//makes sure the trade comprises of two different resources
@@ -339,6 +339,7 @@ public class Trade {
 		
 		ArrayList<ResourceCard> resources = player.getResourceCards();
 		int[] resourceCount = {0, 0, 0, 0, 0}; //array positions indicate brick, grain, lumber, ore, wool respectively
+		String[] resourceTypes = {BRICK, GRAIN, LUMBER, ORE, WOOL};
 		resourceCount = countPlayerResources(resourceCount, resources);
 		ArrayList<Integer> canTrade = new ArrayList<Integer>();
 		
@@ -354,7 +355,7 @@ public class Trade {
 		
 		if (canTrade.size() != 0) {
 			
-			ResourceCard tradeChoice = selectTradeResource(player, scanner, game1, canTrade, resourceType);
+			ResourceCard tradeChoice = selectTradeResource(player, scanner, game1, canTrade, resourceType, resourceTypes);
 			ArrayList<ResourceCard> gainChoice = selectGainResource(player, scanner, game1);
 			int bankAmount = 0;
 			
@@ -444,7 +445,9 @@ public class Trade {
 		
 		int tradeChoice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		
-		ResourceCard portChoice = selectTradeResource(player, scanner, game1, null, resources);
+		String[] resourceTypes = {BRICK, GRAIN, LUMBER, ORE, WOOL};
+		
+		ResourceCard portChoice = selectTradeResource(player, scanner, game1, null, resources, resourceTypes);
 		ResourceCard tradePort = null;
 		
 		switch (portChoice.getResource().toLowerCase()) {
@@ -464,8 +467,6 @@ public class Trade {
 			portChoice = game1.getWool().get(0);
 			break;
 		}
-		
-		String[] resourceTypes = {BRICK, GRAIN, LUMBER, ORE, WOOL};
 		
 		Catan.printToClient("Please select which resource you would like to gain from the bank:", player);
 		
