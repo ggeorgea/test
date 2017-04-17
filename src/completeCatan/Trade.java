@@ -179,17 +179,31 @@ public class Trade {
 		
 		int tradeNumber = 0;;
 		
-		switch (tradeType) {
-		case "direct" :
-			tradeNumber = DIRECT_TRADE_NUMBER; 
-			break;
-		case "standard" :
-			tradeNumber = STANDARD_TRADE_NUMBER; 
-			break;
-		case "special" :
-			tradeNumber = SPECIAL_TRADE_NUMBER; 
-			break;
+//		switch (tradeType) {
+//		case "direct" :
+//			tradeNumber = DIRECT_TRADE_NUMBER; 
+//			break;
+//		case "standard" :
+//			tradeNumber = STANDARD_TRADE_NUMBER; 
+//			break;
+//		case "special" :
+//			tradeNumber = SPECIAL_TRADE_NUMBER; 
+//			break;
+//		}
+		
+		if(tradeType.equals("standard")){
+			tradeNumber = STANDARD_TRADE_NUMBER;
 		}
+		else if(tradeType.equals("special")){
+			tradeNumber = SPECIAL_TRADE_NUMBER;
+		}
+		else{
+			tradeNumber = DIRECT_TRADE_NUMBER;
+		}
+		
+//		for (int i = 0; i < tradeNumber; i++) {
+//			playerResources.remove(removeResource);
+//		}
 		
 		for (int i = 0; i < tradeNumber; i++) {
 			playerResources.remove(removeResource);
@@ -282,11 +296,12 @@ public class Trade {
 		ArrayList<Integer> canTrade = new ArrayList<Integer>();
 		Catan.printToClient("You can trade the following resources:", player);
 		
+		int numPrinted = 0;
 		for (int i = 0; i < resourceCount.length; i++) {
 			if (resourceCount[i] >= DIRECT_TRADE_NUMBER) {
-				
-				Catan.printToClient((i+1) + ": " + resourceType.get(i).getResource() + " (" + resourceCount[i] + " available)", player);
+				Catan.printToClient((numPrinted+1) + ": " + resourceType.get(i).getResource() + " (" + resourceCount[i] + " available)", player);
 				canTrade.add(i);
+				numPrinted++;
 			}
 		}
 		
