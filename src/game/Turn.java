@@ -3,13 +3,12 @@ package game;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import java.io.IOException;
 
-import intergroup.EmptyOuterClass.Empty;
 import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
+import intergroup.board.Board.Roll.Builder;
 
 /**
  * Class contains all the methods to allow players to do things on their turn
@@ -30,16 +29,21 @@ public class Turn {
 		
 		Map.printMap(game1.getBoard(), players);
 		
-		Dice.rollDice(player, scanner, game1);
+		Builder proRoll = Dice.rollTurnDice(player, scanner, game1);
 
 		if (player.getCurrentRoll() != ROBBER) {
-			ResourceAllocation.resourceAllocation(player.getCurrentRoll(), game1, scanner);
+			proRoll.addAllResourceAllocation(ResourceAllocation.resourceAllocation(player.getCurrentRoll(), game1, scanner));
 		}
 		else {
 			Robber.checkCardRemoval(game1, scanner);
 			Robber.moveRobber(player, game1, scanner);
 		}
 
+		Message dicePlusAlloc = Message.newBuilder().setEvent(Event.newBuilder().setRolled(proRoll.build()).build()).build();
+		for (int i = 0; i < players.size(); i++) {
+			Catan.printToClient(dicePlusAlloc, players.get(i));		
+		}
+		
 		int choice = 0;
 		boolean hasPlayedDevCard = false;
 		boolean hasEnded = !END_GAME;

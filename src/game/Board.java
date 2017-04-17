@@ -175,7 +175,7 @@ public class Board {
 	}
 	
 	//gets a location from the array based of coordinates
-	public Location getLocationFromCoordinate(Coordinate coA) {
+	public Location getLocationFromCoordinate(game.Coordinate coA) {
 		
 		return boardLocations[coA.getX()+5][coA.getY()+5];
 	}

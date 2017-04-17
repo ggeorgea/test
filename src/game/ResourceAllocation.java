@@ -1,5 +1,9 @@
 package game;
 
+import intergroup.board.Board.Player;
+import intergroup.resource.Resource.Counts;
+import intergroup.resource.Resource.Counts.Builder;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,9 +34,10 @@ public class ResourceAllocation {
 	//-----Methods to perform the resource allocation for the turn-----//
 	
 	//code to get the resources from a dice roll
-	public static void resourceAllocation(int hexValue, Game game1, Scanner scanner) {
-			
-		ArrayList<Player> players = game1.getPlayers();
+	public static ArrayList<intergroup.board.Board.ResourceAllocation> resourceAllocation(int hexValue, Game game1, Scanner scanner) {
+		ArrayList<intergroup.board.Board.ResourceAllocation> prorecAl = new ArrayList<intergroup.board.Board.ResourceAllocation>();
+		
+		ArrayList<game.Player> players = game1.getPlayers();
 		ArrayList<Hex> hexes = game1.getBoard().getHexes();
 		Board board = game1.getBoard();
 		ArrayList<String> bankHasResources = new ArrayList<String>();
@@ -94,12 +99,13 @@ public class ResourceAllocation {
 		}
 		
 		removeIllegalResources(players, bankHasResources);
-		setResources(players);
+		prorecAl = setResources(players);
 		game1.setPlayers(players);
+		return prorecAl;
 	}
 		
 	//resets the 'newResourceCards' field in each player object
-	public static void resetNewResources(ArrayList<Player> players) {
+	public static void resetNewResources(ArrayList<game.Player> players) {
 		
 		for (int i = 0; i < players.size(); i++) {
 			
@@ -114,7 +120,7 @@ public class ResourceAllocation {
 	public static String getIntersectionResources(Board board, Coordinate nearbyIntersection, Hex hex, Game game1) {
 		
 		String type = ((Intersection) board.getLocationFromCoordinate(nearbyIntersection).getContains()).getBuilding().getType();
-		Player owner = ((Intersection) board.getLocationFromCoordinate(nearbyIntersection).getContains()).getOwner();
+		game.Player owner = ((Intersection) board.getLocationFromCoordinate(nearbyIntersection).getContains()).getOwner();
 		String terrain = hex.getTerrain();
 		
 		//if any player owns an intersection around the hex they get resources
@@ -125,7 +131,7 @@ public class ResourceAllocation {
 			
 			if (bankHasResources != null) {
 				
-				ArrayList<Player> players = game1.getPlayers();
+				ArrayList<game.Player> players = game1.getPlayers();
 				
 				for (int i = 0; i < players.size(); i++) {
 					Catan.printToClient("There are no " + bankHasResources + " cards left. No player gets this resource this turn.", players.get(i));
@@ -140,7 +146,7 @@ public class ResourceAllocation {
 			
 			if (bankHasResources != null) {
 				
-				ArrayList<Player> players = game1.getPlayers();
+				ArrayList<game.Player> players = game1.getPlayers();
 				
 				for (int i = 0; i < players.size(); i++) {
 					Catan.printToClient("There are no " + bankHasResources + " cards left. No player gets this resource this turn.", players.get(i));
@@ -156,7 +162,7 @@ public class ResourceAllocation {
 	//gives the resources to a player
 	//returns the resource if the bank runs out of that resource card
 	//null otherwise
-	public static String getResources(Player player, String terrain, Game game1, int n) {
+	public static String getResources(game.Player player, String terrain, Game game1, int n) {
 		
 		ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
 		
@@ -232,11 +238,11 @@ public class ResourceAllocation {
 	
 	//removes resource cards from the players 'newResourceCards' of the type of resource that the
 	//bank does not have
-	public static void removeIllegalResources(ArrayList<Player> players, ArrayList<String> illegalResources) {
+	public static void removeIllegalResources(ArrayList<game.Player> players, ArrayList<String> illegalResources) {
 		
 		for (int i = 0; i < players.size(); i++) {
 			
-			Player player = players.get(i);
+			game.Player player = players.get(i);
 			ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
 			
 			for (int j = 0; j < newResourceCards.size(); j++) {
@@ -257,29 +263,51 @@ public class ResourceAllocation {
 	}
 		
 	//adds the cards in 'newResourceCards' to 'resourceCards' for each player
-	public static void setResources(ArrayList<Player> players) {
-			
+	public static ArrayList<intergroup.board.Board.ResourceAllocation> setResources(ArrayList<game.Player> players) {
+		ArrayList<intergroup.board.Board.ResourceAllocation> proRecAl = new ArrayList<intergroup.board.Board.ResourceAllocation>();
 		for (int i = 0; i < players.size(); i++) {
-						
-			Player player = players.get(i);
+			game.Player player = players.get(i);
+			intergroup.board.Board.ResourceAllocation.Builder thisProAl =  intergroup.board.Board.ResourceAllocation.newBuilder().setPlayer(Player.newBuilder().setIdValue(player.getID()));
 			PlayerSocket socket = player.getpSocket();
 			ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
 			ArrayList<ResourceCard> cards = player.getResourceCards();
 					
 			//if the player gets resources, they are added to their hand and
+			Builder proC = Counts.newBuilder();
 			//the allocation printed
 			if (newResourceCards.size() > 0) {
-				Catan.printToClient("You get:", players.get(i));
+			//	Catan.printToClient("You get:", players.get(i));
 			
 				for (int j = 0; j < newResourceCards.size(); j++) {
 							
 					cards.add(newResourceCards.get(j));
-
-					Catan.printToClient("1x " + newResourceCards.get(j).getResource(), players.get(i));
+					switch(newResourceCards.get(j).getResource()){
+					case "ore":
+						proC.setOre(proC.getOre()+1);
+						break;
+					case "grain":
+						proC.setGrain(proC.getGrain()+1);
+						break;
+					case "lumber":
+						proC.setLumber(proC.getLumber()+1);
+						break;
+					case "wool":
+						proC.setWool(proC.getWool()+1);
+						break;
+					case "brick":
+						proC.setBrick(proC.getBrick()+1);
+						break;
+					}
+					
+					
+				//	Catan.printToClient("1x " + newResourceCards.get(j).getResource(), players.get(i));
 				}
 					
 				player.setResourceCards(cards);
 			}
+			thisProAl.setResources(proC.build());
+			proRecAl.add(thisProAl.build());
 		}
+		return proRecAl;
 	}
 }

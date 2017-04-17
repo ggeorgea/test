@@ -14,7 +14,7 @@ import intergroup.lobby.Lobby.GameWon;
 public class Game {
 
 	private String id;
-	private Board board;
+	private game.Board board;
 
 	private ArrayList<ResourceCard> ore = new ArrayList<ResourceCard>();
 	private ArrayList<ResourceCard> grain = new ArrayList<ResourceCard>();
@@ -33,7 +33,7 @@ public class Game {
 
 	}
 
-	public Game(String id, Board board, ArrayList<ResourceCard> ore, ArrayList<ResourceCard> grain,
+	public Game(String id, game.Board board, ArrayList<ResourceCard> ore, ArrayList<ResourceCard> grain,
 			ArrayList<ResourceCard> lumber, ArrayList<ResourceCard> wool, ArrayList<ResourceCard> brick,
 			ArrayList<DevelopmentCard> developmentCards, ArrayList<Player> players) {
 
@@ -58,11 +58,11 @@ public class Game {
 		this.id = id;
 	}
 
-	public Board getBoard() {
+	public game.Board getBoard() {
 		return board;
 	}
 
-	public void setBoard(Board board) {
+	public void setBoard(game.Board board) {
 		this.board = board;
 	}
 
