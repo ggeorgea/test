@@ -3,6 +3,9 @@ package game;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+//
+//import completeCatan.Game;
+//import completeCatan.ResourceCard;
 
 import intergroup.EmptyOuterClass.Empty;
 import intergroup.Events.Event;
@@ -150,6 +153,43 @@ public class Trade {
 //		}
 //	}
 
+	
+
+
+ public static void returnToBank(ResourceCard removeResource, Game game1) {
+		
+		ArrayList<ResourceCard> temp;
+		
+		switch(removeResource.getResource()){
+		case "ore" :
+			temp = game1.getOre();
+			temp.add(removeResource);
+			game1.setOre(temp);
+			break;
+		case "grain" :
+			temp = game1.getGrain();
+			temp.add(removeResource);
+			game1.setGrain(temp);
+			break;
+		case "lumber" :
+			temp = game1.getLumber();
+			temp.add(removeResource);
+			game1.setLumber(temp);
+			break;
+		case "wool" :
+			temp = game1.getWool();
+			temp.add(removeResource);
+			game1.setWool(temp);
+			break;
+		case "brick" :
+			temp = game1.getBrick();
+			temp.add(removeResource);
+			game1.setBrick(temp);
+			break;
+		}
+	}
+ 
+	
 	public static boolean carryOutTrade(Player player,  ResourceCard tradeChoice, ArrayList<ResourceCard> gainChoice, String tradeType, Message enter, Game game1){
 		
 		ArrayList<ResourceCard> playerResources = player.getResourceCards();
@@ -169,14 +209,28 @@ public class Trade {
 			break;
 		}
 		
-		for (int i = 0; i < tradeNumber; i++) {
-			
-			playerResources.remove(removeResource);
-		}
+		
+ 		for (int i = 0; i < tradeNumber; i++) {
+			for (int j = 0; j < playerResources.size(); j++) {
+				if (playerResources.get(j).getResource().equals(removeResource.getResource())) {
+					playerResources.remove(playerResources.get(j));
+					returnToBank(removeResource, game1);
+					break;
+				}
+			}
+		} 
+//		
+//		for (int i = 0; i < tradeNumber; i++) {
+//			
+//			playerResources.remove(removeResource);
+//		}
 		
 		ResourceCard addResource = gainChoice.get(0);
 		playerResources.add(addResource);
 		player.setResourceCards(playerResources);
+	
+		
+		
 		Message acception = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(intergroup.board.Board.Player.newBuilder().setIdValue(player.getID()).build()).setBankTrade(enter.getRequest().getInitiateTrade().getBank()).build()).build();
 		for(Player k : game1.getPlayers()){
 			Catan.printToClient(acception, k);
@@ -226,7 +280,7 @@ public class Trade {
 		for (int i = 0; i < resourceCount.length; i++) {
 			if (resourceCount[i] >= DIRECT_TRADE_NUMBER) {
 				
-				Catan.printToClient((i+1) + ": " + resourceType.get(i).getResource() + " (" + resourceCount[i] + " available)", player);
+			//	Catan.printToClient((i+1) + ": " + resourceType.get(i).getResource() + " (" + resourceCount[i] + " available)", player);
 				canTrade.add(i);
 			}
 		}
