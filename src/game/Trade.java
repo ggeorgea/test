@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import intergroup.EmptyOuterClass.Empty;
 import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
 import intergroup.board.Board;
+import intergroup.resource.Resource;
 import intergroup.resource.Resource.Counts;
+import intergroup.trade.Trade.WithPlayer;
 
 /**
  * Class to store methods associated with trade
@@ -628,10 +631,10 @@ public class Trade {
 			}
 		}
 		
-		//TODO finish
-		//Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setPlayerTrade();
+		//TODO event for player trade
+		Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setPlayerTradeInitiated(WithPlayer.newBuilder().setOther(Board.Player.newBuilder().setIdValue(tradeID).build()).setOffering(Resource.Counts.newBuilder().setBrick(noOffBrick).setLumber(noOffLumber).setOre(noOffOre).setGrain(noOffGrain).setWool(noOffWool).build()).setWanting(Resource.Counts.newBuilder().setBrick(noWantBrick).setLumber(noWantLumber).setOre(noWantOre).setGrain(noWantGrain).setWool(noWantWool).build()).build()).build()).build();
 		
-		//Catan.printToClient(m, playerTrade);
+		Catan.printToClient(m, playerTrade);
 		
 		Message reply = Message.newBuilder().build();
 		
@@ -654,11 +657,21 @@ public class Trade {
 		if (response == 0) {
 			Catan.printToClient("Offer rejected. Trading stopped.", playerTrade);
 			Catan.printToClient("Offer rejected. Trading stopped.", player);
+			
+			//TODO reject event
+			Message reject = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setPlayerTradeRejected(Empty.newBuilder().build()).build()).build();
+			Catan.printToClient(reject, player);
+			Catan.printToClient(reject, playerTrade);
 		}
 		else {
 			Catan.printToClient("Offer accepted. Trading stopped.", playerTrade);
 			Catan.printToClient("Offer accepted. Trading stopped.", player);
 			tradePlayerResources(player, playerTrade, playerToTrade, playerTradeToTrade);
+			
+			//TODO accept event
+			Message accept = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setPlayerTradeAccepted(WithPlayer.newBuilder().setOther(Board.Player.newBuilder().setIdValue(tradeID).build()).setOffering(Resource.Counts.newBuilder().setBrick(noOffBrick).setLumber(noOffLumber).setOre(noOffOre).setGrain(noOffGrain).setWool(noOffWool).build()).setWanting(Resource.Counts.newBuilder().setBrick(noWantBrick).setLumber(noWantLumber).setOre(noWantOre).setGrain(noWantGrain).setWool(noWantWool).build()).build()).build()).build();
+			Catan.printToClient(accept, player);
+			Catan.printToClient(accept, playerTrade);
 		}
 	}
 
