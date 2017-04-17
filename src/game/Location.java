@@ -16,7 +16,7 @@ public class Location {
 	}
 	
 	public Location(Coordinate coord, String type, Object contains) {
-	
+		
 		this.coord = coord;
 		this.type = type;
 		this.contains = contains;

@@ -44,10 +44,10 @@ public class Player {
 	}
 
 	public Player(String name, int victoryPoints, int currentRoll, int noRoads,
-			int noSettlements, int noCities, int longestRoad, int largestArmy,
-			boolean hasLongestRoad, boolean hasLargestArmy,
-			ArrayList<ResourceCard> resourceCards,
-			ArrayList<DevelopmentCard> developmentCards) {
+		int noSettlements, int noCities, int longestRoad, int largestArmy,
+		boolean hasLongestRoad, boolean hasLargestArmy,
+		ArrayList<ResourceCard> resourceCards,
+		ArrayList<DevelopmentCard> developmentCards) {
 
 		this.name = name;
 		this.victoryPoints = victoryPoints;
@@ -245,13 +245,13 @@ public class Player {
 		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		
 		switch (choice) {
-		case 1 :
+			case 1 :
 			printResourceCards(player);
 			break;
-		case 2 :
+			case 2 :
 			printDevelopmentCards(player);
 			break;
-		default :
+			default :
 			Catan.printToClient("Invalid choice. Please choose again", player);
 			printHand(player, scanner);			
 		}

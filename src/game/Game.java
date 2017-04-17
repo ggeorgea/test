@@ -28,14 +28,12 @@ public class Game {
 	private static final boolean END_GAME = true;
 
 //-----Constructors-----//
-	
 	public Game() {
 
 	}
-
 	public Game(String id, game.Board board, ArrayList<ResourceCard> ore, ArrayList<ResourceCard> grain,
-			ArrayList<ResourceCard> lumber, ArrayList<ResourceCard> wool, ArrayList<ResourceCard> brick,
-			ArrayList<DevelopmentCard> developmentCards, ArrayList<Player> players) {
+		ArrayList<ResourceCard> lumber, ArrayList<ResourceCard> wool, ArrayList<ResourceCard> brick,
+		ArrayList<DevelopmentCard> developmentCards, ArrayList<Player> players) {
 
 		this.id = id;
 		this.board = board;
@@ -148,8 +146,6 @@ public class Game {
 				playerNum = i;
 			}
 		}
-		
-		//TODO game won event
 		Message m = Message.newBuilder().setEvent(Event.newBuilder().setGameWon(GameWon.newBuilder().setWinner(Board.Player.newBuilder().setIdValue(playerNum).build()).build()).build()).build();
 
 		for (int i = 0; i < players.size(); i++) {

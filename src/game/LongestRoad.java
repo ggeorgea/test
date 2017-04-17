@@ -20,18 +20,18 @@ public class LongestRoad {
 		loop = false;
 
 		Board board1 = game1.getBoard();
-		int currLongest = player.getLongestRoad(); 		//old longest road
-		int longest = 0;								//longest road found from this point
+		int currLongest = player.getLongestRoad(); 	
+		int longest = 0;								
 
 		//this is one end of the road
 		Intersection intA = (Intersection) game1.getBoard()
-				.getLocationFromCoordinate(road1.getCoordinateA())
-				.getContains();
+		.getLocationFromCoordinate(road1.getCoordinateA())
+		.getContains();
 		
 		//this is the other
 		Intersection intB = (Intersection) game1.getBoard()
-				.getLocationFromCoordinate(road1.getCoordinateB())
-				.getContains();
+		.getLocationFromCoordinate(road1.getCoordinateB())
+		.getContains();
 
 
 		Road end1A = null;
@@ -62,7 +62,7 @@ public class LongestRoad {
 			
 			//this maps a point to a sector for the purpose of finding overlap
 			HashMap<Intersection, String> sectorMap = new HashMap<Intersection, String>();
-					
+			
 			//END 1
 			int longests1 = 0;
 			HashMap<Intersection, Integer> distancesMaps1 = new HashMap<Intersection, Integer>();
@@ -80,8 +80,8 @@ public class LongestRoad {
 			visitorsMaps1.put(intB, idArray1s1);
 			
 			longests1 = Branch(game1, player, intA,intB, road1, (ArrayList<Integer>) namesLists1.clone(), 1,
-					distancesMaps1, visitorsMaps1, "s1", sectorMap);
-						
+				distancesMaps1, visitorsMaps1, "s1", sectorMap);
+			
 			// END2
 			int longests2 = 0;
 			HashMap<Intersection, Integer> distancesMaps2 = new HashMap<Intersection, Integer>();
@@ -99,7 +99,7 @@ public class LongestRoad {
 			visitorsMaps2.put(intA, idArray1s2);
 
 			longests2 = Branch(game1, player, intB, intA, road1, (ArrayList<Integer>) namesLists2.clone(), 1,
-					distancesMaps2, visitorsMaps2, "s2", sectorMap);
+				distancesMaps2, visitorsMaps2, "s2", sectorMap);
 			
 			//deciding on what to return
 			if (loop) {
@@ -116,7 +116,7 @@ public class LongestRoad {
 
 		} 
 		
-		//this is what happens if only one end connected to anything, this works!
+		//this is what happens if only one end connected to anything
 		else {
 			
 			// setup
@@ -158,15 +158,15 @@ public class LongestRoad {
 					
 					//branch using the road end1A fromm intA to the intersection that road end1A leads to, and moving the length to two 
 					toplen = Branch(game1, player, getOtherInt(board1, end1A, intA), intA, end1A,
-							(ArrayList<Integer>) namesList.clone(), toplen + 1,
-							distancesMap, visitorsMap, null, null);
+						(ArrayList<Integer>) namesList.clone(), toplen + 1,
+						distancesMap, visitorsMap, null, null);
 				}
 				
 				// looking at the other branch possibility
 				if (end1B != null) {
 					toplen = Branch(game1, player, getOtherInt(board1, end1B, intA), intA, end1B,
-							(ArrayList<Integer>) namesList.clone(), botLen + 1,
-							distancesMap, visitorsMap, null, null);
+						(ArrayList<Integer>) namesList.clone(), botLen + 1,
+						distancesMap, visitorsMap, null, null);
 				}
 				// getting which one of those is better!
 				if (toplen > botLen) {
@@ -202,16 +202,16 @@ public class LongestRoad {
 					
 					System.out.println("A");
 					toplen = Branch(game1, player, getOtherInt(board1, end2A, intB), intB, end2A,
-							(ArrayList<Integer>) namesList.clone(), toplen + 1,
-							distancesMap, visitorsMap, null, null);
+						(ArrayList<Integer>) namesList.clone(), toplen + 1,
+						distancesMap, visitorsMap, null, null);
 				}
 				
 				// looking at the other branch possibility
 				if (end2B != null) {
 					System.out.println("B");
 					botLen = Branch(game1, player, getOtherInt(board1, end2B, intB), intB, end2B,
-							(ArrayList<Integer>) namesList.clone(), botLen + 1,
-							distancesMap, visitorsMap, null, null);
+						(ArrayList<Integer>) namesList.clone(), botLen + 1,
+						distancesMap, visitorsMap, null, null);
 				}
 				
 				// getting which one of those is better!
@@ -232,9 +232,9 @@ public class LongestRoad {
 	}
 	
 	public static int Branch(Game game1, Player player, Intersection pointInt,
-			Intersection fromInt, Road carrying, ArrayList<Integer> idArray,
-			int currdist, HashMap<Intersection, Integer> distancesMap, HashMap<Intersection, ArrayList<Integer>> visitorsMap,
-			String sector, HashMap<Intersection, String> sectorMap) {
+		Intersection fromInt, Road carrying, ArrayList<Integer> idArray,
+		int currdist, HashMap<Intersection, Integer> distancesMap, HashMap<Intersection, ArrayList<Integer>> visitorsMap,
+		String sector, HashMap<Intersection, String> sectorMap) {
 		
 		//this is code for when the built road connected two other roads
 		if (sector != null) {
@@ -246,10 +246,10 @@ public class LongestRoad {
 			//if null we are the first and add ourselves
 			if (thisSector == null) {
 				sectorMap.put(pointInt, sector);
-		
+				
 			} 
 			
-			//otherwise if it a different sector, we have a loop!
+			//otherwise if it a different sector, we have a loop
 			else if (!thisSector.equals(sector)) {
 				loop = true;
 			}
@@ -261,9 +261,9 @@ public class LongestRoad {
 		}
 		
 		System.out.print("branching to " + pointInt.getCoordinate().getX()
-				+ "," + pointInt.getCoordinate().getY() + " from "
-				+ fromInt.getCoordinate().getX() + ","
-				+ fromInt.getCoordinate().getY() + "\n");
+			+ "," + pointInt.getCoordinate().getY() + " from "
+			+ fromInt.getCoordinate().getX() + ","
+			+ fromInt.getCoordinate().getY() + "\n");
 		//end of testing code!
 		
 		int thisId = ++id;
@@ -310,9 +310,6 @@ public class LongestRoad {
 			}
 		}
 		
-		//we cannot go over the same spot twice so we return now
-		//THIS MIGHT NEED TO CHANGE AS WE MAY WELL BE ABLE TO AS LONG AS WE CAN FIND SOMEWHERE UNVISITED TO GO NEXT!
-		//ACTUALLY IT WONT BECAUSE EVERY NODE HAS ONLY 3 BRANCHES, and any other visitor must have exited with one!
 		if (visited) {
 			
 			System.out.println("returning due to loop: "+currdist);
@@ -336,20 +333,20 @@ public class LongestRoad {
 		}
 		
 		Road option2 = getRoadFromInt(game1, pointInt, player, fromInt,
-				getOtherInt(game1.getBoard(), option1, pointInt));
+			getOtherInt(game1.getBoard(), option1, pointInt));
 		
 		// add branch!!!
 		int option1Result = Branch(game1, player, getOtherInt(game1.getBoard(), option1, pointInt), pointInt,
-				option1, (ArrayList<Integer>) idArray.clone(), currdist + 1,
-				distancesMap, visitorsMap, sector, sectorMap);
+			option1, (ArrayList<Integer>) idArray.clone(), currdist + 1,
+			distancesMap, visitorsMap, sector, sectorMap);
 		
 		if (option2 == null) {
 			return option1Result;
 		}
 		
 		int option2Result = Branch(game1, player, getOtherInt(game1.getBoard(), option2, pointInt), pointInt,
-				option2, (ArrayList<Integer>) idArray.clone(), currdist + 1,
-				distancesMap, visitorsMap, sector, sectorMap);
+			option2, (ArrayList<Integer>) idArray.clone(), currdist + 1,
+			distancesMap, visitorsMap, sector, sectorMap);
 		
 		if (option1Result > option2Result) {
 			return option1Result;
@@ -361,7 +358,7 @@ public class LongestRoad {
 	//returns the other intersection of a road where one intersection is given as a parameter
 	//WORKS
 	public static Intersection getOtherInt(Board board1, Road road1,
-			Intersection int1) {
+		Intersection int1) {
 		
 		Intersection endA = (Intersection) board1.getLocationFromCoordinate(road1.getCoordinateA()).getContains();
 		Intersection endB = (Intersection) board1.getLocationFromCoordinate(road1.getCoordinateB()).getContains();
@@ -377,7 +374,7 @@ public class LongestRoad {
 	//returns a road from an intersection, in the game an intersection given, belonging to the player give, that does not go to either of the two other intersections specified
 	//WORKS	
 	public static Road getRoadFromInt(Game game1, Intersection sett1,
-			Player player, Intersection int1Ill, Intersection int2Ill) {
+		Player player, Intersection int1Ill, Intersection int2Ill) {
 		
 		Road startRoad1 = null;
 		int j = sett1.getCoordinate().getX();
@@ -385,97 +382,97 @@ public class LongestRoad {
 		
 		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(), new Coordinate(j, g + 1));
 		if ((startRoad1 != null && startRoad1.getOwner().equals(player))
-				&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
-						.getBoard()
-						.getLocationFromCoordinate(new Coordinate(j, g + 1))
-						.getContains()))
-				&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
-						.getBoard()
-						.getLocationFromCoordinate(new Coordinate(j, g + 1))
-						.getContains()))) {
+			&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
+				.getBoard()
+				.getLocationFromCoordinate(new Coordinate(j, g + 1))
+				.getContains()))
+			&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
+				.getBoard()
+				.getLocationFromCoordinate(new Coordinate(j, g + 1))
+				.getContains()))) {
 			return startRoad1;
-		}
-		
-		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(), new Coordinate(j, g - 1));
-		if ((startRoad1 != null && startRoad1.getOwner().equals(player))
-				&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
-						.getBoard()
-						.getLocationFromCoordinate(new Coordinate(j, g - 1))
-						.getContains()))
-				&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
-						.getBoard()
-						.getLocationFromCoordinate(new Coordinate(j, g - 1))
-						.getContains()))) {
-			return startRoad1;
-		}
-		
-		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
-				new Coordinate(j + 1, g));
-		if ((startRoad1 != null && startRoad1.getOwner().equals(player))
-				&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
-						.getBoard()
-						.getLocationFromCoordinate(new Coordinate(j + 1, g))
-						.getContains()))
-				&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
-						.getBoard()
-						.getLocationFromCoordinate(new Coordinate(j + 1, g))
-						.getContains()))) {
-			return startRoad1;
-		}
-		
-		// not working
-		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
-				new Coordinate(j - 1, g));
-		
-		if ((startRoad1 != null && startRoad1.getOwner().equals(player))
-				&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
-						.getBoard()
-						.getLocationFromCoordinate(new Coordinate(j - 1, g))
-						.getContains()))
-				&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
-						.getBoard()
-						.getLocationFromCoordinate(new Coordinate(j - 1, g))
-						.getContains()))) {
-			return startRoad1;
-		}
-		
-		// not working
-		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
-				new Coordinate(j + 1, g + 1));
-		if ((startRoad1 != null && startRoad1.getOwner().equals(player))
-				&& ((int1Ill == null) || !int1Ill
-						.equals((Intersection) game1
-								.getBoard()
-								.getLocationFromCoordinate(
-										new Coordinate(j + 1, g + 1))
-								.getContains()))
-				&& ((int2Ill == null) || !int2Ill
-						.equals((Intersection) game1
-								.getBoard()
-								.getLocationFromCoordinate(
-										new Coordinate(j + 1, g + 1))
-								.getContains()))) {
-			return startRoad1;
-		}
-		
-		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
-				new Coordinate(j - 1, g - 1));
-
-		if ((startRoad1 != null && startRoad1.getOwner().equals(player))
-				&& (((int1Ill == null) || !int1Ill
-						.equals((Intersection) game1
-								.getBoard()
-								.getLocationFromCoordinate(
-										new Coordinate(j - 1, g - 1))
-								.getContains())))
-				&& (((int2Ill == null) || !int2Ill
-						.equals((Intersection) game1
-								.getBoard()
-								.getLocationFromCoordinate(
-										new Coordinate(j - 1, g - 1))
-								.getContains())))) {
-		}
-		
-		return null;
 	}
+	
+	startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(), new Coordinate(j, g - 1));
+	if ((startRoad1 != null && startRoad1.getOwner().equals(player))
+		&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
+			.getBoard()
+			.getLocationFromCoordinate(new Coordinate(j, g - 1))
+			.getContains()))
+		&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
+			.getBoard()
+			.getLocationFromCoordinate(new Coordinate(j, g - 1))
+			.getContains()))) {
+		return startRoad1;
+}
+
+startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
+	new Coordinate(j + 1, g));
+if ((startRoad1 != null && startRoad1.getOwner().equals(player))
+	&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
+		.getBoard()
+		.getLocationFromCoordinate(new Coordinate(j + 1, g))
+		.getContains()))
+	&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
+		.getBoard()
+		.getLocationFromCoordinate(new Coordinate(j + 1, g))
+		.getContains()))) {
+	return startRoad1;
+}
+
+		// not working
+startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
+	new Coordinate(j - 1, g));
+
+if ((startRoad1 != null && startRoad1.getOwner().equals(player))
+	&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
+		.getBoard()
+		.getLocationFromCoordinate(new Coordinate(j - 1, g))
+		.getContains()))
+	&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
+		.getBoard()
+		.getLocationFromCoordinate(new Coordinate(j - 1, g))
+		.getContains()))) {
+	return startRoad1;
+}
+
+		// not working
+startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
+	new Coordinate(j + 1, g + 1));
+if ((startRoad1 != null && startRoad1.getOwner().equals(player))
+	&& ((int1Ill == null) || !int1Ill
+		.equals((Intersection) game1
+			.getBoard()
+			.getLocationFromCoordinate(
+				new Coordinate(j + 1, g + 1))
+			.getContains()))
+	&& ((int2Ill == null) || !int2Ill
+		.equals((Intersection) game1
+			.getBoard()
+			.getLocationFromCoordinate(
+				new Coordinate(j + 1, g + 1))
+			.getContains()))) {
+	return startRoad1;
+}
+
+startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
+	new Coordinate(j - 1, g - 1));
+
+if ((startRoad1 != null && startRoad1.getOwner().equals(player))
+	&& (((int1Ill == null) || !int1Ill
+		.equals((Intersection) game1
+			.getBoard()
+			.getLocationFromCoordinate(
+				new Coordinate(j - 1, g - 1))
+			.getContains())))
+	&& (((int2Ill == null) || !int2Ill
+		.equals((Intersection) game1
+			.getBoard()
+			.getLocationFromCoordinate(
+				new Coordinate(j - 1, g - 1))
+			.getContains())))) {
+}
+
+return null;
+}
 }

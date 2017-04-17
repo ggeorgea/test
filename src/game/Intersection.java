@@ -16,8 +16,7 @@ public class Intersection {
 	
 	public Intersection() {
 		
-	}
-	
+	}	
 	public Intersection(Coordinate coordinate, Player owner, Building building) {
 		
 		this.coordinate = coordinate;

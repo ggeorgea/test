@@ -10,13 +10,6 @@ public class Map {
 	//the big thing that prints the map, if this doesn't work, its probably because you were using the set methods that take coordinates
 	public static void printMap(Board board1, ArrayList<Player> players) {
 
-		//this big print out is gonna get very complicated, it does look quite
-		//nice as ascii
-		//i suggest we lose any semblance that we can keep it looking neat as
-		//ascii, and instead try to make it neat as code!
-		//these are just for iterating through the robber fields, the terrain
-		//fields and then number fields
-		
 		int rn = 0;
 		int tn = 0;
 		int nn = 0;
