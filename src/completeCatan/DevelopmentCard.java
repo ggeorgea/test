@@ -208,7 +208,7 @@ public class DevelopmentCard {
  		}
  		
  		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
- 		DevelopmentCard play = playCards.get(choice);	
+ 		DevelopmentCard play = playCards.get(choice-1);	
  		
  		String type = play.getType();
  		
@@ -244,6 +244,17 @@ public class DevelopmentCard {
  	
  	//plays a knight card
 	public static void playKnightCard(Player player, Game game1, Scanner scanner) throws IOException {
+		
+		//notifies all players of successful action
+		Catan.printToClient("Successfully played year of plenty card!", player);
+		
+		ArrayList<Player> players = game1.getPlayers();
+		
+		for (int i = 0; i < players.size(); i++) {
+			if (!players.get(i).equals(player)) {
+				Catan.printToClient("Player: " + player.getName() + " played a knight card", players.get(i));
+			}
+		}
 		
 		//moves the robber
 		Robber.moveRobber(player, game1, scanner);
@@ -306,6 +317,17 @@ public class DevelopmentCard {
 	//plays a road building card
 	public static void playRoadBuildingCard(Player player, Game game1, Scanner scanner) throws IOException {
  		
+		//notifies all players of successful action
+		Catan.printToClient("Successfully played road building card!", player);
+		
+		ArrayList<Player> players = game1.getPlayers();
+		
+		for (int i = 0; i < players.size(); i++) {
+			if (!players.get(i).equals(player)) {
+				Catan.printToClient("Player: " + player.getName() + " played a road building card", players.get(i));
+			}
+		}
+		
  		boolean roadBuilding = true;
  		
  		//lets the player build two roads
@@ -326,6 +348,17 @@ public class DevelopmentCard {
 		}
 		
 		player.setResourceCards(cards);
+		
+		//notifies all players of successful action
+		Catan.printToClient("Successfully played year of plenty card!", player);
+		
+		ArrayList<Player> players = game1.getPlayers();
+		
+		for (int i = 0; i < players.size(); i++) {
+			if (!players.get(i).equals(player)) {
+				Catan.printToClient("Player: " + player.getName() + " played a year of plenty card", players.get(i));
+			}
+		}
 		
 		//if there are no resources in the bank the card cannot be played
 		return hasResource;
@@ -426,7 +459,7 @@ public class DevelopmentCard {
 			
 			Player player2 = players.get(i);
 			
-			if (!player2.equals(player2)) {
+			if (!player2.equals(player)) {
 				
 				ArrayList<ResourceCard> player2Cards = player2.getResourceCards();
 			
@@ -447,6 +480,15 @@ public class DevelopmentCard {
 	
 		player.setResourceCards(cards);
 		game1.setPlayers(players);
+		
+		//notifies all players of successful action
+		Catan.printToClient("Successfully played monopoly card!", player);
+		
+		for (int i = 0; i < players.size(); i++) {
+			if (!players.get(i).equals(player)) {
+				Catan.printToClient("Player: " + player.getName() + " played a monopoly card with resource " + resource, players.get(i));
+			}
+		}
 	}
 	
 	//lets the player choose the resource for monopoly
