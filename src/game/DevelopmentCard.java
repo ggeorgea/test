@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import intergroup.Messages.Message;
 import intergroup.board.Board;
 import intergroup.board.Board.MultiSteal;
 import intergroup.board.Board.PlayableDevCard;
+import intergroup.board.Board.Steal;
 
 /**
  * Class to store information about development cards
@@ -521,6 +523,25 @@ public class DevelopmentCard {
 	public static void playMonopolyCard(Player player, Game game1, Scanner scanner) throws IOException {
 		
 		String resource = chooseResourceMonopoly(scanner, player);
+		int resourceValue = 0;
+		
+		switch (resource) {
+		case BRICK :
+			resourceValue = 1;
+			break;
+		case LUMBER :
+			resourceValue = 2;
+			break;
+		case WOOL :
+			resourceValue = 3;
+			break;
+		case GRAIN :
+			resourceValue = 4;
+			break;
+		case ORE :
+			resourceValue = 5;
+			break;			
+		}
 		
 		if (resource.equals("")) {
 			return;
@@ -529,30 +550,45 @@ public class DevelopmentCard {
 		ArrayList<ResourceCard> cards = player.getResourceCards();
 		
 		ArrayList<Player> players = game1.getPlayers();
-		players.remove(player);
+		ArrayList<Steal> thefts = new ArrayList<Steal>();
 		
 		//takes the resources of specified type from each of the other
 		//players' hands and gives them to the player
 		for (int i = 0; i < players.size(); i++) {
 			
 			Player player2 = players.get(i);
-			ArrayList<ResourceCard> player2Cards = player2.getResourceCards();
 			
-			for (int j = 0; j < player2Cards.size(); j++) {
+			if (!player2.equals(player)) {
 				
-				ResourceCard card = player2Cards.get(i);
+				ArrayList<ResourceCard> player2Cards = player2.getResourceCards();
 				
-				if (card.getResource().equals(resource)) {
-					
-					player2Cards.remove(card);
-					cards.add(card);
+				for (int j = 0; j < player2Cards.size(); j++) {
+				
+					ResourceCard card = player2Cards.get(i);
+									
+					if (card.getResource().equals(resource)) {
+											
+						Steal theft = Steal.newBuilder().setVictim(Board.Player.newBuilder().setIdValue(i).build()).setResourceValue(resourceValue).build();
+						thefts.add(theft);
+						
+						player2Cards.remove(card);
+						cards.add(card);
+					}
 				}
-			}
-			
-			player2.setResourceCards(player2Cards);
+				
+				player2.setResourceCards(player2Cards);
+			}			
 		}
 	
 		player.setResourceCards(cards);
+		game1.setPlayers(players);
+			
+		Message m = Message.newBuilder().setEvent(Event.newBuilder().setMonopolyResolution(MultiSteal.newBuilder().addAllThefts(thefts).build()).build()).build();
+		
+		//TODO monopoly resolution event
+		for (int i = 0; i < players.size(); i++) {
+			Catan.printToClient(m, players.get(i));
+		}
 	}
 	
 	//lets the player choose the resource for monopoly
