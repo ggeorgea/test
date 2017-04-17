@@ -2,7 +2,6 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 /**
  * Class that keeps track of the state of the board
  */
@@ -24,12 +23,12 @@ public class Board {
 //-----Constructors-----//
 	
 	public Board() {	
-	
+		
 	}
 	
 	public Board(int size, Coordinate robber, ArrayList<Hex> hexes,
-			ArrayList<Port> ports, ArrayList<Road> roads,
-			ArrayList<Intersection> buildings, Location[][] boardLocations) {
+		ArrayList<Port> ports, ArrayList<Road> roads,
+		ArrayList<Intersection> buildings, Location[][] boardLocations) {
 		
 		this.size = size;
 		this.robber = robber;
@@ -57,7 +56,7 @@ public class Board {
 	public void setRobber(Coordinate robber) {
 		this.robber = robber;
 	}
-		
+	
 	public ArrayList<Hex> getHexes() {
 		return hexes;
 	}
@@ -196,6 +195,6 @@ public class Board {
 	//puts a location into the array at the given coordinates
 	public void setLocationFromCoordinate(Coordinate coA, Location location1) {
 		
-		 boardLocations[coA.getX()+5][coA.getY()+5] = location1;
+		boardLocations[coA.getX()+5][coA.getY()+5] = location1;
 	}
 }
