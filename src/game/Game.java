@@ -2,6 +2,12 @@ package game;
 
 import java.util.ArrayList;
 
+import intergroup.EmptyOuterClass.Empty;
+import intergroup.Events.Event;
+import intergroup.Messages.Message;
+import intergroup.board.Board;
+import intergroup.lobby.Lobby.GameWon;
+
 /**
  * Class to store the state of the Catan game
  */
@@ -133,14 +139,21 @@ public class Game {
 	//prints a statement ending the game
 	public static void endGame(Player player, Game game1) {
 		
-		Catan.printToClient("You won!", player);
-		
 		ArrayList<Player> players = game1.getPlayers();
 		
+		int playerNum = 0;
+		
 		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i) != player) {
-				Catan.printToClient("Player " + player.getName() + " won!", players.get(i));
+			if(players.get(i).equals(player)) {
+				playerNum = i;
 			}
+		}
+		
+		//TODO game won event
+		Message m = Message.newBuilder().setEvent(Event.newBuilder().setGameWon(GameWon.newBuilder().setWinner(Board.Player.newBuilder().setIdValue(playerNum).build()).build()).build()).build();
+
+		for (int i = 0; i < players.size(); i++) {
+			Catan.printToClient(m, players.get(i));
 		}
 	}
 }

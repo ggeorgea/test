@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import java.io.IOException;
 
+import intergroup.EmptyOuterClass.Empty;
 import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
@@ -160,6 +161,11 @@ public class Turn {
 		}
 
 		Player.updateDevelopmentCards(player);
+		
+		//TODO turn ended event
+		Message m = Message.newBuilder().setEvent(Event.newBuilder().setTurnEnded(Empty.newBuilder().build()).build()).build();
+		Catan.printToClient(m, player);
+		
 		return hasEnded;
 	}
 
