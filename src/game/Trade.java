@@ -1,15 +1,16 @@
 package game;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import java.io.IOException;
+
 import intergroup.EmptyOuterClass.Empty;
 import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;
 import intergroup.board.Board;
 import intergroup.resource.Resource;
-import intergroup.resource.Resource.Counts;
 import intergroup.trade.Trade.WithPlayer;
 
 /**
@@ -64,20 +65,20 @@ public class Trade {
 		resourceType.addAll(game1.getWool());
 
 		boolean hasStandard = false; 
-		if(player.getStandardPorts().size() > 0) {
+		if (player.getStandardPorts().size() > 0) {
 			hasStandard = true;
 		}
+		
 		boolean hasSpecial = false; 
-		if(player.getSpecialPorts().size() > 0) {
+		if (player.getSpecialPorts().size() > 0) {
 			hasSpecial = true;
 		}
 		if (!(hasSpecial&&tradeSpecial(player,enter, scanner, game1, resourceType))) {	
-			if(!(hasStandard&&tradeStandard(player, enter, scanner, game1, resourceType))){
-				if(!tradeDirect(player, enter, scanner, game1, resourceType)){
-				//	Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid trade").build()).build()).build(), player.getpSocket().getClientSocket());
+			if (!(hasStandard&&tradeStandard(player, enter, scanner, game1, resourceType))) {
+				if (!tradeDirect(player, enter, scanner, game1, resourceType)) {
+			
 					Catan.printToClient("Offer rejected incorrect resources. Trading stopped.", player);
 					
-					//TODO reject event
 					Message reject = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(player.getID()).build()).setPlayerTradeRejected(Empty.newBuilder().build()).build()).build();
 					
 					for (int i = 0; i < game1.getPlayers().size(); i++) {
@@ -86,44 +87,40 @@ public class Trade {
 				}
 			}
 		}
-
-		
-		
 	}
 
 	public static void returnToBank(ResourceCard removeResource, Game game1) {
 		
 		ArrayList<ResourceCard> temp;
 		
-		switch(removeResource.getResource()){
-			case "ore" :
+		switch (removeResource.getResource()) {
+		case "ore" :
 			temp = game1.getOre();
 			temp.add(removeResource);
 			game1.setOre(temp);
 			break;
-			case "grain" :
+		case "grain" :
 			temp = game1.getGrain();
 			temp.add(removeResource);
 			game1.setGrain(temp);
 			break;
-			case "lumber" :
+		case "lumber" :
 			temp = game1.getLumber();
 			temp.add(removeResource);
 			game1.setLumber(temp);
 			break;
-			case "wool" :
+		case "wool" :
 			temp = game1.getWool();
 			temp.add(removeResource);
 			game1.setWool(temp);
 			break;
-			case "brick" :
+		case "brick" :
 			temp = game1.getBrick();
 			temp.add(removeResource);
 			game1.setBrick(temp);
 			break;
 		}
-	}
-	
+	}	
 	
 	public static boolean carryOutTrade(Player player,  ResourceCard tradeChoice, ArrayList<ResourceCard> gainChoice, String tradeType, Message enter, Game game1){
 		
@@ -133,17 +130,16 @@ public class Trade {
 		int tradeNumber = 0;;
 		
 		switch (tradeType) {
-			case "direct" :
+		case "direct" :
 			tradeNumber = DIRECT_TRADE_NUMBER; 
 			break;
-			case "standard" :
+		case "standard" :
 			tradeNumber = STANDARD_TRADE_NUMBER; 
 			break;
-			case "special" :
+		case "special" :
 			tradeNumber = SPECIAL_TRADE_NUMBER; 
 			break;
-		}
-		
+		}		
 		
 		for (int i = 0; i < tradeNumber; i++) {
 			for (int j = 0; j < playerResources.size(); j++) {
@@ -154,24 +150,21 @@ public class Trade {
 				}
 			}
 		} 
-
 		
 		ResourceCard addResource = gainChoice.get(0);
 		playerResources.add(addResource);
-		player.setResourceCards(playerResources);
-		
-		
+		player.setResourceCards(playerResources);		
 		
 		Message acception = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(intergroup.board.Board.Player.newBuilder().setIdValue(player.getID()).build()).setBankTrade(enter.getRequest().getInitiateTrade().getBank()).build()).build();
-		for(Player k : game1.getPlayers()){
-			Catan.printToClient(acception, k);
-		}
 		
+		for (Player k : game1.getPlayers()) {
+			Catan.printToClient(acception, k);
+		}	
 		
 		return true;
 	}
 
-	public static boolean tradeDirect(Player player, Message enter, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType){
+	public static boolean tradeDirect(Player player, Message enter, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType) {
 		
 		ArrayList<ResourceCard> resources = player.getResourceCards();
 		int[] resourceCount = {0, 0, 0, 0, 0}; //array positions indicate brick, grain, lumber, ore, wool respectively
@@ -180,27 +173,27 @@ public class Trade {
 		for (int i = 0; i < resources.size(); i++) {
 			
 			switch (resources.get(i).getResource()) {
-				case "brick" : 
+			case "brick" : 
 				resourceCount[0]++;
 				bankAmount = game1.getBrick().size();
 				break;
-				case "grain" : 
+			case "grain" : 
 				resourceCount[1]++; 
 				bankAmount = game1.getGrain().size();
 				break;
-				case "lumber" : 
+			case "lumber" : 
 				resourceCount[2]++; 
 				bankAmount = game1.getLumber().size();
 				break;
-				case "ore" : 
+			case "ore" : 
 				resourceCount[3]++; 
 				bankAmount = game1.getOre().size();
 				break;
-				case "wool" : 
+			case "wool" : 
 				resourceCount[4]++; 
 				bankAmount = game1.getWool().size();
 				break;
-				default : 
+			default : 
 				break;
 			}
 		}
@@ -210,15 +203,11 @@ public class Trade {
 		
 		for (int i = 0; i < resourceCount.length; i++) {
 			if (resourceCount[i] >= DIRECT_TRADE_NUMBER) {
-				
 				canTrade.add(i);
 			}
 		}
 		
-		if (canTrade.size() != 0) {
-			
-			
-			
+		if (canTrade.size() != 0) {			
 			
 			int noOffBrick = enter.getRequest().getInitiateTrade().getBank().getOffering().getBrick();
 			int noOffOre = enter.getRequest().getInitiateTrade().getBank().getOffering().getOre();
@@ -233,44 +222,41 @@ public class Trade {
 			
 			ResourceCard tradeChoice = new ResourceCard();
 			
-			if (noOffBrick>0){
+			if (noOffBrick > 0) {
 				tradeChoice = game1.getBrick().get(0);
 			}
-			if (noOffGrain>0){
+			if (noOffGrain > 0) {
 				tradeChoice = game1.getGrain().get(0);
 			}
-			if (noOffLumber>0){
+			if (noOffLumber > 0) {
 				tradeChoice = game1.getLumber().get(0);
 			}
-			if (noOffOre>0){
+			if (noOffOre > 0) {
 				tradeChoice = game1.getOre().get(0);
 			}
-			if (noOffWool>0){
+			if (noOffWool > 0) {
 				tradeChoice = game1.getWool().get(0);
-			}
-			
+			}			
 			
 			ArrayList<ResourceCard> gainChoice = null;
-			//int bankAmount = 0;
-//			
-//			switch (gainChoice) {
-			if (noWantBrick>0){
+
+			if (noWantBrick > 0) {
 				gainChoice = game1.getBrick();
 				bankAmount = gainChoice.size();
 			}
-			if (noWantGrain>0){
+			if (noWantGrain > 0) {
 				gainChoice = game1.getGrain();
 				bankAmount = gainChoice.size();
 			}
-			if (noWantLumber>0){
+			if (noWantLumber > 0) {
 				gainChoice = game1.getLumber();
 				bankAmount = gainChoice.size();
 			}
-			if (noWantOre>0){
+			if (noWantOre > 0) {
 				gainChoice = game1.getOre();
 				bankAmount = gainChoice.size();
 			}
-			if (noWantWool>0){
+			if (noWantWool > 0) {
 				gainChoice = game1.getWool();
 				bankAmount = gainChoice.size();
 			}
@@ -288,14 +274,16 @@ public class Trade {
 			if (bankAmount >= DIRECT_TRADE_NUMBER) {
 				return carryOutTrade(player, tradeChoice, gainChoice, "direct",enter, game1);
 			}			
-			else return false;
+			else {
+				return false;
+			}
 		}
 		else {		
 			return false;
 		}
 	}
 
-	public static boolean tradeStandard(Player player, Message enter, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType){
+	public static boolean tradeStandard(Player player, Message enter, Scanner scanner, Game game1, ArrayList<ResourceCard> resourceType) {
 		
 		ArrayList<ResourceCard> resources = player.getResourceCards();
 		int[] resourceCount = {0, 0, 0, 0, 0}; //array positions indicate brick, grain, lumber, ore, wool respectively
@@ -303,8 +291,7 @@ public class Trade {
 		ArrayList<Integer> canTrade = new ArrayList<Integer>();
 		
 		for (int i = 0; i < resources.size(); i++) {
-			if (resourceCount[i] >= STANDARD_TRADE_NUMBER) {
-				
+			if (resourceCount[i] >= STANDARD_TRADE_NUMBER) {				
 				canTrade.add(i);
 			}
 		}
@@ -324,44 +311,42 @@ public class Trade {
 			
 			ResourceCard tradeChoice = new ResourceCard();
 			
-			if (noOffBrick>0){
+			if (noOffBrick > 0) {
 				tradeChoice = game1.getBrick().get(0);
 			}
-			if (noOffGrain>0){
+			if (noOffGrain > 0) {
 				tradeChoice = game1.getGrain().get(0);
 			}
-			if (noOffLumber>0){
+			if (noOffLumber > 0) {
 				tradeChoice = game1.getLumber().get(0);
 			}
-			if (noOffOre>0){
+			if (noOffOre > 0) {
 				tradeChoice = game1.getOre().get(0);
 			}
-			if (noOffWool>0){
+			if (noOffWool > 0) {
 				tradeChoice = game1.getWool().get(0);
-			}
-			
+			}	
 			
 			ArrayList<ResourceCard> gainChoice = null;
 			int bankAmount = 0;
 			
-//			switch (gainChoice) {
-			if (noWantBrick>0){
+			if (noWantBrick > 0) {
 				gainChoice = game1.getBrick();
 				bankAmount = gainChoice.size();
 			}
-			if (noWantGrain>0){
+			if (noWantGrain > 0) {
 				gainChoice = game1.getGrain();
 				bankAmount = gainChoice.size();
 			}
-			if (noWantLumber>0){
+			if (noWantLumber > 0) { 
 				gainChoice = game1.getLumber();
 				bankAmount = gainChoice.size();
 			}
-			if (noWantOre>0){
+			if (noWantOre > 0) {
 				gainChoice = game1.getOre();
 				bankAmount = gainChoice.size();
 			}
-			if (noWantWool>0){
+			if (noWantWool > 0) {
 				gainChoice = game1.getWool();
 				bankAmount = gainChoice.size();
 			}
@@ -387,12 +372,7 @@ public class Trade {
 		ArrayList<Port> ownedPorts = player.getSpecialPorts();
 		ArrayList<Port> tradePorts = new ArrayList<Port>();
 		ArrayList<String> portTypes = new ArrayList<String>();
-		ArrayList<ResourceCard> resources = player.getResourceCards();
-
-		
-		
-		
-		
+		ArrayList<ResourceCard> resources = player.getResourceCards();		
 		
 		for (int i = 0; i < ownedPorts.size(); i++) {
 			for (int j = 0; j < resources.size(); j++) {
@@ -419,36 +399,32 @@ public class Trade {
 					tradePorts.add(ownedPorts.get(i));
 				}
 			}
-		}
-
-		
+		}		
 		
 		int noOffBrick = enter.getRequest().getInitiateTrade().getBank().getOffering().getBrick();
 		int noOffOre = enter.getRequest().getInitiateTrade().getBank().getOffering().getOre();
 		int noOffLumber = enter.getRequest().getInitiateTrade().getBank().getOffering().getLumber();
 		int noOffWool = enter.getRequest().getInitiateTrade().getBank().getOffering().getWool();
-		int noOffGrain = enter.getRequest().getInitiateTrade().getBank().getOffering().getGrain();
-		
+		int noOffGrain = enter.getRequest().getInitiateTrade().getBank().getOffering().getGrain();		
 		
 		ResourceCard portChoice = new ResourceCard();
 		ResourceCard tradePort = null;
 		
-		if (noOffBrick>0){
+		if (noOffBrick > 0) {
 			portChoice = game1.getBrick().get(0);
 		}
-		if (noOffGrain>0){
+		if (noOffGrain > 0) {
 			portChoice = game1.getGrain().get(0);
 		}
-		if (noOffLumber>0){
+		if (noOffLumber > 0) {
 			portChoice = game1.getLumber().get(0);
 		}
-		if (noOffOre>0){
+		if (noOffOre > 0) {
 			portChoice = game1.getOre().get(0);
 		}
-		if (noOffWool>0){
+		if (noOffWool > 0) {
 			portChoice = game1.getWool().get(0);
-		}
-		
+		}	
 		
 		int noWantBrick = enter.getRequest().getInitiateTrade().getBank().getWanting().getBrick();
 		int noWantOre = enter.getRequest().getInitiateTrade().getBank().getWanting().getOre();
@@ -458,24 +434,24 @@ public class Trade {
 
 		ArrayList<ResourceCard> gainResource = null;
 		int bankAmount = 0;	
-//		switch (gainChoice) {
-		if (noWantBrick>0){
+
+		if (noWantBrick > 0) {
 			gainResource = game1.getBrick();
 			bankAmount = gainResource.size();
 		}
-		if (noWantGrain>0){
+		if (noWantGrain > 0) {
 			gainResource = game1.getGrain();
 			bankAmount = gainResource.size();
 		}
-		if (noWantLumber>0){
+		if (noWantLumber > 0) {
 			gainResource = game1.getLumber();
 			bankAmount = gainResource.size();
 		}
-		if (noWantOre>0){
+		if (noWantOre > 0) {
 			gainResource = game1.getOre();
 			bankAmount = gainResource.size();
 		}
-		if (noWantWool>0){
+		if (noWantWool > 0) {
 			gainResource = game1.getWool();
 			bankAmount = gainResource.size();
 		}
@@ -498,19 +474,19 @@ public class Trade {
 		for (int i = 0; i < resources.size(); i++) {
 			
 			switch (resources.get(i).getResource()) {
-				case "brick" : 
+			case "brick" : 
 				resourceCount[0]++; 
 				break;
-				case "grain" : 
+			case "grain" : 
 				resourceCount[1]++; 
 				break;
-				case "lumber" : 
+			case "lumber" : 
 				resourceCount[2]++; 
 				break;
-				case "ore" : 
+			case "ore" : 
 				resourceCount[3]++; 
 				break;
-				case "wool" : 
+			case "wool" : 
 				resourceCount[4]++; 
 				break;
 				default : 
@@ -578,7 +554,7 @@ public class Trade {
 		int noWantLumber = enter.getRequest().getInitiateTrade().getPlayer().getWanting().getLumber();
 		int noWantWool = enter.getRequest().getInitiateTrade().getPlayer().getWanting().getWool();
 		int noWantGrain = enter.getRequest().getInitiateTrade().getPlayer().getWanting().getGrain();
-		//////////////////////
+		
 		ArrayList<ResourceCard> playerToTrade = new ArrayList<ResourceCard>();
 		ArrayList<ResourceCard> playerCards = player.getResourceCards();
 		
@@ -870,13 +846,13 @@ public class Trade {
 
 		//returns the correct string based on the player's choice
 		switch (choice) {
-			case 1 :
+		case 1 :
 			return ACCEPT_TRADE;
-			case 2 :
+		case 2 :
 			return REJECT_TRADE;
-			case 3 :
+		case 3 :
 			return COUNTER_TRADE;
-			default :
+		default :
 			return REJECT_TRADE;
 		}
 	}

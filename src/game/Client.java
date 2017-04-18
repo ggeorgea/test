@@ -1,11 +1,11 @@
 package game;
 
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.net.Socket;
+
 import intergroup.Events.Event;
-import intergroup.Requests.Request;
 import intergroup.board.Board.Harbour;
 import intergroup.board.Board.Hex;
 import intergroup.board.Board.ResourceAllocation;
@@ -15,12 +15,12 @@ import intergroup.lobby.Lobby.GameSetup.PlayerSetting;
 public class Client {
 
 	ArrayList<String> lobbyMem = new ArrayList<String>();
-//	ArrayList<String> lobbyUp = new ArrayList<String>();
 	Game game = new Game();
 	Board board = new Board();
 	int myID = -1;
 	Player myPlayer;
-	boolean gameStarted= false;
+	boolean gameStarted = false;
+	
 	int mybrick = 0;
 	int mylumber = 0;
 	int mywool = 0;
@@ -33,86 +33,88 @@ public class Client {
 	int yearOfPlentyCards = 0;
 	int myRoadBuildingCards = 0;
 
-	public void adjustRecourses(int brickAdj, int lumberAdj, int woolAdj, int grainAdj, int oreAdj){
-		mybrick+=brickAdj;
-		mylumber+=lumberAdj;
-		mywool+=woolAdj;
-		mygrain+=grainAdj;
-		myore+=oreAdj;
+	public void adjustRecourses(int brickAdj, int lumberAdj, int woolAdj, int grainAdj, int oreAdj) {
+		
+		mybrick += brickAdj;
+		mylumber += lumberAdj;
+		mywool += woolAdj;
+		mygrain += grainAdj;
+		myore += oreAdj;
 	}
+	
 	public void resolveEvent(Event event, Socket mySocket) {
+		
 		switch (event.getTypeCase().name()) {
-			case "INITIALALLOCATION":
-			for(ResourceAllocation rA : event.getInitialAllocation().getResourceAllocationList()){
-				if(rA.getPlayer().getIdValue()==myID){
+		case "INITIALALLOCATION":
+			for (ResourceAllocation rA : event.getInitialAllocation().getResourceAllocationList()) {
+				if (rA.getPlayer().getIdValue() == myID) {
 					mybrick += rA.getResources().getBrick();
 					mylumber += rA.getResources().getLumber();
 					mywool += rA.getResources().getWool();
 					mygrain += rA.getResources().getGrain();
 					myore += rA.getResources().getOre();
-					System.out.println("you got "+rA.getResources().getBrick()+", lumber: "+rA.getResources().getLumber()+", wool: "+rA.getResources().getWool()+", grain: "+rA.getResources().getGrain()+", ore:"+rA.getResources().getOre());
+					System.out.println("you got " + rA.getResources().getBrick() + ", lumber: " + rA.getResources().getLumber() + ", wool: " + rA.getResources().getWool() + ", grain: " + rA.getResources().getGrain() + ", ore:" + rA.getResources().getOre());
 				}
 			}
 			gameStarted = true;
 			break;
-			case "CHATMESSAGE":
-			System.out.println("player "+event.getInstigator().getIdValue()+ ": "+event.getChatMessage());
+		case "CHATMESSAGE":
+			System.out.println("player " + event.getInstigator().getIdValue() + ": "+event.getChatMessage());
 			break;
-			case "ERROR":
+		case "ERROR":
 			System.out.println("Error: "+event.getError().getDescription());
 			break;
-			case "ROLLED":
-			if(event.getInstigator().getIdValue()!=myID){
-				System.out.println( "player "+event.getInstigator().getIdValue()+" rolled a "+(event.getRolled().getA() + event.getRolled().getB())+"!");
-			}else{
-				System.out.println( "You rolled a "+(event.getRolled().getA() + event.getRolled().getB())+"!");
+		case "ROLLED":
+			if (event.getInstigator().getIdValue() != myID) {
+				System.out.println("player " + event.getInstigator().getIdValue() + " rolled a " + (event.getRolled().getA() + event.getRolled().getB()) + "!");
 			}
-			if(event.getRolled().getResourceAllocationCount()!=0){
-				for(ResourceAllocation rA : event.getInitialAllocation().getResourceAllocationList()){
-					if(rA.getPlayer().getIdValue()==myID){
+			else {
+				System.out.println("You rolled a " + (event.getRolled().getA() + event.getRolled().getB()) + "!");
+			}
+			if (event.getRolled().getResourceAllocationCount() != 0) {
+				for (ResourceAllocation rA : event.getInitialAllocation().getResourceAllocationList()) {
+					if (rA.getPlayer().getIdValue() == myID) {
 						mybrick += rA.getResources().getBrick();
 						mylumber += rA.getResources().getLumber();
 						mywool += rA.getResources().getWool();
 						mygrain += rA.getResources().getGrain();
 						myore += rA.getResources().getOre();
-						System.out.println("you got "+rA.getResources().getBrick()+", lumber: "+rA.getResources().getLumber()+", wool: "+rA.getResources().getWool()+", grain: "+rA.getResources().getGrain()+", ore:"+rA.getResources().getOre());
+						System.out.println("you got " + rA.getResources().getBrick() + ", lumber: " + rA.getResources().getLumber() + ", wool: " + rA.getResources().getWool() + ", grain: " + rA.getResources().getGrain() + ", ore:" + rA.getResources().getOre());
 					}
 				}
 			}
-
 			break;
-			case "ROADBUILT":
+		case "ROADBUILT":
 			int rx1 = event.getRoadBuilt().getA().getX();
 			int ry1 = event.getRoadBuilt().getA().getY();
 			int rx2 = event.getRoadBuilt().getB().getX();
 			int ry2 = event.getRoadBuilt().getB().getY();
 
-
 			Player roadplayer = null;
-			for(Player p : game.getPlayers()){
-				if(p.getID()==event.getInstigator().getIdValue()){
-					roadplayer=p;
+			for (Player p : game.getPlayers()) {
+				if (p.getID() == event.getInstigator().getIdValue()) {
+					roadplayer = p;
 					break;
 				}
 			}		
 			Road road = game.getBoard().getRoadFromCo(new Coordinate(rx1,ry1), new Coordinate(rx2,ry2));
 			road.setOwner(roadplayer);
 			roadplayer.setNoRoads(roadplayer.getNoRoads() - 1);
-			System.out.println("player "+roadplayer.getID()+" placed a road at ("+rx1+", "+ry1+"),("+rx2+", "+ry2+")");
+			System.out.println("player " + roadplayer.getID() + " placed a road at (" + rx1 + ", " + ry1 + "),(" + rx2 + ", " + ry2 + ")");
 
-			if(roadplayer.getID()==myID){
-				mybrick --;
-				mylumber --;
+			if (roadplayer.getID() == myID) {
+				mybrick--;
+				mylumber--;
 			}
 			break;
-			case "SETTLEMENTBUILT":
+		case "SETTLEMENTBUILT":
 			int bx = event.getSettlementBuilt().getX();
 			int by = event.getSettlementBuilt().getY();
 			Intersection settlement = (Intersection)board.getLocationFromCoordinate(new Coordinate(bx,by)).getContains();
 			Player thisplayer = null;
-			for(Player p : game.getPlayers()){
-				if(p.getID()==event.getInstigator().getIdValue()){
-					thisplayer=p;
+			for (Player p : game.getPlayers()) {
+				if (p.getID() == event.getInstigator().getIdValue()) {
+					thisplayer = p;
 					break;
 				}
 			}			
@@ -122,23 +124,23 @@ public class Client {
 			thisplayer.setVictoryPoints(thisplayer.getVictoryPoints() + 1);		
 			Trade.checkIfPortSettled(thisplayer, settlement, game);		
 
-			System.out.println("player "+thisplayer.getID()+" placed a settlement at ("+bx+", "+by+")");
-			if(thisplayer.getID()==myID){
-				mybrick --;
-				mylumber --;
-				mygrain --;
-				mywool --;
+			System.out.println("player " + thisplayer.getID() + " placed a settlement at (" + bx + ", " + by + ")");
+			if (thisplayer.getID() == myID) {
+				mybrick--;
+				mylumber--;
+				mygrain--;
+				mywool--;
 			}
 			break;
-			case "CITYBUILT":
+		case "CITYBUILT":
 			int cx = event.getCityBuilt().getX();
 			int cy = event.getCityBuilt().getY();
 			Intersection city = (Intersection) game.getBoard().getLocationFromCoordinate(new Coordinate (cx,cy)).getContains();
 
 			Player cityPlayer = null;
-			for(Player p : game.getPlayers()){
-				if(p.getID()==event.getInstigator().getIdValue()){
-					cityPlayer=p;
+			for (Player p : game.getPlayers()) {
+				if (p.getID() == event.getInstigator().getIdValue()) {
+					cityPlayer = p;
 					break;
 				}
 			}		
@@ -146,238 +148,240 @@ public class Client {
 			cityPlayer.setNoCities(cityPlayer.getNoCities() + 1);
 			cityPlayer.setNoSettlements(cityPlayer.getNoSettlements() - 1);
 			cityPlayer.setVictoryPoints(cityPlayer.getVictoryPoints() + 1); 
-			System.out.println("player "+cityPlayer.getID()+" placed a settlement at ("+cx+", "+cy+")");
-			if(cityPlayer.getID()==myID){
-				mygrain -=2;
-				myore -=3;
+			System.out.println("player " + cityPlayer.getID() + " placed a settlement at (" + cx + ", " + cy + ")");
+			if (cityPlayer.getID() == myID) {
+				mygrain -= 2;
+				myore -= 3;
 			}
 			break;
-			case "DEVCARDBOUGHT":
+		case "DEVCARDBOUGHT":
 			int typeOfEvent = event.getDevCardBought().getCardCase().getNumber();
-			if(event.getInstigator().getIdValue()!=myID){
-				switch(typeOfEvent){
-					case 1:
-					System.out.println("player "+event.getInstigator().getIdValue()+" bought a dev card");
+			if (event.getInstigator().getIdValue() != myID) {
+				switch (typeOfEvent) {
+				case 1:
+					System.out.println("player " + event.getInstigator().getIdValue() + " bought a dev card");
 					break;
-					case 3:
-					System.out.println("player "+event.getInstigator().getIdValue()+" bought a victory ponint dev card");
+				case 3:
+					System.out.println("player " + event.getInstigator().getIdValue() + " bought a victory ponint dev card");
 					break;
-					case 2:
+				case 2:
 					System.out.println("error: should not know type of card");
 					break;
 				}
-			}else{
-				switch(typeOfEvent){
-					case 1:
+			}
+			else {
+				switch (typeOfEvent) {
+				case 1:
 					System.out.println("error: should know type of card");
 					break;
-					case 3:
-					System.out.println("you bought a victory ponint dev card");
+				case 3:
+					System.out.println("you bought a victory point dev card");
 					break;
-					case 2:		
+				case 2:		
 					int playableType = event.getDevCardBought().getPlayableDevCardValue();
-					switch(playableType){
-							  //KNIGHT 
-						case 0:
+					switch (playableType) {
+					//KNIGHT 
+					case 0:
 						myUnplayedKnights++;
 						System.out.println("you bought a knight");
-							 // ROAD_BUILDING = 
-						case 1:
+					// ROAD_BUILDING = 
+					case 1:
 						myRoadBuildingCards++;
 						System.out.println("you bought a road building card");
-							 // MONOPOLY = 
-						case 2:
+					// MONOPOLY = 
+					case 2:
 						myMonopolyCards++;
 						System.out.println("you bought a monopoly card");
-							//  YEAR_OF_PLENTY = 
-						case 3: 							
+					//  YEAR_OF_PLENTY = 
+					case 3: 							
 						yearOfPlentyCards++;
-						System.out.println("you bought a year Of Plenty Card");
+						System.out.println("you bought a year Of plenty Card");
 					}
 
 					break;					
 				}				
-				mywool --;
-				mygrain --;
-				myore --;
+				mywool--;
+				mygrain--;
+				myore--;
 			}
 			break;
-			case "DEVCARDPLAYED":
+		case "DEVCARDPLAYED":
 			int playableType = event.getDevCardPlayed().getNumber();
 
-			if(event.getInstigator().getIdValue()!=myID){
+			if (event.getInstigator().getIdValue() != myID) {
 				int instID = event.getInstigator().getIdValue();
-				switch(playableType){
-					//KNIGHT 
-					case 0:
-					System.out.println("player "+instID+" played a knight");
-					// ROAD_BUILDING = 
-					case 1:
-					System.out.println("player "+instID+" played a road building card");
-					// MONOPOLY = 
-					case 2:
-					System.out.println("player "+instID+" played a monopoly card");
-					//  YEAR_OF_PLENTY = 
-					case 3: 
-					System.out.println("player "+instID+" played a year Of Plenty Card");
+				switch (playableType) {
+				//KNIGHT 
+				case 0:
+					System.out.println("player " + instID + " played a knight");
+				// ROAD_BUILDING = 
+				case 1:
+					System.out.println("player " + instID + " played a road building card");
+				// MONOPOLY = 
+				case 2:
+					System.out.println("player " + instID + " played a monopoly card");
+				//  YEAR_OF_PLENTY = 
+				case 3: 
+					System.out.println("player " + instID + " played a year Of Plenty Card");
 				}
 
-			}else{
-				switch(playableType){
-						  //KNIGHT 
-					case 0:
+			}
+			else {
+				switch (playableType) {
+				//KNIGHT 
+				case 0:
 					myUnplayedKnights--;
 					myPlayedKnights++;
 					System.out.println("you played a knight");
-						 // ROAD_BUILDING = 
-					case 1:
+				 // ROAD_BUILDING = 
+				case 1:
 					myRoadBuildingCards--;
 					System.out.println("you bought a road building card");
-						 // MONOPOLY = 
-					case 2:
+				// MONOPOLY = 
+				case 2:
 					myMonopolyCards--;
 					System.out.println("you played a monopoly card");
-						//  YEAR_OF_PLENTY = 
-					case 3: 							
+				//  YEAR_OF_PLENTY = 
+				case 3: 							
 					yearOfPlentyCards--;
 					System.out.println("you played a year Of Plenty Card");
 				}
 			}
 			break;
-			case "ROBBERMOVED":
+		case "ROBBERMOVED":
 			int nx = event.getRobberMoved().getX();
 			int ny = event.getRobberMoved().getY();
-			game.getBoard().setRobber(new Coordinate(nx,ny));
-			System.out.println("the robber was moved to: ("+nx+", "+ny+") by player"+ event.getInstigator().getIdValue());
+			game.getBoard().setRobber(new Coordinate(nx, ny));
+			System.out.println("the robber was moved to: (" + nx + ", " + ny + ") by player " +  event.getInstigator().getIdValue());
 			break;
-			case "RESOURCESTOLEN":
+		case "RESOURCESTOLEN":
 			int quant = event.getResourceStolen().getQuantity();
 			int reco = event.getResourceStolen().getResourceValue();
 
-			if(event.getInstigator().getIdValue()==myID){
-				switch(reco){
-					//BRICK
-					case  1:
-					System.out.println("you stole brick X"+quant+" from player "+event.getResourceStolen().getVictim().getIdValue());
-					mybrick+=quant;
+			if (event.getInstigator().getIdValue() == myID) {
+				switch (reco) {
+				//BRICK
+				case 1:
+					System.out.println("you stole brick X" + quant + " from player " + event.getResourceStolen().getVictim().getIdValue());
+					mybrick += quant;
 					break;
-					//LUMBER
-					case  2:	
-					System.out.println("you stole LUMBER X"+quant+" from player "+event.getResourceStolen().getVictim().getIdValue());
-					mylumber+=quant;
+				//LUMBER
+				case 2:	
+					System.out.println("you stole LUMBER X" + quant + " from player " + event.getResourceStolen().getVictim().getIdValue());
+					mylumber += quant;
 					break;
-					//WOOL
-					case  3:	
-					System.out.println("you stole WOOL X"+quant+" from player "+event.getResourceStolen().getVictim().getIdValue());
-					mywool+=quant;
+				//WOOL
+				case 3:	
+					System.out.println("you stole WOOL X" + quant + " from player " + event.getResourceStolen().getVictim().getIdValue());
+					mywool += quant;
 					break;
-					//GRAIN
-					case  4:	
-					System.out.println("you stole GRAIN X"+quant+" from player "+event.getResourceStolen().getVictim().getIdValue());
-					mygrain+=quant;
+				//GRAIN
+				case 4:	
+					System.out.println("you stole GRAIN X" + quant + " from player " + event.getResourceStolen().getVictim().getIdValue());
+					mygrain += quant;
 					break;
-					//ORE
-					case  5:	
-					System.out.println("you stole ORE X"+quant+" from player "+event.getResourceStolen().getVictim().getIdValue());
-					myore+=quant;
+				//ORE
+				case 5:	
+					System.out.println("you stole ORE X" + quant + " from player " + event.getResourceStolen().getVictim().getIdValue());
+					myore += quant;
 					break;
 				}
-			}else{
-				if(event.getResourceStolen().getVictim().getIdValue() == myID){
-					switch(reco){
-						//BRICK
-						case  1:
-						System.out.println("you lost brick X"+quant+" to player "+event.getInstigator().getIdValue());
-						mybrick-=quant;
+			}
+			else {
+				if (event.getResourceStolen().getVictim().getIdValue() == myID) {
+					switch (reco) {
+					//BRICK
+					case 1:
+						System.out.println("you lost brick X" + quant + " to player " + event.getInstigator().getIdValue());
+						mybrick -= quant;
 						break;
-						//LUMBER
-						case  2:	
-						System.out.println("you lost LUMBER X"+quant+" to player "+event.getInstigator().getIdValue());
-						mylumber-=quant;
+					//LUMBER
+					case 2:	
+						System.out.println("you lost LUMBER X" + quant + " to player " + event.getInstigator().getIdValue());
+						mylumber -= quant;
 						break;
-						//WOOL
-						case  3:	
-						System.out.println("you lost WOOL X"+quant+" to player "+event.getInstigator().getIdValue());
-						mywool-=quant;
+					//WOOL
+					case 3:	
+						System.out.println("you lost WOOL X" + quant + " to player " + event.getInstigator().getIdValue());
+						mywool -= quant;
 						break;
-						//GRAIN
-						case  4:	
-						System.out.println("you lost GRAIN X"+quant+" to player "+event.getInstigator().getIdValue());
-						mygrain-=quant;
+					//GRAIN
+					case 4:	
+						System.out.println("you lost GRAIN X" + quant + " to player " + event.getInstigator().getIdValue());
+						mygrain -= quant;
 						break;
-						//ORE
-						case  5:	
-						System.out.println("you lost ORE X"+quant+" to player "+event.getInstigator().getIdValue());
-						myore-=quant;
+					//ORE
+					case 5:	
+						System.out.println("you lost ORE X" + quant + " to player " + event.getInstigator().getIdValue());
+						myore -= quant;
 						break;
 					}
 				}
-				else{
-					System.out.println("player "+event.getInstigator().getIdValue()+" stole "+quant+" resources from player"+ event.getResourceStolen().getVictim().getIdValue());
+				else {
+					System.out.println("player " + event.getInstigator().getIdValue() + " stole " + quant + " resources from player " + event.getResourceStolen().getVictim().getIdValue());
 				}
 			}
 			break;
-			case "RESOURCECHOSEN":
-				//what is this for???
-			if(event.getInstigator().getIdValue()!=myID){
-				switch(event.getResourceChosenValue()){
-					//GENERIC
-					case  0:
-					System.out.println("player "+event.getInstigator().getIdValue()+" chose generic");
+		case "RESOURCECHOSEN":
+			//what is this for???
+			if (event.getInstigator().getIdValue() != myID) {
+				switch (event.getResourceChosenValue()) {
+				//GENERIC
+				case 0:
+					System.out.println("player " + event.getInstigator().getIdValue() + " chose generic");
 					break;
-					//BRICK
-					case  1:
-					System.out.println("player "+event.getInstigator().getIdValue()+" chose brick");
+				//BRICK
+				case 1:
+					System.out.println("player " + event.getInstigator().getIdValue() + " chose brick");
 					break;
-					//LUMBER
-					case  2:					
-					System.out.println("player "+event.getInstigator().getIdValue()+" chose lumber");
+				//LUMBER
+				case 2:					
+					System.out.println("player " + event.getInstigator().getIdValue() + " chose lumber");
 					break;
-					//WOOL
-					case  3:						
-					System.out.println("player "+event.getInstigator().getIdValue()+" chose wool");
+				//WOOL
+				case 3:						
+					System.out.println("player " + event.getInstigator().getIdValue() + " chose wool");
 					break;
-					//GRAIN
-					case  4:						
-					System.out.println("player "+event.getInstigator().getIdValue()+" chose grain");
+				//GRAIN
+				case 4:						
+					System.out.println("player " + event.getInstigator().getIdValue() + " chose grain");
 					break;
-					//ORE
-					case  5:						
-					System.out.println("player "+event.getInstigator().getIdValue()+" chose ore");
+				//ORE
+				case 5:						
+					System.out.println("player " + event.getInstigator().getIdValue() + " chose ore");
 					break;
-
 				}
-			}else{
-				switch(event.getResourceChosenValue()){
-					//GENERIC
-					case  0:
+			}
+			else {
+				switch (event.getResourceChosenValue()) {
+				//GENERIC
+				case 0:
 					System.out.println("you chose generic");
 					break;
-					//BRICK
-					case  1:
+				//BRICK
+				case 1:
 					System.out.println("you chose brick");
 					break;
-					//LUMBER
-					case  2:					
+				//LUMBER
+				case 2:					
 					System.out.println("you chose lumber");
 					break;
-					//WOOL
-					case  3:						
+				//WOOL
+				case 3:						
 					System.out.println("you chose wool");
 					break;
-					//GRAIN
-					case  4:						
+				//GRAIN
+				case 4:						
 					System.out.println("you chose grain");
 					break;
-					//ORE
-					case  5:						
+				//ORE
+				case 5:						
 					System.out.println("you chose ore");
 					break;
-
 				}
 			}
 			break;
-			case "CARDSDISCARDED":
+		case "CARDSDISCARDED":
 			
 			int brick = event.getCardsDiscarded().getBrick();
 			int lumber = event.getCardsDiscarded().getLumber();
@@ -385,11 +389,12 @@ public class Client {
 			int grain = event.getCardsDiscarded().getGrain();
 			int ore = event.getCardsDiscarded().getOre();
 
-			if(event.getInstigator().getIdValue()!=myID){
-				System.out.println("player "+event.getInstigator().getIdValue()+"discarded brick: "+brick+", lumber: "+lumber+", wool: "+wool+", grain: "+grain+", ore:"+ore);
+			if (event.getInstigator().getIdValue() != myID) {
+				System.out.println("player " + event.getInstigator().getIdValue() + "discarded brick: " + brick + ", lumber: " + lumber + ", wool: " + wool + ", grain: " + grain + ", ore:" + ore);
 
-			}else{
-				System.out.println("you discarded brick: "+brick+", lumber: "+lumber+", wool: "+wool+", grain: "+grain+", ore:"+ore);
+			}
+			else {
+				System.out.println("you discarded brick: " + brick + ", lumber: " + lumber + ", wool: " + wool + ", grain: " + grain + ", ore:" + ore);
 				mybrick -= brick;
 				mylumber -= lumber;
 				mywool -= wool;
@@ -397,7 +402,7 @@ public class Client {
 				myore -= ore;
 			}
 			break;
-			case "BANKTRADE":
+		case "BANKTRADE":
 			int brickO = event.getBankTrade().getOffering().getBrick();
 			int lumberO = event.getBankTrade().getOffering().getLumber();
 			int woolO = event.getBankTrade().getOffering().getWool();
@@ -409,10 +414,11 @@ public class Client {
 			int grainW = event.getBankTrade().getWanting().getGrain();
 			int oreW = event.getBankTrade().getWanting().getOre();
 
-			if(event.getInstigator().getIdValue()!=myID){
-				System.out.println("player "+event.getInstigator().getIdValue()+" traded with the bank, GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
-			}else{
-				System.out.println("you traded with the bank, GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
+			if (event.getInstigator().getIdValue() != myID) {
+				System.out.println("player " + event.getInstigator().getIdValue() + " traded with the bank, GIVING: brick " + brickO + ", lumber " + lumberO + ", wool " + woolO + ", grain " + grainO + ", ore " + oreO + " GETTING: brick " + brickW + ", lumber " + lumberW + ", wool " + woolW + ", grain " + grainW + ", ore " + oreW);
+			}
+			else {
+				System.out.println("you traded with the bank, GIVING: brick " + brickO + ", lumber " + lumberO + ", wool " + woolO + ", grain " + grainO + ", ore " + oreO + " GETTING: brick " + brickW + ", lumber " + lumberW + ", wool " + woolW + ", grain " + grainW + ", ore " + oreW);
 				mybrick += brickW-brickO;
 				mylumber += lumberW- lumberO;
 				mywool += woolW-woolO;
@@ -420,7 +426,7 @@ public class Client {
 				myore  += oreW-oreO;
 			}
 			break;	
-			case "PLAYERTRADEACCEPTED":
+		case "PLAYERTRADEACCEPTED":
 			brickO = event.getBankTrade().getOffering().getBrick();
 			lumberO = event.getBankTrade().getOffering().getLumber();
 			woolO = event.getBankTrade().getOffering().getWool();
@@ -431,12 +437,13 @@ public class Client {
 			woolW = event.getBankTrade().getWanting().getWool();
 			grainW = event.getBankTrade().getWanting().getGrain();
 			oreW = event.getBankTrade().getWanting().getOre();
-			if(event.getInstigator().getIdValue()!=myID){
-				if(event.getPlayerTradeAccepted().getOther().getIdValue()!=myID){
-					System.out.println("player "+event.getInstigator().getIdValue()+" traded with player "+ event.getPlayerTradeAccepted().getOther().getIdValue()+", GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
+			
+			if (event.getInstigator().getIdValue() != myID) {
+				if (event.getPlayerTradeAccepted().getOther().getIdValue() != myID) {
+					System.out.println("player " + event.getInstigator().getIdValue() + " traded with player " + event.getPlayerTradeAccepted().getOther().getIdValue() + ", GIVING: brick " + brickO + ", lumber " + lumberO + ", wool " + woolO + ", grain " + grainO + ", ore " + oreO + " GETTING: brick " + brickW + ", lumber " + lumberW + ", wool " + woolW + ", grain " + grainW + ", ore " + oreW);
 				}
-				else{
-					System.out.println("player "+event.getInstigator().getIdValue()+" traded with you , GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
+				else {
+					System.out.println("player " + event.getInstigator().getIdValue() + " traded with you , GIVING: brick " + brickO + ", lumber " + lumberO + ", wool " + woolO + ", grain " + grainO + ", ore " + oreO + " GETTING: brick " + brickW + ", lumber " + lumberW + ", wool " + woolW + ", grain " + grainW + ", ore " + oreW);
 					mybrick -= brickW-brickO;
 					mylumber -= lumberW- lumberO;
 					mywool -= woolW-woolO;
@@ -448,12 +455,13 @@ public class Client {
 					mygrain += grainW-grainO;
 					myore  += oreW-oreO;
 				}
-			}else{
-				System.out.println("you traded with player "+ event.getPlayerTradeAccepted().getOther().getIdValue()+", GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
+			}
+			else {
+				System.out.println("you traded with player " + event.getPlayerTradeAccepted().getOther().getIdValue() + ", GIVING: brick " + brickO + ", lumber " + lumberO + ", wool " + woolO + ", grain " + grainO + ", ore " + oreO + " GETTING: brick " + brickW + ", lumber " + lumberW + ", wool " + woolW + ", grain " + grainW + ", ore " + oreW);
 
 			}
 			break;			
-			case "PLAYERTRADEINITIATED":
+		case "PLAYERTRADEINITIATED":
 			brickO = event.getBankTrade().getOffering().getBrick();
 			lumberO = event.getBankTrade().getOffering().getLumber();
 			woolO = event.getBankTrade().getOffering().getWool();
@@ -464,43 +472,44 @@ public class Client {
 			woolW = event.getBankTrade().getWanting().getWool();
 			grainW = event.getBankTrade().getWanting().getGrain();
 			oreW = event.getBankTrade().getWanting().getOre();
-			if(event.getInstigator().getIdValue()!=myID){
-				if(event.getPlayerTradeAccepted().getOther().getIdValue()!=myID){
-					System.out.println("player "+event.getInstigator().getIdValue()+" wants to trade with player "+ event.getPlayerTradeAccepted().getOther().getIdValue()+", GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
+			
+			if (event.getInstigator().getIdValue() != myID) {
+				if (event.getPlayerTradeAccepted().getOther().getIdValue() != myID) {
+					System.out.println("player " + event.getInstigator().getIdValue() + " wants to trade with player " + event.getPlayerTradeAccepted().getOther().getIdValue() + ", GIVING: brick " + brickO + ", lumber " + lumberO + ", wool " + woolO + ", grain " + grainO + ", ore " + oreO + " GETTING: brick " + brickW + ", lumber " + lumberW + ", wool " + woolW + ", grain " + grainW + ", ore " + oreW);
 				}
-				else{
-					System.out.println("player "+event.getInstigator().getIdValue()+" wants to trade with you , GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
+				else {
+					System.out.println("player " + event.getInstigator().getIdValue() + " wants to trade with you , GIVING: brick " + brickO + ", lumber " + lumberO + ", wool " + woolO + ", grain " + grainO + ", ore " + oreO + " GETTING: brick " + brickW + ", lumber " + lumberW + ", wool " + woolW + ", grain " + grainW + ", ore " + oreW);
 					System.out.println("what is your response?");
 				}
-			}else{
-				System.out.println("you want to trade with player "+ event.getPlayerTradeAccepted().getOther().getIdValue()+", GIVING: brick "+brickO+", lumber "+lumberO+", wool "+woolO+", grain "+grainO+", ore "+oreO+" GETTING: brick "+brickW+", lumber "+lumberW+", wool "+woolW+", grain "+grainW+", ore "+oreW);
+			}
+			else {
+				System.out.println("you want to trade with player " + event.getPlayerTradeAccepted().getOther().getIdValue() + ", GIVING: brick " + brickO + ", lumber " + lumberO + ", wool " + woolO + ", grain " + grainO + ", ore " + oreO + " GETTING: brick " + brickW + ", lumber " + lumberW + ", wool " + woolW + ", grain " + grainW + ", ore " + oreW);
 
 			}				
 			break;			
-			case "PLAYERTRADEREJECTED":
+		case "PLAYERTRADEREJECTED":
 			System.out.println("the trade was rejected");
 			break;			
-			case "TURNENDED":
+		case "TURNENDED":
 			System.out.println("turn over");
 			break;
-			case "GAMEWON":
+		case "GAMEWON":
 			System.out.println("THANK YOU FOR PLAYING");
 			break;
-			case "BEGINGAME":
+		case "BEGINGAME":
 			List<Hex> hexes = event.getBeginGame().getHexesList();
 			List<Harbour> habours = event.getBeginGame().getHarboursList();
 			List<PlayerSetting> playerSettings = event.getBeginGame().getPlayerSettingsList();
-				//intergroup.board.Board.Player ownPlayer = event.getBeginGame().getOwnPlayer();
 			ArrayList<Player> players = new ArrayList<Player>();
 			board = Setup.getMeABoard();
-			for(PlayerSetting pSett : playerSettings){
+			for (PlayerSetting pSett : playerSettings) {
 				Player p1 = new Player();
 				p1.setName(pSett.getUsername());
 				p1.setColour(pSett.getColourValue());
 				p1.setID(pSett.getPlayer().getIdValue());
 				players.add(p1);
 			}
-			for(Hex hex:hexes){
+			for (Hex hex:hexes) {
 				int x  = hex.getLocation().getX();
 				int y = hex.getLocation().getY();
 				Location l1 = board.getLocationFromCoordinate(new Coordinate(x,y));
@@ -508,39 +517,39 @@ public class Client {
 				boardHex.setNumber(hex.getNumberToken());
 				int terrVal = hex.getTerrainValue();
 				String terrain = "";
-				switch(terrVal){
-					case 0:
+				switch (terrVal) {
+				case 0:
 					terrain = "H";
 					break;
-					case 1:
+				case 1:
 					terrain = "P";
 					break;
-					case 2:
+				case 2:
 					terrain = "M";
 					break;
-					case 3:
+				case 3:
 					terrain = "G";
 					break;
-					case 4:
+				case 4:
 					terrain = "F";
 					break;
-					case 5:
+				case 5:
 					terrain = "D";
 					break;
-					default:
+				default:
 					System.out.println("error allocating hex terrain");
 				}
 				boardHex.setTerrain(terrain);				
 			}
-			for(Harbour habour: habours){
+			for (Harbour habour: habours) {
 				int x1  = habour.getLocation().getA().getX();
 				int y1 = habour.getLocation().getA().getY();
 				int x2  = habour.getLocation().getB().getX();
 				int y2 = habour.getLocation().getB().getY();
 				Port boardPort = new Port();
-				for( Port tryPort: board.getPorts()){
-					Road r1 = board.getRoadFromCo(new Coordinate(x1,y1), new Coordinate(x2,y2));
-					if(tryPort.getCoordinateA()==r1.getCoordinateA()&&tryPort.getCoordinateB()==r1.getCoordinateB()){
+				for (Port tryPort: board.getPorts()) {
+					Road r1 = board.getRoadFromCo(new Coordinate(x1, y1), new Coordinate(x2, y2));
+					if (tryPort.getCoordinateA() == r1.getCoordinateA() && tryPort.getCoordinateB() == r1.getCoordinateB()) {
 						boardPort = tryPort;
 						break;
 					}
@@ -548,131 +557,127 @@ public class Client {
 
 				int rec = habour.getResourceValue();
 				String recourse = "";
-				switch(rec){
-					case 0:
+				switch (rec) {
+				case 0:
 					recourse = "?";
 					break;
-					case 1:
+				case 1:
 					recourse = "H";
 					break;
-					case 2:
+				case 2:
 					recourse = "F";
 					break;
-					case 3:
+				case 3:
 					recourse = "P";
 					break;
-					case 4:
+				case 4:
 					recourse = "G";
 					break;
-					case 5:
+				case 5:
 					recourse = "M";
 					break;
-					default:
+				default:
 					System.out.println("error allocating port resource");
 				}
 				boardPort.setResource(recourse);
 				myID = event.getBeginGame().getOwnPlayer().getIdValue();
-
-
 			}
 			game.setBoard(board);
 			game.setPlayers(players);
-			for(Player p : game.getPlayers()){
-				if(p.getID()==myID){
-					myPlayer=p;
+			for (Player p : game.getPlayers()) {
+				if (p.getID() == myID) {
+					myPlayer = p;
 					break;
 				}
 			}		
 			break;
-			case "LOBBYUPDATE":
+		case "LOBBYUPDATE":
 			ArrayList<String> lobbyNames = new ArrayList<String>();
 			int count = event.getLobbyUpdate().getUsernameCount();
-			for(int i = 0; i<count; i++){
+			for (int i = 0; i < count; i++) {
 				lobbyNames.add(event.getLobbyUpdate().getUsername(i));
 			}
-			for(String name : lobbyNames){
-				if(!lobbyMem.contains(name)){
-					System.out.println(name+" is in the lobby!");
+			for (String name : lobbyNames) {
+				if (!lobbyMem.contains(name)) {
+					System.out.println(name + " is in the lobby!");
 				}
 			}
 			lobbyMem = lobbyNames;
-
 			break;
-			case "MONOPOLYRESOLUTION":					
-			for(int i = 0; i<event.getMonopolyResolution().getTheftsCount();i++){
+		case "MONOPOLYRESOLUTION":					
+			for (int i = 0; i < event.getMonopolyResolution().getTheftsCount(); i++) {
 				Steal thisSteal = event.getMonopolyResolution().getThefts(i);
 				int Aquant = thisSteal.getQuantity();
 				int Areco = thisSteal.getResourceValue();
 
-				if(event.getInstigator().getIdValue()==myID){
-					switch(Areco){
-						//BRICK
-						case  1:
-						System.out.println("you stole brick X"+Aquant+" from player "+thisSteal.getVictim().getIdValue());
-						mybrick+=Aquant;
+				if (event.getInstigator().getIdValue() == myID) {
+					switch (Areco) {
+					//BRICK
+					case 1:
+						System.out.println("you stole brick X" + Aquant + " from player " + thisSteal.getVictim().getIdValue());
+						mybrick += Aquant;
 						break;
-						//LUMBER
-						case  2:	
-						System.out.println("you stole LUMBER X"+Aquant+" from player "+thisSteal.getVictim().getIdValue());
-						mylumber+=Aquant;
+					//LUMBER
+					case 2:	
+						System.out.println("you stole LUMBER X" + Aquant + " from player " + thisSteal.getVictim().getIdValue());
+						mylumber += Aquant;
 						break;
-						//WOOL
-						case  3:	
-						System.out.println("you stole WOOL X"+Aquant+" from player "+thisSteal.getVictim().getIdValue());
-						mywool+=Aquant;
+					//WOOL
+					case 3:	
+						System.out.println("you stole WOOL X" + Aquant + " from player " + thisSteal.getVictim().getIdValue());
+						mywool += Aquant;
 						break;
-						//GRAIN
-						case  4:	
-						System.out.println("you stole GRAIN X"+Aquant+" from player "+thisSteal.getVictim().getIdValue());
-						mygrain+=Aquant;
+					//GRAIN
+					case 4:	
+						System.out.println("you stole GRAIN X" + Aquant + " from player " + thisSteal.getVictim().getIdValue());
+						mygrain += Aquant;
 						break;
-						//ORE
-						case  5:	
-						System.out.println("you stole ORE X"+Aquant+" from player "+thisSteal.getVictim().getIdValue());
-						myore+=Aquant;
+					//ORE
+					case 5:	
+						System.out.println("you stole ORE X" + Aquant + " from player " + thisSteal.getVictim().getIdValue());
+						myore += Aquant;
 						break;
 					}
-				}else{
-					if(thisSteal.getVictim().getIdValue() == myID){
-						switch(Areco){
-							//BRICK
-							case  1:
-							System.out.println("you lost brick X"+Aquant+" to player "+event.getInstigator().getIdValue());
-							mybrick-=Aquant;
+				}
+				else { 
+					if (thisSteal.getVictim().getIdValue() == myID) {
+						switch (Areco) {
+						//BRICK
+						case 1:
+							System.out.println("you lost brick X" + Aquant + " to player " + event.getInstigator().getIdValue());
+							mybrick -= Aquant;
 							break;
-							//LUMBER
-							case  2:	
-							System.out.println("you lost LUMBER X"+Aquant+" to player "+event.getInstigator().getIdValue());
-							mylumber-=Aquant;
+						//LUMBER
+						case 2:	
+							System.out.println("you lost LUMBER X" + Aquant + " to player " + event.getInstigator().getIdValue());
+							mylumber -= Aquant;
 							break;
-							//WOOL
-							case  3:	
-							System.out.println("you lost WOOL X"+Aquant+" to player "+event.getInstigator().getIdValue());
-							mywool-=Aquant;
+						//WOOL
+						case 3:	
+							System.out.println("you lost WOOL X" + Aquant + " to player " + event.getInstigator().getIdValue());
+							mywool -= Aquant;
 							break;
-							//GRAIN
-							case  4:	
-							System.out.println("you lost GRAIN X"+Aquant+" to player "+event.getInstigator().getIdValue());
-							mygrain-=Aquant;
+						//GRAIN
+						case 4:	
+							System.out.println("you lost GRAIN X" + Aquant + " to player " + event.getInstigator().getIdValue());
+							mygrain -= Aquant;
 							break;
-							//ORE
-							case  5:	
-							System.out.println("you lost ORE X"+Aquant+" to player "+event.getInstigator().getIdValue());
-							myore-=Aquant;
+						//ORE
+						case 5:	
+							System.out.println("you lost ORE X" + Aquant + " to player " + event.getInstigator().getIdValue());
+							myore -= Aquant;
 							break;
 						}
 					}
-					else{
-						System.out.println("player "+event.getInstigator().getIdValue()+" stole "+Aquant+" resources from player"+thisSteal.getVictim().getIdValue());
+					else {
+						System.out.println("player " + event.getInstigator().getIdValue() + " stole " + Aquant + " resources from player" + thisSteal.getVictim().getIdValue());
 					}
 				}					
 			}					
 			break;
-			case "TYPE_NOT_SET	":
+		case "TYPE_NOT_SET	":
 			break;
-			default:
+		default:
 		}
-
 	}
-
 }

@@ -187,7 +187,7 @@ public class Board {
 		if(((2*y <= x+8) && (2*y >= x-8) && (y <= 2*x+8) && (y >= 2*x-8) && (y >= -x-8) && (y <= -x+8))) {
 			return true;
 		}
-		else{
+		else {
 			return false;
 		}
 	}

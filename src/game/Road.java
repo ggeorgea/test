@@ -124,7 +124,6 @@ public class Road {
 				}
 			}
 
-			//TODO build road event
 			Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setRoadBuilt(Board.Edge.newBuilder().setA(Board.Point.newBuilder().setX(road.getCoordinateA().getX()).setY(road.getCoordinateA().getY()).build()).setB(Board.Point.newBuilder().setX(road.getCoordinateB().getX()).setY(road.getCoordinateB().getY()).build()).build()).build()).build();
 			
 			ArrayList<Player> players = game1.getPlayers();
@@ -249,51 +248,51 @@ public class Road {
 			||((road4!=null)&&(road4.getOwner().equals(player)))
 			) {
 			return true;
+		}
+		else {
+			return false;
+		}
 	}
-	else {
-		return false;
-	}
-}
 
 	//updates the player with the longest road
-public static void checkLongestRoad(Player player, Game game1, Road road) {
+	public static void checkLongestRoad(Player player, Game game1, Road road) {
 	
-	int oldlong = player.getLongestRoad();
-	LongestRoad.CheckPlayerLongestRoad(player, game1, road);
-	int newLong = player.getLongestRoad();
+		int oldlong = player.getLongestRoad();
+		LongestRoad.CheckPlayerLongestRoad(player, game1, road);
+		int newLong = player.getLongestRoad();
 	
 		//has to have improved and be longer than 4 to matter
-	if (newLong > oldlong && newLong > 4) {
+		if (newLong > oldlong && newLong > 4) {
 		
-		boolean longer = false;
-		ArrayList<Player> players = game1.getPlayers();
+			boolean longer = false;
+			ArrayList<Player> players = game1.getPlayers();
 		
 			//checks to see if any other players have a longer or equal road already
-		for (Player p : players) {
-			if (p.getLongestRoad() >= newLong && !p.equals(player)) {
-				longer = true;
-			}
+			for (Player p : players) {
+				if (p.getLongestRoad() >= newLong && !p.equals(player)) {
+					longer = true;
+				}
 			
 				//if p doesnt have the longest road, but thinks they do
-			else if (!p.equals(player) && p.hasLongestRoad()) {
+				else if (!p.equals(player) && p.hasLongestRoad()) {
 				
-				p.setHasLongestRoad(false);
-				p.setVictoryPoints(p.getVictoryPoints()-2);
-			}
-		}
-		if(!longer && !player.hasLongestRoad()) {
-			
-			player.setHasLongestRoad(true); 
-			player.setVictoryPoints(player.getVictoryPoints()+2); 
-			
-			Catan.printToClient("You now have the longest road!", player);
-			
-			for (int i = 0; i < players.size(); i++) {
-				if (players.get(i) != player) {
-					Catan.printToClient("Player " + player.getName() + " now has the longest road!", players.get(i));
+					p.setHasLongestRoad(false);
+					p.setVictoryPoints(p.getVictoryPoints()-2);
 				}
 			}
-		}
+			if (!longer && !player.hasLongestRoad()) {
+			
+				player.setHasLongestRoad(true); 
+				player.setVictoryPoints(player.getVictoryPoints()+2); 
+			
+				Catan.printToClient("You now have the longest road!", player);
+			
+				for (int i = 0; i < players.size(); i++) {
+					if (players.get(i) != player) {
+						Catan.printToClient("Player " + player.getName() + " now has the longest road!", players.get(i));
+					}
+				}
+			}
+		}	
 	}
-}
 }

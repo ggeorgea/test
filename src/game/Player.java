@@ -305,6 +305,7 @@ public class Player {
 		}
 	}
 
+	//updates player ports
 	public void updatePlayerPorts(Player player, Game game1) {
 		
 		Board board1 = game1.getBoard();

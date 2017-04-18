@@ -83,6 +83,7 @@ public class Robber {
 		int noGrain = enter.getRequest().getDiscardResources().getGrain();
 		
 		if (noBrick + noWool + noLumber + noWool + noGrain != noCardsToRemove) {
+			
 			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not the correct amount of resources").build()).build()).build(), player.getpSocket().getClientSocket());
 			cardRemoval(player, cards, game1, scanner);
 			return;
@@ -167,6 +168,7 @@ public class Robber {
 	public static void moveRobber(Player player, Game game1, Scanner scanner) {
 
 		try {
+			
 			Catan.printToClient("Please send a move robber request.", player);
 			Message enter = Message.newBuilder().build();
 			
@@ -193,170 +195,167 @@ public class Robber {
 				|| (!game1.getBoard().getLocationFromCoordinate(a).getType().equals(HEX))) {
 
 				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("Invalid coordinates.").build()).build()).build(), player.getpSocket().getClientSocket());
-			return;
+				return;
+			}
+
+			Hex hex1 = (Hex) game1.getBoard().getLocationFromCoordinate(a).getContains();
+			hex1.setisRobberHere(ROBBER);
+			game1.getBoard().setRobber(a);
+		
+			ArrayList<Player> players = game1.getPlayers();
+			Message m = Message.newBuilder().setEvent(Event.newBuilder().setRobberMoved(Point.newBuilder().setX(x).setY(y).build()).build()).build();
+		
+			for (int i = 0; i < players.size(); i++) {
+				Catan.printToClient(m, players.get(i));
+			}			
+		
+			robberStealCard(player,  game1, scanner);
 		}
-
-		Hex hex1 = (Hex) game1.getBoard().getLocationFromCoordinate(a).getContains();
-		hex1.setisRobberHere(ROBBER);
-		game1.getBoard().setRobber(a);
+		catch(InputMismatchException e) {
 		
-		ArrayList<Player> players = game1.getPlayers();
-		Message m = Message.newBuilder().setEvent(Event.newBuilder().setRobberMoved(Point.newBuilder().setX(x).setY(y).build()).build()).build();
-		
-			//TODO event for robber moved
-		for (int i = 0; i < players.size(); i++) {
-			Catan.printToClient(m, players.get(i));
-		}			
-		
-		robberStealCard(player,  game1, scanner);
+			scanner.nextLine();
+			moveRobber(player,game1,scanner);
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-	catch(InputMismatchException e) {
-		
-		scanner.nextLine();
-		moveRobber(player,game1,scanner);
-	} 
-	catch (IOException e) {
-		e.printStackTrace();
-	}
-}
 
-public static void robberStealCard(Player player, Game game1, Scanner scanner) throws IOException {
+	public static void robberStealCard(Player player, Game game1, Scanner scanner) throws IOException {
 
 		//choose a player to steal a card from
-	Player target = null;
+		Player target = null;
 	
-	while (true) {
+		while (true) {
 
-		target = null;
+			target = null;
 		
-		Catan.printToClient("Who do you want to steal from?", player);
-		Message enter = Message.newBuilder().build();
+			Catan.printToClient("Who do you want to steal from?", player);
+			Message enter = Message.newBuilder().build();
 		
-		boolean success = false;
+			boolean success = false;
 		
-		while (!success) {
+			while (!success) {
 			
-			enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
+				enter = Catan.getPBMsg(player.getpSocket().getClientSocket());
 			
-			if (enter.getRequest().getBodyCase().getNumber() == 11) {
-				success = true;
+				if (enter.getRequest().getBodyCase().getNumber() == 11) {
+					success = true;
+				}
+				else {
+					Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a target player request").build()).build()).build(), player.getpSocket().getClientSocket());
+				}
 			}
+		
+			int id = enter.getRequest().getSubmitTargetPlayer().getIdValue();
+
+			ArrayList<Player> allPlayers = game1.getPlayers();
+		
+			if (id >= 0 && id < allPlayers.size()-1) {
+				target = allPlayers.get(id);
+			}
+		
+			if (target == null || target == player) { 
+			
+				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("incorrect player choice").build()).build()).build(), player.getpSocket().getClientSocket());
+				continue;
+			} 
 			else {
-				Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a target player request").build()).build()).build(), player.getpSocket().getClientSocket());
+				break;
 			}
 		}
-		
-		int id = enter.getRequest().getSubmitTargetPlayer().getIdValue();
-
-		ArrayList<Player> allPlayers = game1.getPlayers();
-		
-		if (id >= 0 && id < allPlayers.size()-1) {
-			target = allPlayers.get(id);
-		}
-		
-		if (target == null || target == player) { 
-			
-			Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("incorrect player choice").build()).build()).build(), player.getpSocket().getClientSocket());
-			continue;
-		} 
-		else {
-			break;
-		}
-	}
 	
-	ArrayList<Hex> hexes = game1.getBoard().getHexes();
-	boolean allowedToSteal = false; 
-	for (int i = 0; i < hexes.size(); i++) {
+		ArrayList<Hex> hexes = game1.getBoard().getHexes();
+		boolean allowedToSteal = false; 
+	
+		for (int i = 0; i < hexes.size(); i++) {
 		
-		Hex hex = hexes.get(i);
+			Hex hex = hexes.get(i);
 		
 			//if the hex value is the same as the dice roll and the robber
 			//is not there, resources can be given out
-		if ((hex.getisRobberHere().equals(ROBBER))) {
-			for (Coordinate c : getNearbyCoordinates(hex.getCoordinate())) { 
+			if ((hex.getisRobberHere().equals(ROBBER))) {
+				for (Coordinate c : getNearbyCoordinates(hex.getCoordinate())) { 
 				
-				Player ownerOfLocation = ((Intersection) game1.getBoard().getLocationFromCoordinate(c).getContains()).getOwner();	
+					Player ownerOfLocation = ((Intersection) game1.getBoard().getLocationFromCoordinate(c).getContains()).getOwner();	
 				
-				if (ownerOfLocation == target) { 
-					allowedToSteal = true; 
+					if (ownerOfLocation == target) { 
+						allowedToSteal = true; 
+					}
 				}
 			}
-			
+		}
+		if (allowedToSteal) { 
+			transferRandomCard(target, player, game1);
 		}
 	}
-	if (allowedToSteal) { 
-		transferRandomCard(target, player, game1);
-	}
-}
 
 	//method to return all coord given hex 
-public static ArrayList<Coordinate> getNearbyCoordinates(Coordinate coordinate) { 
+	public static ArrayList<Coordinate> getNearbyCoordinates(Coordinate coordinate) { 
 	
-	ArrayList<Coordinate> nearbyCoordinates = new ArrayList<>(); 
-	int x = coordinate.getX();
-	int y = coordinate.getY();
+		ArrayList<Coordinate> nearbyCoordinates = new ArrayList<>(); 
+		int x = coordinate.getX();
+		int y = coordinate.getY();
 	
-	nearbyCoordinates.add(new Coordinate(x, y-1));
-	nearbyCoordinates.add(new Coordinate(x, y+1));
-	nearbyCoordinates.add(new Coordinate(x-1, y));
-	nearbyCoordinates.add(new Coordinate(x+1, y));
-	nearbyCoordinates.add(new Coordinate(x-1, y-1));
-	nearbyCoordinates.add(new Coordinate(x+1, y+1));
+		nearbyCoordinates.add(new Coordinate(x, y-1));
+		nearbyCoordinates.add(new Coordinate(x, y+1));
+		nearbyCoordinates.add(new Coordinate(x-1, y));
+		nearbyCoordinates.add(new Coordinate(x+1, y));
+		nearbyCoordinates.add(new Coordinate(x-1, y-1));
+		nearbyCoordinates.add(new Coordinate(x+1, y+1));
+		
+		return nearbyCoordinates; 
 	
-	return nearbyCoordinates; 
-	
-}
-
-
-public static void transferRandomCard(Player from, Player to, Game game1) { 
-	
-	Random r = new Random(); 
-	ArrayList<ResourceCard> fromCards = from.getResourceCards();
-	ArrayList<ResourceCard> toCards = to.getResourceCards();
-	int index = r.nextInt(fromCards.size());
-	ResourceCard card = fromCards.get(index);
-	fromCards.remove(card);
-	toCards.add(card);
-	
-	ArrayList<Player> players = game1.getPlayers();
-	
-	int playerNum = 0;
-	int playerStealNum = 0;
-	
-	for (int i = 0; i < players.size(); i++) {
-		if (players.get(i).equals(from)) {
-			playerNum = i;
-		}
-		else if (players.get(i).equals(to)) {
-			playerStealNum = i;
-		}
 	}
+
+	public static void transferRandomCard(Player from, Player to, Game game1) { 
 	
-	int resource = 0;
+		Random r = new Random(); 
+		ArrayList<ResourceCard> fromCards = from.getResourceCards();
+		ArrayList<ResourceCard> toCards = to.getResourceCards();
+		int index = r.nextInt(fromCards.size());
+		ResourceCard card = fromCards.get(index);
+		fromCards.remove(card);
+		toCards.add(card);
 	
-	switch(card.getResource()) {
+		ArrayList<Player> players = game1.getPlayers();
+		
+		int playerNum = 0;
+		int playerStealNum = 0;
+	
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).equals(from)) {
+				playerNum = i;
+			}
+			else if (players.get(i).equals(to)) {
+				playerStealNum = i;
+			}
+		}
+	
+		int resource = 0;
+	
+		switch (card.getResource()) {
 		case BRICK : 
-		resource = 1;
-		break;
+			resource = 1;
+			break;
 		case LUMBER :
-		resource = 2;
-		break;
+			resource = 2;
+			break;
 		case WOOL :
-		resource = 3;
-		break;
+			resource = 3;
+			break;
 		case GRAIN :
-		resource = 4;
-		break;
+			resource = 4;
+			break;
 		case ORE :
-		resource = 5;
-		break;
-	}
+			resource = 5;
+			break;
+		}
+
+		Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setResourceStolen(Steal.newBuilder().setVictim(Board.Player.newBuilder().setIdValue(playerStealNum).build()).setResourceValue(resource).build()).build()).build();
 	
-		//TODO card stolen event
-	Message m = Message.newBuilder().setEvent(Event.newBuilder().setInstigator(Board.Player.newBuilder().setIdValue(playerNum).build()).setResourceStolen(Steal.newBuilder().setVictim(Board.Player.newBuilder().setIdValue(playerStealNum).build()).setResourceValue(resource).build()).build()).build();
-	
-	for (int i = 0; i < players.size(); i++) {
-		Catan.printToClient(m, players.get(i));
+		for (int i = 0; i < players.size(); i++) {
+			Catan.printToClient(m, players.get(i));
+		}
 	}
-}
 }

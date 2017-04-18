@@ -1,11 +1,12 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import intergroup.board.Board.Player;
 import intergroup.resource.Resource.Counts;
 import intergroup.resource.Resource.Counts.Builder;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Class to store methods associated with resource allocation
@@ -35,6 +36,7 @@ public class ResourceAllocation {
 	
 	//code to get the resources from a dice roll
 	public static ArrayList<intergroup.board.Board.ResourceAllocation> resourceAllocation(int hexValue, Game game1, Scanner scanner) {
+		
 		ArrayList<intergroup.board.Board.ResourceAllocation> prorecAl = new ArrayList<intergroup.board.Board.ResourceAllocation>();
 		
 		ArrayList<game.Player> players = game1.getPlayers();
@@ -169,7 +171,7 @@ public class ResourceAllocation {
 
 			ResourceCard card = null;
 			switch(terrain) {
-				case PASTURE : 
+			case PASTURE : 
 				ArrayList<ResourceCard> wool = game1.getWool();
 				
 				if (wool.size() <= 0) {
@@ -180,7 +182,7 @@ public class ResourceAllocation {
 				wool.remove(0);
 				game1.setWool(wool);
 				break;
-				case FOREST :
+			case FOREST :
 				ArrayList<ResourceCard> lumber = game1.getLumber();
 				
 				if (lumber.size() <= 0) {
@@ -191,7 +193,7 @@ public class ResourceAllocation {
 				lumber.remove(0);
 				game1.setLumber(lumber);
 				break;
-				case MOUNTAIN :
+			case MOUNTAIN :
 				ArrayList<ResourceCard> ore = game1.getOre();
 				
 				if (ore.size() <= 0) {
@@ -202,7 +204,7 @@ public class ResourceAllocation {
 				ore.remove(0);
 				game1.setOre(ore);
 				break;
-				case HILL :
+			case HILL :
 				ArrayList<ResourceCard> brick = game1.getBrick();
 				
 				if (brick.size() <= 0) {
@@ -213,7 +215,7 @@ public class ResourceAllocation {
 				brick.remove(0);
 				game1.setBrick(brick);
 				break;
-				case GRASS :
+			case GRASS :
 				ArrayList<ResourceCard> grain = game1.getGrain();
 				
 				if (grain.size() <= 0) {
@@ -263,37 +265,42 @@ public class ResourceAllocation {
 
 	//adds the cards in 'newResourceCards' to 'resourceCards' for each player
 	public static ArrayList<intergroup.board.Board.ResourceAllocation> setResources(ArrayList<game.Player> players) {
+		
 		ArrayList<intergroup.board.Board.ResourceAllocation> proRecAl = new ArrayList<intergroup.board.Board.ResourceAllocation>();
+		
 		for (int i = 0; i < players.size(); i++) {
+			
 			game.Player player = players.get(i);
 			intergroup.board.Board.ResourceAllocation.Builder thisProAl =  intergroup.board.Board.ResourceAllocation.newBuilder().setPlayer(Player.newBuilder().setIdValue(player.getID()));
+			
 			PlayerSocket socket = player.getpSocket();
+			
 			ArrayList<ResourceCard> newResourceCards = player.getNewResourceCards();
 			ArrayList<ResourceCard> cards = player.getResourceCards();
 
 			//if the player gets resources, they are added to their hand and
 			Builder proC = Counts.newBuilder();
+			
 			//the allocation printed
 			if (newResourceCards.size() > 0) {
-			//	Catan.printToClient("You get:", players.get(i));
 
 				for (int j = 0; j < newResourceCards.size(); j++) {
 
 					cards.add(newResourceCards.get(j));
 					switch(newResourceCards.get(j).getResource()){
-						case "ore":
+					case "ore":
 						proC.setOre(proC.getOre()+1);
 						break;
-						case "grain":
+					case "grain":
 						proC.setGrain(proC.getGrain()+1);
 						break;
-						case "lumber":
+					case "lumber":
 						proC.setLumber(proC.getLumber()+1);
 						break;
-						case "wool":
+					case "wool":
 						proC.setWool(proC.getWool()+1);
 						break;
-						case "brick":
+					case "brick":
 						proC.setBrick(proC.getBrick()+1);
 						break;
 					}
@@ -302,9 +309,11 @@ public class ResourceAllocation {
 
 				player.setResourceCards(cards);
 			}
+			
 			thisProAl.setResources(proC.build());
 			proRecAl.add(thisProAl.build());
 		}
+		
 		return proRecAl;
 	}
 }

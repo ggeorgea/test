@@ -6,6 +6,7 @@ package game;
 public class ResourceCard {
 
 	private String resource;
+	
 //-----Constructors-----//	
 	public ResourceCard() {
 		
@@ -14,6 +15,7 @@ public class ResourceCard {
 	public ResourceCard(String resource) {
 		this.resource = resource;
 	}
+	
 //-----Getters and Setters-----//
 	
 	public String getResource() {
