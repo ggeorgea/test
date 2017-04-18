@@ -16,6 +16,7 @@ import intergroup.board.Board.Roll.Builder;
 public class Dice {
 
 	public static int valueDice = 0; 
+	
 	public static Builder rollTurnDice(Player player, Scanner scanner, Game game1) {
 
 		Random random = new Random();
@@ -34,7 +35,7 @@ public class Dice {
 				if (enter.getRequest().getBodyCase().getNumber() == 1) {
 					success = true;
 				}
-				else{
+				else {
 					Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a roll dice request").build()).build()).build(), player.getpSocket().getClientSocket());
 				}
 			} 
@@ -50,14 +51,6 @@ public class Dice {
 		int diceRoll = dice1 + dice2;
 		
 		valueDice = diceRoll;
-		
-		int playerNum = 0;
-		
-		for (int i = 0; i < game1.getPlayers().size(); i++) {
-			if (game1.getPlayers().get(i).equals(player)) {
-				playerNum = i;
-			}
-		}
 		
 		player.setCurrentRoll(diceRoll);
 		return intergroup.board.Board.Roll.newBuilder().setA(dice1).setB(dice2);
@@ -83,7 +76,7 @@ public class Dice {
 				if (enter.getRequest().getBodyCase().getNumber() == 1) {
 					success = true;
 				}
-				else{
+				else {
 					Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setError(Error.newBuilder().setDescription("not a roll dice request").build()).build()).build(), player.getpSocket().getClientSocket());
 				}
 			} 
@@ -123,7 +116,7 @@ public class Dice {
 	}
 
 	//method to return the value of the dice 
-	public int getCurrentValueOfDice(){
+	public int getCurrentValueOfDice() {
 		return valueDice;
 	}
 }

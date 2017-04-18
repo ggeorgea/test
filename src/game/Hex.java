@@ -15,6 +15,7 @@ public class Hex {
 	public Hex() {
 		
 	}
+	
 	public Hex(Coordinate coordinate, String terrain, int number) {
 		
 		this.coordinate = coordinate;

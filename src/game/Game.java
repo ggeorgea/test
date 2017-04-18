@@ -2,7 +2,6 @@ package game;
 
 import java.util.ArrayList;
 
-import intergroup.EmptyOuterClass.Empty;
 import intergroup.Events.Event;
 import intergroup.Messages.Message;
 import intergroup.board.Board;
@@ -31,6 +30,7 @@ public class Game {
 	public Game() {
 
 	}
+	
 	public Game(String id, game.Board board, ArrayList<ResourceCard> ore, ArrayList<ResourceCard> grain,
 		ArrayList<ResourceCard> lumber, ArrayList<ResourceCard> wool, ArrayList<ResourceCard> brick,
 		ArrayList<DevelopmentCard> developmentCards, ArrayList<Player> players) {
@@ -146,6 +146,7 @@ public class Game {
 				playerNum = i;
 			}
 		}
+		
 		Message m = Message.newBuilder().setEvent(Event.newBuilder().setGameWon(GameWon.newBuilder().setWinner(Board.Player.newBuilder().setIdValue(playerNum).build()).build()).build()).build();
 
 		for (int i = 0; i < players.size(); i++) {

@@ -22,6 +22,7 @@ public class PlayerSocket {
 	public PlayerSocket() {
 		
 	}	
+	
     public PlayerSocket(Socket ClientSocket) throws IOException {
     	
     	this.clientSocket = ClientSocket;
@@ -31,42 +32,42 @@ public class PlayerSocket {
 //-----Getters and Setters-----//	
     
     public Socket getClientSocket() {
-      return clientSocket;
-  }
+    	return clientSocket;
+    }
 
-  public void setClientSocket(Socket clientSocket) {
-      this.clientSocket = clientSocket;
-  }    
+    public void setClientSocket(Socket clientSocket) {
+    	this.clientSocket = clientSocket;
+    } 
+  
 //-----Communication Methods-----//   
   
-  public void sendMessage(String msg) {
+    public void sendMessage(String msg) {
    
-   try {
-     Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(msg).build()).build(), clientSocket);
- } 
- catch (IOException e) {
-     e.printStackTrace();
- }
-}
+    	try {
+    		Catan.sendPBMsg(Message.newBuilder().setEvent(Event.newBuilder().setChatMessage(msg).build()).build(), clientSocket);
+    	} 
+    	catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    }
 
-public void requestMessage() throws IOException{
-   Catan.requestGenericPBMsg(clientSocket);
-}
+  	public void requestMessage() throws IOException{
+  		Catan.requestGenericPBMsg(clientSocket);
+  	}
 
-public String getMessage() throws IOException {
+  	public String getMessage() throws IOException {
    
-   Message m1 = Catan.getPBMsg(clientSocket);
-   return m1.getEvent().getChatMessage();
-}
+  		Message m1 = Catan.getPBMsg(clientSocket);
+  		return m1.getEvent().getChatMessage();
+  	}
 
-    //TODO will this not need to be changed?
-public String Communicate(String Message) throws IOException{
+	public String Communicate(String Message) throws IOException{
     
-   String inputLine;
-   String  outputLine = Message;
-   out.println(outputLine);
-   inputLine = in.readLine();
+		String inputLine;
+		String  outputLine = Message;
+		out.println(outputLine);
+		inputLine = in.readLine();
    
-   return inputLine;
-}   
+		return inputLine;
+	}   
 }
