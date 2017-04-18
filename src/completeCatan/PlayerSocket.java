@@ -39,7 +39,7 @@ public class PlayerSocket {
         
 //-----Communication Methods-----// 
 
-    public void sendMessage(String Message){
+    public void sendMessage(String Message) {
     
     	String  outputLine = Message;
     	out.println(outputLine);

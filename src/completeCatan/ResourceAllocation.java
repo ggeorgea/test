@@ -27,7 +27,7 @@ public class ResourceAllocation {
 	public static final String BRICK = "brick";
 	public static final String GRAIN = "grain";
 	
-	//-----Methods to perform the resource allocation for the turn-----//
+//-----Methods to perform the resource allocation for the turn-----//
 	
 	//code to get the resources from a dice roll
 	public static void resourceAllocation(int hexValue, Game game1, Scanner scanner) {

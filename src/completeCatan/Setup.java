@@ -261,7 +261,7 @@ public class Setup {
  		return victory;
  	}
  
- //-----Methods to initialise the resource card decks for the game-----//
+//-----Methods to initialise the resource card decks for the game-----//
  
  	//gets the deck of resource cards
  	public static ArrayList<ResourceCard> getResourceCardDeck(String resource) {
@@ -277,7 +277,7 @@ public class Setup {
  		return resourceCards;
  	}
  
- //-----Methods to get the initial placement of roads and settlements for the game-----//
+//-----Methods to get the initial placement of roads and settlements for the game-----//
  
  	//gets the players to set the initial roads and settlements before turn 1
  	public static void setInitialRoadsAndSettlements(Game game1, Scanner scanner) throws IOException {

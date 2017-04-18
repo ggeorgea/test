@@ -26,6 +26,8 @@ import java.net.UnknownHostException;
  	private static final String BRICK = "brick";
  	
  	private static final String YES = "y";
+ 	private static final char YES_CHAR = 'Y';
+ 	private static final char NO_CHAR = 'N';
  
  	public static void main(String[] args) throws Exception {
  
@@ -111,10 +113,10 @@ import java.net.UnknownHostException;
  		char c = choice.toCharArray()[0];
  
  		switch (c) {
- 		case 'Y':
+ 		case YES_CHAR:
  			keepPlaying = true;
  			break;
- 		case 'N':
+ 		case NO_CHAR:
  			keepPlaying = false;
  			break;
  		default:
