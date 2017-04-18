@@ -41,7 +41,7 @@ public class Box extends javax.swing.JFrame {
    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
    private void initComponents() {
 
-	   jPanel1 =  new ImagePanel("C:\\Users\\George\\Downloads\\FLSDY0TI6HSHMJ4.MEDIUM.jpg");
+	   jPanel1 =  new ImagePanel("FLSDY0TI6HSHMJ4.MEDIUM.jpg");
        jButton1 = new javax.swing.JButton();
        jButton2 = new javax.swing.JButton();
        jButton3 = new javax.swing.JButton();
