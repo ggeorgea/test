@@ -125,25 +125,25 @@ public class Setup {
 			String check = "";
 			
 			switch(c) {
-				case 'W' :
+			case 'W' :
 				check = "W";
 				break;
-				case 'R' :
+			case 'R' :
 				check = "R";
 				break;
-				case 'G' :
+			case 'G' :
 				check = "G";
 				break;
-				case 'B' :
+			case 'B' :
 				check = "B";
 				break;
-				case 'O' :
+			case 'O' :
 				check = "O";
 				break;
-				case 'Y' :
+			case 'Y' :
 				check = "Y";
 				break;
-				default :
+			default :
 				socket.sendMessage("Invalid character. Please choose again.");
 				selectPlayerName(player, players, n, scanner);
 				return;
@@ -163,8 +163,7 @@ public class Setup {
 		}
 		else {
 		//End of Networking test
-		//----------------------------------------------
-			
+		//----------------------------------------------			
 			
 			Catan.printToClient("Select a character to be your player name.", thisPlayer);
 			Catan.printToClient("Select from: W-White, R-Red, G-Green, B-Blue, O-Orange, Y-Yellow", thisPlayer);
@@ -174,32 +173,32 @@ public class Setup {
 			String check = "";
 
 			switch(c) {
-				case 'W' :
+			case 'W' :
 				check = "W";
 				break;
-				case 'R' :
+			case 'R' :
 				check = "R";
 				break;
-				case 'G' :
+			case 'G' :
 				check = "G";
 				break;
-				case 'B' :
+			case 'B' :
 				check = "B";
 				break;
-				case 'O' :
+			case 'O' :
 				check = "O";
 				break;
-				case 'Y' :
+			case 'Y' :
 				check = "Y";
 				break;
-				default :
+			default :
 				Catan.printToClient("Invalid character. Please choose again.", thisPlayer);
 				selectPlayerName(player, players, n, scanner);
 				return;
 			}
 
-		//makes sure the player chooses a name not already being used
-		//pre networking:for (int i = 0; i < players.size(); i++) {
+			//makes sure the player chooses a name not already being used
+			//pre networking:for (int i = 0; i < players.size(); i++) {
 			for (int i = 0; i < n; i++) {
 				if (players.get(i).getName().equals(check)) {
 					
@@ -602,7 +601,7 @@ public class Setup {
 		}
 
 		settlement.setOwner(player);
-		settlement.setBuilding(new Building(TOWN,1));
+		settlement.setBuilding(new Building(TOWN, 1));
 		player.getFirstSettlements().add(settlement);
 		player.setNoSettlements(player.getNoSettlements() + 1);
 		Trade.checkIfPortSettled(player, settlement, game1);

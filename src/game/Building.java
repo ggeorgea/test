@@ -14,7 +14,7 @@ import intergroup.board.Board;
  * and cities
  */
 public class Building {
-	//fields 
+	
 	private String type;
 	private int victoryPoints;
 	
@@ -234,42 +234,42 @@ public class Building {
 			int j = settlement.getCoordinate().getX();
 			int g = settlement.getCoordinate().getY();
 		
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j,g+1));
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j, g+1));
 			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 			
 				foundSuitable = true;
 				return foundSuitable;
 			}
 		
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j,g-1));
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j, g-1));
 			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 			
 				foundSuitable = true;
 				return foundSuitable;
 			}
 		
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1,g));
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1, g));
 			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 			
 				foundSuitable = true;
 				return foundSuitable;
 			}
 		
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1,g));
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1, g));
 			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 			
 				foundSuitable = true;
 				return foundSuitable;
 			}
 		
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1,g+1));
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j+1, g+1));
 			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 			
 				foundSuitable = true;
 				return foundSuitable;
 			}
 		
-			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1,g-1));
+			tryRoad = game1.getBoard().getRoadFromCo(settlement.getCoordinate(), new Coordinate(j-1, g-1));
 			if (tryRoad != null && tryRoad.getOwner().equals(player)) {
 			
 				foundSuitable = true;

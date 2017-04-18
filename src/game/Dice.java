@@ -3,7 +3,9 @@ package game;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+
 import java.io.IOException;
+
 import intergroup.Events.Event;
 import intergroup.Events.Event.Error;
 import intergroup.Messages.Message;

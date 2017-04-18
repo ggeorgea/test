@@ -144,8 +144,7 @@ public class Robber {
 						cards.remove(cards.get(j));
 					}
 				}
-			}
-			
+			}			
 			
 			game1.setBrick(brick);
 			game1.setOre(ore);

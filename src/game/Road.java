@@ -34,7 +34,8 @@ public class Road {
 		this.coordinateA = coordinateA;
 		this.coordinateB = coordinateB;
 		this.owner = owner;
-	}	
+	}
+	
 //-----Getters and Setters-----//
 	
 	public Coordinate getCoordinateA() {

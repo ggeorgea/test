@@ -391,88 +391,78 @@ public class LongestRoad {
 				.getLocationFromCoordinate(new Coordinate(j, g + 1))
 				.getContains()))) {
 			return startRoad1;
-	}
+		}
 	
-	startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(), new Coordinate(j, g - 1));
-	if ((startRoad1 != null && startRoad1.getOwner().equals(player))
-		&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
-			.getBoard()
-			.getLocationFromCoordinate(new Coordinate(j, g - 1))
-			.getContains()))
-		&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
-			.getBoard()
-			.getLocationFromCoordinate(new Coordinate(j, g - 1))
-			.getContains()))) {
-		return startRoad1;
-}
+		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(), new Coordinate(j, g - 1));
+		if ((startRoad1 != null && startRoad1.getOwner().equals(player))
+				&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
+					.getBoard()
+					.getLocationFromCoordinate(new Coordinate(j, g - 1))
+					.getContains()))
+				&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
+					.getBoard()
+					.getLocationFromCoordinate(new Coordinate(j, g - 1))
+					.getContains()))) {
+			return startRoad1;
+		}
 
-startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
-	new Coordinate(j + 1, g));
-if ((startRoad1 != null && startRoad1.getOwner().equals(player))
-	&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
-		.getBoard()
-		.getLocationFromCoordinate(new Coordinate(j + 1, g))
-		.getContains()))
-	&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
-		.getBoard()
-		.getLocationFromCoordinate(new Coordinate(j + 1, g))
-		.getContains()))) {
-	return startRoad1;
-}
-
-		// not working
-startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
-	new Coordinate(j - 1, g));
-
-if ((startRoad1 != null && startRoad1.getOwner().equals(player))
-	&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
-		.getBoard()
-		.getLocationFromCoordinate(new Coordinate(j - 1, g))
-		.getContains()))
-	&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
-		.getBoard()
-		.getLocationFromCoordinate(new Coordinate(j - 1, g))
-		.getContains()))) {
-	return startRoad1;
-}
+		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(), new Coordinate(j + 1, g));
+		if ((startRoad1 != null && startRoad1.getOwner().equals(player))
+				&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
+					.getBoard()
+					.getLocationFromCoordinate(new Coordinate(j + 1, g))
+					.getContains()))
+				&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
+					.getBoard()
+					.getLocationFromCoordinate(new Coordinate(j + 1, g))
+					.getContains()))) {
+			return startRoad1;
+		}	
 
 		// not working
-startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
-	new Coordinate(j + 1, g + 1));
-if ((startRoad1 != null && startRoad1.getOwner().equals(player))
-	&& ((int1Ill == null) || !int1Ill
-		.equals((Intersection) game1
-			.getBoard()
-			.getLocationFromCoordinate(
-				new Coordinate(j + 1, g + 1))
-			.getContains()))
-	&& ((int2Ill == null) || !int2Ill
-		.equals((Intersection) game1
-			.getBoard()
-			.getLocationFromCoordinate(
-				new Coordinate(j + 1, g + 1))
-			.getContains()))) {
-	return startRoad1;
-}
+		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(), new Coordinate(j - 1, g));
+		if ((startRoad1 != null && startRoad1.getOwner().equals(player))
+				&& ((int1Ill == null) || !int1Ill.equals((Intersection) game1
+					.getBoard()
+					.getLocationFromCoordinate(new Coordinate(j - 1, g))
+					.getContains()))
+				&& ((int2Ill == null) || !int2Ill.equals((Intersection) game1
+					.getBoard()
+					.getLocationFromCoordinate(new Coordinate(j - 1, g))
+					.getContains()))) {
+			return startRoad1;
+		}
 
-startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(),
-	new Coordinate(j - 1, g - 1));
+		// not working
+		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(), new Coordinate(j + 1, g + 1));
+		if ((startRoad1 != null && startRoad1.getOwner().equals(player))
+				&& ((int1Ill == null) || !int1Ill
+					.equals((Intersection) game1
+					.getBoard()
+					.getLocationFromCoordinate(new Coordinate(j + 1, g + 1))
+					.getContains()))
+				&& ((int2Ill == null) || !int2Ill
+					.equals((Intersection) game1
+					.getBoard()
+					.getLocationFromCoordinate(new Coordinate(j + 1, g + 1))
+					.getContains()))) {
+			return startRoad1;
+		}	
 
-if ((startRoad1 != null && startRoad1.getOwner().equals(player))
-	&& (((int1Ill == null) || !int1Ill
-		.equals((Intersection) game1
-			.getBoard()
-			.getLocationFromCoordinate(
-				new Coordinate(j - 1, g - 1))
-			.getContains())))
-	&& (((int2Ill == null) || !int2Ill
-		.equals((Intersection) game1
-			.getBoard()
-			.getLocationFromCoordinate(
-				new Coordinate(j - 1, g - 1))
-			.getContains())))) {
-}
+		startRoad1 = game1.getBoard().getRoadFromCo(sett1.getCoordinate(), new Coordinate(j - 1, g - 1));
+		if ((startRoad1 != null && startRoad1.getOwner().equals(player))
+				&& (((int1Ill == null) || !int1Ill
+					.equals((Intersection) game1
+					.getBoard()
+					.getLocationFromCoordinate(new Coordinate(j - 1, g - 1))
+					.getContains())))
+				&& (((int2Ill == null) || !int2Ill
+					.equals((Intersection) game1
+					.getBoard()
+					.getLocationFromCoordinate(new Coordinate(j - 1, g - 1))
+					.getContains())))) {
+		}
 
-return null;
-}
+		return null;
+	}	
 }

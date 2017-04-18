@@ -12,6 +12,7 @@ public class Hex {
 	private String isRobberHere = " ";
 	
 //-----Constructors-----//
+	
 	public Hex() {
 		
 	}

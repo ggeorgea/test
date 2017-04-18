@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 /**
  * Class that keeps track of the state of the board
  */

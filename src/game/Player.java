@@ -245,13 +245,13 @@ public class Player {
 		int choice = Integer.parseInt(Catan.getInputFromClient(player, scanner));
 		
 		switch (choice) {
-			case 1 :
+		case 1 :
 			printResourceCards(player);
 			break;
-			case 2 :
+		case 2 :
 			printDevelopmentCards(player);
 			break;
-			default :
+		default :
 			Catan.printToClient("Invalid choice. Please choose again", player);
 			printHand(player, scanner);			
 		}
